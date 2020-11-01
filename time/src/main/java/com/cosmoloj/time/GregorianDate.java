@@ -74,19 +74,15 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
         if (field instanceof ChronoField) {
             final ChronoField chronoField = (ChronoField) field;
             if (chronoField.isDateBased()) {
-                switch (chronoField) {
-                    case DAY_OF_MONTH:
-                        return ValueRange.of(1, lengthOfMonth());
-                    case DAY_OF_YEAR:
-                        return ValueRange.of(1, lengthOfYear());
-                    case ALIGNED_WEEK_OF_MONTH:
-                        return ValueRange.of(1, getMonth() == Month.FEBRUARY && !isLeapYear() ? 4 : 5);
-                    case YEAR_OF_ERA:
-                        return (getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1)
-                                : ValueRange.of(1, Year.MAX_VALUE));
-                    default:
-                        return field.range();
-                }
+                return switch (chronoField) {
+                    case DAY_OF_MONTH -> ValueRange.of(1, lengthOfMonth());
+                    case DAY_OF_YEAR -> ValueRange.of(1, lengthOfYear());
+                    case ALIGNED_WEEK_OF_MONTH ->
+                        ValueRange.of(1, getMonth() == Month.FEBRUARY && !isLeapYear() ? 4 : 5);
+                    case YEAR_OF_ERA ->
+                        getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1) : ValueRange.of(1, Year.MAX_VALUE);
+                    default -> field.range();
+                };
             }
             throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
         }
@@ -116,38 +112,24 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
     }
 
     private int get0(final TemporalField field) {
-        switch ((ChronoField) field) {
-            case DAY_OF_WEEK:
-                return getDayOfWeek().getValue();
-            case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-                return ((day - 1) % 7) + 1;
-            case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-                return ((getDayOfYear() - 1) % 7) + 1;
-            case DAY_OF_MONTH:
-                return day;
-            case DAY_OF_YEAR:
-                return getDayOfYear();
-            case EPOCH_DAY:
-                throw new UnsupportedTemporalTypeException(
+        return switch ((ChronoField) field) {
+            case DAY_OF_WEEK -> getDayOfWeek().getValue();
+            case ALIGNED_DAY_OF_WEEK_IN_MONTH -> ((day - 1) % 7) + 1;
+            case ALIGNED_DAY_OF_WEEK_IN_YEAR -> ((getDayOfYear() - 1) % 7) + 1;
+            case DAY_OF_MONTH -> day;
+            case DAY_OF_YEAR -> getDayOfYear();
+            case EPOCH_DAY -> throw new UnsupportedTemporalTypeException(
                     "Invalid field 'EpochDay' for get() method, use getLong() instead");
-            case ALIGNED_WEEK_OF_MONTH:
-                return ((day - 1) / 7) + 1;
-            case ALIGNED_WEEK_OF_YEAR:
-                return ((getDayOfYear() - 1) / 7) + 1;
-            case MONTH_OF_YEAR:
-                return month;
-            case PROLEPTIC_MONTH:
-                throw new UnsupportedTemporalTypeException(
+            case ALIGNED_WEEK_OF_MONTH -> ((day - 1) / 7) + 1;
+            case ALIGNED_WEEK_OF_YEAR -> ((getDayOfYear() - 1) / 7) + 1;
+            case MONTH_OF_YEAR -> month;
+            case PROLEPTIC_MONTH -> throw new UnsupportedTemporalTypeException(
                     "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
-            case YEAR_OF_ERA:
-                return (year >= 1 ? year : 1 - year);
-            case YEAR:
-                return year;
-            case ERA:
-                return (year >= 1 ? 1 : 0);
-            default:
-                throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
-        }
+            case YEAR_OF_ERA -> (year >= 1 ? year : 1 - year);
+            case YEAR -> year;
+            case ERA -> (year >= 1 ? 1 : 0);
+            default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
+        };
     }
 
     @Override
@@ -278,7 +260,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
      */
     public int getDayOfYear2() {
         // On ajoute le nombre de jours écoulés dans l'année jusqu'au mois en cours.
-        int total = ((367 * month - 362) / 12);
+        int total = (367 * month - 362) / 12;
 
         // On ajoute le nombre de jours écoulés dans le mois courant.
         total += day;
@@ -306,35 +288,24 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
         if (field instanceof ChronoField) {
             final ChronoField f = (ChronoField) field;
             f.checkValidValue(newValue);
-            switch (f) {
-                case DAY_OF_WEEK:
-                    return plusDays(newValue - getDayOfWeek().getValue());
-                case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-                    return plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH));
-                case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-                    return plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR));
-                case DAY_OF_MONTH:
-                    return withDayOfMonth((int) newValue);
-                case DAY_OF_YEAR:
-                    return withDayOfYear((int) newValue);
-                case EPOCH_DAY:
-                    return GregorianDate.ofEpochDay(newValue);
-                case ALIGNED_WEEK_OF_MONTH:
-                    return plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_MONTH));
-                case ALIGNED_WEEK_OF_YEAR:
-                    return plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_YEAR));
-                case MONTH_OF_YEAR:
-                    return withMonth((int) newValue);
-                case PROLEPTIC_MONTH:
-                    return plusMonths(newValue - JulianUtil.getProlepticMonth(year, month));
-                case YEAR_OF_ERA: return withYear((int) (year >= 1 ? newValue : 1 - newValue));
-                case YEAR:
-                    return withYear((int) newValue);
-                case ERA:
-                    return (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - year));
-                default:
-                    throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
-            }
+            return switch (f) {
+                case DAY_OF_WEEK -> plusDays(newValue - getDayOfWeek().getValue());
+                case ALIGNED_DAY_OF_WEEK_IN_MONTH ->
+                    plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH));
+                case ALIGNED_DAY_OF_WEEK_IN_YEAR ->
+                    plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR));
+                case DAY_OF_MONTH -> withDayOfMonth((int) newValue);
+                case DAY_OF_YEAR -> withDayOfYear((int) newValue);
+                case EPOCH_DAY -> GregorianDate.ofEpochDay(newValue);
+                case ALIGNED_WEEK_OF_MONTH -> plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_MONTH));
+                case ALIGNED_WEEK_OF_YEAR -> plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_YEAR));
+                case MONTH_OF_YEAR -> withMonth((int) newValue);
+                case PROLEPTIC_MONTH -> plusMonths(newValue - JulianUtil.getProlepticMonth(year, month));
+                case YEAR_OF_ERA -> withYear((int) (year >= 1 ? newValue : 1 - newValue));
+                case YEAR -> withYear((int) newValue);
+                case ERA -> (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - year));
+                default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
+            };
         }
         return field.adjustInto(this, newValue);
     }
@@ -398,27 +369,17 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
     @Override
     public GregorianDate plus(final long amountToAdd, final TemporalUnit unit) {
         if (unit instanceof ChronoUnit) {
-            final ChronoUnit f = (ChronoUnit) unit;
-            switch (f) {
-                case DAYS:
-                    return plusDays(amountToAdd);
-                case WEEKS:
-                    return plusWeeks(amountToAdd);
-                case MONTHS:
-                    return plusMonths(amountToAdd);
-                case YEARS:
-                    return plusYears(amountToAdd);
-                case DECADES:
-                    return plusYears(Math.multiplyExact(amountToAdd, 10));
-                case CENTURIES:
-                    return plusYears(Math.multiplyExact(amountToAdd, 100));
-                case MILLENNIA:
-                    return plusYears(Math.multiplyExact(amountToAdd, 1000));
-                case ERAS:
-                    return with(ChronoField.ERA, Math.addExact(getLong(ChronoField.ERA), amountToAdd));
-                default:
-                    throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
-            }
+            return switch ((ChronoUnit) unit) {
+                case DAYS -> plusDays(amountToAdd);
+                case WEEKS -> plusWeeks(amountToAdd);
+                case MONTHS -> plusMonths(amountToAdd);
+                case YEARS -> plusYears(amountToAdd);
+                case DECADES -> plusYears(Math.multiplyExact(amountToAdd, 10));
+                case CENTURIES -> plusYears(Math.multiplyExact(amountToAdd, 100));
+                case MILLENNIA -> plusYears(Math.multiplyExact(amountToAdd, 1000));
+                case ERAS -> with(ChronoField.ERA, Math.addExact(getLong(ChronoField.ERA), amountToAdd));
+                default -> throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
+            };
         }
         return unit.addTo(this, amountToAdd);
     }
