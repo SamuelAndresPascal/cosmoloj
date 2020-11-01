@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <junit.jupiter.version>5.6.2</junit.jupiter.version>
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <checkstyle.plugin.version>3.1.1</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>8.37</checkstyle.version>
@@ -18,6 +18,7 @@
         <javadoc.plugin.version>3.2.0</javadoc.plugin.version>
         <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
         <site.plugin.version>3.9.1</site.plugin.version>
+        <deploy.plugin.version>3.0.0-M1</deploy.plugin.version>
         <project.info.reports.plugin.version>3.1.0</project.info.reports.plugin.version>
         <wagon.ssh.version>3.4.1</wagon.ssh.version>
         <deploy.server.ip>${env.DEPLOY_PUBLIC_SERVER}</deploy.server.ip>
@@ -130,7 +131,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
+                <version>${deploy.plugin.version}</version>
                 <dependencies>
                     <dependency><!-- add support for ssh/scp -->
                         <groupId>org.apache.maven.wagon</groupId>
