@@ -1,0 +1,42 @@
+before_script:
+  - export PATH=$PATH:$MAVEN_HOME/bin:$JAVA_HOME/bin
+  - java -version
+  - mvn -v
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+build:
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=warn
+  artifacts:
+    expire_in: 2 days
+
+javadoc:
+  script:
+    - mvn $MAVEN_CLI_OPTS javadoc:aggregate-no-fork
+  allow_failure: true
+  artifacts:
+    expire_in: 2 days
+
+deploy:
+  script:
+    - mvn $MAVEN_CLI_OPTS deploy -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=warn
+  when: manual
+  artifacts:
+    expire_in: 2 days
+
+site:
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install -DskipTests
+    - mvn $MAVEN_CLI_OPTS site-deploy -DskipTests
+  when: manual
+  artifacts:
+    expire_in: 2 days
+
+sonar:
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install -DskipTests sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT -Dsonar.host.url=http://$SONAR_SERVER:9000 -Dsonar.login=$SONAR_LOGIN
+  artifacts:
+    expire_in: 2 days
