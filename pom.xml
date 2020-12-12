@@ -12,7 +12,7 @@
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
         <checkstyle.plugin.version>3.1.1</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
-        <checkstyle.version>8.37</checkstyle.version>
+        <checkstyle.version>8.38</checkstyle.version>
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
         <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
         <javadoc.plugin.version>3.2.0</javadoc.plugin.version>
@@ -37,10 +37,33 @@
         </site>
     </distributionManagement>
 
+<!--    <name>cosmoloj</name>
+    <description>Open library utilities for space and time related Java applications.</description>
+    <url>https://github.com/SamuelAndresPascal/cosmoloj</url>
+
     <organization>
-        <!-- Used as the 'Vendor' for JNLP generation -->
         <name>Cosmoloj</name>
-    </organization>
+    </organization>-->
+
+<!--    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Samuel Andrés</name>
+            <email>samuel.andres@yahoo.fr</email>
+            <organizationUrl>https://github.com/SamuelAndresPascal/cosmoloj</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://git@github.com:SamuelAndresPascal/cosmoloj.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:SamuelAndresPascal/cosmoloj.git</developerConnection>
+        <url>https://github.com/SamuelAndresPascal/cosmoloj</url>
+    </scm>-->
 
     <modules>
         <module>time</module>
