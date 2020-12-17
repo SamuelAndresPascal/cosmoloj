@@ -65,7 +65,7 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
 
     @Override
     public RomaicMonth getMonth() {
-        return RomaicMonth.of(month);
+        return RomaicMonth.of(getMonthValue());
     }
 
     @Override
@@ -122,7 +122,7 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
                 return toEpochDay();
             }
             if (field == ChronoField.PROLEPTIC_MONTH) {
-                return JulianUtil.getProlepticMonth(year, month);
+                return JulianUtil.getProlepticMonth(getYear(), getMonthValue());
             }
             return get0(field);
         }
@@ -134,31 +134,31 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
             case DAY_OF_WEEK:
                 return getDayOfWeek().getValue();
             case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-                return ((day - 1) % 7) + 1;
+                return ((getDayOfMonth() - 1) % 7) + 1;
             case ALIGNED_DAY_OF_WEEK_IN_YEAR:
                 return ((getDayOfYear() - 1) % 7) + 1;
             case DAY_OF_MONTH:
-                return day;
+                return getDayOfMonth();
             case DAY_OF_YEAR:
                 return getDayOfYear();
             case EPOCH_DAY:
                 throw new UnsupportedTemporalTypeException(
                         "Invalid field 'EpochDay' for get() method, use getLong() instead");
             case ALIGNED_WEEK_OF_MONTH:
-                return ((day - 1) / 7) + 1;
+                return ((getDayOfMonth() - 1) / 7) + 1;
             case ALIGNED_WEEK_OF_YEAR:
                 return ((getDayOfYear() - 1) / 7) + 1;
             case MONTH_OF_YEAR:
-                return month;
+                return getMonthValue();
             case PROLEPTIC_MONTH:
                 throw new UnsupportedTemporalTypeException(
                         "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
             case YEAR_OF_ERA:
-                return (year >= 1 ? year : 1 - year);
+                return (getYear() >= 1 ? getYear() : 1 - getYear());
             case YEAR:
-                return year;
+                return getYear();
             case ERA:
-                return (year >= 1 ? 1 : 0);
+                return (getYear() >= 1 ? 1 : 0);
             default:
                 throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
         }
@@ -171,7 +171,7 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
 
     @Override
     public int lengthOfMonth() {
-        return RomaicMonth.of(month).length(isLeapYear());
+        return RomaicMonth.of(getMonthValue()).length(isLeapYear());
     }
 
     @Override
@@ -230,7 +230,7 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
 
     @Override
     public long toEpochDay() {
-        final long y = year;
+        final long y = getYear();
 
         // Nombre de jours dans les années écoulées depuis l'année 0000 en comptant 365 jours par an.
         long total = 365 * y;
@@ -259,12 +259,12 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
 
     @Override
     public boolean isLeapYear() {
-        return RomaicChronology.INSTANCE.isLeapYear(year);
+        return RomaicChronology.INSTANCE.isLeapYear(getYear());
     }
 
     @Override
     public int getDayOfYear() {
-        return getMonth().firstDayOfYear(isLeapYear()) + day - 1;
+        return getMonth().firstDayOfYear(isLeapYear()) + getDayOfMonth() - 1;
     }
 
     @Override
@@ -300,13 +300,13 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
                 case MONTH_OF_YEAR:
                     return withMonth((int) newValue);
                 case PROLEPTIC_MONTH:
-                    return plusMonths(newValue - JulianUtil.getProlepticMonth(year, month));
+                    return plusMonths(newValue - JulianUtil.getProlepticMonth(getYear(), getMonthValue()));
                 case YEAR_OF_ERA:
-                    return withYear((int) (year >= 1 ? newValue : 1 - newValue));
+                    return withYear((int) (getYear() >= 1 ? newValue : 1 - newValue));
                 case YEAR:
                     return withYear((int) newValue);
                 case ERA:
-                    return (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - year));
+                    return (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - getYear()));
                 default:
                     throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
             }
@@ -315,33 +315,33 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
     }
 
     public RomaicDate withYear(final int year) {
-        if (this.year == year) {
+        if (this.getYear() == year) {
             return this;
         }
         ChronoField.YEAR.checkValidValue(year);
-        return resolvePreviousValid(year, month, day);
+        return resolvePreviousValid(year, getMonthValue(), getDayOfMonth());
     }
 
     public RomaicDate withMonth(final int month) {
-        if (this.month == month) {
+        if (this.getMonthValue() == month) {
             return this;
         }
         ChronoField.MONTH_OF_YEAR.checkValidValue(month);
-        return resolvePreviousValid(year, month, day);
+        return resolvePreviousValid(getYear(), month, getDayOfMonth());
     }
 
     public RomaicDate withDayOfMonth(final int dayOfMonth) {
-        if (this.day == dayOfMonth) {
+        if (this.getDayOfMonth() == dayOfMonth) {
             return this;
         }
-        return of(year, month, dayOfMonth);
+        return of(getYear(), getMonthValue(), dayOfMonth);
     }
 
     public RomaicDate withDayOfYear(final int dayOfYear) {
         if (this.getDayOfYear() == dayOfYear) {
             return this;
         }
-        return ofYearDay(year, dayOfYear);
+        return ofYearDay(getYear(), dayOfYear);
     }
 
     private static RomaicDate resolvePreviousValid(final int year, final int month, int day) {
@@ -402,19 +402,19 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
         if (yearsToAdd == 0) {
             return this;
         }
-        int newYear = ChronoField.YEAR.checkValidIntValue(year + yearsToAdd);  // safe overflow
-        return resolvePreviousValid(newYear, month, day);
+        int newYear = ChronoField.YEAR.checkValidIntValue(getYear() + yearsToAdd);  // safe overflow
+        return resolvePreviousValid(newYear, getMonthValue(), getDayOfMonth());
     }
 
     public RomaicDate plusMonths(final long monthsToAdd) {
         if (monthsToAdd == 0) {
             return this;
         }
-        long monthCount = year * 12L + (month - 1);
+        long monthCount = getYear() * 12L + (getMonthValue() - 1);
         long calcMonths = monthCount + monthsToAdd;  // safe overflow
         int newYear = ChronoField.YEAR.checkValidIntValue(Math.floorDiv(calcMonths, 12));
         int newMonth = (int) Math.floorMod(calcMonths, 12) + 1;
-        return resolvePreviousValid(newYear, newMonth, day);
+        return resolvePreviousValid(newYear, newMonth, getDayOfMonth());
     }
 
     public RomaicDate plusWeeks(final long weeksToAdd) {
@@ -474,7 +474,7 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
 
     @Override
     public String toString() {
-        return FormatUtil.toString(year, month, day);
+        return FormatUtil.toString(getYear(), getMonthValue(), getDayOfMonth());
     }
 
     public static RomaicDate of(final int year, final int month, final int dayOfMonth) {

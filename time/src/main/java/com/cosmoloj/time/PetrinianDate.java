@@ -71,7 +71,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public Month getMonth() {
-        return Month.of(month);
+        return Month.of(getMonthValue());
     }
 
     @Override
@@ -128,7 +128,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
                 return toEpochDay();
             }
             if (field == ChronoField.PROLEPTIC_MONTH) {
-                return JulianUtil.getProlepticMonth(year, month);
+                return JulianUtil.getProlepticMonth(getYear(), getMonthValue());
             }
             return get0(field);
         }
@@ -140,31 +140,31 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
             case DAY_OF_WEEK:
                 return getDayOfWeek().getValue();
             case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-                return ((day - 1) % 7) + 1;
+                return ((getDayOfMonth() - 1) % 7) + 1;
             case ALIGNED_DAY_OF_WEEK_IN_YEAR:
                 return ((getDayOfYear() - 1) % 7) + 1;
             case DAY_OF_MONTH:
-                return day;
+                return getDayOfMonth();
             case DAY_OF_YEAR:
                 return getDayOfYear();
             case EPOCH_DAY:
                 throw new UnsupportedTemporalTypeException(
                         "Invalid field 'EpochDay' for get() method, use getLong() instead");
             case ALIGNED_WEEK_OF_MONTH:
-                return ((day - 1) / 7) + 1;
+                return ((getDayOfMonth() - 1) / 7) + 1;
             case ALIGNED_WEEK_OF_YEAR:
                 return ((getDayOfYear() - 1) / 7) + 1;
             case MONTH_OF_YEAR:
-                return month;
+                return getMonthValue();
             case PROLEPTIC_MONTH:
                 throw new UnsupportedTemporalTypeException(
                         "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
             case YEAR_OF_ERA:
-                return (year >= 1 ? year : 1 - year);
+                return (getYear() >= 1 ? getYear() : 1 - getYear());
             case YEAR:
-                return year;
+                return getYear();
             case ERA:
-                return (year >= 1 ? 1 : 0);
+                return (getYear() >= 1 ? 1 : 0);
             default:
                 throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
         }
@@ -177,7 +177,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public int lengthOfMonth() {
-        return Month.of(month).length(isLeapYear());
+        return Month.of(getMonthValue()).length(isLeapYear());
     }
 
     @Override
@@ -236,7 +236,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public long toEpochDay() {
-        final long y = year;
+        final long y = getYear();
 
         // Nombre de jours dans les années écoulées depuis l'année 0000 en comptant 365 jours par an.
         long total = 365 * y;
@@ -265,12 +265,12 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public boolean isLeapYear() {
-        return PetrinianChronology.INSTANCE.isLeapYear(year);
+        return PetrinianChronology.INSTANCE.isLeapYear(getYear());
     }
 
     @Override
     public int getDayOfYear() {
-        return getMonth().firstDayOfYear(isLeapYear()) + day - 1;
+        return getMonth().firstDayOfYear(isLeapYear()) + getDayOfMonth() - 1;
     }
 
     @Override
@@ -306,13 +306,13 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
                 case MONTH_OF_YEAR:
                     return withMonth((int) newValue);
                 case PROLEPTIC_MONTH:
-                    return plusMonths(newValue - JulianUtil.getProlepticMonth(year, month));
+                    return plusMonths(newValue - JulianUtil.getProlepticMonth(getYear(), getMonthValue()));
                 case YEAR_OF_ERA:
-                    return withYear((int) (year >= 1 ? newValue : 1 - newValue));
+                    return withYear((int) (getYear() >= 1 ? newValue : 1 - newValue));
                 case YEAR:
                     return withYear((int) newValue);
                 case ERA:
-                    return (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - year));
+                    return (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - getYear()));
                 default:
                     throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
             }
@@ -321,33 +321,33 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     }
 
     public PetrinianDate withYear(final int year) {
-        if (this.year == year) {
+        if (this.getYear() == year) {
             return this;
         }
         ChronoField.YEAR.checkValidValue(year);
-        return resolvePreviousValid(year, month, day);
+        return resolvePreviousValid(year, getMonthValue(), getDayOfMonth());
     }
 
     public PetrinianDate withMonth(final int month) {
-        if (this.month == month) {
+        if (this.getMonthValue() == month) {
             return this;
         }
         ChronoField.MONTH_OF_YEAR.checkValidValue(month);
-        return resolvePreviousValid(year, month, day);
+        return resolvePreviousValid(getYear(), month, getDayOfMonth());
     }
 
     public PetrinianDate withDayOfMonth(int dayOfMonth) {
-        if (this.day == dayOfMonth) {
+        if (this.getDayOfMonth() == dayOfMonth) {
             return this;
         }
-        return of(year, month, dayOfMonth);
+        return of(getYear(), getMonthValue(), dayOfMonth);
     }
 
     public PetrinianDate withDayOfYear(final int dayOfYear) {
         if (this.getDayOfYear() == dayOfYear) {
             return this;
         }
-        return ofYearDay(year, dayOfYear);
+        return ofYearDay(getYear(), dayOfYear);
     }
 
     private static PetrinianDate resolvePreviousValid(final int year, final int month, int day) {
@@ -408,19 +408,19 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
         if (yearsToAdd == 0) {
             return this;
         }
-        int newYear = ChronoField.YEAR.checkValidIntValue(year + yearsToAdd);  // safe overflow
-        return resolvePreviousValid(newYear, month, day);
+        int newYear = ChronoField.YEAR.checkValidIntValue(getYear() + yearsToAdd);  // safe overflow
+        return resolvePreviousValid(newYear, getMonthValue(), getDayOfMonth());
     }
 
     public PetrinianDate plusMonths(final long monthsToAdd) {
         if (monthsToAdd == 0) {
             return this;
         }
-        long monthCount = year * 12L + (month - 1);
+        long monthCount = getYear() * 12L + (getMonthValue() - 1);
         long calcMonths = monthCount + monthsToAdd;  // safe overflow
         int newYear = ChronoField.YEAR.checkValidIntValue(Math.floorDiv(calcMonths, 12));
         int newMonth = (int) Math.floorMod(calcMonths, 12) + 1;
-        return resolvePreviousValid(newYear, newMonth, day);
+        return resolvePreviousValid(newYear, newMonth, getDayOfMonth());
     }
 
     public PetrinianDate plusWeeks(final long weeksToAdd) {
@@ -480,7 +480,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public String toString() {
-        return FormatUtil.toString(year, month, day);
+        return FormatUtil.toString(getYear(), getMonthValue(), getDayOfMonth());
     }
 
     public static PetrinianDate of(final int year, final int month, final int dayOfMonth) {

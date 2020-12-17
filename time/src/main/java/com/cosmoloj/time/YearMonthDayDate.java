@@ -6,9 +6,9 @@ package com.cosmoloj.time;
  */
 public class YearMonthDayDate {
 
-    protected final int year;
-    protected final int month;
-    protected final int day;
+    private final int year;
+    private final int month;
+    private final int day;
 
     public YearMonthDayDate(final int year, final int month, final int dayOfMonth) {
         this.year = year;

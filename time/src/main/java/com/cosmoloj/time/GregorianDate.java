@@ -51,7 +51,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public Month getMonth() {
-        return Month.of(month);
+        return Month.of(getMonthValue());
     }
 
     @Override
@@ -104,7 +104,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
                 return toEpochDay();
             }
             if (field == ChronoField.PROLEPTIC_MONTH) {
-                return JulianUtil.getProlepticMonth(year, month);
+                return JulianUtil.getProlepticMonth(getYear(), getMonthValue());
             }
             return get0(field);
         }
@@ -114,20 +114,20 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
     private int get0(final TemporalField field) {
         return switch ((ChronoField) field) {
             case DAY_OF_WEEK -> getDayOfWeek().getValue();
-            case ALIGNED_DAY_OF_WEEK_IN_MONTH -> ((day - 1) % 7) + 1;
+            case ALIGNED_DAY_OF_WEEK_IN_MONTH -> ((getDayOfMonth() - 1) % 7) + 1;
             case ALIGNED_DAY_OF_WEEK_IN_YEAR -> ((getDayOfYear() - 1) % 7) + 1;
-            case DAY_OF_MONTH -> day;
+            case DAY_OF_MONTH -> getDayOfMonth();
             case DAY_OF_YEAR -> getDayOfYear();
             case EPOCH_DAY -> throw new UnsupportedTemporalTypeException(
                     "Invalid field 'EpochDay' for get() method, use getLong() instead");
-            case ALIGNED_WEEK_OF_MONTH -> ((day - 1) / 7) + 1;
+            case ALIGNED_WEEK_OF_MONTH -> ((getDayOfMonth() - 1) / 7) + 1;
             case ALIGNED_WEEK_OF_YEAR -> ((getDayOfYear() - 1) / 7) + 1;
-            case MONTH_OF_YEAR -> month;
+            case MONTH_OF_YEAR -> getMonthValue();
             case PROLEPTIC_MONTH -> throw new UnsupportedTemporalTypeException(
                     "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
-            case YEAR_OF_ERA -> (year >= 1 ? year : 1 - year);
-            case YEAR -> year;
-            case ERA -> (year >= 1 ? 1 : 0);
+            case YEAR_OF_ERA -> (getYear() >= 1 ? getYear() : 1 - getYear());
+            case YEAR -> getYear();
+            case ERA -> (getYear() >= 1 ? 1 : 0);
             default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
         };
     }
@@ -139,7 +139,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public int lengthOfMonth() {
-        return Month.of(month).length(isLeapYear());
+        return Month.of(getMonthValue()).length(isLeapYear());
     }
 
     @Override
@@ -213,7 +213,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public long toEpochDay() {
-        final long y = year;
+        final long y = getYear();
 
         // Nombre de jours dans les années écoulées depuis l'année 0000 en comptant 365 jours par an.
         long total = 365 * y;
@@ -245,12 +245,12 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public boolean isLeapYear() {
-        return GregorianChronology.INSTANCE.isLeapYear(year);
+        return GregorianChronology.INSTANCE.isLeapYear(getYear());
     }
 
     @Override
     public int getDayOfYear() {
-        return getMonth().firstDayOfYear(isLeapYear()) + day - 1;
+        return getMonth().firstDayOfYear(isLeapYear()) + getDayOfMonth() - 1;
     }
 
     /**
@@ -260,12 +260,12 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
      */
     public int getDayOfYear2() {
         // On ajoute le nombre de jours écoulés dans l'année jusqu'au mois en cours.
-        int total = (367 * month - 362) / 12;
+        int total = (367 * getMonthValue() - 362) / 12;
 
         // On ajoute le nombre de jours écoulés dans le mois courant.
-        total += day;
+        total += getDayOfMonth();
 
-        if (month > 2) {
+        if (getMonthValue() > 2) {
             total--;
             if (!isLeapYear()) {
                 total--;
@@ -300,10 +300,10 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
                 case ALIGNED_WEEK_OF_MONTH -> plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_MONTH));
                 case ALIGNED_WEEK_OF_YEAR -> plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_YEAR));
                 case MONTH_OF_YEAR -> withMonth((int) newValue);
-                case PROLEPTIC_MONTH -> plusMonths(newValue - JulianUtil.getProlepticMonth(year, month));
-                case YEAR_OF_ERA -> withYear((int) (year >= 1 ? newValue : 1 - newValue));
+                case PROLEPTIC_MONTH -> plusMonths(newValue - JulianUtil.getProlepticMonth(getYear(), getMonthValue()));
+                case YEAR_OF_ERA -> withYear((int) (getYear() >= 1 ? newValue : 1 - newValue));
                 case YEAR -> withYear((int) newValue);
-                case ERA -> (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - year));
+                case ERA -> (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - getYear()));
                 default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
             };
         }
@@ -311,33 +311,33 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
     }
 
     public GregorianDate withYear(final int year) {
-        if (this.year == year) {
+        if (this.getYear() == year) {
             return this;
         }
         ChronoField.YEAR.checkValidValue(year);
-        return resolvePreviousValid(year, month, day);
+        return resolvePreviousValid(year, getMonthValue(), getDayOfMonth());
     }
 
     public GregorianDate withMonth(final int month) {
-        if (this.month == month) {
+        if (this.getMonthValue() == month) {
             return this;
         }
         ChronoField.MONTH_OF_YEAR.checkValidValue(month);
-        return resolvePreviousValid(year, month, day);
+        return resolvePreviousValid(getYear(), month, getDayOfMonth());
     }
 
     public GregorianDate withDayOfMonth(final int dayOfMonth) {
-        if (this.day == dayOfMonth) {
+        if (this.getDayOfMonth() == dayOfMonth) {
             return this;
         }
-        return of(year, month, dayOfMonth);
+        return of(getYear(), getMonthValue(), dayOfMonth);
     }
 
     public GregorianDate withDayOfYear(final int dayOfYear) {
         if (this.getDayOfYear() == dayOfYear) {
             return this;
         }
-        return ofYearDay(year, dayOfYear);
+        return ofYearDay(getYear(), dayOfYear);
     }
 
     private static GregorianDate resolvePreviousValid(final int year, final int month, int day) {
@@ -388,19 +388,19 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
         if (yearsToAdd == 0) {
             return this;
         }
-        int newYear = ChronoField.YEAR.checkValidIntValue(year + yearsToAdd);  // safe overflow
-        return resolvePreviousValid(newYear, month, day);
+        int newYear = ChronoField.YEAR.checkValidIntValue(getYear() + yearsToAdd);  // safe overflow
+        return resolvePreviousValid(newYear, getMonthValue(), getDayOfMonth());
     }
 
     public GregorianDate plusMonths(final long monthsToAdd) {
         if (monthsToAdd == 0) {
             return this;
         }
-        long monthCount = year * 12L + (month - 1);
+        long monthCount = getYear() * 12L + (getMonthValue() - 1);
         long calcMonths = monthCount + monthsToAdd;  // safe overflow
         int newYear = ChronoField.YEAR.checkValidIntValue(Math.floorDiv(calcMonths, 12));
         int newMonth = (int) Math.floorMod(calcMonths, 12) + 1;
-        return resolvePreviousValid(newYear, newMonth, day);
+        return resolvePreviousValid(newYear, newMonth, getDayOfMonth());
     }
 
     public GregorianDate plusWeeks(final long weeksToAdd) {
@@ -460,7 +460,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public String toString() {
-        return FormatUtil.toString(year, month, day);
+        return FormatUtil.toString(getYear(), getMonthValue(), getDayOfMonth());
     }
 
     public static GregorianDate of(final int year, final int month, final int dayOfMonth) {
