@@ -117,7 +117,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler.plugin.version}</version>
                 <configuration>
-                    <release>15</release>
+                    <release>16</release>
                     <compilerArgs>
                         <!--arg>-verbose</arg>
                         <arg>-Xlint:all,-options,-path</arg-->
