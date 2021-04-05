@@ -12,7 +12,7 @@
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
-        <checkstyle.version>8.41</checkstyle.version>
+        <checkstyle.version>8.41.1</checkstyle.version>
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
         <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
         <javadoc.plugin.version>3.2.0</javadoc.plugin.version>
