@@ -12,14 +12,11 @@ public enum ChristianEra implements Era {
     BC, AD;
 
     public static ChristianEra of(final int era) {
-        switch (era) {
-            case 0:
-                return BC;
-            case 1:
-                return AD;
-            default:
-                throw new DateTimeException("Invalid era: " + era);
-        }
+        return switch (era) {
+            case 0 -> BC;
+            case 1 -> AD;
+            default -> throw new DateTimeException("Invalid era: " + era);
+        };
     }
 
     @Override
