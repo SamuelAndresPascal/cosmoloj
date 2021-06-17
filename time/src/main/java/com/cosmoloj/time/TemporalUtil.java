@@ -32,27 +32,18 @@ public final class TemporalUtil {
 
     public static <S extends WeekDate & ChronoLocalDate, E extends WeekDate & ChronoLocalDate> long between(
             final S startInclusive, final E endExclusive, final TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            switch ((ChronoUnit) unit) {
-                case DAYS:
-                    return TemporalUtil.daysBetween(startInclusive, endExclusive);
-                case WEEKS:
-                    return TemporalUtil.daysBetween(startInclusive, endExclusive) / 7;
-                case MONTHS:
-                    return TemporalUtil.monthsBetween(startInclusive, endExclusive);
-                case YEARS:
-                    return TemporalUtil.monthsBetween(startInclusive, endExclusive) / 12;
-                case DECADES:
-                    return TemporalUtil.monthsBetween(startInclusive, endExclusive) / 120;
-                case CENTURIES:
-                    return TemporalUtil.monthsBetween(startInclusive, endExclusive) / 1200;
-                case MILLENNIA:
-                    return TemporalUtil.monthsBetween(startInclusive, endExclusive) / 12000;
-                case ERAS:
-                    return endExclusive.getLong(ChronoField.ERA) - startInclusive.getLong(ChronoField.ERA);
-                default:
-                    throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
-            }
+        if (unit instanceof ChronoUnit chrono) {
+            return switch (chrono) {
+                case DAYS -> TemporalUtil.daysBetween(startInclusive, endExclusive);
+                case WEEKS -> TemporalUtil.daysBetween(startInclusive, endExclusive) / 7;
+                case MONTHS -> TemporalUtil.monthsBetween(startInclusive, endExclusive);
+                case YEARS -> TemporalUtil.monthsBetween(startInclusive, endExclusive) / 12;
+                case DECADES -> TemporalUtil.monthsBetween(startInclusive, endExclusive) / 120;
+                case CENTURIES -> TemporalUtil.monthsBetween(startInclusive, endExclusive) / 1200;
+                case MILLENNIA -> TemporalUtil.monthsBetween(startInclusive, endExclusive) / 12000;
+                case ERAS -> endExclusive.getLong(ChronoField.ERA) - startInclusive.getLong(ChronoField.ERA);
+                default -> throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
+            };
         }
         return unit.between(startInclusive, endExclusive);
     }
