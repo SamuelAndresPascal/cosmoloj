@@ -1,6 +1,5 @@
 package com.cosmoloj.time;
 
-import com.cosmoloj.time.GregorianDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
@@ -24,7 +23,7 @@ public class GregorianDateTest {
 
     @Test
     public void testOfEpochDay() {
-        for(long i = -1000000l; i <= 1000000l; i++){
+        for (long i = -1000000; i <= 1000000; i++) {
             final LocalDate local = LocalDate.ofEpochDay(i);
             final GregorianDate gregorian = GregorianDate.ofEpochDay(i);
             Assertions.assertEquals(local.getDayOfMonth(), gregorian.getDayOfMonth());
@@ -37,7 +36,7 @@ public class GregorianDateTest {
     public void testToEpochDay() {
         Assertions.assertEquals(0, GregorianDate.of(1970, 1, 1).toEpochDay());
         Assertions.assertEquals(-GregorianDate.DAYS_0000_TO_1970, GregorianDate.of(0000, 1, 1).toEpochDay());
-        Assertions.assertEquals(-GregorianDate.DAYS_0000_TO_1970-365, GregorianDate.of(-1, 1, 1).toEpochDay());
+        Assertions.assertEquals(-GregorianDate.DAYS_0000_TO_1970 - 365, GregorianDate.of(-1, 1, 1).toEpochDay());
     }
 
     @Test
@@ -47,7 +46,7 @@ public class GregorianDateTest {
         Assertions.assertEquals(1, GregorianDate.of(2015, 1, 1).getDayOfYear());
         Assertions.assertEquals(60, GregorianDate.of(2015, 3, 1).getDayOfYear());
 
-        for(long i = -1000000l; i<=1000000l; i++){
+        for (long i = -1000000; i <= 1000000; i++) {
             Assertions.assertEquals(LocalDate.ofEpochDay(i).getDayOfYear(), GregorianDate.ofEpochDay(i).getDayOfYear());
         }
     }
@@ -59,7 +58,7 @@ public class GregorianDateTest {
         Assertions.assertEquals(1, GregorianDate.of(2015, 1, 1).getDayOfYear2());
         Assertions.assertEquals(60, GregorianDate.of(2015, 3, 1).getDayOfYear2());
 
-        for(long i = -1000000l; i<=1000000l; i++){
+        for (long i = -1000000; i <= 1000000; i++) {
             Assertions.assertEquals(
                     LocalDate.ofEpochDay(i).getDayOfYear(), GregorianDate.ofEpochDay(i).getDayOfYear2());
         }

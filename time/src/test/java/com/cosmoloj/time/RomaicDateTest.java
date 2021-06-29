@@ -1,7 +1,5 @@
 package com.cosmoloj.time;
 
-import com.cosmoloj.time.RomaicDate;
-import com.cosmoloj.time.RomaicMonth;
 import com.cosmoloj.time.chrono.RomaicChronology;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -161,37 +159,38 @@ public class RomaicDateTest {
         Assertions.assertEquals(RomaicMonth.JANUARY, romaic0.getMonth());
         Assertions.assertEquals(0, romaic0.getYear());
 
-        final RomaicDate romaic_100 = RomaicDate.ofEpochDay(LocalDate.of(-100, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(4, romaic_100.getDayOfMonth());
-        Assertions.assertEquals(RomaicMonth.JANUARY, romaic_100.getMonth());
-        Assertions.assertEquals(-100, romaic_100.getYear());
+        final RomaicDate romaicM100 = RomaicDate.ofEpochDay(LocalDate.of(-100, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(4, romaicM100.getDayOfMonth());
+        Assertions.assertEquals(RomaicMonth.JANUARY, romaicM100.getMonth());
+        Assertions.assertEquals(-100, romaicM100.getYear());
 
-        final RomaicDate romaic_200 = RomaicDate.ofEpochDay(LocalDate.of(-200, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(5, romaic_200.getDayOfMonth());
-        Assertions.assertEquals(RomaicMonth.JANUARY, romaic_200.getMonth());
-        Assertions.assertEquals(-200, romaic_200.getYear());
+        final RomaicDate romaicM200 = RomaicDate.ofEpochDay(LocalDate.of(-200, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(5, romaicM200.getDayOfMonth());
+        Assertions.assertEquals(RomaicMonth.JANUARY, romaicM200.getMonth());
+        Assertions.assertEquals(-200, romaicM200.getYear());
 
-        final RomaicDate romaic_300 = RomaicDate.ofEpochDay(LocalDate.of(-300, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(6, romaic_300.getDayOfMonth());
-        Assertions.assertEquals(RomaicMonth.JANUARY, romaic_300.getMonth());
-        Assertions.assertEquals(-300, romaic_300.getYear());
+        final RomaicDate romaicM300 = RomaicDate.ofEpochDay(LocalDate.of(-300, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(6, romaicM300.getDayOfMonth());
+        Assertions.assertEquals(RomaicMonth.JANUARY, romaicM300.getMonth());
+        Assertions.assertEquals(-300, romaicM300.getYear());
 
-        final RomaicDate romaic_400 = RomaicDate.ofEpochDay(LocalDate.of(-400, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(6, romaic_400.getDayOfMonth());
-        Assertions.assertEquals(RomaicMonth.JANUARY, romaic_400.getMonth());
-        Assertions.assertEquals(-400, romaic_400.getYear());
+        final RomaicDate romaicM400 = RomaicDate.ofEpochDay(LocalDate.of(-400, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(6, romaicM400.getDayOfMonth());
+        Assertions.assertEquals(RomaicMonth.JANUARY, romaicM400.getMonth());
+        Assertions.assertEquals(-400, romaicM400.getYear());
 
-        final RomaicDate romaic_500 = RomaicDate.ofEpochDay(LocalDate.of(-500, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(7, romaic_500.getDayOfMonth());
-        Assertions.assertEquals(RomaicMonth.JANUARY, romaic_500.getMonth());
-        Assertions.assertEquals(-500, romaic_500.getYear());
+        final RomaicDate romaicM500 = RomaicDate.ofEpochDay(LocalDate.of(-500, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(7, romaicM500.getDayOfMonth());
+        Assertions.assertEquals(RomaicMonth.JANUARY, romaicM500.getMonth());
+        Assertions.assertEquals(-500, romaicM500.getYear());
     }
 
     @Test
     public void testToEpochDay() {
-        Assertions.assertEquals(0, RomaicDate.of(1969+5509, 4, 19).toEpochDay());//1-1-1970 grégorien
+        Assertions.assertEquals(0, RomaicDate.of(1969 + 5509, 4, 19).toEpochDay()); //1-1-1970 grégorien
         Assertions.assertEquals(-RomaicDate.DAYS_0000_ROMAIC_TO_1970_GREGORIAN, RomaicDate.of(0000, 1, 1).toEpochDay());
-        Assertions.assertEquals(-RomaicDate.DAYS_0000_ROMAIC_TO_1970_GREGORIAN-365, RomaicDate.of(-1, 1, 1).toEpochDay());
+        Assertions.assertEquals(-RomaicDate.DAYS_0000_ROMAIC_TO_1970_GREGORIAN - 365,
+                RomaicDate.of(-1, 1, 1).toEpochDay());
     }
 
     @Test
@@ -204,7 +203,8 @@ public class RomaicDateTest {
 
     @Test
     public void testDayOfWeek() {
-        Assertions.assertEquals(DayOfWeek.THURSDAY, RomaicDate.of(1969+5509, 4, 19).getDayOfWeek());//1-1-1970 grégorien
+        Assertions.assertEquals(DayOfWeek.THURSDAY,
+                RomaicDate.of(1969 + 5509, 4, 19).getDayOfWeek()); //1-1-1970 grégorien
         Assertions.assertEquals(LocalDate.now().getDayOfWeek(), RomaicDate.from(LocalDate.now()).getDayOfWeek());
     }
 

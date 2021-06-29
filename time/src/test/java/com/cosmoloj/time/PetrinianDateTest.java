@@ -1,6 +1,5 @@
 package com.cosmoloj.time;
 
-import com.cosmoloj.time.PetrinianDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class PetrinianDateTest {
 
     @Test
-    public void testOf0() {
+    public void of0() {
         final LocalDate local = LocalDate.of(2016, Month.JANUARY, 16);
         final PetrinianDate petrinian = PetrinianDate.ofEpochDay(local.toEpochDay());
         Assertions.assertEquals(3, petrinian.getDayOfMonth());
@@ -23,7 +22,7 @@ public class PetrinianDateTest {
     }
 
     @Test
-    public void testOfEpochDay() {
+    public void ofEpochDay() {
 
         final PetrinianDate petrinian1 = PetrinianDate.ofEpochDay(LocalDate.of(2016, Month.JANUARY, 16).toEpochDay());
         Assertions.assertEquals(3, petrinian1.getDayOfMonth());
@@ -145,41 +144,43 @@ public class PetrinianDateTest {
         Assertions.assertEquals(Month.JANUARY, petrinian0.getMonth());
         Assertions.assertEquals(0, petrinian0.getYear());
 
-        final PetrinianDate petrinian_100 = PetrinianDate.ofEpochDay(LocalDate.of(-100, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(4, petrinian_100.getDayOfMonth());
-        Assertions.assertEquals(Month.JANUARY, petrinian_100.getMonth());
-        Assertions.assertEquals(-100, petrinian_100.getYear());
+        final PetrinianDate petrinianM100 = PetrinianDate.ofEpochDay(LocalDate.of(-100, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(4, petrinianM100.getDayOfMonth());
+        Assertions.assertEquals(Month.JANUARY, petrinianM100.getMonth());
+        Assertions.assertEquals(-100, petrinianM100.getYear());
 
-        final PetrinianDate petrinian_200 = PetrinianDate.ofEpochDay(LocalDate.of(-200, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(5, petrinian_200.getDayOfMonth());
-        Assertions.assertEquals(Month.JANUARY, petrinian_200.getMonth());
-        Assertions.assertEquals(-200, petrinian_200.getYear());
+        final PetrinianDate petrinianM200 = PetrinianDate.ofEpochDay(LocalDate.of(-200, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(5, petrinianM200.getDayOfMonth());
+        Assertions.assertEquals(Month.JANUARY, petrinianM200.getMonth());
+        Assertions.assertEquals(-200, petrinianM200.getYear());
 
-        final PetrinianDate petrinian_300 = PetrinianDate.ofEpochDay(LocalDate.of(-300, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(6, petrinian_300.getDayOfMonth());
-        Assertions.assertEquals(Month.JANUARY, petrinian_300.getMonth());
-        Assertions.assertEquals(-300, petrinian_300.getYear());
+        final PetrinianDate petrinianM300 = PetrinianDate.ofEpochDay(LocalDate.of(-300, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(6, petrinianM300.getDayOfMonth());
+        Assertions.assertEquals(Month.JANUARY, petrinianM300.getMonth());
+        Assertions.assertEquals(-300, petrinianM300.getYear());
 
-        final PetrinianDate petrinian_400 = PetrinianDate.ofEpochDay(LocalDate.of(-400, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(6, petrinian_400.getDayOfMonth());
-        Assertions.assertEquals(Month.JANUARY, petrinian_400.getMonth());
-        Assertions.assertEquals(-400, petrinian_400.getYear());
+        final PetrinianDate petrinianM400 = PetrinianDate.ofEpochDay(LocalDate.of(-400, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(6, petrinianM400.getDayOfMonth());
+        Assertions.assertEquals(Month.JANUARY, petrinianM400.getMonth());
+        Assertions.assertEquals(-400, petrinianM400.getYear());
 
-        final PetrinianDate petrinian_500 = PetrinianDate.ofEpochDay(LocalDate.of(-500, Month.JANUARY, 1).toEpochDay());
-        Assertions.assertEquals(7, petrinian_500.getDayOfMonth());
-        Assertions.assertEquals(Month.JANUARY, petrinian_500.getMonth());
-        Assertions.assertEquals(-500, petrinian_500.getYear());
+        final PetrinianDate petrinianM500 = PetrinianDate.ofEpochDay(LocalDate.of(-500, Month.JANUARY, 1).toEpochDay());
+        Assertions.assertEquals(7, petrinianM500.getDayOfMonth());
+        Assertions.assertEquals(Month.JANUARY, petrinianM500.getMonth());
+        Assertions.assertEquals(-500, petrinianM500.getYear());
     }
 
     @Test
-    public void testToEpochDay() {
-        Assertions.assertEquals(0, PetrinianDate.of(1969, 12, 19).toEpochDay());//1-1-1970 grégorien
-        Assertions.assertEquals(-PetrinianDate.DAYS_0000_PETRINIAN_TO_1970_GREGORIAN, PetrinianDate.of(0000, 1, 1).toEpochDay());
-        Assertions.assertEquals(-PetrinianDate.DAYS_0000_PETRINIAN_TO_1970_GREGORIAN-365, PetrinianDate.of(-1, 1, 1).toEpochDay());
+    public void toEpochDay() {
+        Assertions.assertEquals(0, PetrinianDate.of(1969, 12, 19).toEpochDay()); //1-1-1970 grégorien
+        Assertions.assertEquals(-PetrinianDate.DAYS_0000_PETRINIAN_TO_1970_GREGORIAN,
+                PetrinianDate.of(0000, 1, 1).toEpochDay());
+        Assertions.assertEquals(-PetrinianDate.DAYS_0000_PETRINIAN_TO_1970_GREGORIAN - 365,
+                PetrinianDate.of(-1, 1, 1).toEpochDay());
     }
 
     @Test
-    public void testDayOfYear() {
+    public void dayOfYear() {
         Assertions.assertEquals(1, PetrinianDate.of(2016, 1, 1).getDayOfYear());
         Assertions.assertEquals(61, PetrinianDate.of(2016, 3, 1).getDayOfYear());
         Assertions.assertEquals(1, PetrinianDate.of(2015, 1, 1).getDayOfYear());
@@ -187,13 +188,13 @@ public class PetrinianDateTest {
     }
 
     @Test
-    public void testDayOfWeek() {
-        Assertions.assertEquals(DayOfWeek.THURSDAY, PetrinianDate.of(1969, 12, 19).getDayOfWeek());//1-1-1970 grégorien
+    public void dayOfWeek() {
+        Assertions.assertEquals(DayOfWeek.THURSDAY, PetrinianDate.of(1969, 12, 19).getDayOfWeek()); //1-1-1970 grégorien
         Assertions.assertEquals(LocalDate.now().getDayOfWeek(), PetrinianDate.from(LocalDate.now()).getDayOfWeek());
     }
 
     @Test
-    public void testLengthOfMonth() {
+    public void lengthOfMonth() {
         Assertions.assertEquals(31, PetrinianDate.of(2016, 1, 1).lengthOfMonth());
 
         Assertions.assertEquals(29, PetrinianDate.of(2016, 2, 1).lengthOfMonth());
@@ -217,7 +218,7 @@ public class PetrinianDateTest {
     }
 
     @Test
-    public void testLengthOfYear() {
+    public void lengthOfYear() {
         Assertions.assertEquals(366, PetrinianDate.of(2000, 12, 31).lengthOfYear());
         Assertions.assertEquals(366, PetrinianDate.of(2000, 1, 1).lengthOfYear());
         Assertions.assertEquals(366, PetrinianDate.of(1900, 12, 31).lengthOfYear());

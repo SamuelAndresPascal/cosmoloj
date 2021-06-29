@@ -1,7 +1,5 @@
 package com.cosmoloj.time;
 
-import com.cosmoloj.time.JulianDayDate;
-import com.cosmoloj.time.PetrinianDate;
 import java.time.LocalDate;
 import java.time.Month;
 import org.junit.jupiter.api.Assertions;
@@ -17,11 +15,11 @@ public class JulianDayDateTest {
     public void testOf0() {
         final LocalDate local1 = LocalDate.of(2016, Month.JANUARY, 16);
         final JulianDayDate julianDay1 = JulianDayDate.ofEpochDay(local1.toEpochDay());
-        Assertions.assertEquals(2_457_403l, julianDay1.getDay());
+        Assertions.assertEquals(2_457_403L, julianDay1.getDay());
 
         final LocalDate local2 = LocalDate.of(2000, Month.JANUARY, 1);
         final JulianDayDate julianDay2 = JulianDayDate.ofEpochDay(local2.toEpochDay());
-        Assertions.assertEquals(2_451_544l, julianDay2.getDay());
+        Assertions.assertEquals(2_451_544L, julianDay2.getDay());
 
         final JulianDayDate julianDay3 = JulianDayDate.of(0);
         final LocalDate local3 = LocalDate.ofEpochDay(julianDay3.toEpochDay());
