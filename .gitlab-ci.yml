@@ -2,6 +2,7 @@ before_script:
   - export PATH=$PATH:$MAVEN_HOME/bin:$JAVA_HOME/bin
   - java -version
   - mvn -v
+  - echo $HOME
 
 variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
@@ -15,7 +16,7 @@ build:
 
 javadoc:
   script:
-    - mvn $MAVEN_CLI_OPTS javadoc:aggregate-no-fork
+    - mvn $MAVEN_CLI_OPTS javadoc:aggregate-no-fork -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
   allow_failure: true
   artifacts:
     expire_in: 2 days
