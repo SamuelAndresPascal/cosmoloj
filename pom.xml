@@ -23,7 +23,7 @@
         <wagon.ssh.version>3.4.3</wagon.ssh.version>
         <deploy.server.ip>${env.DEPLOY_PUBLIC_SERVER}</deploy.server.ip>
         <site.server.ip>${env.SITE_PUBLIC_SERVER}</site.server.ip>
-        <deploy.server.path>${env.DEPLOY_SERVER_PATH}</deploy.server.path>
+        <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
     </properties>
 
