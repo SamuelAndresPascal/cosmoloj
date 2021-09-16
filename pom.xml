@@ -9,12 +9,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.6</logback.version>
-        <junit.jupiter.version>5.7.1</junit.jupiter.version>
+        <junit.jupiter.version>5.8.0</junit.jupiter.version>
         <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>9.0</checkstyle.version>
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
-        <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
+        <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
         <sonar.plugin.version>3.9.0.2155</sonar.plugin.version>
         <javadoc.plugin.version>3.3.0</javadoc.plugin.version>
         <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
