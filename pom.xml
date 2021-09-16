@@ -219,6 +219,7 @@
                 </dependencies>
             </plugin>
 
+            <!-- pour les rapports de couverture de tests -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -232,7 +233,7 @@
                     </execution>
                     <execution>
                         <id>jacoco-site</id>
-                        <phase>package</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                             <goal>report-aggregate</goal>
