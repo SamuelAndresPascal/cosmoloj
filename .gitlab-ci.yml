@@ -8,13 +8,28 @@ variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
+stages:
+  - build
+  - test
+  - deploy
+  - site
+
 build:
+  stage: build
   script:
     - mvn $MAVEN_CLI_OPTS clean install -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
   artifacts:
     expire_in: 2 days
 
+test:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+  artifacts:
+    expire_in: 2 days
+
 javadoc:
+  stage: build
   script:
     - mvn $MAVEN_CLI_OPTS javadoc:aggregate-no-fork -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
   allow_failure: true
@@ -22,6 +37,7 @@ javadoc:
     expire_in: 2 days
 
 deploy:
+  stage: deploy
   script:
     - mvn $MAVEN_CLI_OPTS deploy -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
   when: manual
@@ -29,6 +45,7 @@ deploy:
     expire_in: 2 days
 
 site:
+  stage: site
   script:
     - mvn $MAVEN_CLI_OPTS clean install -DskipTests
     - mvn $MAVEN_CLI_OPTS site-deploy -DskipTests
@@ -37,6 +54,7 @@ site:
     expire_in: 2 days
 
 sonar:
+  stage: site
   script:
     - mvn $MAVEN_CLI_OPTS clean install -DskipTests sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT -Dsonar.host.url=http://$SONAR_SERVER:9000 -Dsonar.login=$SONAR_LOGIN
   artifacts:
