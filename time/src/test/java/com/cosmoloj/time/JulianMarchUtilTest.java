@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Samuel Andrés
  */
-public class JulianMarchUtilsTest {
+public class JulianMarchUtilTest {
 
     @Test
     public void getMarchMonth0() {
