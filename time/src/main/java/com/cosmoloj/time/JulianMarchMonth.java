@@ -164,55 +164,45 @@ public enum JulianMarchMonth implements TemporalAccessor, TemporalAdjuster {
     }
 
     public int length(final boolean leapYear) {
-        switch (this) {
-            case FEBRUARY: return (leapYear ? 29 : 28);
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER: return 30;
-            default: return 31;
-        }
+        return switch (this) {
+            case FEBRUARY -> leapYear ? 29 : 28;
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+            default -> 31;
+        };
     }
 
     public int minLength() {
-        switch (this) {
-            case FEBRUARY: return 28;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER: return 30;
-            default: return 31;
-        }
+        return switch (this) {
+            case FEBRUARY -> 28;
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+            default -> 31;
+        };
     }
 
     public int maxLength() {
-        switch (this) {
-            case FEBRUARY: return 29;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER: return 30;
-            default: return 31;
-        }
+        return switch (this) {
+            case FEBRUARY -> 29;
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+            default -> 31;
+        };
     }
 
-    public int firstDayOfYear(boolean leapYear) {
-        int leap = leapYear ? 1 : 0;
-        switch (this) {
-            case MARCH: return 1;
-            case APRIL: return 32;
-            case MAY: return 62;
-            case JUNE: return 93;
-            case JULY: return 123;
-            case AUGUST: return 154;
-            case SEPTEMBER: return 185;
-            case OCTOBER: return 215;
-            case NOVEMBER: return 246;
-            case DECEMBER: return 276;
-            case JANUARY: return 307;
-            case FEBRUARY:
-            default: return 338 + leap;
-        }
+    public int firstDayOfYear(final boolean leapYear) {
+        return switch (this) {
+            case MARCH -> 1;
+            case APRIL -> 32;
+            case MAY -> 62;
+            case JUNE -> 93;
+            case JULY -> 123;
+            case AUGUST -> 154;
+            case SEPTEMBER -> 185;
+            case OCTOBER -> 215;
+            case NOVEMBER -> 246;
+            case DECEMBER -> 276;
+            case JANUARY -> 307;
+            case FEBRUARY -> 338 + (leapYear ? 1 : 0);
+            default -> throw new IllegalStateException();
+        };
     }
 
     public JulianMarchMonth firstMonthOfQuarter() {

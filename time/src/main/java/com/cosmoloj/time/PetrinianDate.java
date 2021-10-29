@@ -368,9 +368,8 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public PetrinianDate plus(final TemporalAmount amountToAdd) {
-        if (amountToAdd instanceof Period) {
-            Period periodToAdd = (Period) amountToAdd;
-            return plusMonths(periodToAdd.toTotalMonths()).plusDays(periodToAdd.getDays());
+        if (amountToAdd instanceof Period period) {
+            return plusMonths(period.toTotalMonths()).plusDays(period.getDays());
         }
         Objects.requireNonNull(amountToAdd, "amountToAdd");
         return (PetrinianDate) amountToAdd.addTo(this);
@@ -378,28 +377,18 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public PetrinianDate plus(final long amountToAdd, final TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit f = (ChronoUnit) unit;
-            switch (f) {
-                case DAYS:
-                    return plusDays(amountToAdd);
-                case WEEKS:
-                    return plusWeeks(amountToAdd);
-                case MONTHS:
-                    return plusMonths(amountToAdd);
-                case YEARS:
-                    return plusYears(amountToAdd);
-                case DECADES:
-                    return plusYears(Math.multiplyExact(amountToAdd, 10));
-                case CENTURIES:
-                    return plusYears(Math.multiplyExact(amountToAdd, 100));
-                case MILLENNIA:
-                    return plusYears(Math.multiplyExact(amountToAdd, 1000));
-                case ERAS:
-                    return with(ChronoField.ERA, Math.addExact(getLong(ChronoField.ERA), amountToAdd));
-                default:
-                    throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
-            }
+        if (unit instanceof ChronoUnit chrono) {
+            return switch (chrono) {
+                case DAYS -> plusDays(amountToAdd);
+                case WEEKS -> plusWeeks(amountToAdd);
+                case MONTHS -> plusMonths(amountToAdd);
+                case YEARS -> plusYears(amountToAdd);
+                case DECADES -> plusYears(Math.multiplyExact(amountToAdd, 10));
+                case CENTURIES -> plusYears(Math.multiplyExact(amountToAdd, 100));
+                case MILLENNIA -> plusYears(Math.multiplyExact(amountToAdd, 1000));
+                case ERAS -> with(ChronoField.ERA, Math.addExact(getLong(ChronoField.ERA), amountToAdd));
+                default -> throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
+            };
         }
         return unit.addTo(this, amountToAdd);
     }
@@ -437,9 +426,8 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public PetrinianDate minus(final TemporalAmount amountToSubtract) {
-        if (amountToSubtract instanceof Period) {
-            Period periodToSubtract = (Period) amountToSubtract;
-            return minusMonths(periodToSubtract.toTotalMonths()).minusDays(periodToSubtract.getDays());
+        if (amountToSubtract instanceof Period period) {
+            return minusMonths(period.toTotalMonths()).minusDays(period.getDays());
         }
         Objects.requireNonNull(amountToSubtract, "amountToSubtract");
         return (PetrinianDate) amountToSubtract.subtractFrom(this);
@@ -535,19 +523,12 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     private static PetrinianDate create(final int year, final int month, final int dayOfMonth) {
         if (dayOfMonth > 28) {
-            int dom = 31;
-            switch (month) {
-                case 2:
-                    dom = (PetrinianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
-                    break;
-                case 4:
-                case 6:
-                case 9:
-                case 11:
-                    dom = 30;
-                    break;
-                default:
-            }
+            final int dom = switch (month) {
+                case 2 -> (PetrinianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
+                case 4, 6, 9, 11 -> 30;
+                default -> 31;
+            };
+
             if (dayOfMonth > dom) {
                 if (dayOfMonth == 29) {
                     throw new DateTimeException("Invalid date 'February 29' as '" + year + "' is not a leap year");

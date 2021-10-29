@@ -166,55 +166,46 @@ public enum RomaicMonth implements TemporalAccessor, TemporalAdjuster {
     }
 
     public int length(boolean leapYear) {
-        switch (this) {
-            case FEBRUARY: return (leapYear ? 29 : 28);
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER: return 30;
-            default: return 31;
-        }
+        return switch (this) {
+            case FEBRUARY -> leapYear ? 29 : 28;
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+            default -> 31;
+        };
     }
 
     public int minLength() {
-        switch (this) {
-            case FEBRUARY: return 28;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER: return 30;
-            default: return 31;
-        }
+        return switch (this) {
+            case FEBRUARY -> 28;
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+            default -> 31;
+        };
     }
 
     public int maxLength() {
-        switch (this) {
-            case FEBRUARY: return 29;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER: return 30;
-            default: return 31;
-        }
+        return switch (this) {
+            case FEBRUARY -> 29;
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+            default -> 31;
+        };
     }
 
-    public int firstDayOfYear(boolean leapYear) {
-        int leap = leapYear ? 1 : 0;
-        switch (this) {
-            case SEPTEMBER: return 1;
-            case OCTOBER: return 31;
-            case NOVEMBER: return 62;
-            case DECEMBER: return 92;
-            case JANUARY: return 123;
-            case FEBRUARY: return 154;
-            case MARCH: return 182 + leap;
-            case APRIL: return 213 + leap;
-            case MAY: return 243 + leap;
-            case JUNE: return 274 + leap;
-            case JULY: return 304 + leap;
-            case AUGUST:
-            default: return 335 + leap;
-        }
+    public int firstDayOfYear(final boolean leapYear) {
+        final int leap = leapYear ? 1 : 0;
+        return switch (this) {
+            case SEPTEMBER -> 1;
+            case OCTOBER -> 31;
+            case NOVEMBER -> 62;
+            case DECEMBER -> 92;
+            case JANUARY -> 123;
+            case FEBRUARY -> 154;
+            case MARCH -> 182 + leap;
+            case APRIL -> 213 + leap;
+            case MAY -> 243 + leap;
+            case JUNE -> 274 + leap;
+            case JULY -> 304 + leap;
+            case AUGUST -> 335 + leap;
+            default -> throw new IllegalStateException();
+        };
     }
 
     public RomaicMonth firstMonthOfQuarter() {

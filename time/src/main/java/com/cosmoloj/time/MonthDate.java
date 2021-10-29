@@ -7,7 +7,7 @@ package com.cosmoloj.time;
  */
 public abstract class MonthDate<M> extends YearMonthDayDate {
 
-    public MonthDate(final int year, final int month, final int dayOfMonth) {
+    protected MonthDate(final int year, final int month, final int dayOfMonth) {
         super(year, month, dayOfMonth);
     }
 

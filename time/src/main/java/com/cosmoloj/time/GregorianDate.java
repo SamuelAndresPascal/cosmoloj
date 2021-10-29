@@ -358,9 +358,8 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public GregorianDate plus(final TemporalAmount amountToAdd) {
-        if (amountToAdd instanceof Period) {
-            Period periodToAdd = (Period) amountToAdd;
-            return plusMonths(periodToAdd.toTotalMonths()).plusDays(periodToAdd.getDays());
+        if (amountToAdd instanceof Period period) {
+            return plusMonths(period.toTotalMonths()).plusDays(period.getDays());
         }
         Objects.requireNonNull(amountToAdd, "amountToAdd");
         return (GregorianDate) amountToAdd.addTo(this);
@@ -368,8 +367,8 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public GregorianDate plus(final long amountToAdd, final TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            return switch ((ChronoUnit) unit) {
+        if (unit instanceof ChronoUnit chrono) {
+            return switch (chrono) {
                 case DAYS -> plusDays(amountToAdd);
                 case WEEKS -> plusWeeks(amountToAdd);
                 case MONTHS -> plusMonths(amountToAdd);
@@ -417,9 +416,8 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public GregorianDate minus(final TemporalAmount amountToSubtract) {
-        if (amountToSubtract instanceof Period) {
-            Period periodToSubtract = (Period) amountToSubtract;
-            return minusMonths(periodToSubtract.toTotalMonths()).minusDays(periodToSubtract.getDays());
+        if (amountToSubtract instanceof Period period) {
+            return minusMonths(period.toTotalMonths()).minusDays(period.getDays());
         }
         Objects.requireNonNull(amountToSubtract, "amountToSubtract");
         return (GregorianDate) amountToSubtract.subtractFrom(this);
@@ -515,19 +513,12 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     private static GregorianDate create(final int year, int month, int dayOfMonth) {
         if (dayOfMonth > 28) {
-            int dom = 31;
-            switch (month) {
-                case 2:
-                    dom = (GregorianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
-                    break;
-                case 4:
-                case 6:
-                case 9:
-                case 11:
-                    dom = 30;
-                    break;
-                default:
-            }
+            final int dom = switch (month) {
+                case 2 -> (GregorianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
+                case 4, 6, 9, 11 -> 30;
+                default -> 31;
+            };
+
             if (dayOfMonth > dom) {
                 if (dayOfMonth == 29) {
                     throw new DateTimeException("Invalid date 'February 29' as '" + year + "' is not a leap year");

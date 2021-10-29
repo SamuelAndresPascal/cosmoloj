@@ -8,7 +8,7 @@ package com.cosmoloj.time;
  */
 public abstract class WeekDate<M, W> extends MonthDate<M> {
 
-    public WeekDate(final int year, final int month, final int dayOfMonth) {
+    protected WeekDate(final int year, final int month, final int dayOfMonth) {
         super(year, month, dayOfMonth);
     }
 
