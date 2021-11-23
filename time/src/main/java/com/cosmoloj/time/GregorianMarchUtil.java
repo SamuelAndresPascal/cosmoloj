@@ -42,7 +42,7 @@ public final class GregorianMarchUtil {
         positifs pendant le premier cycle le temps du calcul, "adjust" indique
         la correction à apporter pour retrouver l'année négative véritable.
         */
-        long adjust = 0;
+        final long adjust;
         if (zeroDay < 0) {
             /*
              zeroDay = 0 : c'est le 01/03/0000
@@ -83,7 +83,7 @@ public final class GregorianMarchUtil {
              sera ajouté au nombre d'années final pour revenir en négatif.
             */
 
-            long adjustCycles = (zeroDay + 1) / GregorianUtil.DAYS_PER_CYCLE - 1;
+            final long adjustCycles = (zeroDay + 1) / GregorianUtil.DAYS_PER_CYCLE - 1;
             adjust = adjustCycles * GregorianUtil.YEARS_PER_CYCLE; // Nombre d'années à retirer
 
             /*
@@ -101,6 +101,8 @@ public final class GregorianMarchUtil {
                             "-adjustCycles" cycles
             */
             zeroDay += -adjustCycles * GregorianUtil.DAYS_PER_CYCLE;
+        } else {
+            adjust = 0;
         }
 
         // écart approché en entre le nombre de jour en moyenne par année grégorienne réel (365,2425)

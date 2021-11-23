@@ -71,14 +71,13 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public ValueRange range(final TemporalField field) {
-        if (field instanceof ChronoField) {
-            final ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (chronoField.isDateBased()) {
                 return switch (chronoField) {
                     case DAY_OF_MONTH -> ValueRange.of(1, lengthOfMonth());
                     case DAY_OF_YEAR -> ValueRange.of(1, lengthOfYear());
                     case ALIGNED_WEEK_OF_MONTH ->
-                        ValueRange.of(1, getMonth() == Month.FEBRUARY && !isLeapYear() ? 4 : 5);
+                        ValueRange.of(1, Month.FEBRUARY.equals(getMonth()) && !isLeapYear() ? 4 : 5);
                     case YEAR_OF_ERA ->
                         getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1) : ValueRange.of(1, Year.MAX_VALUE);
                     default -> field.range();
@@ -199,16 +198,15 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
         if (this == obj) {
             return true;
         }
-        if (obj instanceof GregorianDate) {
-            return TemporalUtil.compare(this, (GregorianDate) obj) == 0;
+        if (obj instanceof GregorianDate gregorian) {
+            return TemporalUtil.compare(this, gregorian) == 0;
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        return hash;
+        return super.hashCode();
     }
 
     @Override
@@ -285,8 +283,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public GregorianDate with(final TemporalField field, final long newValue) {
-        if (field instanceof ChronoField) {
-            final ChronoField f = (ChronoField) field;
+        if (field instanceof ChronoField f) {
             f.checkValidValue(newValue);
             return switch (f) {
                 case DAY_OF_WEEK -> plusDays(newValue - getDayOfWeek().getValue());
@@ -340,20 +337,13 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
         return ofYearDay(getYear(), dayOfYear);
     }
 
-    private static GregorianDate resolvePreviousValid(final int year, final int month, int day) {
-        switch (month) {
-            case 2:
-                day = Math.min(day, GregorianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                day = Math.min(day, 30);
-                break;
-            default:
-        }
-        return new GregorianDate(year, month, day);
+    private static GregorianDate resolvePreviousValid(final int year, final int month, final int day) {
+        final int d = switch (month) {
+            case 2 -> Math.min(day, GregorianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
+            case 4, 6, 9, 11 -> Math.min(day, 30);
+            default -> day;
+        };
+        return new GregorianDate(year, month, d);
     }
 
     @Override
@@ -493,7 +483,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     public static GregorianDate ofEpochDay(final long epochDay) {
         // Nombre de jours écoulés depuis l'époque 01/01/0000 grégorien
-        long zeroDay = epochDay + DAYS_0000_TO_1970;
+        final long zeroDay = epochDay + DAYS_0000_TO_1970;
 
         /*
         Numéro de jour dans l'année commençant le 1er mars.
@@ -514,7 +504,7 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
     private static GregorianDate create(final int year, int month, int dayOfMonth) {
         if (dayOfMonth > 28) {
             final int dom = switch (month) {
-                case 2 -> (GregorianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
+                case 2 -> GregorianChronology.INSTANCE.isLeapYear(year) ? 29 : 28;
                 case 4, 6, 9, 11 -> 30;
                 default -> 31;
             };

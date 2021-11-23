@@ -222,16 +222,15 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
         if (this == obj) {
             return true;
         }
-        if (obj instanceof PetrinianDate) {
-            return TemporalUtil.compare(this, (PetrinianDate) obj) == 0;
+        if (obj instanceof PetrinianDate petrinian) {
+            return TemporalUtil.compare(this, petrinian) == 0;
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        return hash;
+        return super.hashCode();
     }
 
     @Override
@@ -283,39 +282,26 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public PetrinianDate with(final TemporalField field, final long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
+        if (field instanceof ChronoField f) {
             f.checkValidValue(newValue);
-            switch (f) {
-                case DAY_OF_WEEK:
-                    return plusDays(newValue - getDayOfWeek().getValue());
-                case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-                    return plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH));
-                case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-                    return plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR));
-                case DAY_OF_MONTH:
-                    return withDayOfMonth((int) newValue);
-                case DAY_OF_YEAR:
-                    return withDayOfYear((int) newValue);
-                case EPOCH_DAY:
-                    return PetrinianDate.ofEpochDay(newValue);
-                case ALIGNED_WEEK_OF_MONTH:
-                    return plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_MONTH));
-                case ALIGNED_WEEK_OF_YEAR:
-                    return plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_YEAR));
-                case MONTH_OF_YEAR:
-                    return withMonth((int) newValue);
-                case PROLEPTIC_MONTH:
-                    return plusMonths(newValue - JulianUtil.getProlepticMonth(getYear(), getMonthValue()));
-                case YEAR_OF_ERA:
-                    return withYear((int) (getYear() >= 1 ? newValue : 1 - newValue));
-                case YEAR:
-                    return withYear((int) newValue);
-                case ERA:
-                    return (getLong(ChronoField.ERA) == newValue ? this : withYear(1 - getYear()));
-                default:
-                    throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
-            }
+            return switch (f) {
+                case DAY_OF_WEEK -> plusDays(newValue - getDayOfWeek().getValue());
+                case ALIGNED_DAY_OF_WEEK_IN_MONTH ->
+                    plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH));
+                case ALIGNED_DAY_OF_WEEK_IN_YEAR ->
+                    plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR));
+                case DAY_OF_MONTH -> withDayOfMonth((int) newValue);
+                case DAY_OF_YEAR -> withDayOfYear((int) newValue);
+                case EPOCH_DAY -> PetrinianDate.ofEpochDay(newValue);
+                case ALIGNED_WEEK_OF_MONTH -> plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_MONTH));
+                case ALIGNED_WEEK_OF_YEAR -> plusWeeks(newValue - getLong(ChronoField.ALIGNED_WEEK_OF_YEAR));
+                case MONTH_OF_YEAR -> withMonth((int) newValue);
+                case PROLEPTIC_MONTH -> plusMonths(newValue - JulianUtil.getProlepticMonth(getYear(), getMonthValue()));
+                case YEAR_OF_ERA -> withYear((int) (getYear() >= 1 ? newValue : 1 - newValue));
+                case YEAR -> withYear((int) newValue);
+                case ERA -> getLong(ChronoField.ERA) == newValue ? this : withYear(1 - getYear());
+                default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
+            };
         }
         return field.adjustInto(this, newValue);
     }
@@ -350,20 +336,13 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
         return ofYearDay(getYear(), dayOfYear);
     }
 
-    private static PetrinianDate resolvePreviousValid(final int year, final int month, int day) {
-        switch (month) {
-            case 2:
-                day = Math.min(day, PetrinianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                day = Math.min(day, 30);
-                break;
-            default:
-        }
-        return new PetrinianDate(year, month, day);
+    private static PetrinianDate resolvePreviousValid(final int year, final int month, final int day) {
+        final int d = switch (month) {
+            case 2 -> Math.min(day, PetrinianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
+            case 4, 6, 9, 11 -> Math.min(day, 30);
+            default -> day;
+        };
+        return new PetrinianDate(year, month, d);
     }
 
     @Override
@@ -503,7 +482,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     public static PetrinianDate ofEpochDay(final long epochDay) {
         // Conversion en jours depuis le 1/1/0 pétrinien
-        long zeroDay = epochDay + DAYS_0000_PETRINIAN_TO_1970_GREGORIAN;
+        final long zeroDay = epochDay + DAYS_0000_PETRINIAN_TO_1970_GREGORIAN;
 
         /*
         Numéro de jour dans l'année commençant le 1er mars.
@@ -524,7 +503,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     private static PetrinianDate create(final int year, final int month, final int dayOfMonth) {
         if (dayOfMonth > 28) {
             final int dom = switch (month) {
-                case 2 -> (PetrinianChronology.INSTANCE.isLeapYear(year) ? 29 : 28);
+                case 2 -> PetrinianChronology.INSTANCE.isLeapYear(year) ? 29 : 28;
                 case 4, 6, 9, 11 -> 30;
                 default -> 31;
             };
