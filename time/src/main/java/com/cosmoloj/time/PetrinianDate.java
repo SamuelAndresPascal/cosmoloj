@@ -91,22 +91,17 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public ValueRange range(final TemporalField field) {
-        if (field instanceof ChronoField) {
-            final ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (chronoField.isDateBased()) {
-                switch (chronoField) {
-                    case DAY_OF_MONTH:
-                        return ValueRange.of(1, lengthOfMonth());
-                    case DAY_OF_YEAR:
-                        return ValueRange.of(1, lengthOfYear());
-                    case ALIGNED_WEEK_OF_MONTH:
-                        return ValueRange.of(1, getMonth() == Month.FEBRUARY && !isLeapYear() ? 4 : 5);
-                    case YEAR_OF_ERA:
-                        return (getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1)
-                                : ValueRange.of(1, Year.MAX_VALUE));
-                    default:
-                        return field.range();
-                }
+                return switch (chronoField) {
+                    case DAY_OF_MONTH -> ValueRange.of(1, lengthOfMonth());
+                    case DAY_OF_YEAR -> ValueRange.of(1, lengthOfYear());
+                    case ALIGNED_WEEK_OF_MONTH ->
+                        ValueRange.of(1, getMonth() == Month.FEBRUARY && !isLeapYear() ? 4 : 5);
+                    case YEAR_OF_ERA ->
+                        getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1) : ValueRange.of(1, Year.MAX_VALUE);
+                    default -> field.range();
+                };
             }
             throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
         }
@@ -136,38 +131,24 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     }
 
     private int get0(final TemporalField field) {
-        switch ((ChronoField) field) {
-            case DAY_OF_WEEK:
-                return getDayOfWeek().getValue();
-            case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-                return ((getDayOfMonth() - 1) % 7) + 1;
-            case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-                return ((getDayOfYear() - 1) % 7) + 1;
-            case DAY_OF_MONTH:
-                return getDayOfMonth();
-            case DAY_OF_YEAR:
-                return getDayOfYear();
-            case EPOCH_DAY:
-                throw new UnsupportedTemporalTypeException(
-                        "Invalid field 'EpochDay' for get() method, use getLong() instead");
-            case ALIGNED_WEEK_OF_MONTH:
-                return ((getDayOfMonth() - 1) / 7) + 1;
-            case ALIGNED_WEEK_OF_YEAR:
-                return ((getDayOfYear() - 1) / 7) + 1;
-            case MONTH_OF_YEAR:
-                return getMonthValue();
-            case PROLEPTIC_MONTH:
-                throw new UnsupportedTemporalTypeException(
-                        "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
-            case YEAR_OF_ERA:
-                return (getYear() >= 1 ? getYear() : 1 - getYear());
-            case YEAR:
-                return getYear();
-            case ERA:
-                return (getYear() >= 1 ? 1 : 0);
-            default:
-                throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
-        }
+        return switch ((ChronoField) field) {
+            case DAY_OF_WEEK -> getDayOfWeek().getValue();
+            case ALIGNED_DAY_OF_WEEK_IN_MONTH -> ((getDayOfMonth() - 1) % 7) + 1;
+            case ALIGNED_DAY_OF_WEEK_IN_YEAR -> ((getDayOfYear() - 1) % 7) + 1;
+            case DAY_OF_MONTH -> getDayOfMonth();
+            case DAY_OF_YEAR -> getDayOfYear();
+            case EPOCH_DAY -> throw new UnsupportedTemporalTypeException(
+                    "Invalid field 'EpochDay' for get() method, use getLong() instead");
+            case ALIGNED_WEEK_OF_MONTH -> ((getDayOfMonth() - 1) / 7) + 1;
+            case ALIGNED_WEEK_OF_YEAR -> ((getDayOfYear() - 1) / 7) + 1;
+            case MONTH_OF_YEAR -> getMonthValue();
+            case PROLEPTIC_MONTH -> throw new UnsupportedTemporalTypeException(
+                    "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
+            case YEAR_OF_ERA -> getYear() >= 1 ? getYear() : 1 - getYear();
+            case YEAR -> getYear();
+            case ERA -> getYear() >= 1 ? 1 : 0;
+            default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
+        };
     }
 
     @Override
@@ -187,32 +168,32 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public int compareTo(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate) {
-            return TemporalUtil.compare(this, (PetrinianDate) other);
+        if (other instanceof PetrinianDate date) {
+            return TemporalUtil.compare(this, date);
         }
         return ChronoLocalDate.super.compareTo(other);
     }
 
     @Override
     public boolean isAfter(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate) {
-            return TemporalUtil.compare(this, (PetrinianDate) other) > 0;
+        if (other instanceof PetrinianDate date) {
+            return TemporalUtil.compare(this, date) > 0;
         }
         return ChronoLocalDate.super.isAfter(other);
     }
 
     @Override
     public boolean isBefore(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate) {
-            return TemporalUtil.compare(this, (PetrinianDate) other) < 0;
+        if (other instanceof PetrinianDate date) {
+            return TemporalUtil.compare(this, date) < 0;
         }
         return ChronoLocalDate.super.isBefore(other);
     }
 
     @Override
     public boolean isEqual(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate) {
-            return TemporalUtil.compare(this, (PetrinianDate) other) == 0;
+        if (other instanceof PetrinianDate date) {
+            return TemporalUtil.compare(this, date) == 0;
         }
         return ChronoLocalDate.super.isEqual(other);
     }
@@ -274,8 +255,8 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public PetrinianDate with(final TemporalAdjuster adjuster) {
-        if (adjuster instanceof PetrinianDate) {
-            return (PetrinianDate) adjuster;
+        if (adjuster instanceof PetrinianDate date) {
+            return date;
         }
         return (PetrinianDate) adjuster.adjustInto(this);
     }
@@ -521,7 +502,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
 
     public static PetrinianDate from(final TemporalAccessor temporal) {
         Objects.requireNonNull(temporal, "temporal");
-        PetrinianDate date = temporal.query(TemporalQueries.petrinianDate());
+        final PetrinianDate date = temporal.query(TemporalQueries.petrinianDate());
         if (date == null) {
             throw new DateTimeException(
                     String.format("Unable to obtain PetrinianDate from TemporalAccessor: %s of type %s",

@@ -124,9 +124,9 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
             case MONTH_OF_YEAR -> getMonthValue();
             case PROLEPTIC_MONTH -> throw new UnsupportedTemporalTypeException(
                     "Invalid field 'ProlepticMonth' for get() method, use getLong() instead");
-            case YEAR_OF_ERA -> (getYear() >= 1 ? getYear() : 1 - getYear());
+            case YEAR_OF_ERA -> getYear() >= 1 ? getYear() : 1 - getYear();
             case YEAR -> getYear();
-            case ERA -> (getYear() >= 1 ? 1 : 0);
+            case ERA -> getYear() >= 1 ? 1 : 0;
             default -> throw new UnsupportedTemporalTypeException("Unsupported field: " + field);
         };
     }
@@ -163,32 +163,32 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public int compareTo(final ChronoLocalDate other) {
-        if (other instanceof GregorianDate) {
-            return TemporalUtil.compare(this, (GregorianDate) other);
+        if (other instanceof GregorianDate date) {
+            return TemporalUtil.compare(this, date);
         }
         return ChronoLocalDate.super.compareTo(other);
     }
 
     @Override
     public boolean isAfter(final ChronoLocalDate other) {
-        if (other instanceof GregorianDate) {
-            return TemporalUtil.compare(this, (GregorianDate) other) > 0;
+        if (other instanceof GregorianDate date) {
+            return TemporalUtil.compare(this, date) > 0;
         }
         return ChronoLocalDate.super.isAfter(other);
     }
 
     @Override
     public boolean isBefore(final ChronoLocalDate other) {
-        if (other instanceof GregorianDate) {
-            return TemporalUtil.compare(this, (GregorianDate) other) < 0;
+        if (other instanceof GregorianDate date) {
+            return TemporalUtil.compare(this, date) < 0;
         }
         return ChronoLocalDate.super.isBefore(other);
     }
 
     @Override
     public boolean isEqual(final ChronoLocalDate other) {
-        if (other instanceof GregorianDate) {
-            return TemporalUtil.compare(this, (GregorianDate) other) == 0;
+        if (other instanceof GregorianDate date) {
+            return TemporalUtil.compare(this, date) == 0;
         }
         return ChronoLocalDate.super.isEqual(other);
     }
@@ -275,8 +275,8 @@ public final class GregorianDate extends WeekDate<Month, DayOfWeek>
 
     @Override
     public GregorianDate with(final TemporalAdjuster adjuster) {
-        if (adjuster instanceof GregorianDate) {
-            return (GregorianDate) adjuster;
+        if (adjuster instanceof GregorianDate date) {
+            return date;
         }
         return (GregorianDate) adjuster.adjustInto(this);
     }
