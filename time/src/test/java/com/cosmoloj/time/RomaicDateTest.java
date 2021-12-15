@@ -36,6 +36,36 @@ public class RomaicDateTest {
         Assertions.assertTrue(RomaicChronology.INSTANCE.isLeapYear(-5500));
     }
 
+    /**
+     * Test de régression implémenté à l'occasion de la correction d'une anomalie qui consistait à pouvoir passer
+     * du 28 octobre 7529 au 29 octobre 7529 en incrémendant d'un jour mais qui aboutissait à une erreur lorsque ce même
+     * 29 octobre 7529 était créé directement.
+     *
+     * L'anomalie était due à une mauvaise gestion de la longueur des jours des mois lors s'une création directe. Le
+     * mois d'octobre étant le deuxième mois de l'année romaïque, il était représenté à ce moment-là comme durant de 28
+     * à 29 jours selon les années bissextiles ou non-bissextiles.
+     */
+    @Test
+    public void regression1() {
+        final RomaicDate date1 = RomaicDate.of(7529, 2, 28);
+        Assertions.assertEquals(28, date1.getDayOfMonth());
+        Assertions.assertEquals(2, date1.getMonthValue());
+        Assertions.assertEquals(RomaicMonth.OCTOBER, date1.getMonth());
+        Assertions.assertEquals(7529, date1.getYear());
+
+        final RomaicDate date2 = date1.plusDays(1);
+        Assertions.assertEquals(29, date2.getDayOfMonth());
+        Assertions.assertEquals(2, date2.getMonthValue());
+        Assertions.assertEquals(RomaicMonth.OCTOBER, date2.getMonth());
+        Assertions.assertEquals(7529, date2.getYear());
+
+        final RomaicDate date3 = RomaicDate.of(7529, 2, 29);
+        Assertions.assertEquals(29, date3.getDayOfMonth());
+        Assertions.assertEquals(2, date3.getMonthValue());
+        Assertions.assertEquals(RomaicMonth.OCTOBER, date3.getMonth());
+        Assertions.assertEquals(7529, date3.getYear());
+    }
+
     @Test @Disabled
     public void testOfEpochDay() {
 

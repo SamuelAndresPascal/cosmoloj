@@ -480,8 +480,8 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
     private static RomaicDate create(final int year, final int month, final int dayOfMonth) {
         if (dayOfMonth > 28) {
             final int dom = switch (month) {
-                case 2 -> RomaicChronology.INSTANCE.isLeapYear(year) ? 29 : 28;
-                case 4, 6, 9, 11 -> 30;
+                case 6 -> RomaicChronology.INSTANCE.isLeapYear(year) ? 29 : 28;
+                case 8, 10, 1, 3 -> 30;
                 default -> 31;
             };
 
