@@ -22,6 +22,23 @@ public class GregorianDateTest {
     }
 
     @Test
+    public void regressionFalseBissextile() {
+        final GregorianDate date1 = GregorianDate.of(2022, Month.FEBRUARY, 28);
+
+        final GregorianDate date2 = date1.plusDays(1);
+        Assertions.assertEquals(1, date2.getDayOfMonth());
+        Assertions.assertEquals(3, date2.getMonthValue());
+        Assertions.assertEquals(Month.MARCH, date2.getMonth());
+        Assertions.assertEquals(2022, date2.getYear());
+
+        final GregorianDate date3 = date1.plusDays(2);
+        Assertions.assertEquals(2, date3.getDayOfMonth());
+        Assertions.assertEquals(3, date3.getMonthValue());
+        Assertions.assertEquals(Month.MARCH, date3.getMonth());
+        Assertions.assertEquals(2022, date3.getYear());
+    }
+
+    @Test
     public void testOfEpochDay() {
         for (long i = -1000000; i <= 1000000; i++) {
             final LocalDate local = LocalDate.ofEpochDay(i);

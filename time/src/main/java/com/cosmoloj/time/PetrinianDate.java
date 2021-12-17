@@ -65,7 +65,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     static final long DAYS_0000_PETRINIAN_TO_1970_GREGORIAN
             = (JulianUtil.DAYS_PER_CENTURY * 20L) - (30L * 365L + 7L) - 13L;
 
-    private PetrinianDate(int year, int month, int dayOfMonth) {
+    private PetrinianDate(final int year, final int month, final int dayOfMonth) {
         super(year, month, dayOfMonth);
     }
 

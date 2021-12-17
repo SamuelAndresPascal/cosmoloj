@@ -177,7 +177,12 @@ public final class JulianMarchUtil {
             zeroDay += -adjustCycles * JulianUtil.DAYS_PER_CYCLE;
         }
 
-        long yearEst = JulianUtil.YEARS_PER_CYCLE * zeroDay / JulianUtil.DAYS_PER_CYCLE;
+        /*
+        On ajoute 4 à l'estimation de l'année pour compenser les inégalités de jours entre les années dans le cycle.
+        La surestimation qui en découle peut menier à un jour dans l'année négatif, ce à quoi l'on peut remédier
+        en décrémentant l'année et en recalculant le jour.
+        */
+        long yearEst = (JulianUtil.YEARS_PER_CYCLE * zeroDay + 4) / JulianUtil.DAYS_PER_CYCLE;
         long doyEst = JulianMarchUtil.dayOfYear(zeroDay, yearEst);
         if (doyEst < 0) {
             // fix estimate
