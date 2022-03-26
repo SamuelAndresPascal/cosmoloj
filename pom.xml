@@ -12,6 +12,7 @@
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.0</checkstyle.version>
         <compiler.plugin.version>3.9.0</compiler.plugin.version>
+        <compiler.plugin.release>18</compiler.plugin.release>
         <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
         <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
         <javadoc.plugin.version>3.3.2</javadoc.plugin.version>
@@ -127,7 +128,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler.plugin.version}</version>
                 <configuration>
-                    <release>17</release>
+                    <release>${compiler.plugin.release}</release>
                     <compilerArgs>
                         <!--arg>-verbose</arg>
                         <arg>-Xlint:all,-options,-path</arg-->
@@ -227,6 +228,16 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.plugin.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com.cosmoloj.time.*</exclude>
+                        <exclude>module-info.class</exclude>
+                        <exclude>com/cosmoloj/time/*.class</exclude>
+                        <exclude>com/cosmoloj/time/chrono/*.class</exclude>
+                        <exclude>com/cosmoloj/time/format/*.class</exclude>
+                        <exclude>com/cosmoloj/time/temporal/*.class</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
