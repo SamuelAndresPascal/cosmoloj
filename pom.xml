@@ -13,7 +13,7 @@
         <checkstyle.version>10.1</checkstyle.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
         <compiler.plugin.release>18</compiler.plugin.release>
-        <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
+        <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
         <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
         <javadoc.plugin.version>3.3.2</javadoc.plugin.version>
         <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
