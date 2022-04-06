@@ -27,7 +27,7 @@
         <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
-        <jacoco.plugin.version>0.8.7</jacoco.plugin.version>
+        <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
@@ -228,7 +228,7 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.plugin.version}</version>
-                <configuration>
+<!--                <configuration>
                     <excludes>
                         <exclude>com.cosmoloj.time.*</exclude>
                         <exclude>module-info.class</exclude>
@@ -237,7 +237,7 @@
                         <exclude>com/cosmoloj/time/format/*.class</exclude>
                         <exclude>com/cosmoloj/time/temporal/*.class</exclude>
                     </excludes>
-                </configuration>
+                </configuration>-->
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
