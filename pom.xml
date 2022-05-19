@@ -11,6 +11,7 @@
         <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.2</checkstyle.version>
+        <dependency.plugin.version>3.3.0</dependency.plugin.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
         <compiler.plugin.release>18</compiler.plugin.release>
         <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
@@ -219,6 +220,27 @@
                 </dependencies>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${dependency.plugin.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>analyze</id>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <configuration>
+                                <failOnWarning>true</failOnWarning>
+                                <ignoredUnusedDeclaredDependencies>
+                                    org.junit.jupiter:*:jar:${junit.jupiter.version},ch.qos.logback:*:jar:${logback.version},org.slf4j:*:jar:${slf4j.version}
+                                </ignoredUnusedDeclaredDependencies>
+                            </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- pour les rapports de couverture de tests -->
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -306,6 +328,19 @@
                     <additionalparam>--allow-script-in-comments</additionalparam>
                     <failOnError>${javadoc.plugin.failOnError}</failOnError>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${dependency.plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>analyze-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
