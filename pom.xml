@@ -12,6 +12,7 @@
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.2</checkstyle.version>
         <dependency.plugin.version>3.3.0</dependency.plugin.version>
+        <spotbugs.plugin.version>4.7.0.0</spotbugs.plugin.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
         <compiler.plugin.release>18</compiler.plugin.release>
         <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
@@ -349,6 +350,12 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs.plugin.version}</version>
             </plugin>
 
             <plugin>
