@@ -30,7 +30,7 @@
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
-  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/time/target/site/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>
+  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/time/target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>
 
 <!--    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
