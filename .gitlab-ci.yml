@@ -56,6 +56,7 @@ site:
 sonar:
   stage: site
   dependencies:
+    - build
     - test
   script:
     - mvn $MAVEN_CLI_OPTS sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT -Dsonar.host.url=http://$SONAR_SERVER:9000 -Dsonar.login=$SONAR_LOGIN
