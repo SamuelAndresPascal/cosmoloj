@@ -30,7 +30,12 @@
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
-  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/time/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/time/target/site/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>
+
+<!--    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+    <sonar.language>java</sonar.language>-->
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.11</logback.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
