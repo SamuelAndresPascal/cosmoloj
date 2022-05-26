@@ -30,7 +30,8 @@
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
-  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/time/target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>-->
 
 <!--    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -82,6 +83,7 @@
 
     <modules>
         <module>time</module>
+        <module>reports-cosmoloj</module>
     </modules>
 
     <dependencies>
@@ -271,40 +273,18 @@
                     </excludes>
                 </configuration>-->
                 <executions>
-      <execution>
-        <id>prepare-agent</id>
-        <goals>
-         <goal>prepare-agent</goal>
-        </goals>
-      </execution>
-      <execution>
-        <id>report</id>
-        <goals>
-         <goal>report</goal>
-        </goals>
-      </execution><!--
                     <execution>
-                        <id>report-aggregate</id>
+                        <id>prepare-agent</id>
                         <goals>
-                            <goal>report-aggregate</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
-                        <phase>verify</phase>
-                    </execution>-->
-<!--    </executions>
-                <executions>
-			<execution>
-				<goals>
-					<goal>prepare-agent</goal>
-				</goals>
-			</execution>
-			 attached to Maven test phase
-			<execution>
-				<id>report</id>
-				<phase>test</phase>
-				<goals>
-					<goal>report</goal>
-				</goals>
-			</execution>-->
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
 		</executions>
             </plugin>
         </plugins>
@@ -377,7 +357,6 @@
                     <reportSet>
                         <reports>
                             <report>report</report>
-                            <report>report-aggregate</report>
                         </reports>
                     </reportSet>
                 </reportSets>
