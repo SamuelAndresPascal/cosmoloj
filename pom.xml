@@ -12,6 +12,7 @@
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.2</checkstyle.version>
         <dependency.plugin.version>3.3.0</dependency.plugin.version>
+        <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <spotbugs.plugin.version>4.7.0.0</spotbugs.plugin.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
         <compiler.plugin.release>18</compiler.plugin.release>
@@ -29,14 +30,8 @@
         <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
-        <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
-<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>-->
 
-<!--    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-    <sonar.language>java</sonar.language>-->
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.11</logback.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
@@ -338,18 +333,6 @@
             </plugin>
 
             <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.plugin.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${project.info.reports.plugin.version}</version>
-            </plugin>
-
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.plugin.version}</version>
@@ -360,6 +343,18 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs.plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${project.info.reports.plugin.version}</version>
             </plugin>
         </plugins>
     </reporting>
