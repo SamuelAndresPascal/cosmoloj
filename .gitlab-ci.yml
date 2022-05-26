@@ -58,7 +58,7 @@ sonar:
   dependencies:
     - build
   script:
-    - mvn $MAVEN_CLI_OPTS clean install -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
     - mvn $MAVEN_CLI_OPTS sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT -Dsonar.host.url=http://$SONAR_SERVER:9000 -Dsonar.login=$SONAR_LOGIN
   artifacts:
     expire_in: 2 days
