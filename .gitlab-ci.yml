@@ -2,6 +2,7 @@ before_script:
   - export PATH=$PATH:$MAVEN_HOME/bin:$JAVA_HOME/bin
   - java -version
   - mvn -v
+  - pwd
   - echo $HOME
   - echo $MAVEN_CLI_OPTS
   - echo $ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
@@ -16,7 +17,7 @@ stages:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS clean install -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS clean install -DskipTests
   artifacts:
     paths:
       - target/*
@@ -26,21 +27,21 @@ build:
 test:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS jar:jar surefire:test -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS jar:jar surefire:test
   artifacts:
     expire_in: 2 days
 
 deploy:
   stage: deploy
   script:
-    - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy
   artifacts:
     expire_in: 2 days
 
 javadoc:
   stage: doc
   script:
-    - mvn $MAVEN_CLI_OPTS jar:jar javadoc:aggregate-no-fork -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS jar:jar javadoc:aggregate-no-fork
   allow_failure: true
   artifacts:
     expire_in: 2 days
@@ -48,14 +49,14 @@ javadoc:
 site:
   stage: site
   script:
-    - mvn $MAVEN_CLI_OPTS site-deploy -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS site-deploy
   artifacts:
     expire_in: 2 days
 
 sonar:
   stage: site
   script:
-    - mvn $MAVEN_CLI_OPTS clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=$ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
+    - mvn $MAVEN_CLI_OPTS clean install
     - mvn $MAVEN_CLI_OPTS sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT -Dsonar.host.url=http://$SONAR_SERVER:9000 -Dsonar.login=$SONAR_LOGIN
   artifacts:
     expire_in: 2 days
