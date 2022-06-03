@@ -162,11 +162,11 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
         if (other instanceof JulianDayDate) {
             final long diff = this.julianDay - ((JulianDayDate) other).julianDay;
             if (diff < Integer.MIN_VALUE) {
-                return Integer.MIN_VALUE;
+                return -1;
             } else if (diff > Integer.MAX_VALUE) {
-                return Integer.MAX_VALUE;
+                return 1;
             } else {
-                return (int) diff;
+                return diff > 0 ? 1 : -1;
             }
         }
         return ChronoLocalDate.super.compareTo(other);

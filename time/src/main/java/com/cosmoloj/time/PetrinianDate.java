@@ -87,7 +87,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek> {
                     case ALIGNED_WEEK_OF_MONTH ->
                         ValueRange.of(1, getMonth() == Month.FEBRUARY && !isLeapYear() ? 4 : 5);
                     case YEAR_OF_ERA ->
-                        getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1) : ValueRange.of(1, Year.MAX_VALUE);
+                        getYear() <= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1L) : ValueRange.of(1, Year.MAX_VALUE);
                     default -> field.range();
                 };
             }
