@@ -30,7 +30,7 @@ public final class TemporalUtil {
         return (packed2 - packed1) / 32;
     }
 
-    public static <S extends WeekDate & ChronoLocalDate, E extends WeekDate & ChronoLocalDate> long between(
+    public static <S extends WeekDate, E extends WeekDate> long between(
             final S startInclusive, final E endExclusive, final TemporalUnit unit) {
         if (unit instanceof ChronoUnit chrono) {
             return switch (chrono) {

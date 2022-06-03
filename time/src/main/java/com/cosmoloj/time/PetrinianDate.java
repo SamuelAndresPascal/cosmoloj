@@ -3,7 +3,6 @@ package com.cosmoloj.time;
 import com.cosmoloj.time.chrono.PetrinianChronology;
 import com.cosmoloj.time.format.FormatUtil;
 import com.cosmoloj.time.temporal.TemporalQueries;
-import java.io.Serializable;
 import java.time.Clock;
 import java.time.DateTimeException;
 import java.time.DayOfWeek;
@@ -31,8 +30,7 @@ import java.util.Objects;
  *
  * @author Samuel Andrés
  */
-public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
-        implements Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
+public final class PetrinianDate extends WeekDate<Month, DayOfWeek> {
 
     public static final PetrinianDate MIN = PetrinianDate.of(Year.MIN_VALUE, 1, 1);
     public static final PetrinianDate MAX = PetrinianDate.of(Year.MAX_VALUE, 12, 31);
@@ -75,18 +73,8 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     }
 
     @Override
-    public boolean isSupported(final TemporalUnit unit) {
-        return ChronoLocalDate.super.isSupported(unit);
-    }
-
-    @Override
     public long until(final Temporal endExclusive, final TemporalUnit unit) {
         return TemporalUtil.between(this, PetrinianDate.from(endExclusive), unit);
-    }
-
-    @Override
-    public boolean isSupported(final TemporalField field) {
-        return ChronoLocalDate.super.isSupported(field);
     }
 
     @Override
@@ -109,14 +97,6 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     }
 
     @Override
-    public int get(final TemporalField field) {
-        if (field instanceof ChronoField) {
-            return get0(field);
-        }
-        return ChronoLocalDate.super.get(field);
-    }
-
-    @Override
     public long getLong(final TemporalField field) {
         if (field instanceof ChronoField) {
             if (field == ChronoField.EPOCH_DAY) {
@@ -130,7 +110,8 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
         return field.getFrom(this);
     }
 
-    private int get0(final TemporalField field) {
+    @Override
+    protected int get0(final TemporalField field) {
         return switch ((ChronoField) field) {
             case DAY_OF_WEEK -> getDayOfWeek().getValue();
             case ALIGNED_DAY_OF_WEEK_IN_MONTH -> ((getDayOfMonth() - 1) % 7) + 1;
@@ -164,38 +145,6 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
     @Override
     public ChronoPeriod until(final ChronoLocalDate endDateExclusive) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public int compareTo(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate date) {
-            return TemporalUtil.compare(this, date);
-        }
-        return ChronoLocalDate.super.compareTo(other);
-    }
-
-    @Override
-    public boolean isAfter(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate date) {
-            return TemporalUtil.compare(this, date) > 0;
-        }
-        return ChronoLocalDate.super.isAfter(other);
-    }
-
-    @Override
-    public boolean isBefore(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate date) {
-            return TemporalUtil.compare(this, date) < 0;
-        }
-        return ChronoLocalDate.super.isBefore(other);
-    }
-
-    @Override
-    public boolean isEqual(final ChronoLocalDate other) {
-        if (other instanceof PetrinianDate date) {
-            return TemporalUtil.compare(this, date) == 0;
-        }
-        return ChronoLocalDate.super.isEqual(other);
     }
 
     @Override
@@ -423,7 +372,7 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
         if (query == TemporalQueries.petrinianDate()) {
             return (R) this;
         }
-        return ChronoLocalDate.super.query(query);
+        return super.query(query);
     }
 
     @Override
@@ -474,11 +423,11 @@ public final class PetrinianDate extends WeekDate<Month, DayOfWeek>
         final YearDayDate marchDoy = JulianMarchUtil.toDayOfYear(zeroDay - 60);
 
         // Retour à l'année commençant en janvier.
-        final YearMonthDayDate date = JulianMarchUtil.translate(marchDoy, JulianMarchMonth.JANUARY);
+        final YearMonthDay date = JulianMarchUtil.translate(marchDoy, JulianMarchMonth.JANUARY);
 
         // check year now we are certain it is correct
-        int year = ChronoField.YEAR.checkValidIntValue(date.getYear());
-        return new PetrinianDate(year, date.getMonthValue(), date.getDayOfMonth());
+        int year = ChronoField.YEAR.checkValidIntValue(date.year());
+        return new PetrinianDate(year, date.month(), date.day());
     }
 
     private static PetrinianDate create(final int year, final int month, final int dayOfMonth) {

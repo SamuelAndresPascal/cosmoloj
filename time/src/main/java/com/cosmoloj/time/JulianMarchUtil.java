@@ -123,7 +123,7 @@ public final class JulianMarchUtil {
      * @param offset Décalage du début de l'année (de 0 à 11 mois plus tôt).
      * @return La date exprimé dans l'année commençant
      */
-    public static YearMonthDayDate translate(final int marchDoy0, final long marchYear, final int offset) {
+    private static YearMonthDay translate(final int marchDoy0, final long marchYear, final int offset) {
         if (offset < 0 || offset > 11) {
             throw new IllegalArgumentException();
         }
@@ -131,7 +131,7 @@ public final class JulianMarchUtil {
         final int month = JulianMarchUtil.changeMonthOrder(marchMonth0, offset);
         final int dom = JulianMarchUtil.getMarchDayOfMonth(marchDoy0, marchMonth0);
         final long year = marchYear + marchMonth0 / (JulianUtil.MONTHS_PER_YEAR - offset);
-        return new YearMonthDayDate((int) year, month, dom);
+        return new YearMonthDay((int) year, month, dom);
     }
 
     /**
@@ -141,7 +141,7 @@ public final class JulianMarchUtil {
      * @param toMonth
      * @return
      */
-    public static YearMonthDayDate translate(final int marchDoy0, final long marchYear,
+    private static YearMonthDay translate(final int marchDoy0, final long marchYear,
             final JulianMarchMonth toMonth) {
         return translate(marchDoy0, marchYear, JulianUtil.MONTHS_PER_YEAR - toMonth.compareTo(JulianMarchMonth.MARCH));
     }
@@ -155,7 +155,7 @@ public final class JulianMarchUtil {
      * @param toMonth
      * @return
      */
-    public static YearMonthDayDate translate(final YearDayDate date, final JulianMarchMonth toMonth) {
+    static YearMonthDay translate(final YearDayDate date, final JulianMarchMonth toMonth) {
         return translate(date.getDayOfYear(), date.getYear(),
                 JulianUtil.MONTHS_PER_YEAR - toMonth.compareTo(JulianMarchMonth.MARCH));
     }
