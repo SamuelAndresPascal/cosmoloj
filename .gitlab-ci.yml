@@ -42,7 +42,6 @@ javadoc:
   stage: doc
   script:
     - mvn $MAVEN_CLI_OPTS jar:jar javadoc:aggregate-no-fork
-  allow_failure: true
   artifacts:
     expire_in: 2 days
 
