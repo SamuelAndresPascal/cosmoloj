@@ -12,6 +12,7 @@
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.3</checkstyle.version>
         <dependency.plugin.version>3.3.0</dependency.plugin.version>
+        <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <spotbugs.plugin.version>4.7.0.0</spotbugs.plugin.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
@@ -45,7 +46,7 @@
         </site>
     </distributionManagement>
 
-<!--    <name>cosmoloj</name>
+    <!--    <name>cosmoloj</name>
     <description>Open library utilities for space and time related Java applications.</description>
     <url>https://github.com/SamuelAndresPascal/cosmoloj</url>
 
@@ -53,7 +54,7 @@
         <name>Cosmoloj</name>
     </organization>-->
 
-<!--    <licenses>
+    <!--    <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
@@ -74,7 +75,15 @@
     </scm>-->
 
     <modules>
+        <!--
+        Rappel :
+        L'ajout d'un module doit potentiellement se traduire par :
+        - son ajout dans le block 'dependencyManagement' afin de la référencer depuis les autres modules avec la version implicite
+        - son ajout dans les dépendances du module 'report-cosmoloj' afin d'être prise en compte dans le rapport jacoco agrégé
+        - son ajout comme 'artifactItem' du plugin 'dependencies' du module 'report-cosmoloj' afin d'être copiée dans le répertoire des modules (pour faciliter la constitution d'un module-path)
+        -->
         <module>time</module>
+        <!-- utilitaire d'agrégation -->
         <module>reports-cosmoloj</module>
     </modules>
 
@@ -226,15 +235,15 @@
                 <executions>
                     <execution>
                         <id>analyze</id>
-                            <goals>
-                                <goal>analyze-only</goal>
-                            </goals>
-                            <configuration>
-                                <failOnWarning>true</failOnWarning>
-                                <ignoredUnusedDeclaredDependencies>
-                                    org.junit.jupiter:*:jar:${junit.jupiter.version},ch.qos.logback:*:jar:${logback.version},org.slf4j:*:jar:${slf4j.version}
-                                </ignoredUnusedDeclaredDependencies>
-                            </configuration>
+                        <goals>
+                            <goal>analyze-only</goal>
+                        </goals>
+                        <configuration>
+                            <failOnWarning>true</failOnWarning>
+                            <ignoredUnusedDeclaredDependencies>
+                                org.junit.jupiter:*:jar:${junit.jupiter.version},ch.qos.logback:*:jar:${logback.version},org.slf4j:*:jar:${slf4j.version}
+                            </ignoredUnusedDeclaredDependencies>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -244,7 +253,7 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.plugin.version}</version>
-<!--                <configuration>
+                <!--                <configuration>
                     <excludes>
                         <exclude>com.cosmoloj.time.*</exclude>
                         <exclude>module-info.class</exclude>
@@ -267,7 +276,7 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
-		</executions>
+                </executions>
             </plugin>
         </plugins>
     </build>
