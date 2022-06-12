@@ -11,19 +11,19 @@
         <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.3</checkstyle.version>
-        <dependency.plugin.version>3.3.0</dependency.plugin.version>
-        <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
-        <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
-        <spotbugs.plugin.version>4.7.0.0</spotbugs.plugin.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
         <compiler.plugin.release>18</compiler.plugin.release>
-        <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
-        <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
+        <dependency.plugin.version>3.3.0</dependency.plugin.version>
+        <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
+        <deploy.plugin.version>3.0.0-M2</deploy.plugin.version>
+        <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
         <javadoc.plugin.version>3.4.0</javadoc.plugin.version>
         <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
-        <site.plugin.version>3.12.0</site.plugin.version>
-        <deploy.plugin.version>3.0.0-M2</deploy.plugin.version>
         <project.info.reports.plugin.version>3.3.0</project.info.reports.plugin.version>
+        <site.plugin.version>3.12.0</site.plugin.version>
+        <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
+        <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
+        <spotbugs.plugin.version>4.7.0.0</spotbugs.plugin.version>
         <wagon.ssh.version>3.5.1</wagon.ssh.version>
 
         <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
