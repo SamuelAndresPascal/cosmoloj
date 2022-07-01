@@ -59,9 +59,7 @@
         <!--                            <destFileName>optional-new-name.jar</destFileName>-->
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${project.build.directory}/wars</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
