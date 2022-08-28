@@ -63,8 +63,7 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
 
     @Override
     public ValueRange range(final TemporalField field) {
-        if (field instanceof ChronoField) {
-            final ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (chronoField.isDateBased()) {
                 switch (chronoField) {
 //                    case DAY_OF_MONTH:
@@ -159,8 +158,8 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
 
     @Override
     public int compareTo(final ChronoLocalDate other) {
-        if (other instanceof JulianDayDate) {
-            final long diff = this.julianDay - ((JulianDayDate) other).julianDay;
+        if (other instanceof JulianDayDate julianDayDate) {
+            final long diff = this.julianDay - julianDayDate.julianDay;
             if (diff < Integer.MIN_VALUE) {
                 return -1;
             } else if (diff > Integer.MAX_VALUE) {
@@ -174,16 +173,16 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
 
     @Override
     public boolean isAfter(final ChronoLocalDate other) {
-        if (other instanceof JulianDayDate) {
-            return this.julianDay - ((JulianDayDate) other).julianDay > 0;
+        if (other instanceof JulianDayDate julianDayDate) {
+            return this.julianDay - julianDayDate.julianDay > 0;
         }
         return ChronoLocalDate.super.isAfter(other);
     }
 
     @Override
     public boolean isBefore(final ChronoLocalDate other) {
-        if (other instanceof JulianDayDate) {
-            return this.julianDay - ((JulianDayDate) other).julianDay < 0;
+        if (other instanceof JulianDayDate julianDayDate) {
+            return this.julianDay - julianDayDate.julianDay < 0;
         }
         return ChronoLocalDate.super.isBefore(other);
     }
@@ -201,8 +200,8 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
         if (this == obj) {
             return true;
         }
-        if (obj instanceof JulianDayDate) {
-            return this.julianDay - ((JulianDayDate) obj).julianDay == 0;
+        if (obj instanceof JulianDayDate julianDayDate) {
+            return this.julianDay - julianDayDate.julianDay == 0;
         }
         return false;
     }
@@ -226,18 +225,17 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
 
     @Override
     public JulianDayDate with(final TemporalAdjuster adjuster) {
-        if (adjuster instanceof JulianDayDate) {
-            return (JulianDayDate) adjuster;
+        if (adjuster instanceof JulianDayDate julianDayDate) {
+            return julianDayDate;
         }
         return (JulianDayDate) adjuster.adjustInto(this);
     }
 
     @Override
     public JulianDayDate with(final TemporalField field, final long newValue) {
-        if (field instanceof ChronoField) {
-            final ChronoField f = (ChronoField) field;
-            f.checkValidValue(newValue);
-            switch (f) {
+        if (field instanceof ChronoField chronoField) {
+            chronoField.checkValidValue(newValue);
+            switch (chronoField) {
 //                case DAY_OF_WEEK:
 //                    return plusDays(newValue - getDayOfWeek().getValue());
 //                case ALIGNED_DAY_OF_WEEK_IN_MONTH:
@@ -329,9 +327,8 @@ public final class JulianDayDate implements Temporal, TemporalAdjuster, ChronoLo
 
     @Override
     public JulianDayDate plus(final long amountToAdd, final TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            final ChronoUnit f = (ChronoUnit) unit;
-            switch (f) {
+        if (unit instanceof ChronoUnit chronoUnit) {
+            switch (chronoUnit) {
                 case DAYS:
                     return plusDays(amountToAdd);
 //                case WEEKS:

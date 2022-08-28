@@ -208,9 +208,9 @@ public final class RomaicDate extends WeekDate<RomaicMonth, DayOfWeek>
 
     @Override
     public RomaicDate with(final TemporalField field, final long newValue) {
-        if (field instanceof ChronoField f) {
-            f.checkValidValue(newValue);
-            return switch (f) {
+        if (field instanceof ChronoField chronoField) {
+            chronoField.checkValidValue(newValue);
+            return switch (chronoField) {
                 case DAY_OF_WEEK -> plusDays(newValue - getDayOfWeek().getValue());
                 case ALIGNED_DAY_OF_WEEK_IN_MONTH ->
                     plusDays(newValue - getLong(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH));
