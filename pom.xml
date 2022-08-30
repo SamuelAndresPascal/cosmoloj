@@ -31,7 +31,7 @@
         <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
-        <logback.version>1.2.11</logback.version>
+        <logback.version>1.3.0</logback.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
     </properties>
 
