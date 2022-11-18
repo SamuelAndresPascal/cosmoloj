@@ -24,6 +24,16 @@ build:
       - ./*/target/*
     expire_in: 2 days
 
+form:
+  stage: build
+  script:
+    - cd tex/
+    - xelatex -halt-on-error simpleUnit.tex
+  artifacts:
+    paths:
+      - tex/simpleUnit.pdf
+    expire_in: 2 days
+
 test:
   stage: test
   script:

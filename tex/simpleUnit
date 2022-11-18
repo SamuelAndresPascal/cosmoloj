@@ -1,0 +1,326 @@
+\documentclass[a4paper,draft,twoside,10pt]{article}
+
+\usepackage[francais]{babel}
+\usepackage{fontspec}
+\usepackage{comment}
+\usepackage{tikz-uml}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+%\usepackage{amsmath}
+
+% Compiler avec:
+% xelatex simpleUnit
+
+\title{Simple Unit\\0.1-r0}
+\author{Samuel Andrés}
+
+\begin{document}
+
+\maketitle
+
+\section{Versionnement et recommandations}
+
+Le numéro de version de se document est composé d'un numéro de version majeure, d'un numéro de version mineure et d'un
+numéro de révision:
+
+<version majeure>.<version mineure>-r<révision>
+
+Un changement de numéro de version majeure intervient lors d'une modification du contrat cassant la rétrocompatibilité
+avec les versions précédentes.
+
+Un changement de numéro de version mineure intervient lors d'une modification du contrat qui ne casse pas la
+rétrocompatibilité.
+
+Un changement de numéro de version de révison intervient à tout autre modification de ce document sans effet sur le
+contrat \emph{ou} relevant de corrections d'erreurs flagrantes.
+
+Les changements de version majeure, mineure et de révision interviennent chacune par incrémentation d'une valeur
+entière. Le numéro de révision est réinitialisé à 0 lors d'un changement de version mineure ou majeure. Le numéro de
+version mineure est réinitialisé à 0 lors d'un changement de version majeure.
+
+On \emph{recommande} que les implémentations se référant à cette spécification suivent elles-mêmes un versionnement à
+trois valeurs (majeure, mineure et révision) les versions majeure et mineure se référant respectivement aux versions
+majeure et mineure de la présente spécification et la version de révision étant réservée aux correctifs internes de
+l'implémentation ou aux modifications qui ne relèvent pas de critères impératifs de la présente spécification (par
+exemple, si une implémentation simplement \emph{suggérée} par la présente spécification vient à disparaître d'une
+implémentation, quoique cela crée ainsi une rupture de rétrocompatibilité). On \emph{recommande} aussi dans ce cas que
+l'implémentation indique de manière explicite que son numéro de version se réfère au numéro de version de la présente
+spécification. Dans le cas contraire, toute implémentation se référant à la présente spécification sans s'aligner sur
+ses numéros de version majeure et de version mineure \emph{doit} indiquer explicitement le numéro de version complet de
+la spécification.
+
+
+
+
+
+\section{Spécification abstraite}
+
+\subsection{Périmètre}
+
+La présente spécification abstraite s'inspire de la JSR 363 de la communauté Java mais en restreint le périmètre.
+
+Elle est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et non des
+collections d'unités courante ou exaustive. Il ne s'agit pas non plus d'une bibliothèque d'interprétation de chaines de
+caractères comme unités ni d'écriture d'unités sous forme de chaînes de caractères.
+
+En définissant les unes par rapport aux autres les unités qui lui sont nécessaires, la présente spécification vise à
+permettre à l'utilisateur d'une implémentation de s'affranchir de la question rébarbative de l'implémentation des
+convertisseurs d'unité à unité.
+
+En adoptant un périmètre limité, la présente spécification a également pour objectif de s'abstraire des spécificités des
+langages de programmation de manière à ce que la représentation conceptuelle qu'elle propose puisse être aisément
+implémentée dans plusieurs langages de programmation. Toutefois, la spécification est explicitement orientée objet.
+
+La présente spécification n'inclut pas les contrôles d'homogénéité de conversion d'unités ni de cohérence des dimension
+ni des grandeurs. La cohérence des conversions est laissée à l'utilisateur.
+
+On se restreint à la représentation des conversions et des unités communes de manière à n'implémenter que des cas
+relativement simples de conversions affines ou linéaires.
+
+La conceptualisation des bases, des systèmes d'unités et des considérations relatives aux mesures n'entrent pas dans
+le champ de cette spécification.
+
+Sauf mention contraire relative aux éléments optionnels ou recommandés, le respect de la spécification abstraite est
+impératif.
+
+Dans les diagrammes de cette section, les méthodes en italique sont optionnelles. Leur implémentation est
+\emph{recommandée} pour qui souhaite s'aligner sur la spécification d'implémentation qui les utilise.
+
+\subsection{Convertisseurs}
+
+Un convertisseur représente une conversion affine ou linéaire d'une unité à une autre. La méthode \emph{convert()} prend
+en paramètre une valeur exprimée dans l'unité de départ et retourne son expression dans l'unité cible.
+
+Les méthodes \emph{scale()} et \emph{offset()} retournent respectivement la pente et l'ordonnée à l'origine de la
+formule de conversion linéaire ou affine et la méthode \emph{inverse()} retourne la conversion inverse de l'unité cible
+vers l'unité de départ du convertisseur à partir duquel la méthode est appelée.
+
+On \emph{recommande} que dans le convertisseur inverse du convertisseur inverse d'un convertisseur soit identique à ce
+dernier au sens de l'instance.
+
+La méthode \emph{linear()} est optionnelle. Elle construit un convertisseur qui ne garde que la partie linéaire du
+convertisseur sur lequel la méthode est appelé. Lorsque cette méthode est implémentée, on \emph{recommande} que si le
+convertisseur sur lequel elle est appelé est déjà linéaire, alors la méthode renvoie ce convertisseur lui-même au sens
+de l'instance.
+
+La méthode \emph{linearPow()} est optionnelle. Elle construit un convertisseur qui ne garde que la partie linéaire du
+convertisseur sur lequel la méthode est appelé, mais en l'élevant à la puissance indiquée en paramètre. Lorsque cette
+méthode est implémentée, on \emph{recommande} que si le convertisseur sur lequel elle est appelée est déjà linéaire
+\emph{et} que la puissance indiquée en paramètre est égale à 1, alors la méthode renvoie ce convertisseur lui-même au
+sens de l'instance.
+
+La méthode \emph{concatenate()} produit un convertisseur dont la méthode \emph{convert()} est équivalente à l'évaluation
+en premier lieu de la méthode \emph{convert()} du convertisseur indiqué en paramètre et en second lieu de la méthode
+\emph{convert()} du convertisseur d'appel sur la valeur qui en résulte.
+
+\begin{figure}[!h]
+\begin{tikzpicture}
+\umlclass{UnitConverter}{
+  }{
+  + scale() : decimal\\
+  + offset() : decimal\\
+  + inverse() : UnitConverter\\
+  \umlvirt{+ linear() : UnitConverter}\\
+  \umlvirt{+ linearPow(pow : decimal) : UnitConverter}\\
+  + convert(value : decimal) : decimal\\
+  + concatenate(converter : UnitConverter) : UnitConverter
+}
+\end{tikzpicture}
+\caption{Contrat du convertisseur d'unités.}
+\end{figure}
+
+On \emph{recommande} que les implémentations fournissent des convertisseurs immuables et indiquent le cas échéant cette
+caractéristique de manière explicite.
+
+\subsection{Types d'unités}
+
+Le type abstrait \emph{Unit} représente une unité de manière générale. Les unités concrètes sont de trois types: les
+unités fondamentales (\emph{FundamentalUnit}) ne sont définies à partir d'aucune autre unité. Les unités transformées
+(\emph{TransformedUnit}) sont définies par une unité de référence et un convertisseur qui représente la formule linéaire
+ou affine qui permet de passer de l'une à l'autre. Les unités dérivées (\emph{DerivedUnit}) sont définies par une
+collection d'unités chacune élevée à une puissance rationnelle, l'association d'une unité et d'une puissance rationnelle
+constitutant un facteur (\emph{Factor}) de l'unité dérivée.
+
+Les unités transformées et dérivées sont ainsi définies à partir d'autres unités et donc, directement ou indirectement,
+de manière ultime à partir d'un jeu d'unités qui sont toutes fondamentales.
+
+Toute unité est capable de fournir d'une part avec la méthode \emph{getConverterTo​()}, un convertisseur vers une unité
+cible (sous réserve, dont l'appréciation est laissée à l'utilisateur, de la cohérence entre l'unité de départ et l'unité
+cible du point de vue des unités fondamentales qui la composent) et d'autre part avec la méthode \emph{toBase()},
+un convertisseur vers le jeu d'unités fondamentales qui la composent.
+
+\begin{figure}[!h]
+\begin{tikzpicture}
+\umlclass[type=abstract, y=3]{Unit}{
+  }{
+  + getConverterTo​(unit: Unit) : UnitConverter\\
+  + toBase() : UnitConverter
+}
+\umlclass[x=-3.5]{TransformedUnit}{
+  }{
+\umlvirt{+ reference(): Unit}\\
+\umlvirt{+ toReference(): UnitConverter}
+}
+\umlclass[y=-3]{FundamentalUnit}{
+  }{
+}
+\umlclass[x=3.5]{DerivedUnit}{
+  }{
+  \umlvirt{+ definition(): Factor[]}
+}
+\umlinherit{FundamentalUnit}{Unit}
+\umlinherit{TransformedUnit}{Unit}
+\umlinherit{DerivedUnit}{Unit}
+\end{tikzpicture}
+\caption{Contrats des différents types d'unités.}
+\end{figure}
+
+Les unités sont des instances immuables (impératif).
+
+\subsection{Facteurs}
+
+Un facteur représente l'association d'une unité à une exposant rationnel. La combinaison des facteurs permet de
+construire les unités dérivées.
+
+On \emph{suggère} que le concept d'unité spécialise celui de facteur de manière à considérer par polymorphysme qu'une
+unité est un facteur d'elle-même élevée à la puissance 1. Cette représentation permet d'éviter la construction de
+facteurs d'unités à la puissance 1 dans la définition de nombreuses unités dérivées courantes.
+
+
+\begin{figure}[!h]
+\begin{tikzpicture}
+\umlclass[y=4]{Factor}{
+  }{
+    + dim() : Unit\\
+    + numerator() : integer\\
+    + denominator() : integer\\
+    + power() : decimal
+}
+\umlclass{Unit}{
+  }{
+  + getConverterTo​() : UnitConverter\\
+  + toBase() : UnitConverter\\
+  + dim() : Unit \{ return this \}\\
+  + numerator() : integer \{ return 1 \}\\
+  + denominator() : integer \{ return 1 \}\\
+  + power() : decimal \{ return 1. \}
+}
+\umlinherit{Unit}{Factor}
+\end{tikzpicture}
+\caption{Contrats du facteur et spécialisation suggérée par l'unité.}
+\end{figure}
+
+\subsection{Méthodes de construction}
+
+On \emph{suggère} l'implémentation de méthodes de construction d'unités filles à partir d'une unité parente à la manière
+des méthodes spécifiées par la JSR 363.
+
+On suggère de manière non exhaustive, l'implémentation des méthodes suivantes:
+
+\begin{itemize}
+\item La méthode \emph{shift()} construit une unité transformée dont l'unité de référence est l'unité d'appel de la
+méthode et le convertisseur à l'unité de référence est une translation dont la valeur est indiquée en paramètre.
+\item La méthode \emph{scaleMultiply()} construit une unité transformée dont l'unité de référence est l'unité d'appel de
+la méthode et le convertisseur à l'unité de référence est un agrandissement dont la valeur est indiquée en paramètre.
+\item La méthode \emph{scaleDivide()} construit une unité transformée correspondant à un appel à \emph{scaleMultiply()}
+avec un argument donc la valeur serait inversée.
+\item La méthode \emph{factor()} construit un facteur dont l'unité est l'unité d'appel et la puissance est un rationnel
+construit par le rapport du premier et du second paramètres.
+\end{itemize}
+
+
+\begin{figure}[!h]
+\begin{tikzpicture}
+\umlclass{Unit}{
+  }{
+  + getConverterTo​() : UnitConverter\\
+  + toBase() : UnitConverter\\
+  + shift(value : decimal) : TransformedUnit\\
+  + scaleMultiply(value : number) : TransformedUnit\\
+  + scaleDivide(value : number) : TransformedUnit\\
+  + factor(numerator : integer, denominator : integer) : Factor
+}
+\end{tikzpicture}
+\caption{Contrats du facteur et spécialisation suggérée par l'unité.}
+\end{figure}
+
+\section{Spécification d'implémentation}
+
+La spécification d'implémentation est indicative. La spécification dans son ensemble peut être respectée par une
+implémentation sans qu'elle s'aligne pour autant sur les choix d'implémentation exposés par cette section.
+
+\subsection{Construction des convertisseurs}
+
+Les convertisseurs sont construits par concaténation de la conversion de l'unité de départ vers les unités fondamentales
+qui la composent et de la conversion inverse de l'unité cible vers ces mêmes unités fondamentales
+(Algorithme~\ref{alg:getConverterTo​}).
+
+\begin{algorithm}[!h]
+\caption{Implémentation de Unit.getConverterTo​()}\label{alg:getConverterTo​}
+\begin{algorithmic}
+\Procedure{Unit.getConverterTo​}{target}\Comment{convertisseur de $this$ à $target$}
+\State \textbf{return} target.toBase().inverse().concatenate(this.toBase())
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+Pour cela, chaque type d'unité doit être capable de définir la conversion par laquelle exprimer une valeur dans les
+unités fondamentales qui la composent en implémentant la méthode \emph{toBase()} de manière spécifique chacune à sa
+nature.
+
+La conversion d'une unité fondamentale vers le jeu d'unité fondamentale qui la constitue est l'identité. On
+\emph{recommande} d'implémenter cette identité comme un convertisseur singleton.
+
+\begin{algorithm}[!h]
+\caption{Implémentation de FundamentalUnit.toBase()}\label{alg:fundamentalUnit:toBase}
+\begin{algorithmic}
+\Procedure{FundamentalUnit.toBase}{}
+\State \textbf{return} identity()\Comment{un UnitConverter correspondant à l'identité.}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+La conversion d'une unité transformée vers le jeu d'untés fondamentales qui la composent consite à concaténer la
+conversion vers son unité de référence à la conversion vers le jeu d'unités fondamentales qui composent cette dernière.
+
+\begin{algorithm}[!h]
+\caption{Implémentation de TransformedUnit.toBase()}\label{alg:transformedUnit:toBase}
+\begin{algorithmic}
+\Procedure{TransformedUnit.toBase}{}
+\State \textbf{return} this.reference().toBase().concatenate(this.toReference())
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+Enfin, la conversion d'une unité dérivée vers le jeu d'unités fondamentales qui la composent consiste à parcourir les
+facteurs de définition de l'unité, d'en extraire la conversion vers le jeu d'unités fondamentales de l'unité du facteur,
+de n'en garder que la part linéaire et de l'élever à la puissance du facteur. Chaque facteur fournissant ainsi un
+convertisseur vers son jeu d'unités fondamentales, tous sont concaténés de manière à produire un convertisseur global.
+
+L'algorithme ne garde que la partie linéaire des convertisseurs résultants des unités référencées par chaque facteur car
+on considère que les translations doivent disparaître ainsi qu'on s'y attend, par exemple en convertissant des degrés
+Celcius par mètre en degrés Kelvin par mètre.
+
+\begin{algorithm}[!h]
+\caption{Implémentation de DerivedUnit.toBase()}\label{alg:derivedUnit:toBase}
+\begin{algorithmic}
+\Procedure{DerivedUnit.toBase}{}
+
+\State result : UnitConverter $\gets$ identity()
+\For{factor $\in$ this.definition()}
+\State toFactorBase $\gets$ factor.dim().toBase().linearPow(factor.power())
+\State result $\gets$ toFactorBase.concatenate(result)
+\EndFor
+
+\State \textbf{return} result
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{Validation}
+
+La conformité aux critères de validation est impérative au respect de la spécification. On ne donne cependant pas de
+critère relatif à la précision des conversions au-delà des valeurs indiquées.
+
+\end{document}
