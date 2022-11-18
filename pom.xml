@@ -83,6 +83,8 @@
         - son ajout comme 'artifactItem' du plugin 'dependencies' du module 'report-cosmoloj' afin d'être copiée dans le répertoire des modules (pour faciliter la constitution d'un module-path)
         -->
         <module>time</module>
+        <module>unit-simple-api</module>
+        <module>unit-simple-impl</module>
         <!-- utilitaire d'agrégation -->
         <module>reports-cosmoloj</module>
     </modules>
@@ -112,6 +114,16 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>time</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>unit-simple-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>unit-simple-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
