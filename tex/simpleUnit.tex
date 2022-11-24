@@ -12,7 +12,7 @@
 % Compiler avec:
 % xelatex simpleUnit
 
-\title{Simple Unit\\0.1-r0}
+\title{Simple Unit\\0.1-r0 (en cours de rédaction)}
 \author{Samuel Andrés}
 
 \begin{document}
@@ -21,7 +21,7 @@
 
 \section{Versionnement et recommandations}
 
-Le numéro de version de se document est composé d'un numéro de version majeure, d'un numéro de version mineure et d'un
+Le numéro de version de ce document est composé d'un numéro de version majeure, d'un numéro de version mineure et d'un
 numéro de révision:
 
 <version majeure>.<version mineure>-r<révision>
@@ -60,9 +60,9 @@ la spécification.
 
 La présente spécification abstraite s'inspire de la JSR 363 de la communauté Java mais en restreint le périmètre.
 
-Elle est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et non des
-collections d'unités courante ou exaustive. Il ne s'agit pas non plus d'une bibliothèque d'interprétation de chaines de
-caractères comme unités ni d'écriture d'unités sous forme de chaînes de caractères.
+Elle est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et non pas à 
+fournir des collections d'unités courantes déjà construites. Il ne s'agit pas non plus d'une bibliothèque 
+d'interprétation de chaines de caractères comme unités ni d'écriture d'unités sous forme de chaînes de caractères.
 
 En définissant les unes par rapport aux autres les unités qui lui sont nécessaires, la présente spécification vise à
 permettre à l'utilisateur d'une implémentation de s'affranchir de la question rébarbative de l'implémentation des
@@ -70,7 +70,8 @@ convertisseurs d'unité à unité.
 
 En adoptant un périmètre limité, la présente spécification a également pour objectif de s'abstraire des spécificités des
 langages de programmation de manière à ce que la représentation conceptuelle qu'elle propose puisse être aisément
-implémentée dans plusieurs langages de programmation. Toutefois, la spécification est explicitement orientée objet.
+implémentée en plusieurs d'entre eux en y consacrant un minimum d'effort. Toutefois, la spécification est explicitement
+orientée objet.
 
 La présente spécification n'inclut pas les contrôles d'homogénéité de conversion d'unités ni de cohérence des dimension
 ni des grandeurs. La cohérence des conversions est laissée à l'utilisateur.
@@ -93,14 +94,14 @@ Un convertisseur représente une conversion affine ou linéaire d'une unité à 
 en paramètre une valeur exprimée dans l'unité de départ et retourne son expression dans l'unité cible.
 
 Les méthodes \emph{scale()} et \emph{offset()} retournent respectivement la pente et l'ordonnée à l'origine de la
-formule de conversion linéaire ou affine et la méthode \emph{inverse()} retourne la conversion inverse de l'unité cible
-vers l'unité de départ du convertisseur à partir duquel la méthode est appelée.
+formule de conversion linéaire ou affine et la méthode \emph{inverse()} retourne le convertisseur inverse de l'unité 
+cible vers l'unité de départ du convertisseur d'appel de la méthode.
 
-On \emph{recommande} que dans le convertisseur inverse du convertisseur inverse d'un convertisseur soit identique à ce
-dernier au sens de l'instance.
+On \emph{recommande} qu'un convertisseur soit identique au sens de l'instance au convertisseur inverse de son 
+convertisseur inverse.
 
 La méthode \emph{linear()} est optionnelle. Elle construit un convertisseur qui ne garde que la partie linéaire du
-convertisseur sur lequel la méthode est appelé. Lorsque cette méthode est implémentée, on \emph{recommande} que si le
+convertisseur sur lequel la méthode est appelée. Lorsque cette méthode est implémentée, on \emph{recommande} que si le
 convertisseur sur lequel elle est appelé est déjà linéaire, alors la méthode renvoie ce convertisseur lui-même au sens
 de l'instance.
 
@@ -216,7 +217,7 @@ facteurs d'unités à la puissance 1 dans la définition de nombreuses unités d
 On \emph{suggère} l'implémentation de méthodes de construction d'unités filles à partir d'une unité parente à la manière
 des méthodes spécifiées par la JSR 363.
 
-On suggère de manière non exhaustive, l'implémentation des méthodes suivantes:
+On suggère l'implémentation de méthodes utilitaires, parmi lesquelles les méthodes suivantes:
 
 \begin{itemize}
 \item La méthode \emph{shift()} construit une unité transformée dont l'unité de référence est l'unité d'appel de la
@@ -224,7 +225,7 @@ méthode et le convertisseur à l'unité de référence est une translation dont
 \item La méthode \emph{scaleMultiply()} construit une unité transformée dont l'unité de référence est l'unité d'appel de
 la méthode et le convertisseur à l'unité de référence est un agrandissement dont la valeur est indiquée en paramètre.
 \item La méthode \emph{scaleDivide()} construit une unité transformée correspondant à un appel à \emph{scaleMultiply()}
-avec un argument donc la valeur serait inversée.
+avec un argument donc la valeur est inversée.
 \item La méthode \emph{factor()} construit un facteur dont l'unité est l'unité d'appel et la puissance est un rationnel
 construit par le rapport du premier et du second paramètres.
 \end{itemize}
@@ -281,7 +282,7 @@ La conversion d'une unité fondamentale vers le jeu d'unité fondamentale qui la
 \end{algorithmic}
 \end{algorithm}
 
-La conversion d'une unité transformée vers le jeu d'untés fondamentales qui la composent consite à concaténer la
+La conversion d'une unité transformée vers le jeu d'unités fondamentales qui la composent consite à concaténer la
 conversion vers son unité de référence à la conversion vers le jeu d'unités fondamentales qui composent cette dernière.
 
 \begin{algorithm}[!h]
