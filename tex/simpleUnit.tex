@@ -184,7 +184,7 @@ Les unités sont des instances immuables (impératif).
 Un facteur représente l'association d'une unité à une exposant rationnel. La combinaison des facteurs permet de
 construire les unités dérivées.
 
-On \emph{suggère} que le concept d'unité spécialise celui de facteur de manière à considérer par polymorphysme qu'une
+On \emph{suggère} que le concept d'unité spécialise celui de facteur de manière à considérer par polymorphisme qu'une
 unité est un facteur d'elle-même élevée à la puissance 1. Cette représentation permet d'éviter la construction de
 facteurs d'unités à la puissance 1 dans la définition de nombreuses unités dérivées courantes.
 
@@ -270,7 +270,7 @@ Pour cela, chaque type d'unité doit être capable de définir la conversion par
 unités fondamentales qui la composent en implémentant la méthode \emph{toBase()} de manière spécifique chacune à sa
 nature.
 
-La conversion d'une unité fondamentale vers le jeu d'unité fondamentale qui la constitue est l'identité. On
+La conversion d'une unité fondamentale vers le jeu d'unités fondamentales qui la constitue est l'identité. On
 \emph{recommande} d'implémenter cette identité comme un convertisseur singleton.
 
 \begin{algorithm}[!h]
