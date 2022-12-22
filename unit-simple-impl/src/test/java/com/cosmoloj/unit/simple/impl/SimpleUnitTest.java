@@ -83,4 +83,22 @@ public final class SimpleUnitTest {
         Assertions.assertEquals(3., kPerMToCPerM.convert(3.), 1e-10);
         Assertions.assertEquals(3., kPerMToCPerM.inverse().convert(3.), 1e-10);
     }
+
+    @Test
+    public void speed() {
+
+        final Unit m = new SimpleFundamentalUnit();
+        final Unit km = m.scaleMultiply(1000.);
+
+        final Unit s = new SimpleFundamentalUnit();
+        final Unit h = s.scaleMultiply(3600.);
+
+        final Unit ms = SimpleDerivedUnit.of(m, s.factor(-1));
+        final Unit kmh = SimpleDerivedUnit.of(km, h.factor(-1));
+
+        final UnitConverter msToKmh = ms.getConverterTo(kmh);
+
+        Assertions.assertEquals(360., msToKmh.convert(100.), 1e-10);
+        Assertions.assertEquals(5., msToKmh.inverse().convert(18.), 1e-10);
+    }
 }
