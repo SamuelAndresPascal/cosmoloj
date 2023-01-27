@@ -12,7 +12,7 @@
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.6.0</checkstyle.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
-        <compiler.plugin.release>18</compiler.plugin.release>
+        <compiler.plugin.release>19</compiler.plugin.release>
         <dependency.plugin.version>3.5.0</dependency.plugin.version>
         <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
         <deploy.plugin.version>3.0.0</deploy.plugin.version>
@@ -31,8 +31,8 @@
         <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
         <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
-        <logback.version>1.3.3</logback.version>
-        <junit.jupiter.version>5.9.1</junit.jupiter.version>
+        <logback.version>1.3.5</logback.version>
+        <junit.jupiter.version>5.9.2</junit.jupiter.version>
     </properties>
 
     <distributionManagement>
