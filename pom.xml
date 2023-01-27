@@ -8,12 +8,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <checkstyle.plugin.version>3.2.0</checkstyle.plugin.version>
+        <checkstyle.plugin.version>3.2.1</checkstyle.plugin.version>
         <checkstyle.location>checkstyle.xml</checkstyle.location>
         <checkstyle.version>10.6.0</checkstyle.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
         <compiler.plugin.release>18</compiler.plugin.release>
-        <dependency.plugin.version>3.4.0</dependency.plugin.version>
+        <dependency.plugin.version>3.5.0</dependency.plugin.version>
         <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
         <deploy.plugin.version>3.0.0</deploy.plugin.version>
         <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
@@ -23,7 +23,7 @@
         <site.plugin.version>3.12.1</site.plugin.version>
         <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
         <surefire.plugin.version>3.0.0-M7</surefire.plugin.version>
-        <spotbugs.plugin.version>4.7.1.1</spotbugs.plugin.version>
+        <spotbugs.plugin.version>4.7.3.0</spotbugs.plugin.version>
         <wagon.ssh.version>3.5.1</wagon.ssh.version>
 
         <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
