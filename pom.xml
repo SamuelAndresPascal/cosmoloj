@@ -1,50 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.cosmoloj</groupId>
-    <artifactId>cosmoloj</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cosmoloj</groupId>
+  <artifactId>cosmoloj</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <checkstyle.plugin.version>3.2.1</checkstyle.plugin.version>
-        <checkstyle.location>checkstyle.xml</checkstyle.location>
-        <checkstyle.version>10.7.0</checkstyle.version>
-        <compiler.plugin.version>3.10.1</compiler.plugin.version>
-        <compiler.plugin.release>19</compiler.plugin.release>
-        <dependency.plugin.version>3.5.0</dependency.plugin.version>
-        <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
-        <deploy.plugin.version>3.0.0</deploy.plugin.version>
-        <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
-        <javadoc.plugin.version>3.4.1</javadoc.plugin.version>
-        <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
-        <project.info.reports.plugin.version>3.4.1</project.info.reports.plugin.version>
-        <site.plugin.version>3.12.1</site.plugin.version>
-        <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
-        <surefire.plugin.version>3.0.0-M8</surefire.plugin.version>
-        <spotbugs.plugin.version>4.7.3.0</spotbugs.plugin.version>
-        <wagon.ssh.version>3.5.3</wagon.ssh.version>
+    <checkstyle.plugin.version>3.2.1</checkstyle.plugin.version>
+    <checkstyle.location>checkstyle.xml</checkstyle.location>
+    <checkstyle.version>10.9.3</checkstyle.version>
+    <compiler.plugin.version>3.10.1</compiler.plugin.version>
+    <compiler.plugin.release>19</compiler.plugin.release>
+    <dependency.plugin.version>3.5.0</dependency.plugin.version>
+    <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
+    <deploy.plugin.version>3.0.0</deploy.plugin.version>
+    <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
+    <javadoc.plugin.version>3.4.1</javadoc.plugin.version>
+    <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
+    <project.info.reports.plugin.version>3.4.1</project.info.reports.plugin.version>
+    <site.plugin.version>3.12.1</site.plugin.version>
+    <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
+    <surefire.plugin.version>3.0.0-M8</surefire.plugin.version>
+    <spotbugs.plugin.version>4.7.3.0</spotbugs.plugin.version>
+    <wagon.ssh.version>3.5.3</wagon.ssh.version>
 
-        <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
-        <site.server.ip>${env.PUBLIC_SITE_SERVER}</site.server.ip>
-        <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
-        <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
+    <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
+    <site.server.ip>${env.PUBLIC_SITE_SERVER}</site.server.ip>
+    <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
+    <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
 
-        <logback.version>1.3.5</logback.version>
-        <junit.jupiter.version>5.9.2</junit.jupiter.version>
-    </properties>
+    <logback.version>1.3.5</logback.version>
+    <junit.jupiter.version>5.9.2</junit.jupiter.version>
+  </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>deploy-public</id>
-            <url>scp://${deploy.server.ip}${deploy.server.path}</url>
-        </repository>
-        <site>
-            <id>site-public</id>
-            <url>scp://${site.server.ip}${site.server.path}</url>
-        </site>
-    </distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>deploy-public</id>
+      <url>scp://${deploy.server.ip}${deploy.server.path}</url>
+    </repository>
+    <site>
+      <id>site-public</id>
+      <url>scp://${site.server.ip}${site.server.path}</url>
+    </site>
+  </distributionManagement>
 
     <!--    <name>cosmoloj</name>
     <description>Open library utilities for space and time related Java applications.</description>
@@ -74,296 +76,291 @@
         <url>https://github.com/SamuelAndresPascal/cosmoloj</url>
     </scm>-->
 
-    <modules>
-        <!--
-        Rappel :
-        L'ajout d'un module doit potentiellement se traduire par :
-        - son ajout dans le block 'dependencyManagement' afin de la référencer depuis les autres modules avec la version implicite
-        - son ajout dans les dépendances du module 'report-cosmoloj' afin d'être prise en compte dans le rapport jacoco agrégé
-        - son ajout comme 'artifactItem' du plugin 'dependencies' du module 'report-cosmoloj' afin d'être copiée dans le répertoire des modules (pour faciliter la constitution d'un module-path)
-        -->
-        <module>time</module>
-        <module>unit-simple-api</module>
-        <module>unit-simple-impl</module>
-        <!-- utilitaire d'agrégation -->
-        <module>reports-cosmoloj</module>
-    </modules>
+  <modules>
+      <!--
+      Rappel :
+      L'ajout d'un module doit potentiellement se traduire par :
+      - son ajout dans le block 'dependencyManagement' afin de la référencer depuis les autres modules avec la version implicite
+      - son ajout dans les dépendances du module 'report-cosmoloj' afin d'être prise en compte dans le rapport jacoco agrégé
+      - son ajout comme 'artifactItem' du plugin 'dependencies' du module 'report-cosmoloj' afin d'être copiée dans le répertoire des modules (pour faciliter la constitution d'un module-path)
+      -->
+    <module>time</module>
+    <module>unit-simple-api</module>
+    <module>unit-simple-impl</module>
+    <!-- utilitaire d'agrégation -->
+    <module>reports-cosmoloj</module>
+  </modules>
 
+  <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>time</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>unit-simple-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>unit-simple-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
 
-    <dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar.plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler.plugin.version}</version>
+        <configuration>
+          <release>${compiler.plugin.release}</release>
+          <compilerArgs>
+            <!--arg>-verbose</arg>
+            <arg>-Xlint:all,-options,-path</arg-->
+            <arg>-Xlint:unchecked</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <!-- pour JUnit 5 -->
+        <version>${surefire.plugin.version}</version>
+        <configuration>
+          <systemPropertyVariables>
+            <logback.configurationFile>${user.home}/.cosmoloj/logback-test.xml</logback.configurationFile>
+          </systemPropertyVariables>
+          <trimStackTrace>false</trimStackTrace>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>${site.plugin.version}</version>
         <dependencies>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>time</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>unit-simple-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>unit-simple-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+          <dependency><!-- add support for ssh/scp -->
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <version>${wagon.ssh.version}</version>
+          </dependency>
         </dependencies>
-    </dependencyManagement>
+      </plugin>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>${sonar.plugin.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler.plugin.version}</version>
-                <configuration>
-                    <release>${compiler.plugin.release}</release>
-                    <compilerArgs>
-                        <!--arg>-verbose</arg>
-                        <arg>-Xlint:all,-options,-path</arg-->
-                        <arg>-Xlint:unchecked</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${deploy.plugin.version}</version>
+        <dependencies>
+          <dependency><!-- add support for ssh/scp -->
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <version>${wagon.ssh.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
 
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <!-- pour JUnit 5 -->
-                <version>${surefire.plugin.version}</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <logback.configurationFile>${user.home}/.cosmoloj/logback-test.xml</logback.configurationFile>
-                    </systemPropertyVariables>
-                    <trimStackTrace>false</trimStackTrace>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${javadoc.plugin.version}</version>
+        <configuration>
+          <additionalparam>-header &apos;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;&lt;/script&gt;&apos;</additionalparam>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${site.plugin.version}</version>
-                <dependencies>
-                    <dependency><!-- add support for ssh/scp -->
-                        <groupId>org.apache.maven.wagon</groupId>
-                        <artifactId>wagon-ssh</artifactId>
-                        <version>${wagon.ssh.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+          <!-- Required as of JDK 8u121 -->
+          <additionalparam>--allow-script-in-comments</additionalparam>
+          <failOnError>${javadoc.plugin.failOnError}</failOnError>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${deploy.plugin.version}</version>
-                <dependencies>
-                    <dependency><!-- add support for ssh/scp -->
-                        <groupId>org.apache.maven.wagon</groupId>
-                        <artifactId>wagon-ssh</artifactId>
-                        <version>${wagon.ssh.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle.plugin.version}</version>
+        <configuration>
+          <configLocation>${checkstyle.location}</configLocation>
+          <excludes>**/module-info.java</excludes>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <configuration>
+              <consoleOutput>true</consoleOutput>
+              <failsOnError>true</failsOnError>
+              <linkXRef>false</linkXRef>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${javadoc.plugin.version}</version>
-                <configuration>
-                    <additionalparam>-header &apos;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;&lt;/script&gt;&apos;</additionalparam>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
 
-                    <!-- Required as of JDK 8u121 -->
-                    <additionalparam>--allow-script-in-comments</additionalparam>
-                    <failOnError>${javadoc.plugin.failOnError}</failOnError>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${dependency.plugin.version}</version>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
-                <configuration>
-                    <configLocation>${checkstyle.location}</configLocation>
-                    <excludes>**/module-info.java</excludes>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <configuration>
-                            <!--configLocation>checkstyle.xml</configLocation-->
-                            <encoding>UTF-8</encoding>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
-                            <linkXRef>false</linkXRef>
-                        </configuration>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
+        <executions>
+          <execution>
+            <id>analyze</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+            <configuration>
+              <failOnWarning>true</failOnWarning>
+              <ignoredUnusedDeclaredDependencies>
+                  org.junit.jupiter:*:jar:${junit.jupiter.version},ch.qos.logback:*:jar:${logback.version},org.slf4j:*:jar:${slf4j.version}
+              </ignoredUnusedDeclaredDependencies>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>${checkstyle.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+      <!-- pour les rapports de couverture de tests -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.plugin.version}</version>
+        <!--                <configuration>
+            <excludes>
+                <exclude>com.cosmoloj.time.*</exclude>
+                <exclude>module-info.class</exclude>
+                <exclude>com/cosmoloj/time/*.class</exclude>
+                <exclude>com/cosmoloj/time/chrono/*.class</exclude>
+                <exclude>com/cosmoloj/time/format/*.class</exclude>
+                <exclude>com/cosmoloj/time/temporal/*.class</exclude>
+            </excludes>
+        </configuration>-->
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${dependency.plugin.version}</version>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${surefire.plugin.version}</version>
+        <configuration>
+          <showSuccess>false</showSuccess>
+        </configuration>
+      </plugin>
 
-                <executions>
-                    <execution>
-                        <id>analyze</id>
-                        <goals>
-                            <goal>analyze-only</goal>
-                        </goals>
-                        <configuration>
-                            <failOnWarning>true</failOnWarning>
-                            <ignoredUnusedDeclaredDependencies>
-                                org.junit.jupiter:*:jar:${junit.jupiter.version},ch.qos.logback:*:jar:${logback.version},org.slf4j:*:jar:${slf4j.version}
-                            </ignoredUnusedDeclaredDependencies>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle.plugin.version}</version>
+        <configuration>
+          <configLocation>${checkstyle.location}</configLocation>
+          <excludes>**/module-info.java</excludes>
+        </configuration>
+      </plugin>
 
-            <!-- pour les rapports de couverture de tests -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.plugin.version}</version>
-                <!--                <configuration>
-                    <excludes>
-                        <exclude>com.cosmoloj.time.*</exclude>
-                        <exclude>module-info.class</exclude>
-                        <exclude>com/cosmoloj/time/*.class</exclude>
-                        <exclude>com/cosmoloj/time/chrono/*.class</exclude>
-                        <exclude>com/cosmoloj/time/format/*.class</exclude>
-                        <exclude>com/cosmoloj/time/temporal/*.class</exclude>
-                    </excludes>
-                </configuration>-->
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${javadoc.plugin.version}</version>
+        <configuration>
+          <additionalparam>-header &apos;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;&lt;/script&gt;&apos;</additionalparam>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${surefire.plugin.version}</version>
-                <configuration>
-                    <showSuccess>false</showSuccess>
-                </configuration>
-            </plugin>
+          <!-- Required as of JDK 8u121 -->
+          <additionalparam>--allow-script-in-comments</additionalparam>
+          <failOnError>${javadoc.plugin.failOnError}</failOnError>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
-                <configuration>
-                    <configLocation>${checkstyle.location}</configLocation>
-                    <excludes>**/module-info.java</excludes>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${dependency.plugin.version}</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>analyze-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${javadoc.plugin.version}</version>
-                <configuration>
-                    <additionalparam>-header &apos;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;&lt;/script&gt;&apos;</additionalparam>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.plugin.version}</version>
+        <reportSets>
+            <reportSet>
+                <reports>
+                    <report>report</report>
+                </reports>
+            </reportSet>
+        </reportSets>
+      </plugin>
 
-                    <!-- Required as of JDK 8u121 -->
-                    <additionalparam>--allow-script-in-comments</additionalparam>
-                    <failOnError>${javadoc.plugin.failOnError}</failOnError>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${spotbugs.plugin.version}</version>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${dependency.plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>analyze-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.plugin.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${project.info.reports.plugin.version}</version>
-            </plugin>
-        </plugins>
-    </reporting>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>${project.info.reports.plugin.version}</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
