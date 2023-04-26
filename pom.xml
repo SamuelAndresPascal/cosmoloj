@@ -10,22 +10,22 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <checkstyle.plugin.version>3.2.1</checkstyle.plugin.version>
+    <checkstyle.plugin.version>3.2.2</checkstyle.plugin.version>
     <checkstyle.location>checkstyle.xml</checkstyle.location>
     <checkstyle.version>10.9.3</checkstyle.version>
-    <compiler.plugin.version>3.10.1</compiler.plugin.version>
+    <compiler.plugin.version>3.11.0</compiler.plugin.version>
     <compiler.plugin.release>19</compiler.plugin.release>
     <dependency.plugin.version>3.5.0</dependency.plugin.version>
     <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
-    <deploy.plugin.version>3.0.0</deploy.plugin.version>
-    <jacoco.plugin.version>0.8.8</jacoco.plugin.version>
-    <javadoc.plugin.version>3.4.1</javadoc.plugin.version>
+    <deploy.plugin.version>3.1.1</deploy.plugin.version>
+    <jacoco.plugin.version>0.8.9</jacoco.plugin.version>
+    <javadoc.plugin.version>3.5.0</javadoc.plugin.version>
     <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
     <project.info.reports.plugin.version>3.4.1</project.info.reports.plugin.version>
     <site.plugin.version>3.12.1</site.plugin.version>
     <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
     <surefire.plugin.version>3.0.0-M8</surefire.plugin.version>
-    <spotbugs.plugin.version>4.7.3.0</spotbugs.plugin.version>
+    <spotbugs.plugin.version>4.7.3.4</spotbugs.plugin.version>
     <wagon.ssh.version>3.5.3</wagon.ssh.version>
 
     <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
@@ -342,11 +342,11 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco.plugin.version}</version>
         <reportSets>
-            <reportSet>
-                <reports>
-                    <report>report</report>
-                </reports>
-            </reportSet>
+          <reportSet>
+            <reports>
+              <report>report</report>
+            </reports>
+          </reportSet>
         </reportSets>
       </plugin>
 
