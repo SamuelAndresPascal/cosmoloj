@@ -12,7 +12,7 @@
 
     <checkstyle.plugin.version>3.2.2</checkstyle.plugin.version>
     <checkstyle.location>checkstyle.xml</checkstyle.location>
-    <checkstyle.version>10.9.3</checkstyle.version>
+    <checkstyle.version>10.12.0</checkstyle.version>
     <compiler.plugin.version>3.11.0</compiler.plugin.version>
     <compiler.plugin.release>19</compiler.plugin.release>
     <dependency.plugin.version>3.5.0</dependency.plugin.version>
