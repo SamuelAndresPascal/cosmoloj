@@ -7,13 +7,13 @@ import com.cosmoloj.unit.simple.api.Unit;
  *
  * @author Samuel Andrés
  */
-public class SimpleFactor implements Factor {
+public final class SimpleFactor implements Factor {
 
     private final Unit dim;
     private final int numerator;
     private final int denominator;
 
-    public SimpleFactor(final Unit dim, final int numerator, final int denominator) {
+    private SimpleFactor(final Unit dim, final int numerator, final int denominator) {
         this.dim = dim;
         this.numerator = numerator;
         this.denominator = denominator;
