@@ -1,97 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.cosmoloj</groupId>
-        <artifactId>cosmoloj</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
     <groupId>com.cosmoloj</groupId>
-    <artifactId>reports-cosmoloj</artifactId>
+    <artifactId>cosmoloj</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>com.cosmoloj</groupId>
+  <artifactId>reports-cosmoloj</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>time</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>unit-simple-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>unit-simple-impl</artifactId>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>configuration</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>math-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>time</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>unit-simple-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>unit-simple-impl</artifactId>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${dependency.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <!--
-                        Aucune dépendance n'étant utilisée dans le module des rapports il faut désactiver les alertes
-                        relatives à l'inutilisation des projets internes levées par la vérification des dépendances dans
-                        ce module.
-                        -->
-                        <id>analyze</id>
-                            <goals>
-                                <goal>analyze-only</goal>
-                            </goals>
-                            <configuration>
-                                <failOnWarning>true</failOnWarning>
-                                <ignoredUnusedDeclaredDependencies>
-                                    ${project.groupId}:*:jar:${project.version}
-                                </ignoredUnusedDeclaredDependencies>
-                            </configuration>
-                    </execution>
-                    <execution>
-                        <!-- Copie des jars dans le répertoire bibliothèque (concentration des modules) -->
-                        <id>copy</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>time</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>jar</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
-        <!--                            <destFileName>optional-new-name.jar</destFileName>-->
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${dependency.plugin.version}</version>
+        <executions>
+          <execution>
+            <!--
+            Aucune dépendance n'étant utilisée dans le module des rapports il faut désactiver les alertes
+            relatives à l'inutilisation des projets internes levées par la vérification des dépendances dans
+            ce module.
+            -->
+            <id>analyze</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+            <configuration>
+              <failOnWarning>true</failOnWarning>
+              <ignoredUnusedDeclaredDependencies>
+                ${project.groupId}:*:jar:${project.version},ch.qos.logback:logback-classic:jar:${logback.version}
+              </ignoredUnusedDeclaredDependencies>
+            </configuration>
+          </execution>
+          <execution>
+            <!-- Copie des jars dans le répertoire bibliothèque (concentration des modules) -->
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>configuration</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>util</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>math-util</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>time</artifactId>
+                  <version>${project.version}</version>
+                  <type>jar</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
+                  <!--                            <destFileName>optional-new-name.jar</destFileName>-->
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.plugin.version}</version>
-                <!--
-                Pour ce module, on ne génère que le rapport agrégé.
-                -->
-                <executions>
-                    <execution>
-                        <id>jacoco-report-aggregate</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report-aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.plugin.version}</version>
+        <!--
+        Pour ce module, on ne génère que le rapport agrégé.
+        -->
+        <executions>
+          <execution>
+            <id>jacoco-report-aggregate</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report-aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <reporting>
     <plugins>
