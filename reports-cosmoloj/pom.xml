@@ -60,10 +60,6 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>language-wkt-epsg</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>format-shp</artifactId>
     </dependency>
     <dependency>
@@ -179,11 +175,6 @@
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>language-wkt-cts</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>${project.groupId}</groupId>
-                  <artifactId>language-wkt-epsg</artifactId>
                   <version>${project.version}</version>
                 </artifactItem>
                 <artifactItem>
