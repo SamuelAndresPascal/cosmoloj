@@ -88,6 +88,9 @@
     <module>configuration</module>
     <module>util</module>
     <module>math-util</module>
+    <module>processor-common</module>
+    <module>language-api</module>
+    <module>language-common</module>
     <module>time</module>
     <module>unit-simple-api</module>
     <module>unit-simple-impl</module>
@@ -150,6 +153,21 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>math-util</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>processor-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-common</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
