@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Samuel Andrés
  */
-public abstract class AstrolojFactoryWriter extends AstrolojCommonWriter {
+public abstract class AbstractFactoryWriter extends AbstractJavaWriter {
 
     protected static final String SOURCE_API_PACKAGE = "api";
     protected static final String TARGET_BEAN_PACKAGE = "bean";
@@ -29,7 +29,7 @@ public abstract class AstrolojFactoryWriter extends AstrolojCommonWriter {
     private String[] apiPackage = new String[0];
     private StringBuilder currentBuilder;
 
-    protected AstrolojFactoryWriter(final ProcessingEnvironment procEnv, final RoundEnvironment roundEnv,
+    protected AbstractFactoryWriter(final ProcessingEnvironment procEnv, final RoundEnvironment roundEnv,
             final String factoryName) {
         super(procEnv, roundEnv);
         this.factoryName = Objects.requireNonNull(factoryName);

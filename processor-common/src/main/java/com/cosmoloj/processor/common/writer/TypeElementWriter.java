@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Samuel Andrés
  */
-public abstract class TypeElementWriter extends AstrolojCommonWriter {
+public abstract class TypeElementWriter extends AbstractJavaWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

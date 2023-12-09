@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Samuel Andrés
  */
-public abstract class AstrolojCommonWriter implements JavaWriter {
+public abstract class AbstractJavaWriter implements JavaWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -24,7 +24,7 @@ public abstract class AstrolojCommonWriter implements JavaWriter {
     private final RoundEnvironment roundEnv;
     private int indent = 0;
 
-    protected AstrolojCommonWriter(final ProcessingEnvironment procEnv, final RoundEnvironment roundEnv) {
+    protected AbstractJavaWriter(final ProcessingEnvironment procEnv, final RoundEnvironment roundEnv) {
         this.procEnv = procEnv;
         this.roundEnv = roundEnv;
     }

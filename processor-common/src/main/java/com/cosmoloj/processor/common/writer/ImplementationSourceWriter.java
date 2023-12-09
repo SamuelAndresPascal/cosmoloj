@@ -12,7 +12,7 @@ import javax.lang.model.type.TypeMirror;
  *
  * @author Samuel Andrés
  */
-public abstract class ImplementationSourceWriter extends AstrolojCommonWriter implements JavaWriter {
+public abstract class ImplementationSourceWriter extends AbstractJavaWriter implements JavaWriter {
 
     private final Generics generics;
     private final ProcessingEnvironment procEnv;
