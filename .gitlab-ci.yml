@@ -58,6 +58,7 @@ javadoc:
 site:
   stage: site
   script:
+    - mvn $MAVEN_CLI_OPTS clean install
     - mvn $MAVEN_CLI_OPTS site-deploy
   artifacts:
     expire_in: 2 days
