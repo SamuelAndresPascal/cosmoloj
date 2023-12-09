@@ -1,0 +1,17 @@
+[
+    {
+        "type": "techreport",
+        "key": "tga",
+        "kind": "document",
+        "title": "TGA File Format",
+        "url": "http://tfc.duke.free.fr/coding/tga_specs.pdf"
+    },
+    {
+        "type": "book",
+        "format": "bibtex",
+        "key": "real_time_collision_detection",
+        "title": "Real-Time Collision Detection",
+        "editor": "Sony Computer Entertainment America, CRC Press",
+        "year": 2004
+    }
+]
