@@ -100,6 +100,12 @@
     <module>processor-bibliography</module>
     <module>bibliography-cosmoloj</module>
     <module>math-tabular</module>
+    <module>language-wkt-sf</module>
+    <module>language-wkt-cts</module>
+    <module>language-wkt-epsg</module>
+    <module>format-shp</module>
+    <module>format-shx</module>
+    <module>format-dbf-v3</module>
     <module>time</module>
     <module>unit-simple-api</module>
     <module>unit-simple-impl</module>
@@ -197,6 +203,36 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>math-tabular</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-wkt-sf</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-wkt-cts</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-wkt-epsg</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>format-shp</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>format-shx</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>format-dbf-v3</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
