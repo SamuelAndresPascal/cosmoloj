@@ -31,7 +31,7 @@
     <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
     <site.server.ip>${env.PUBLIC_SITE_SERVER}</site.server.ip>
     <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
-    <site.server.path>${env.SITE_SERVER_PATH}</site.server.path>
+    <site.server.path>${env.PUBLIC_SITE_SERVER_PATH}</site.server.path>
 
     <slf4j.version>2.0.4</slf4j.version>
     <logback.version>1.3.5</logback.version>
