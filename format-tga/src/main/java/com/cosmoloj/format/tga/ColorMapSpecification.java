@@ -1,6 +1,6 @@
 package com.cosmoloj.format.tga;
 
-import com.cosmoloj.bibliography.astroloj.Astroloj;
+import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.util.bib.Reference;
 
 /**
@@ -10,7 +10,7 @@ import com.cosmoloj.util.bib.Reference;
  *
  * @author Samuel Andrés
  */
-@Reference(Astroloj.TGA)
+@Reference(Cosmoloj.TGA)
 public record ColorMapSpecification(
 
     /**
@@ -56,6 +56,6 @@ public record ColorMapSpecification(
      *
      * @return
      */
-    @Reference(Astroloj.TGA)
+    @Reference(Cosmoloj.TGA)
     byte colorMapEntrySize) {
 }

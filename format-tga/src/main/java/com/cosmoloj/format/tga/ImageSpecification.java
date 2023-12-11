@@ -1,6 +1,6 @@
 package com.cosmoloj.format.tga;
 
-import com.cosmoloj.bibliography.astroloj.Astroloj;
+import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.util.bib.Reference;
 import com.cosmoloj.util.bin.BinaryUtil;
 
@@ -10,7 +10,7 @@ import com.cosmoloj.util.bin.BinaryUtil;
  *
  * @author Samuel Andrés
  */
-@Reference(Astroloj.TGA)
+@Reference(Cosmoloj.TGA)
 public record ImageSpecification(
     /**
      * <div class="en">Field 5.1 (2 bytes) - X-origin of Image:</div>
@@ -83,7 +83,7 @@ public record ImageSpecification(
      * @return
      * @see ImageDescriptor
      */
-    @Reference(Astroloj.TGA)
+    @Reference(Cosmoloj.TGA)
     byte imageDescriptor) {
 
     /**
