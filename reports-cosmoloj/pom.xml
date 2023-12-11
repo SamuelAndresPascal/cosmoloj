@@ -72,6 +72,14 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>format-tga</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>util-java2d</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>time</artifactId>
     </dependency>
     <dependency>
@@ -190,6 +198,16 @@
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>format-dbf-v3</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>		
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>format-tga</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>util-java2d</artifactId>
                   <version>${project.version}</version>
                 </artifactItem>
                 <artifactItem>
