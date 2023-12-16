@@ -1,6 +1,6 @@
 package com.cosmoloj.language.wkt2.v1_0.lexeme.simple;
 
-import com.cosmoloj.bibliography.astroloj.Astroloj;
+import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.language.common.LanguageUtil;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  *
  * @author Samuel Andrés
  */
-@Reference(Astroloj.WKT_CRS_V1_0)
+@Reference(Cosmoloj.WKT_CRS_V1_0)
 public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
 
     ABRIDGEDTRANSFORMATION,
