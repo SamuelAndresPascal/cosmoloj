@@ -5920,9 +5920,11 @@ public class WktParserTest {
         Assertions.assertTrue(coordOpId.getId().getSemantics() instanceof Integer);
         Assertions.assertEquals(1568, ((Integer) coordOpId.getId().getSemantics()).intValue());
         Assertions.assertEquals("LINZS25000", coordOpId.getCitation().getText().getSemantics());
-        Assertions.assertEquals("http://www.linz.govt.nz/geodetic/software-downloads/", coordOpId.getUri().getValue().getSemantics());
+        Assertions.assertEquals("http://www.linz.govt.nz/geodetic/software-downloads/",
+        coordOpId.getUri().getValue().getSemantics());
 
-        Assertions.assertEquals("Coordinate transformation accuracy 0.1-1.0m", coordOp.getRemark().getText().getSemantics());
+        Assertions.assertEquals("Coordinate transformation accuracy 0.1-1.0m",
+        coordOp.getRemark().getText().getSemantics());
     }
 
     @Test

@@ -6668,7 +6668,7 @@ public class WktParserCtsTest {
     @Test // fichier avec des crochets comme délimiteurs
     public void projcs_test_3a() throws LanguageException, IOException {
 
-        try (final DefaultStreamScanner scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
+        try (DefaultStreamScanner scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
                 WktParserTest.class.getResourceAsStream("example3a"))))) {
 
             final WktLexer lexer = new WktLexer(scanner, new ArrayList<>(), '[', ']');
@@ -6914,7 +6914,7 @@ public class WktParserCtsTest {
     @Test // fichier avec des parenthèses comme délimiteurs
     public void projcs_test_3b() throws LanguageException, IOException {
 
-        try (final DefaultStreamScanner scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
+        try (DefaultStreamScanner scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
                 WktParserTest.class.getResourceAsStream("example3b"))))) {
 
             final WktLexer lexer = new WktLexer(scanner, new ArrayList<>(), '(', ')');
@@ -7160,7 +7160,7 @@ public class WktParserCtsTest {
     @Test // vérification du support de l'indentation
     public void projcs_test_3c() throws LanguageException, IOException {
 
-        try (final DefaultStreamScanner scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
+        try (DefaultStreamScanner scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
                 WktParserTest.class.getResourceAsStream("example3c"))))) {
 
             final WktLexer lexer = new WktLexer(scanner, new ArrayList<>(), '[', ']');
