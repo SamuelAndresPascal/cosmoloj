@@ -1085,9 +1085,11 @@ public class WktParserTest {
         Assertions.assertTrue(coordOpId.getId().getSemantics() instanceof Integer);
         Assertions.assertEquals(1568, ((Integer) coordOpId.getId().getSemantics()).intValue());
         Assertions.assertEquals("LINZS25000", coordOpId.getCitation().getText().getSemantics());
-        Assertions.assertEquals("http://www.linz.govt.nz/geodetic/software-downloads/", coordOpId.getUri().getValue().getSemantics());
+        Assertions.assertEquals("http://www.linz.govt.nz/geodetic/software-downloads/",
+        coordOpId.getUri().getValue().getSemantics());
 
-        Assertions.assertEquals("Coordinate transformation accuracy 0.1-1.0m", coordOp.getRemark().getText().getSemantics());
+        Assertions.assertEquals("Coordinate transformation accuracy 0.1-1.0m",
+        coordOp.getRemark().getText().getSemantics());
     }
 
     @Test
@@ -2026,50 +2028,50 @@ public class WktParserTest {
     @Test
     public void derived_engineering_crs_test_b_1() throws LanguageException {
 
-        final var text = "ENGCRS[\"Gulf of Mexico speculative seismic survey bin grid\"," +
-        "BASEPROJCRS[\"NAD27 / Texas South Central\"," +
-        "BASEGEODCRS[\"NAD27\"," +
-        "DATUM[\"North American Datum 1927\"," +
-        "ELLIPSOID[\"Clarke 1866\",20925832.164,294.97869821," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219]]]]," +
-        "CONVERSION[\"Texas South CentralSPCS27\"," +
-        "METHOD[\"Lambert Conic Conformal (2SP)\",ID[\"EPSG\",9802]]," +
-        "PARAMETER[\"Latitude of false origin\",27.83333333333333," +
-        "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8821]]," +
-        "PARAMETER[\"Longitude of false origin\",-99.0," +
-        "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8822]]," +
-        "PARAMETER[\"Latitude of 1st standard parallel\",28.383333333333," +
-        "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8823]]," +
-        "PARAMETER[\"Latitude of 2nd standard parallel\",30.283333333333," +
-        "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8824]]," +
-        "PARAMETER[\"Easting at false origin\",2000000.0," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8826]]," +
-        "PARAMETER[\"Northing at false origin\",0.0," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8827]]]]," +
-        "DERIVINGCONVERSION[\"Gulf of Mexico speculative survey bin grid\"," +
-        "METHOD[\"P6 (I = J-90°) seismic bin grid transformation\",ID[\"EPSG\",1049]]," +
-        "PARAMETER[\"Bin grid origin I\",5000,SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8733]]," +
-        "PARAMETER[\"Bin grid origin J\",0,SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8734]]," +
-        "PARAMETER[\"Bin grid origin Easting\",871200," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8735]]," +
-        "PARAMETER[\"Bin grid origin Northing\", 10280160," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8736]]," +
-        "PARAMETER[\"Scale factor of bin grid\",1.0," +
-        "SCALEUNIT[\"Unity\",1.0],ID[\"EPSG\",8737]]," +
-        "PARAMETER[\"Bin width on I-axis\",82.5," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8738]]," +
-        "PARAMETER[\"Bin width on J-axis\",41.25," +
-        "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8739]]," +
-        "PARAMETER[\"Map grid bearing of bin grid J-axis\",340," +
-        "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8740]]," +
-        "PARAMETER[\"Bin node increment on I-axis\",1.0," +
-        "SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8741]]," +
-        "PARAMETER[\"Bin node increment on J-axis\",1.0," +
-        "SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8742]]]," +
-        "CS[Cartesian,2]," +
-        "AXIS[\"(I)\",northNorthWest]," +
-        "AXIS[\"(J)\",westSouthWest]," +
-        "SCALEUNIT[\"Bin\",1.0]]";
+        final var text = "ENGCRS[\"Gulf of Mexico speculative seismic survey bin grid\","
+       + "BASEPROJCRS[\"NAD27 / Texas South Central\","
+       + "BASEGEODCRS[\"NAD27\","
+       + "DATUM[\"North American Datum 1927\","
+       + "ELLIPSOID[\"Clarke 1866\",20925832.164,294.97869821,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219]]]],"
+       + "CONVERSION[\"Texas South CentralSPCS27\","
+       + "METHOD[\"Lambert Conic Conformal (2SP)\",ID[\"EPSG\",9802]],"
+       + "PARAMETER[\"Latitude of false origin\",27.83333333333333,"
+       + "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8821]],"
+       + "PARAMETER[\"Longitude of false origin\",-99.0,"
+       + "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8822]],"
+       + "PARAMETER[\"Latitude of 1st standard parallel\",28.383333333333,"
+       + "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8823]],"
+       + "PARAMETER[\"Latitude of 2nd standard parallel\",30.283333333333,"
+       + "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8824]],"
+       + "PARAMETER[\"Easting at false origin\",2000000.0,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8826]],"
+       + "PARAMETER[\"Northing at false origin\",0.0,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8827]]]],"
+       + "DERIVINGCONVERSION[\"Gulf of Mexico speculative survey bin grid\","
+       + "METHOD[\"P6 (I = J-90°) seismic bin grid transformation\",ID[\"EPSG\",1049]],"
+       + "PARAMETER[\"Bin grid origin I\",5000,SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8733]],"
+       + "PARAMETER[\"Bin grid origin J\",0,SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8734]],"
+       + "PARAMETER[\"Bin grid origin Easting\",871200,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8735]],"
+       + "PARAMETER[\"Bin grid origin Northing\", 10280160,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8736]],"
+       + "PARAMETER[\"Scale factor of bin grid\",1.0,"
+       + "SCALEUNIT[\"Unity\",1.0],ID[\"EPSG\",8737]],"
+       + "PARAMETER[\"Bin width on I-axis\",82.5,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8738]],"
+       + "PARAMETER[\"Bin width on J-axis\",41.25,"
+       + "LENGTHUNIT[\"US survey foot\",0.304800609601219],ID[\"EPSG\",8739]],"
+       + "PARAMETER[\"Map grid bearing of bin grid J-axis\",340,"
+       + "ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8740]],"
+       + "PARAMETER[\"Bin node increment on I-axis\",1.0,"
+       + "SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8741]],"
+       + "PARAMETER[\"Bin node increment on J-axis\",1.0,"
+       + "SCALEUNIT[\"Bin\",1.0],ID[\"EPSG\",8742]]],"
+       + "CS[Cartesian,2],"
+       + "AXIS[\"(I)\",northNorthWest],"
+       + "AXIS[\"(J)\",westSouthWest],"
+       + "SCALEUNIT[\"Bin\",1.0]]";
 
 
         final WktParser parser = WktParser.of(text);
@@ -2237,7 +2239,8 @@ public class WktParserTest {
 
         final var derivingConvertion = derivedEngineering.getOperation();
 
-        Assertions.assertEquals("Gulf of Mexico speculative survey bin grid", derivingConvertion.getName().getSemantics());
+        Assertions.assertEquals("Gulf of Mexico speculative survey bin grid",
+         derivingConvertion.getName().getSemantics());
 
         final var convMeth = derivingConvertion.getMethod();
 
@@ -3070,7 +3073,8 @@ public class WktParserTest {
         Assertions.assertTrue(param0.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param0.getUnit().getName().getSemantics());
         Assertions.assertTrue(param0.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param0.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+         param0.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param0.getUnit().getIdentifiers().isEmpty());
         Assertions.assertEquals(1, param0.getIdentifiers().size());
         final var id0 = param0.getIdentifiers().get(0);
@@ -3088,7 +3092,8 @@ public class WktParserTest {
         Assertions.assertTrue(param1.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param1.getUnit().getName().getSemantics());
         Assertions.assertTrue(param1.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param1.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+         param1.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param1.getUnit().getIdentifiers().isEmpty());
         Assertions.assertEquals(1, param1.getIdentifiers().size());
         final var id1 = param1.getIdentifiers().get(0);
@@ -3197,7 +3202,8 @@ public class WktParserTest {
         Assertions.assertTrue(param0.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param0.getUnit().getName().getSemantics());
         Assertions.assertTrue(param0.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param0.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+         param0.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param0.getUnit().getIdentifiers().isEmpty());
         Assertions.assertTrue(param0.getIdentifiers().isEmpty());
 
@@ -3208,7 +3214,8 @@ public class WktParserTest {
         Assertions.assertTrue(param1.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param1.getUnit().getName().getSemantics());
         Assertions.assertTrue(param1.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param1.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        param1.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param1.getUnit().getIdentifiers().isEmpty());
         Assertions.assertTrue(param1.getIdentifiers().isEmpty());
 
@@ -3342,21 +3349,21 @@ public class WktParserTest {
     @Test
     public void geodetic_crs_test_a_1() throws LanguageException {
 
-        final var text = "GEODETICCRS[\"JGD2000\"," +
-                "DATUM[\"Japanese Geodetic Datum 2000\"," +
-                "ELLIPSOID[\"GRS 1980\",6378137,298.257222101]]," +
-                "PRIMEM[\"Paris\",2.5969213]," +
-                "CS[Cartesian,3]," +
-                "AXIS[\"(X)\",geocentricX]," +
-                "AXIS[\"(Y)\",geocentricY]," +
-                "AXIS[\"(Z)\",geocentricZ]," +
-                "LENGTHUNIT[\"metre\",1.0]," +
-                "SCOPE[\"Geodesy, topographic mapping and cadastre\"]," +
-                "AREA[\"Japan\"]," +
-                "BBOX[17.09,122.38,46.05,157.64]," +
-                "TIMEEXTENT[2002-04-01,2011-10-21]," +
-                "ID[\"EPSG\",4946,URI[\"urn:ogc:def:crs:EPSG::4946\"]]," +
-                "REMARK[\"注：JGD2000ジオセントリックは現在JGD2011に代わりました。\"]]";
+        final var text = "GEODETICCRS[\"JGD2000\","
+               + "DATUM[\"Japanese Geodetic Datum 2000\","
+               + "ELLIPSOID[\"GRS 1980\",6378137,298.257222101]],"
+               + "PRIMEM[\"Paris\",2.5969213],"
+               + "CS[Cartesian,3],"
+               + "AXIS[\"(X)\",geocentricX],"
+               + "AXIS[\"(Y)\",geocentricY],"
+               + "AXIS[\"(Z)\",geocentricZ],"
+               + "LENGTHUNIT[\"metre\",1.0],"
+               + "SCOPE[\"Geodesy, topographic mapping and cadastre\"],"
+               + "AREA[\"Japan\"],"
+               + "BBOX[17.09,122.38,46.05,157.64],"
+               + "TIMEEXTENT[2002-04-01,2011-10-21],"
+               + "ID[\"EPSG\",4946,URI[\"urn:ogc:def:crs:EPSG::4946\"]],"
+               + "REMARK[\"注：JGD2000ジオセントリックは現在JGD2011に代わりました。\"]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -3525,7 +3532,8 @@ public class WktParserTest {
         Assertions.assertTrue(xUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", xUnit.getName().getSemantics());
         Assertions.assertTrue(xUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(xUnit.getIdentifiers().isEmpty());
 
         final var y = cs.getAxis().get(1);
@@ -3538,7 +3546,8 @@ public class WktParserTest {
         Assertions.assertTrue(yUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", yUnit.getName().getSemantics());
         Assertions.assertTrue(yUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(yUnit.getIdentifiers().isEmpty());
 
         final var z = cs.getAxis().get(2);
@@ -3565,15 +3574,15 @@ public class WktParserTest {
     @Test
     public void geodetic_crs_test_c_1() throws LanguageException {
 
-        final var text = "GEODCRS[\"NAD83\"," +
-            "DATUM[\"North American Datum 1983\"," +
-            "ELLIPSOID[\"GRS 1980\",6378137,298.257222101,LENGTHUNIT[\"metre\",1.0]]]," +
-            "CS[ellipsoidal,2]," +
-            "AXIS[\"latitude\",north]," +
-            "AXIS[\"longitude\",east]," +
-            "ANGLEUNIT[\"degree\",0.017453292519943]," +
-            "ID[\"EPSG\",4269]," +
-            "REMARK[\"1986 realisation\"]]";
+        final var text = "GEODCRS[\"NAD83\","
+            + "DATUM[\"North American Datum 1983\","
+            + "ELLIPSOID[\"GRS 1980\",6378137,298.257222101,LENGTHUNIT[\"metre\",1.0]]],"
+            + "CS[ellipsoidal,2],"
+            + "AXIS[\"latitude\",north],"
+            + "AXIS[\"longitude\",east],"
+            + "ANGLEUNIT[\"degree\",0.017453292519943],"
+            + "ID[\"EPSG\",4269],"
+            + "REMARK[\"1986 realisation\"]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -3630,7 +3639,8 @@ public class WktParserTest {
         Assertions.assertTrue(csUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", csUnit.getName().getSemantics());
         Assertions.assertTrue(csUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.017453292519943, ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.017453292519943,
+        ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
         Assertions.assertNull(crs.getScope());
@@ -3653,15 +3663,15 @@ public class WktParserTest {
     @Test
     public void geodetic_crs_test_d_1() throws LanguageException {
 
-        final var text = "GEODCRS[\"NTF (Paris)\"," +
-                "DATUM[\"Nouvelle Triangulation Francaise\"," +
-                "ELLIPSOID[\"Clarke 1880 (IGN)\",6378249.2,293.4660213]]," +
-                "PRIMEM[\"Paris\",2.5969213]," +
-                "CS[ellipsoidal,2]," +
-                "AXIS[\"latitude\",north,ORDER[1]]," +
-                "AXIS[\"longitude\",east,ORDER[2]]," +
-                "ANGLEUNIT[\"grad\",0.015707963267949]," +
-                "REMARK[\"Nouvelle Triangulation Française\"]]";
+        final var text = "GEODCRS[\"NTF (Paris)\","
+                + "DATUM[\"Nouvelle Triangulation Francaise\","
+                + "ELLIPSOID[\"Clarke 1880 (IGN)\",6378249.2,293.4660213]],"
+                + "PRIMEM[\"Paris\",2.5969213],"
+                + "CS[ellipsoidal,2],"
+                + "AXIS[\"latitude\",north,ORDER[1]],"
+                + "AXIS[\"longitude\",east,ORDER[2]],"
+                + "ANGLEUNIT[\"grad\",0.015707963267949],"
+                + "REMARK[\"Nouvelle Triangulation Française\"]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -3721,7 +3731,8 @@ public class WktParserTest {
         Assertions.assertTrue(csUnit instanceof Unit.Angle);
         Assertions.assertEquals("grad", csUnit.getName().getSemantics());
         Assertions.assertTrue(csUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.015707963267949, ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.015707963267949,
+        ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
         Assertions.assertNull(crs.getScope());
@@ -3841,7 +3852,8 @@ public class WktParserTest {
         final var primeMeridianUnit = primeMeridian.getUnit();
         Assertions.assertEquals("grad", primeMeridianUnit.getName().getSemantics());
         Assertions.assertTrue(primeMeridianUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.015707963267949, primeMeridianUnit.getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.015707963267949,
+        primeMeridianUnit.getConversionFactor().getSemantics().doubleValue());
 
 
         final Anchor anchor = datum.getAnchor();
@@ -3987,7 +3999,8 @@ public class WktParserTest {
     @Test
     public void ellipsoid_test_g_1() throws LanguageException {
 
-        final var text = "SPHEROID[\"Clark 1866\",20925832.164,294.97869821,LENGTHUNIT[\"US survey foot\",0.304800609601219]]";
+        final var text = "SPHEROID[\"Clark 1866\",20925832.164,294.97869821,"
+        + "LENGTHUNIT[\"US survey foot\",0.304800609601219]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -4168,7 +4181,8 @@ public class WktParserTest {
         Assertions.assertTrue(xUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", xUnit.getName().getSemantics());
         Assertions.assertTrue(xUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(xUnit.getIdentifiers().isEmpty());
 
         final var y = cs.getAxis().get(1);
@@ -4181,7 +4195,8 @@ public class WktParserTest {
         Assertions.assertTrue(yUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", yUnit.getName().getSemantics());
         Assertions.assertTrue(yUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(yUnit.getIdentifiers().isEmpty());
 
         final var z = cs.getAxis().get(2);
@@ -4241,8 +4256,10 @@ public class WktParserTest {
 
         Assertions.assertEquals(Direction.counterClockwise, direction.getType().getSemantics());
         Assertions.assertTrue(direction.getComplement() instanceof SimpleNumber.Bearing);
-        Assertions.assertTrue(((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
-        Assertions.assertEquals(0, ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
+        Assertions.assertTrue(
+        ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
+        Assertions.assertEquals(0,
+        ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
 
         final var order = axis.getOrder();
         Assertions.assertEquals(2, order.getValue().getSemantics().intValue());
@@ -4269,8 +4286,10 @@ public class WktParserTest {
 
         Assertions.assertEquals(Direction.counterClockwise, direction.getType().getSemantics());
         Assertions.assertTrue(direction.getComplement() instanceof SimpleNumber.Bearing);
-        Assertions.assertTrue(((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
-        Assertions.assertEquals(0, ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
+        Assertions.assertTrue(
+        ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
+        Assertions.assertEquals(0,
+        ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
 
         final var order = axis.getOrder();
         Assertions.assertEquals(2, order.getValue().getSemantics().intValue());
@@ -6839,50 +6858,50 @@ public class WktParserTest {
     @Test
     public void derived_engineering_crs_test_b_2() throws LanguageException {
 
-        final var text = "ENGCRS(\"Gulf of Mexico speculative seismic survey bin grid\"," +
-        "BASEPROJCRS(\"NAD27 / Texas South Central\"," +
-        "BASEGEODCRS(\"NAD27\"," +
-        "DATUM(\"North American Datum 1927\"," +
-        "ELLIPSOID(\"Clarke 1866\",20925832.164,294.97869821," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219))))," +
-        "CONVERSION(\"Texas South CentralSPCS27\"," +
-        "METHOD(\"Lambert Conic Conformal (2SP)\",ID(\"EPSG\",9802))," +
-        "PARAMETER(\"Latitude of false origin\",27.83333333333333," +
-        "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8821))," +
-        "PARAMETER(\"Longitude of false origin\",-99.0," +
-        "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8822))," +
-        "PARAMETER(\"Latitude of 1st standard parallel\",28.383333333333," +
-        "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8823))," +
-        "PARAMETER(\"Latitude of 2nd standard parallel\",30.283333333333," +
-        "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8824))," +
-        "PARAMETER(\"Easting at false origin\",2000000.0," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8826))," +
-        "PARAMETER(\"Northing at false origin\",0.0," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8827))))," +
-        "DERIVINGCONVERSION(\"Gulf of Mexico speculative survey bin grid\"," +
-        "METHOD(\"P6 (I = J-90°) seismic bin grid transformation\",ID(\"EPSG\",1049))," +
-        "PARAMETER(\"Bin grid origin I\",5000,SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8733))," +
-        "PARAMETER(\"Bin grid origin J\",0,SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8734))," +
-        "PARAMETER(\"Bin grid origin Easting\",871200," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8735))," +
-        "PARAMETER(\"Bin grid origin Northing\", 10280160," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8736))," +
-        "PARAMETER(\"Scale factor of bin grid\",1.0," +
-        "SCALEUNIT(\"Unity\",1.0),ID(\"EPSG\",8737))," +
-        "PARAMETER(\"Bin width on I-axis\",82.5," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8738))," +
-        "PARAMETER(\"Bin width on J-axis\",41.25," +
-        "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8739))," +
-        "PARAMETER(\"Map grid bearing of bin grid J-axis\",340," +
-        "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8740))," +
-        "PARAMETER(\"Bin node increment on I-axis\",1.0," +
-        "SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8741))," +
-        "PARAMETER(\"Bin node increment on J-axis\",1.0," +
-        "SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8742)))," +
-        "CS(Cartesian,2)," +
-        "AXIS(\"(I)\",northNorthWest)," +
-        "AXIS(\"(J)\",westSouthWest)," +
-        "SCALEUNIT(\"Bin\",1.0))";
+        final var text = "ENGCRS(\"Gulf of Mexico speculative seismic survey bin grid\","
+        + "BASEPROJCRS(\"NAD27 / Texas South Central\","
+        + "BASEGEODCRS(\"NAD27\","
+        + "DATUM(\"North American Datum 1927\","
+        + "ELLIPSOID(\"Clarke 1866\",20925832.164,294.97869821,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219)))),"
+        + "CONVERSION(\"Texas South CentralSPCS27\","
+        + "METHOD(\"Lambert Conic Conformal (2SP)\",ID(\"EPSG\",9802)),"
+        + "PARAMETER(\"Latitude of false origin\",27.83333333333333,"
+        + "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8821)),"
+        + "PARAMETER(\"Longitude of false origin\",-99.0,"
+        + "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8822)),"
+        + "PARAMETER(\"Latitude of 1st standard parallel\",28.383333333333,"
+        + "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8823)),"
+        + "PARAMETER(\"Latitude of 2nd standard parallel\",30.283333333333,"
+        + "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8824)),"
+        + "PARAMETER(\"Easting at false origin\",2000000.0,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8826)),"
+        + "PARAMETER(\"Northing at false origin\",0.0,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8827)))),"
+        + "DERIVINGCONVERSION(\"Gulf of Mexico speculative survey bin grid\","
+        + "METHOD(\"P6 (I = J-90°) seismic bin grid transformation\",ID(\"EPSG\",1049)),"
+        + "PARAMETER(\"Bin grid origin I\",5000,SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8733)),"
+        + "PARAMETER(\"Bin grid origin J\",0,SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8734)),"
+        + "PARAMETER(\"Bin grid origin Easting\",871200,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8735)),"
+        + "PARAMETER(\"Bin grid origin Northing\", 10280160,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8736)),"
+        + "PARAMETER(\"Scale factor of bin grid\",1.0,"
+        + "SCALEUNIT(\"Unity\",1.0),ID(\"EPSG\",8737)),"
+        + "PARAMETER(\"Bin width on I-axis\",82.5,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8738)),"
+        + "PARAMETER(\"Bin width on J-axis\",41.25,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219),ID(\"EPSG\",8739)),"
+        + "PARAMETER(\"Map grid bearing of bin grid J-axis\",340,"
+        + "ANGLEUNIT(\"degree\",0.0174532925199433),ID(\"EPSG\",8740)),"
+        + "PARAMETER(\"Bin node increment on I-axis\",1.0,"
+        + "SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8741)),"
+        + "PARAMETER(\"Bin node increment on J-axis\",1.0,"
+        + "SCALEUNIT(\"Bin\",1.0),ID(\"EPSG\",8742))),"
+        + "CS(Cartesian,2),"
+        + "AXIS(\"(I)\",northNorthWest),"
+        + "AXIS(\"(J)\",westSouthWest),"
+        + "SCALEUNIT(\"Bin\",1.0))";
 
 
         final WktParser parser = WktParser.of(text, '(', ')');
@@ -7050,7 +7069,8 @@ public class WktParserTest {
 
         final var derivingConvertion = derivedEngineering.getOperation();
 
-        Assertions.assertEquals("Gulf of Mexico speculative survey bin grid", derivingConvertion.getName().getSemantics());
+        Assertions.assertEquals("Gulf of Mexico speculative survey bin grid",
+        derivingConvertion.getName().getSemantics());
 
         final var convMeth = derivingConvertion.getMethod();
 
@@ -7883,7 +7903,8 @@ public class WktParserTest {
         Assertions.assertTrue(param0.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param0.getUnit().getName().getSemantics());
         Assertions.assertTrue(param0.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param0.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        param0.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param0.getUnit().getIdentifiers().isEmpty());
         Assertions.assertEquals(1, param0.getIdentifiers().size());
         final var id0 = param0.getIdentifiers().get(0);
@@ -7901,7 +7922,8 @@ public class WktParserTest {
         Assertions.assertTrue(param1.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param1.getUnit().getName().getSemantics());
         Assertions.assertTrue(param1.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param1.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        param1.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param1.getUnit().getIdentifiers().isEmpty());
         Assertions.assertEquals(1, param1.getIdentifiers().size());
         final var id1 = param1.getIdentifiers().get(0);
@@ -8010,7 +8032,8 @@ public class WktParserTest {
         Assertions.assertTrue(param0.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param0.getUnit().getName().getSemantics());
         Assertions.assertTrue(param0.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param0.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        param0.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param0.getUnit().getIdentifiers().isEmpty());
         Assertions.assertTrue(param0.getIdentifiers().isEmpty());
 
@@ -8021,7 +8044,8 @@ public class WktParserTest {
         Assertions.assertTrue(param1.getUnit() instanceof Unit.Angle);
         Assertions.assertEquals("degree", param1.getUnit().getName().getSemantics());
         Assertions.assertTrue(param1.getUnit().getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, param1.getUnit().getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        param1.getUnit().getConversionFactor().getSemantics().doubleValue());
         Assertions.assertTrue(param1.getUnit().getIdentifiers().isEmpty());
         Assertions.assertTrue(param1.getIdentifiers().isEmpty());
 
@@ -8155,21 +8179,21 @@ public class WktParserTest {
     @Test
     public void geodetic_crs_test_a_2() throws LanguageException {
 
-        final var text = "GEODETICCRS(\"JGD2000\"," +
-                "DATUM(\"Japanese Geodetic Datum 2000\"," +
-                "ELLIPSOID(\"GRS 1980\",6378137,298.257222101))," +
-                "PRIMEM(\"Paris\",2.5969213)," +
-                "CS(Cartesian,3)," +
-                "AXIS(\"(X)\",geocentricX)," +
-                "AXIS(\"(Y)\",geocentricY)," +
-                "AXIS(\"(Z)\",geocentricZ)," +
-                "LENGTHUNIT(\"metre\",1.0)," +
-                "SCOPE(\"Geodesy, topographic mapping and cadastre\")," +
-                "AREA(\"Japan\")," +
-                "BBOX(17.09,122.38,46.05,157.64)," +
-                "TIMEEXTENT(2002-04-01,2011-10-21)," +
-                "ID(\"EPSG\",4946,URI(\"urn:ogc:def:crs:EPSG::4946\"))," +
-                "REMARK(\"注：JGD2000ジオセントリックは現在JGD2011に代わりました。\"))";
+        final var text = "GEODETICCRS(\"JGD2000\","
+                + "DATUM(\"Japanese Geodetic Datum 2000\","
+                + "ELLIPSOID(\"GRS 1980\",6378137,298.257222101)),"
+                + "PRIMEM(\"Paris\",2.5969213),"
+                + "CS(Cartesian,3),"
+                + "AXIS(\"(X)\",geocentricX),"
+                + "AXIS(\"(Y)\",geocentricY),"
+                + "AXIS(\"(Z)\",geocentricZ),"
+                + "LENGTHUNIT(\"metre\",1.0),"
+                + "SCOPE(\"Geodesy, topographic mapping and cadastre\"),"
+                + "AREA(\"Japan\"),"
+                + "BBOX(17.09,122.38,46.05,157.64),"
+                + "TIMEEXTENT(2002-04-01,2011-10-21),"
+                + "ID(\"EPSG\",4946,URI(\"urn:ogc:def:crs:EPSG::4946\")),"
+                + "REMARK(\"注：JGD2000ジオセントリックは現在JGD2011に代わりました。\"))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -8338,7 +8362,8 @@ public class WktParserTest {
         Assertions.assertTrue(xUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", xUnit.getName().getSemantics());
         Assertions.assertTrue(xUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(xUnit.getIdentifiers().isEmpty());
 
         final var y = cs.getAxis().get(1);
@@ -8351,7 +8376,8 @@ public class WktParserTest {
         Assertions.assertTrue(yUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", yUnit.getName().getSemantics());
         Assertions.assertTrue(yUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(yUnit.getIdentifiers().isEmpty());
 
         final var z = cs.getAxis().get(2);
@@ -8378,15 +8404,15 @@ public class WktParserTest {
     @Test
     public void geodetic_crs_test_c_2() throws LanguageException {
 
-        final var text = "GEODCRS(\"NAD83\"," +
-            "DATUM(\"North American Datum 1983\"," +
-            "ELLIPSOID(\"GRS 1980\",6378137,298.257222101,LENGTHUNIT(\"metre\",1.0)))," +
-            "CS(ellipsoidal,2)," +
-            "AXIS(\"latitude\",north)," +
-            "AXIS(\"longitude\",east)," +
-            "ANGLEUNIT(\"degree\",0.017453292519943)," +
-            "ID(\"EPSG\",4269)," +
-            "REMARK(\"1986 realisation\"))";
+        final var text = "GEODCRS(\"NAD83\","
+            + "DATUM(\"North American Datum 1983\","
+            + "ELLIPSOID(\"GRS 1980\",6378137,298.257222101,LENGTHUNIT(\"metre\",1.0))),"
+            + "CS(ellipsoidal,2),"
+            + "AXIS(\"latitude\",north),"
+            + "AXIS(\"longitude\",east),"
+            + "ANGLEUNIT(\"degree\",0.017453292519943),"
+            + "ID(\"EPSG\",4269),"
+            + "REMARK(\"1986 realisation\"))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -8443,7 +8469,8 @@ public class WktParserTest {
         Assertions.assertTrue(csUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", csUnit.getName().getSemantics());
         Assertions.assertTrue(csUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.017453292519943, ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.017453292519943,
+        ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
         Assertions.assertNull(crs.getScope());
@@ -8466,15 +8493,15 @@ public class WktParserTest {
     @Test
     public void geodetic_crs_test_d_2() throws LanguageException {
 
-        final var text = "GEODCRS(\"NTF (Paris)\"," +
-                "DATUM(\"Nouvelle Triangulation Francaise\"," +
-                "ELLIPSOID(\"Clarke 1880 (IGN)\",6378249.2,293.4660213))," +
-                "PRIMEM(\"Paris\",2.5969213)," +
-                "CS(ellipsoidal,2)," +
-                "AXIS(\"latitude\",north,ORDER(1))," +
-                "AXIS(\"longitude\",east,ORDER(2))," +
-                "ANGLEUNIT(\"grad\",0.015707963267949)," +
-                "REMARK(\"Nouvelle Triangulation Française\"))";
+        final var text = "GEODCRS(\"NTF (Paris)\","
+                + "DATUM(\"Nouvelle Triangulation Francaise\","
+                + "ELLIPSOID(\"Clarke 1880 (IGN)\",6378249.2,293.4660213)),"
+                + "PRIMEM(\"Paris\",2.5969213),"
+                + "CS(ellipsoidal,2),"
+                + "AXIS(\"latitude\",north,ORDER(1)),"
+                + "AXIS(\"longitude\",east,ORDER(2)),"
+                + "ANGLEUNIT(\"grad\",0.015707963267949),"
+                + "REMARK(\"Nouvelle Triangulation Française\"))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -8534,7 +8561,8 @@ public class WktParserTest {
         Assertions.assertTrue(csUnit instanceof Unit.Angle);
         Assertions.assertEquals("grad", csUnit.getName().getSemantics());
         Assertions.assertTrue(csUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.015707963267949, ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.015707963267949,
+        ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
         Assertions.assertNull(crs.getScope());
@@ -8654,7 +8682,8 @@ public class WktParserTest {
         final var primeMeridianUnit = primeMeridian.getUnit();
         Assertions.assertEquals("grad", primeMeridianUnit.getName().getSemantics());
         Assertions.assertTrue(primeMeridianUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.015707963267949, primeMeridianUnit.getConversionFactor().getSemantics().doubleValue());
+        Assertions.assertEquals(0.015707963267949,
+        primeMeridianUnit.getConversionFactor().getSemantics().doubleValue());
 
 
         final Anchor anchor = datum.getAnchor();
@@ -8803,7 +8832,8 @@ public class WktParserTest {
     @Test
     public void ellipsoid_test_g_2() throws LanguageException {
 
-        final var text = "SPHEROID(\"Clark 1866\",20925832.164,294.97869821,LENGTHUNIT(\"US survey foot\",0.304800609601219))";
+        final var text = "SPHEROID(\"Clark 1866\",20925832.164,294.97869821,"
+        + "LENGTHUNIT(\"US survey foot\",0.304800609601219))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -8984,7 +9014,8 @@ public class WktParserTest {
         Assertions.assertTrue(xUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", xUnit.getName().getSemantics());
         Assertions.assertTrue(xUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(xUnit.getIdentifiers().isEmpty());
 
         final var y = cs.getAxis().get(1);
@@ -8997,7 +9028,8 @@ public class WktParserTest {
         Assertions.assertTrue(yUnit instanceof Unit.Angle);
         Assertions.assertEquals("degree", yUnit.getName().getSemantics());
         Assertions.assertTrue(yUnit.getConversionFactor().getSemantics() instanceof Double);
-        Assertions.assertEquals(0.0174532925199433, ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertEquals(0.0174532925199433,
+        ((Double) yUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(yUnit.getIdentifiers().isEmpty());
 
         final var z = cs.getAxis().get(2);
@@ -9057,8 +9089,10 @@ public class WktParserTest {
 
         Assertions.assertEquals(Direction.counterClockwise, direction.getType().getSemantics());
         Assertions.assertTrue(direction.getComplement() instanceof SimpleNumber.Bearing);
-        Assertions.assertTrue(((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
-        Assertions.assertEquals(0, ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
+        Assertions.assertTrue(
+        ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
+        Assertions.assertEquals(0,
+        ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
 
         final var order = axis.getOrder();
         Assertions.assertEquals(2, order.getValue().getSemantics().intValue());
@@ -9085,8 +9119,10 @@ public class WktParserTest {
 
         Assertions.assertEquals(Direction.counterClockwise, direction.getType().getSemantics());
         Assertions.assertTrue(direction.getComplement() instanceof SimpleNumber.Bearing);
-        Assertions.assertTrue(((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
-        Assertions.assertEquals(0, ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
+        Assertions.assertTrue(
+        ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics() instanceof Integer);
+        Assertions.assertEquals(0,
+        ((Integer) ((SimpleNumber.Bearing) direction.getComplement()).getValue().getSemantics()).intValue());
 
         final var order = axis.getOrder();
         Assertions.assertEquals(2, order.getValue().getSemantics().intValue());
