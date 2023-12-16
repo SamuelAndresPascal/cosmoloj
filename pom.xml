@@ -103,6 +103,7 @@
     <module>math-tabular</module>
     <module>language-wkt-sf</module>
     <module>language-wkt-cts</module>
+    <module>language-wkt2-v1_0</module>
     <module>format-shp</module>
     <module>format-shx</module>
     <module>format-dbf-v3</module>
@@ -221,6 +222,11 @@
         <groupId>${project.groupId}</groupId>
         <artifactId>language-wkt-cts</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+	<groupId>${project.groupId}</groupId>
+	<artifactId>language-wkt2-v1_0</artifactId>
+	<version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>

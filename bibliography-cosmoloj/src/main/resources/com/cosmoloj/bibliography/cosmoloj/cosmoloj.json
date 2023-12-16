@@ -49,5 +49,21 @@
             "key": "ogc"
         },
         "url": "https://portal.ogc.org/files/?artifact_id=999"
+    },
+    {
+        "type": "techreport",
+        "key": "wkt_crs_v1_0",
+        "kind": "standard",
+        "title": "Geographic information - Well known text representation of coordinate reference systems",
+        "year": 2015,
+        "month": "May",
+        "day": 1,
+        "number": "OGC 12-063r5",
+        "version": "1.0",
+        "institution": {
+            "type": "reference",
+            "key": "ogc"
+        },
+        "url": "http://docs.opengeospatial.org/is/12-063r5/12-063r5.html"
     }
 ]

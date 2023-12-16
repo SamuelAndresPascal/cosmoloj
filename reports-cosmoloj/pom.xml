@@ -64,6 +64,10 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>language-wkt2-v1_0</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>format-shp</artifactId>
     </dependency>
     <dependency>
@@ -194,6 +198,11 @@
                   <artifactId>language-wkt-cts</artifactId>
                   <version>${project.version}</version>
                 </artifactItem>
+		<artifactItem>
+	          <groupId>${project.groupId}</groupId>
+		  <artifactId>language-wkt2-v1_0</artifactId>
+		  <version>${project.version}</version>
+		</artifactItem>
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>format-shp</artifactId>
