@@ -647,6 +647,7 @@ public class WktParserTest {
         Assertions.assertEquals(6378137.0, targetEllipsoid.getSemiMajorAxis().getSemantics().doubleValue());
         Assertions.assertTrue(targetEllipsoid.getInverseFlattening().getSemantics() instanceof Double);
         Assertions.assertEquals(298.257222101, targetEllipsoid.getInverseFlattening().getSemantics().doubleValue());
+
         final var targetEllUnit = targetEllipsoid.getUnit();
         Assertions.assertEquals("metre", targetEllUnit.getName().getSemantics());
         Assertions.assertTrue(targetEllUnit.getConversionFactor().getSemantics() instanceof Double);
