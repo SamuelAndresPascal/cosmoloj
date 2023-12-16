@@ -45,6 +45,9 @@ deploy:
   stage: deploy
   script:
     - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy
+  environment:
+    name: maven
+    url: http://cosmoloj.com/maven/com/cosmoloj/cosmoloj/maven-metadata.xml
   artifacts:
     expire_in: 2 days
 
@@ -62,6 +65,9 @@ site:
     - mvn $MAVEN_CLI_OPTS site-deploy
   artifacts:
     expire_in: 2 days
+  environment:
+    name: site
+    url: http://cosmoloj.com/cosmoloj/
 
 sonar:
   stage: site
@@ -70,3 +76,6 @@ sonar:
     - mvn $MAVEN_CLI_OPTS sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT -Dsonar.host.url=http://$SONAR_SERVER:9000 -Dsonar.login=$SONAR_LOGIN
   artifacts:
     expire_in: 2 days
+  environment:
+    name: sonar
+    url: http://sonar.romiosyne.net/dashboard?id=cosmoloj
