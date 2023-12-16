@@ -18,9 +18,9 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>util</artifactId>
     </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>format-csv</artifactId>
-    <dependency>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
