@@ -18,6 +18,10 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>util</artifactId>
     </dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>format-csv</artifactId>
+    <dependency>
+    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>math-util</artifactId>
@@ -134,7 +138,12 @@
                   <groupId>${project.groupId}</groupId>
                   <artifactId>util</artifactId>
                   <version>${project.version}</version>
-                </artifactItem>
+	        </artifactItem>
+		<artifactItem>
+		  <groupId>${project.groupId}</groupId>
+		  <artifactId>format-csv</artifactId>
+		  <version>${project.version}</version>
+		</artifactItem>
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>math-util</artifactId>

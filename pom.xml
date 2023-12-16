@@ -92,6 +92,7 @@
       -->
     <module>configuration</module>
     <module>util</module>
+    <module>format-csv</module>
     <module>math-util</module>
     <module>processor-common</module>
     <module>language-api</module>
