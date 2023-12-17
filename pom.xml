@@ -25,7 +25,7 @@
     <project.info.reports.plugin.version>3.4.1</project.info.reports.plugin.version>
     <site.plugin.version>3.12.1</site.plugin.version>
     <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
-    <surefire.plugin.version>3.2.2</surefire.plugin.version>
+    <surefire.plugin.version>3.2.3</surefire.plugin.version>
     <spotbugs.plugin.version>4.7.3.4</spotbugs.plugin.version>
     <wagon.ssh.version>3.5.3</wagon.ssh.version>
 
@@ -34,9 +34,9 @@
     <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
     <site.server.path>${env.PUBLIC_SITE_SERVER_PATH}</site.server.path>
 
-    <slf4j.version>2.0.4</slf4j.version>
-    <logback.version>1.3.5</logback.version>
-    <junit.jupiter.version>5.9.2</junit.jupiter.version>
+    <slf4j.version>2.0.7</slf4j.version>
+    <logback.version>1.3.14</logback.version>
+    <junit.jupiter.version>5.10.1</junit.jupiter.version>
 
     <proc.mp.org.slf4j>${settings.localRepository}/org/slf4j/slf4j-api/${slf4j.version}/slf4j-api-${slf4j.version}.jar</proc.mp.org.slf4j>
     <proc.mp.util>${settings.localRepository}/com/cosmoloj/util/${project.version}/util-${project.version}.jar</proc.mp.util>
