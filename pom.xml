@@ -10,9 +10,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <checkstyle.plugin.version>3.2.2</checkstyle.plugin.version>
+    <checkstyle.plugin.version>3.3.1</checkstyle.plugin.version>
     <checkstyle.location>checkstyle.xml</checkstyle.location>
-    <checkstyle.version>10.12.0</checkstyle.version>
+    <checkstyle.version>10.12.6</checkstyle.version>
     <compiler.plugin.version>3.11.0</compiler.plugin.version>
     <compiler.plugin.release>21</compiler.plugin.release>
     <processor.plugin.version>4.5</processor.plugin.version>
@@ -169,9 +169,9 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
-	 <groupId>${project.groupId}</groupId>
-	 <artifactId>format-csv</artifactId>
-	 <version>${project.version}</version>
+	<groupId>${project.groupId}</groupId>
+	<artifactId>format-csv</artifactId>
+	<version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
@@ -509,7 +509,7 @@
       </plugin>
     </plugins>
   </reporting>
-  
+
   <profiles>
     <profile>
       <id>test-modules</id>
