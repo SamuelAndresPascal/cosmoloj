@@ -46,22 +46,17 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
             case 0 -> labelPredicate;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> basePredicate;
-            case 5 -> SpecialSymbol.comma;
+            case 5 -> SpecialSymbol.COMMA;
             case 6 -> operationPredicate;
-            case 7 -> SpecialSymbol.comma;
+            case 7 -> SpecialSymbol.COMMA;
             case 8 -> CoordinateSystem.class::isInstance;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
-                } else {
-                    yield Scope.INSTANCE_OF
-                    .or(Extent.INSTANCE_OF)
-                    .or(Identifier.INSTANCE_OF)
-                    .or(Remark.INSTANCE_OF);
-                }
-            }
+            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
+                       : Scope.INSTANCE_OF
+                        .or(Extent.INSTANCE_OF)
+                        .or(Identifier.INSTANCE_OF)
+                        .or(Remark.INSTANCE_OF);
         };
     }
 

@@ -12,14 +12,14 @@ import java.util.function.Predicate;
  */
 public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Object> {
 
-    doublequote_symbol('"', '"'),
-    colon(':'),
-    comma(','),
+    DOUBLEQUOTE('"', '"'),
+    COLON(':'),
+    COMMA(','),
     Z('Z'), // Séparateur de l'heure et du fuseau horaire
     T('T'), // Séparateur du jour et de l'heure au format ISO
     plus_sign('+'),
     minus_sign('-'),
-    space(' ');
+    SPACE(' ');
 
     private final String codePoints;
 

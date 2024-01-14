@@ -2013,7 +2013,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
      * <pre>
      * &lt;utc designator&gt; ::= Z
      * &lt;local time zone designator&gt; ::= {&lt;plus sign&gt; | &lt;minus sign&gt;} &lt;hour&gt;
-     * [&lt;colon&gt; &lt;minute&gt;]
+     * [&lt;COLON&gt; &lt;minute&gt;]
      * </pre>
      *
      * @return

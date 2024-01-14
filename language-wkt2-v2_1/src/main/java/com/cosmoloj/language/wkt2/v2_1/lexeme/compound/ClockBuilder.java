@@ -23,9 +23,9 @@ public class ClockBuilder extends LexemeSequenceLexemeBuilder<Clock> implements 
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(SpecialSymbol.T,
                 UnsignedInteger.UNSIGNED_INTEGER,
-                TimeZoneDesignator.INSTANCE_OF.or(SpecialSymbol.colon),
+                TimeZoneDesignator.INSTANCE_OF.or(SpecialSymbol.COLON),
                 UnsignedInteger.UNSIGNED_INTEGER,
-                TimeZoneDesignator.INSTANCE_OF.or(SpecialSymbol.colon),
+                TimeZoneDesignator.INSTANCE_OF.or(SpecialSymbol.COLON),
                 ExactNumericLiteral.EXACT_NUMERIC_LITERAL,
                 TimeZoneDesignator.INSTANCE_OF);
     }

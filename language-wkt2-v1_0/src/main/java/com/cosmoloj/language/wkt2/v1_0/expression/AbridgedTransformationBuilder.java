@@ -23,20 +23,15 @@ public class AbridgedTransformationBuilder
             case 0 -> WktKeyword.ABRIDGEDTRANSFORMATION;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
-                } else {
-                    yield ParameterAbridged.PARAMETER_ABRIDGED
+            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
+                       : ParameterAbridged.PARAMETER_ABRIDGED
                             .or(ParameterFile.INSTANCE_OF)
                             .or(Scope.INSTANCE_OF)
                             .or(Extent.INSTANCE_OF)
                             .or(Identifier.INSTANCE_OF)
                             .or(Remark.INSTANCE_OF);
-                }
-            }
         };
     }
 

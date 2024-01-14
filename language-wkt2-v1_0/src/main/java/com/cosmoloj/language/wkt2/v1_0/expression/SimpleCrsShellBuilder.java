@@ -23,7 +23,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
     private final Predicate<? super Token> datumPredicate;
     private final Predicate<? super Token> labels;
 
-    public SimpleCrsShellBuilder(final Predicate<? super Token> datumType, final WktKeyword... labels) {
+    protected SimpleCrsShellBuilder(final Predicate<? super Token> datumType, final WktKeyword... labels) {
         this.datumPredicate = datumType;
         Predicate<? super Token> l = labels[0];
         for (int i = 1; i < labels.length; i++) {
@@ -31,19 +31,20 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
         }
         this.labels = l;
     }
+
     @Override
     public Predicate<? super Token> predicate(final int currentIndex) {
         return switch (currentIndex) {
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> datumPredicate;
-            case 5 -> SpecialSymbol.comma;
+            case 5 -> SpecialSymbol.COMMA;
             case 6 -> CoordinateSystem.class::isInstance;
             default -> {
                 if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Scope.INSTANCE_OF
                             .or(Extent.INSTANCE_OF)

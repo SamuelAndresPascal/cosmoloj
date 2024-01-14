@@ -41,13 +41,8 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
-                } else {
-                    yield anchorPredicate.or(Identifier.INSTANCE_OF);
-                }
-            }
+            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
+                       : anchorPredicate.or(Identifier.INSTANCE_OF);
         };
     }
 
@@ -55,7 +50,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     public Predicate<? super Token> constraintBefore(final int before) {
         if (even() && beyond(2)) {
             return switch (before) {
-                case 1 -> SpecialSymbol.comma;
+                case 1 -> SpecialSymbol.COMMA;
                 case 2 -> current(anchorPredicate) ? QuotedLatinText.QUOTED_LATIN_TEXT : t -> true;
                 default -> t -> true;
             };

@@ -24,16 +24,16 @@ public class BaseGeodeticCrsBuilder extends CheckTokenBuilder<Token, BaseGeodeti
         return List.of(WktKeyword.BASEGEODCRS.or(WktKeyword.GEOGCS).or(WktKeyword.GEOCCS),
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.QUOTED_LATIN_TEXT,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 GeodeticDatum.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma),
+                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 Unit.Angle.INSTANCE_OF_ANGLE,
                 RightDelimiter.INSTANCE_OF);
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int index) {
-        return index == 6 ? SpecialSymbol.comma : t -> true;
+        return index == 6 ? SpecialSymbol.COMMA : t -> true;
     }
 
     @Override

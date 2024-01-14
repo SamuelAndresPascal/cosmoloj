@@ -35,14 +35,14 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
         return List.of(labels,
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.QUOTED_LATIN_TEXT,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma),
+                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 Identifier.INSTANCE_OF,
                 RightDelimiter.INSTANCE_OF);
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return currentIndex == 4 ? SpecialSymbol.comma : t -> true;
+        return currentIndex == 4 ? SpecialSymbol.COMMA : t -> true;
     }
 
     public static class MapProjectionMethodBuilder extends MethodBuilder<Method.MapProjectionMethod> {

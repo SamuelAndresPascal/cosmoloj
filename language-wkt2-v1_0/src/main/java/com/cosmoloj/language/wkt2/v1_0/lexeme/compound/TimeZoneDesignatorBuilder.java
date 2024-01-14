@@ -13,7 +13,7 @@ import com.cosmoloj.language.api.semantic.Lexeme;
  * <pre>
  * &lt;utc designator&gt; ::= Z
  * &lt;local time zone designator&gt; ::= {&lt;plus sign&gt; | &lt;minus sign&gt;} &lt;hour&gt;
- * [&lt;colon&gt; &lt;minute&gt;]
+ * [&lt;COLON&gt; &lt;minute&gt;]
  * </pre>
  *
  * @author Samuel Andrés
@@ -25,7 +25,7 @@ public class TimeZoneDesignatorBuilder extends LexemeSequenceLexemeBuilder<TimeZ
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(SpecialSymbol.Z.or(SpecialSymbol.plus_sign).or(SpecialSymbol.minus_sign),
                 UnsignedInteger.UNSIGNED_INTEGER,
-                SpecialSymbol.colon,
+                SpecialSymbol.COLON,
                 UnsignedInteger.UNSIGNED_INTEGER);
     }
 

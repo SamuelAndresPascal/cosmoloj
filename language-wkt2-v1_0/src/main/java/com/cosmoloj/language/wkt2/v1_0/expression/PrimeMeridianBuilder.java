@@ -25,13 +25,13 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
             case 0 -> WktKeyword.PRIMEM.or(WktKeyword.PRIMEMERIDIAN);
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> SignedNumericLiteral.INSTANCE_OF;
-            case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+            case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
             case 6 -> Identifier.INSTANCE_OF.or(Unit.Angle.INSTANCE_OF_ANGLE);
             default -> {
                 if (odd() && beyond(6)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(7)) {
                     yield Identifier.INSTANCE_OF;
                 }
@@ -42,7 +42,7 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return (even() && beyond(7)) ? SpecialSymbol.comma : t -> true;
+        return (even() && beyond(7)) ? SpecialSymbol.COMMA : t -> true;
     }
 
     @Override

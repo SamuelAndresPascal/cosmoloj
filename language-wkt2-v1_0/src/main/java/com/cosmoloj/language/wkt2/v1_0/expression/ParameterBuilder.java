@@ -31,20 +31,14 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                     case 0 -> WktKeyword.PARAMETER;
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-                    case 3 -> SpecialSymbol.comma;
+                    case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.INSTANCE_OF;
-                    case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                     case 6 -> Identifier.INSTANCE_OF
                             .or(Unit.Angle.INSTANCE_OF_ANGLE)
                             .or(Unit.Length.INSTANCE_OF_LENGTH)
                             .or(Unit.Scale.INSTANCE_OF_SCALE);
-                    default -> {
-                        if (odd()) {
-                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
-                        } else {
-                            yield Identifier.INSTANCE_OF;
-                        }
-                    }
+                    default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
                 };
             }
 
@@ -76,21 +70,15 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                     case 0 -> WktKeyword.PARAMETER;
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-                    case 3 -> SpecialSymbol.comma;
+                    case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.INSTANCE_OF;
-                    case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                     case 6 -> Unit.Angle.INSTANCE_OF_ANGLE
                             .or(Unit.Length.INSTANCE_OF_LENGTH)
                             .or(Unit.Parametric.INSTANCE_OF_PARAMETRIC)
                             .or(Unit.Scale.INSTANCE_OF_SCALE)
                             .or(Unit.Time.INSTANCE_OF_TIME);
-                    default -> {
-                        if (odd()) {
-                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
-                        } else {
-                            yield Identifier.INSTANCE_OF;
-                        }
-                    }
+                    default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
                 };
             }
 
