@@ -70,6 +70,10 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>language-wkt2-v2_1</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>format-shp</artifactId>
     </dependency>
     <dependency>
@@ -144,12 +148,12 @@
                   <groupId>${project.groupId}</groupId>
                   <artifactId>util</artifactId>
                   <version>${project.version}</version>
-	        </artifactItem>
-		<artifactItem>
-		  <groupId>${project.groupId}</groupId>
-		  <artifactId>format-csv</artifactId>
-		  <version>${project.version}</version>
-		</artifactItem>
+	              </artifactItem>
+		            <artifactItem>
+		              <groupId>${project.groupId}</groupId>
+		              <artifactId>format-csv</artifactId>
+		              <version>${project.version}</version>
+		            </artifactItem>
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>math-util</artifactId>
@@ -200,11 +204,16 @@
                   <artifactId>language-wkt-cts</artifactId>
                   <version>${project.version}</version>
                 </artifactItem>
-		<artifactItem>
-	          <groupId>${project.groupId}</groupId>
-		  <artifactId>language-wkt2-v1_0</artifactId>
-		  <version>${project.version}</version>
-		</artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>language-wkt2-v1_0</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>language-wkt2-v2_1</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>format-shp</artifactId>

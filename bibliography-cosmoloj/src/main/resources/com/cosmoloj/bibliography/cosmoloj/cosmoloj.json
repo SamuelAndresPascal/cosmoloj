@@ -65,5 +65,21 @@
             "key": "ogc"
         },
         "url": "http://docs.opengeospatial.org/is/12-063r5/12-063r5.html"
+    },
+    {
+        "type": "techreport",
+        "key": "wkt_crs_v2_1",
+        "kind": "standard",
+        "title": "Geographic information - Well known text representation of coordinate reference systems",
+        "year": 2015,
+        "month": "May",
+        "day": 1,
+        "number": "OGC 18-010r11",
+        "version": "2.1.11",
+        "institution": {
+            "type": "reference",
+            "key": "ogc"
+        },
+        "url": "http://docs.opengeospatial.org/is/12-063r5/12-063r5.html"
     }
 ]

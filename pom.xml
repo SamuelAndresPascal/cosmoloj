@@ -104,6 +104,7 @@
     <module>language-wkt-sf</module>
     <module>language-wkt-cts</module>
     <module>language-wkt2-v1_0</module>
+    <module>language-wkt2-v2_1</module>
     <module>format-shp</module>
     <module>format-shx</module>
     <module>format-dbf-v3</module>
@@ -224,9 +225,14 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
-	<groupId>${project.groupId}</groupId>
-	<artifactId>language-wkt2-v1_0</artifactId>
-	<version>${project.version}</version>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-wkt2-v1_0</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>language-wkt2-v2_1</artifactId>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
