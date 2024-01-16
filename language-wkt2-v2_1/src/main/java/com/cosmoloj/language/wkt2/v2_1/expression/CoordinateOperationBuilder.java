@@ -24,15 +24,15 @@ public class CoordinateOperationBuilder
             case 0 -> WktKeyword.COORDINATEOPERATION;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> OperationCrs.SourceCrs.INSTANCE_OF_SOURCE_CRS;
-            case 5 -> SpecialSymbol.comma;
+            case 5 -> SpecialSymbol.COMMA;
             case 6 -> OperationCrs.TargetCrs.INSTANCE_OF_TARGET_CRS;
-            case 7 -> SpecialSymbol.comma;
+            case 7 -> SpecialSymbol.COMMA;
             case 8 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
             default -> {
                 if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Parameter.INSTANCE_OF
                             .or(ParameterFile.INSTANCE_OF)

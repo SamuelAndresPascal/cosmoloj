@@ -26,17 +26,17 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
             case 0 -> WktKeyword.GEODETICDATUM.or(WktKeyword.DATUM);
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> Ellipsoid.INSTANCE_OF;
             default -> {
                 if (odd() && rightDelimiterIndex == NOT_CLOSED) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && rightDelimiterIndex == NOT_CLOSED) {
                     yield Anchor.INSTANCE_OF.or(Identifier.INSTANCE_OF);
                 } else if (odd()) {
                     yield PrimeMeridian.INSTANCE_OF;
                 } else {
-                    yield SpecialSymbol.comma;
+                    yield SpecialSymbol.COMMA;
                 }
             }
         };

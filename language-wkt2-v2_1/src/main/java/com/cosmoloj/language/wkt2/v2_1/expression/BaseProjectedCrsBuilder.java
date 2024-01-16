@@ -23,9 +23,9 @@ public class BaseProjectedCrsBuilder extends CheckTokenBuilder<Token, BaseProjec
         return List.of(WktKeyword.BASEPROJCRS,
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.QUOTED_LATIN_TEXT,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 BaseGeodeticCrs.INSTANCE_OF,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 Operation.MapProjection.INSTANCE_OF_MAP_PROJECTION,
                 RightDelimiter.INSTANCE_OF);
     }

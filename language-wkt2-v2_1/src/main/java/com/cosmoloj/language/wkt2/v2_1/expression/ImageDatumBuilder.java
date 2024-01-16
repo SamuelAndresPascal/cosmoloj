@@ -25,11 +25,11 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
             case 0 -> WktKeyword.IDATUM.or(WktKeyword.IMAGEDATUM);
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> PixelInCell.Lexeme.INSTANCE_OF;
             default -> {
                 if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Identifier.INSTANCE_OF.or(Anchor.INSTANCE_OF);
                 }
@@ -41,7 +41,7 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
     public Predicate<? super Token> constraintBefore(final int before) {
         if (even() && beyond(4)) {
             return switch (before) {
-                case 1 -> SpecialSymbol.comma;
+                case 1 -> SpecialSymbol.COMMA;
                 case 2 -> current(Anchor.INSTANCE_OF) ? PixelInCell.Lexeme.INSTANCE_OF : t -> true;
                 default -> t -> true;
             };

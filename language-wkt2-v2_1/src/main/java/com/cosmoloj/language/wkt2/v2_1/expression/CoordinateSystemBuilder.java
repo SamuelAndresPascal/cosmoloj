@@ -31,17 +31,17 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     public Predicate<? super Token> predicate(final int currentIndex) {
         return switch (currentIndex) {
             case 0 -> WktKeyword.CS.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF)); // WKT-CTS compatibility
-            case 1 -> SpecialSymbol.comma.and(this::wktCts).or(LeftDelimiter.class::isInstance);
+            case 1 -> SpecialSymbol.COMMA.and(this::wktCts).or(LeftDelimiter.class::isInstance);
             case 2 -> CsType.Lexeme.INSTANCE_OF.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedInteger.UNSIGNED_INTEGER.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
             default -> {
                 if (odd() && !isClosed()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && !isClosed()) {
                     yield Identifier.INSTANCE_OF.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
                 } else if (odd()) {
-                    yield SpecialSymbol.comma;
+                    yield SpecialSymbol.COMMA;
                 } else {
                     yield Axis.INSTANCE_OF.or(Unit.INSTANCE_OF);
                 }
@@ -83,18 +83,18 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         public Predicate<? super Token> predicate(final int currentIndex) {
             return switch (currentIndex) {
                 case 0 -> WktKeyword.CS.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF)); // WKT-CTS compatibility
-                case 1 -> SpecialSymbol.comma.and(this::wktCts).or(LeftDelimiter.class::isInstance);
+                case 1 -> SpecialSymbol.COMMA.and(this::wktCts).or(LeftDelimiter.class::isInstance);
                 case 2 -> CsType.ellipsoidal.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
-                case 3 -> SpecialSymbol.comma;
+                case 3 -> SpecialSymbol.COMMA;
                 case 4 -> UnsignedInteger.UNSIGNED_INTEGER.and(t -> ((UnsignedInteger) t).getSemantics().equals(2))
                         .or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
                 default -> {
                     if (odd() && !isClosed()) {
-                        yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                        yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                     } else if (even() && !isClosed()) {
                         yield Identifier.INSTANCE_OF.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
                     } else if (odd()) {
-                        yield SpecialSymbol.comma;
+                        yield SpecialSymbol.COMMA;
                     } else {
                         yield Axis.INSTANCE_OF.or(Unit.INSTANCE_OF);
                     }

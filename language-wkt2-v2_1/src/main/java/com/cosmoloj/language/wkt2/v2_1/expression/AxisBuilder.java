@@ -24,13 +24,13 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
             case 0 -> WktKeyword.AXIS;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> AxisNameAbrev.INSTANCE_OF;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> AxisDirection.INSTANCE_OF;
             case 6 -> AxisOrder.INSTANCE_OF.or(Unit.INSTANCE_OF).or(Identifier.INSTANCE_OF);
             case 8 -> Identifier.INSTANCE_OF.or(Unit.INSTANCE_OF);
             default -> {
                 if (odd() && beyond(4)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(8)) {
                     yield Identifier.INSTANCE_OF;
                 }
@@ -41,7 +41,7 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return (even() && beyond(5)) ? SpecialSymbol.comma : t -> true;
+        return (even() && beyond(5)) ? SpecialSymbol.COMMA : t -> true;
     }
 
     @Override

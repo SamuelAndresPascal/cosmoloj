@@ -27,13 +27,13 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                     case 0 -> WktKeyword.GEODCRS.or(WktKeyword.GEODETICCRS).or(WktKeyword.GEOCCS).or(WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-                    case 3 -> SpecialSymbol.comma;
+                    case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.INSTANCE_OF;
-                    case 5 -> SpecialSymbol.comma;
+                    case 5 -> SpecialSymbol.COMMA;
                     case 6 -> CoordinateSystem.class::isInstance;
                     default -> {
                         if (odd()) {
-                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                         } else {
                             yield Scope.INSTANCE_OF
                                     .or(Extent.INSTANCE_OF)
@@ -65,13 +65,13 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                     case 0 -> WktKeyword.GEODCRS.or(WktKeyword.GEODETICCRS).or(WktKeyword.GEOCCS).or(WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-                    case 3 -> SpecialSymbol.comma;
+                    case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.INSTANCE_OF;
-                    case 5 -> SpecialSymbol.comma;
+                    case 5 -> SpecialSymbol.COMMA;
                     case 6 -> CoordinateSystem.Ellipsoidal2DCoordinateSystem.class::isInstance;
                     default -> {
                         if (odd()) {
-                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                         } else {
                             yield Scope.INSTANCE_OF
                                     .or(Extent.INSTANCE_OF)

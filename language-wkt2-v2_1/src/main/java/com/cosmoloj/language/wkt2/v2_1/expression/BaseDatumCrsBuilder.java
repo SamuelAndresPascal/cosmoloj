@@ -34,7 +34,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
         return List.of(label,
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.QUOTED_LATIN_TEXT,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 this.datumPredicate,
                 RightDelimiter.INSTANCE_OF);
     }

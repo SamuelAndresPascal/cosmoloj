@@ -39,11 +39,11 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedNumericLiteral.INSTANCE_OF;
             default -> {
                 if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Identifier.INSTANCE_OF;
                 }

@@ -22,11 +22,11 @@ public class BBoxBuilder extends CheckTokenBuilder<Token, BBox> implements Predi
         return List.of(WktKeyword.BBOX,
                 LeftDelimiter.class::isInstance,
                 SignedNumericLiteral.INSTANCE_OF,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 SignedNumericLiteral.INSTANCE_OF,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 SignedNumericLiteral.INSTANCE_OF,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 SignedNumericLiteral.INSTANCE_OF,
                 RightDelimiter.INSTANCE_OF);
     }

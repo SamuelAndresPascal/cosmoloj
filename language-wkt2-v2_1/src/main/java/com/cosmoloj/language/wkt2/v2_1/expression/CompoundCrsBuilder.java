@@ -23,13 +23,13 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
             case 0 -> WktKeyword.COMPOUNDCRS;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> HorizontalCrs.HORIZONTAL_CRS;
-            case 5 -> SpecialSymbol.comma;
+            case 5 -> SpecialSymbol.COMMA;
             case 6 -> SimpleCrsShell.VerticalCrs.INSTANCE_OF
                     .or(SimpleCrsShell.ParametricCrs.INSTANCE_OF)
                     .or(SimpleCrsShell.TemporalCrs.INSTANCE_OF);
-            case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+            case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
             case 8 -> SimpleCrsShell.TemporalCrs.INSTANCE_OF
                     .or(Scope.INSTANCE_OF)
                     .or(Extent.INSTANCE_OF)
@@ -37,7 +37,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
                     .or(Remark.INSTANCE_OF);
             default -> {
                 if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Scope.INSTANCE_OF
                     .or(Extent.INSTANCE_OF)

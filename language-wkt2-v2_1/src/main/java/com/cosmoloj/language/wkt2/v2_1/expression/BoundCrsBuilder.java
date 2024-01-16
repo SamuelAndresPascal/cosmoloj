@@ -23,9 +23,9 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
             case 0 -> WktKeyword.BOUNDCRS;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> OperationCrs.SourceCrs.INSTANCE_OF_SOURCE_CRS;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> OperationCrs.TargetCrs.INSTANCE_OF_TARGET_CRS;
-            case 5 -> SpecialSymbol.comma;
+            case 5 -> SpecialSymbol.COMMA;
             case 6 -> Operation.AbridgedTransformation.INSTANCE_OF_ABRIDGED_TRANSFORMATION;
             default -> {
                 if (odd() && beyond(8)) {
@@ -33,7 +33,7 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
                 } else if (even() && beyond(7)) {
                     yield Identifier.INSTANCE_OF.or(Remark.INSTANCE_OF);
                 } else if (odd() && beyond(6)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 }
                 yield t -> false;
             }
@@ -45,7 +45,7 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
         return switch (before) {
             case 1 -> {
                 if (even() && beyond(7)) {
-                    yield SpecialSymbol.comma;
+                    yield SpecialSymbol.COMMA;
                 } else if (odd() && beyond(8)) {
                     yield Identifier.INSTANCE_OF.or(Remark.INSTANCE_OF);
                 }

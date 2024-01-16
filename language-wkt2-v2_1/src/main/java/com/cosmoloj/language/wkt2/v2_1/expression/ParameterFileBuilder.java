@@ -23,13 +23,13 @@ public class ParameterFileBuilder extends CheckTokenBuilder<Token, ParameterFile
             case 0 -> WktKeyword.PARAMETERFILE;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 3 -> SpecialSymbol.comma;
+            case 3 -> SpecialSymbol.COMMA;
             case 4 -> QuotedLatinText.QUOTED_LATIN_TEXT;
-            case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+            case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
             case 6 -> Identifier.INSTANCE_OF;
             default -> {
                 if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma);
+                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Identifier.INSTANCE_OF;
                 }

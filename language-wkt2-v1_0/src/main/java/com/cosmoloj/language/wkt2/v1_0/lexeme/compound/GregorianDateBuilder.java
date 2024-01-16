@@ -26,7 +26,7 @@ public class GregorianDateBuilder extends LexemeSequenceLexemeBuilder<GregorianD
                 if (even()) {
                     yield UnsignedInteger.UNSIGNED_INTEGER;
                 } else if (below(5)) {
-                    yield SpecialSymbol.minus_sign;
+                    yield SpecialSymbol.MINUS_SIGN;
                 }
                 yield t -> false;
             }

@@ -23,7 +23,7 @@ public class TimeZoneDesignatorBuilder extends LexemeSequenceLexemeBuilder<TimeZ
 
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
-        return List.of(SpecialSymbol.Z.or(SpecialSymbol.plus_sign).or(SpecialSymbol.minus_sign),
+        return List.of(SpecialSymbol.Z.or(SpecialSymbol.PLUS_SIGN).or(SpecialSymbol.MINUS_SIGN),
                 UnsignedInteger.UNSIGNED_INTEGER,
                 SpecialSymbol.COLON,
                 UnsignedInteger.UNSIGNED_INTEGER);
@@ -36,6 +36,6 @@ public class TimeZoneDesignatorBuilder extends LexemeSequenceLexemeBuilder<TimeZ
 
     @Override
     public Predicate<? super Lexeme> constraintLast(final int currentIndex) {
-        return currentIndex == 1 ? SpecialSymbol.plus_sign.or(SpecialSymbol.minus_sign) : t -> true;
+        return currentIndex == 1 ? SpecialSymbol.PLUS_SIGN.or(SpecialSymbol.MINUS_SIGN) : t -> true;
     }
 }

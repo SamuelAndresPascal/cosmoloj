@@ -515,12 +515,12 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 name,
                 comma,
                 baseGeodeticCrs(baseCrsLabel),
-                flushAndLex(SpecialSymbol.comma),
+                flushAndLex(SpecialSymbol.COMMA),
                 mapProjection(flushAndLexEnum(WktKeyword.class), outProj));
 
         if (outProj[0] == null && outProj[1] == null) {
             builder.list(
-                    flushAndLex(SpecialSymbol.comma),
+                    flushAndLex(SpecialSymbol.COMMA),
                     coordinateSystem(outCs));
         } else {
             builder.list(

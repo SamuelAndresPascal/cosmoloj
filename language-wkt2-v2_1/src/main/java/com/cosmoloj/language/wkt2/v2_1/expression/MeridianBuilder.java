@@ -22,7 +22,7 @@ public class MeridianBuilder extends CheckTokenBuilder<Token, Meridian> implemen
         return List.of(WktKeyword.MERIDIAN,
                 LeftDelimiter.class::isInstance,
                 SignedNumericLiteral.INSTANCE_OF,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 Unit.Angle.INSTANCE_OF_ANGLE,
                 RightDelimiter.INSTANCE_OF);
     }

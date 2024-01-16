@@ -14,11 +14,11 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
 
     DOUBLEQUOTE('"', '"'),
     COLON(':'),
-    comma(','),
+    COMMA(','),
     Z('Z'), // Séparateur de l'heure et du fuseau horaire
     T('T'), // Séparateur du jour et de l'heure au format ISO
-    plus_sign('+'),
-    minus_sign('-'),
+    PLUS_SIGN('+'),
+    MINUS_SIGN('-'),
     SPACE(' ');
 
     private final String codePoints;

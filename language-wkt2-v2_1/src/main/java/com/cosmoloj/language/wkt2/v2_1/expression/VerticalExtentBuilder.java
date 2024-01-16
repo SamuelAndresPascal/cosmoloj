@@ -23,9 +23,9 @@ public class VerticalExtentBuilder extends CheckTokenBuilder<Token, VerticalExte
         return List.of(WktKeyword.VERTICALEXTENT,
                 LeftDelimiter.class::isInstance,
                 SignedNumericLiteral.INSTANCE_OF,
-                SpecialSymbol.comma,
+                SpecialSymbol.COMMA,
                 SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.comma),
+                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 Unit.Length.INSTANCE_OF_LENGTH,
                 RightDelimiter.INSTANCE_OF);
     }

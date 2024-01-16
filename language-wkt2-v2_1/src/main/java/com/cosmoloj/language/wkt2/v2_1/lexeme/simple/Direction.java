@@ -69,7 +69,7 @@ public enum Direction implements SemanticEnum<Direction>, Predicate<Object> {
 
     public static final class Lexeme extends EnumLexeme<Direction> {
 
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Lexeme;
+        public static final Predicate<Object> INSTANCE_OF = Lexeme.class::isInstance;
 
         private Lexeme(final String codePoints, final int first, final int last, final int index) {
             super(codePoints, first, last, index);
