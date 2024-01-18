@@ -33,7 +33,7 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof SpecialSymbol.Lexeme && this.equals(((SpecialSymbol.Lexeme) token).getSemantics());
+        return token instanceof SpecialSymbol.Lexeme s && this.equals(s.getSemantics());
     }
 
     @Override

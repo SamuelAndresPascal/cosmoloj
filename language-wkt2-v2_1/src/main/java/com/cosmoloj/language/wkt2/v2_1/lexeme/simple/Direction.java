@@ -56,7 +56,7 @@ public enum Direction implements SemanticEnum<Direction>, Predicate<Object> {
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof Direction.Lexeme && this.equals(((Direction.Lexeme) token).getSemantics());
+        return token instanceof Direction.Lexeme d && this.equals(d.getSemantics());
     }
 
     public static Direction toEnum(final String candidate) {
@@ -68,8 +68,6 @@ public enum Direction implements SemanticEnum<Direction>, Predicate<Object> {
     }
 
     public static final class Lexeme extends EnumLexeme<Direction> {
-
-        public static final Predicate<Object> INSTANCE_OF = Lexeme.class::isInstance;
 
         private Lexeme(final String codePoints, final int first, final int last, final int index) {
             super(codePoints, first, last, index);

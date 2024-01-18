@@ -3,7 +3,6 @@ package com.cosmoloj.language.wkt2.v2_1.lexeme.simple;
 import com.cosmoloj.language.common.text.lexeme.simple.StringLiteral;
 import com.cosmoloj.language.common.text.lexeme.simple.StringLiteralBuilder;
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 /**
  *
@@ -12,8 +11,6 @@ import java.util.function.Predicate;
 public class AxisNameAbrev extends StringLiteral {
 
     private static final int[] DOUBLE_QUOTE_EXP = new int[]{'"'};
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof AxisNameAbrev;
 
     public AxisNameAbrev(final String codePoints, final int first, final int last, final int index) {
         super(codePoints, first, last, index, '"');

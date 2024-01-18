@@ -18,7 +18,7 @@ public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Token> {
 
     @Override
     public boolean test(final Token token) {
-        return token instanceof PixelInCell.Lexeme && this.equals(((PixelInCell.Lexeme) token).getSemantics());
+        return token instanceof PixelInCell.Lexeme p && this.equals(p.getSemantics());
     }
 
     public static PixelInCell toEnum(final String candidate) {
@@ -30,8 +30,6 @@ public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Token> {
     }
 
     public static final class Lexeme extends EnumLexeme<PixelInCell> {
-
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof PixelInCell.Lexeme;
 
         private Lexeme(final String codePoints, final int first, final int last, final int index) {
             super(codePoints, first, last, index);
@@ -52,7 +50,7 @@ public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Token> {
     }
 
     public static EnumLexemeBuilder<PixelInCell> builder() {
-        return new EnumLexemeBuilder<PixelInCell>(PixelInCell.class, PixelInCell.values(),
+        return new EnumLexemeBuilder<>(PixelInCell.class, PixelInCell.values(),
                 EnumLexemeBuilder.Case.IGNORE, Locale.ROOT) {
 
             @Override

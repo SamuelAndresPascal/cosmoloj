@@ -16,7 +16,7 @@ public class AxisDirectionBuilder extends CheckTokenBuilder<Token, AxisDirection
 
     @Override
     public List<Predicate<? super Token>> predicates() {
-        return List.of(Direction.Lexeme.INSTANCE_OF,
+        return List.of(Direction.Lexeme.class::isInstance,
                 SimpleNumber.Bearing.INSTANCE_OF.or(Meridian.INSTANCE_OF));
     }
 

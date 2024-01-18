@@ -114,7 +114,7 @@ public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof WktKeyword.Lexeme && this.equals(((WktKeyword.Lexeme) token).getSemantics());
+        return token instanceof WktKeyword.Lexeme k && this.equals(k.getSemantics());
     }
 
     public static WktKeyword toEnum(final String candidate) {

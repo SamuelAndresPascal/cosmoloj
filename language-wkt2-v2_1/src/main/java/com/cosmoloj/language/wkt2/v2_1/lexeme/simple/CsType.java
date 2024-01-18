@@ -17,7 +17,7 @@ public enum CsType implements SemanticEnum<CsType>, Predicate<Object> {
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof CsType.Lexeme && this.equals(((CsType.Lexeme) token).getSemantics());
+        return token instanceof CsType.Lexeme cs && this.equals(cs.getSemantics());
     }
 
     public static CsType toEnum(final String candidate) {
@@ -30,7 +30,7 @@ public enum CsType implements SemanticEnum<CsType>, Predicate<Object> {
 
     public static final class Lexeme extends EnumLexeme<CsType> {
 
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Lexeme;
+        public static final Predicate<Object> INSTANCE_OF = Lexeme.class::isInstance;
 
         private Lexeme(final String codePoints, final int first, final int last, final int index) {
             super(codePoints, first, last, index);

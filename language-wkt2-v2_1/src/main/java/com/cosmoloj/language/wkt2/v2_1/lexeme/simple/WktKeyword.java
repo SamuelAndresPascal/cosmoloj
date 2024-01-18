@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.WKT_CRS_V1_0)
+@Reference(Cosmoloj.WKT_CRS_V2_1)
 public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
 
     ABRIDGEDTRANSFORMATION,
@@ -144,7 +144,7 @@ public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof WktKeyword.Lexeme && this.equals(((WktKeyword.Lexeme) token).getSemantics());
+        return token instanceof WktKeyword.Lexeme k && this.equals(k.getSemantics());
     }
 
     public static WktKeyword toEnum(final String candidate) {

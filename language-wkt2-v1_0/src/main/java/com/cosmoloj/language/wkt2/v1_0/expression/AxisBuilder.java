@@ -23,7 +23,7 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
         return switch (currentIndex) {
             case 0 -> WktKeyword.AXIS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> AxisNameAbrev.INSTANCE_OF;
+            case 2 -> AxisNameAbrev.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> AxisDirection.INSTANCE_OF;
             case 6 -> AxisOrder.INSTANCE_OF.or(Unit.INSTANCE_OF).or(Identifier.INSTANCE_OF);

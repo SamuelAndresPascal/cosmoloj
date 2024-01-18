@@ -66,7 +66,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
     @Override
     public CoordinateSystem build() {
-        final List<Token> type = tokens(CsType.Lexeme.INSTANCE_OF);
+        final List<Token> type = tokens(CsType.Lexeme.class::isInstance);
         final List<Token> dimention = tokens(UnsignedInteger.UNSIGNED_INTEGER);
 
         return new CoordinateSystem(first(), last(), index(),
@@ -104,7 +104,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
         @Override
         public CoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
-            final List<Token> type = tokens(CsType.Lexeme.INSTANCE_OF);
+            final List<Token> type = tokens(CsType.Lexeme.class::isInstance);
             final List<Token> dimention = tokens(UnsignedInteger.UNSIGNED_INTEGER);
 
             return new CoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
