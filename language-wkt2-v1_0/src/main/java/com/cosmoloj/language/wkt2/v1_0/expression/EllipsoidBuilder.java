@@ -24,7 +24,7 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
         return switch (currentIndex) {
             case 0 -> WktKeyword.ELLIPSOID.or(WktKeyword.SPHEROID);
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3, 5 -> SpecialSymbol.COMMA;
             case 4, 6 -> SignedNumericLiteral.INSTANCE_OF;
             case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
@@ -33,7 +33,7 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
                 if (odd() && beyond(8)) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(9)) {
-                    yield Identifier.INSTANCE_OF;
+                    yield Identifier.class::isInstance;
                 }
                 yield t -> false;
             }
@@ -49,6 +49,6 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
     public Ellipsoid build() {
         return new Ellipsoid(first(), last(), index(), token(0), token(2), token(4), token(6),
                 (size() >= 10 && testToken(8, Unit.Length.INSTANCE_OF_LENGTH)) ? token(8) : null,
-                tokens(Identifier.INSTANCE_OF));
+                tokens(Identifier.class::isInstance));
     }
 }

@@ -30,7 +30,6 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
     protected DerivedCrsBuilder(final Predicate<? super Token> baseCrsType,
             final Predicate<? super Token> operationType, final WktKeyword... labels) {
-        // super(8);
         this.basePredicate = baseCrsType;
         this.operationPredicate = operationType;
         Predicate<? super Token> l = labels[0];
@@ -45,7 +44,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
         return switch (currentIndex) {
             case 0 -> labelPredicate;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> basePredicate;
             case 5 -> SpecialSymbol.COMMA;

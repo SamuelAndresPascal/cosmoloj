@@ -22,7 +22,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
         return switch (currentIndex) {
             case 0 -> WktKeyword.COMPOUNDCRS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> HorizontalCrs.HORIZONTAL_CRS;
             case 5 -> SpecialSymbol.COMMA;

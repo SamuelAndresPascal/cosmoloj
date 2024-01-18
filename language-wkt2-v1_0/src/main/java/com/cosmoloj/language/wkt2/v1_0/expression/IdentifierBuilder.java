@@ -25,19 +25,19 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktKeyword.ID.or(WktKeyword.AUTHORITY),
                 LeftDelimiter.class::isInstance,
-                QuotedLatinText.QUOTED_LATIN_TEXT, // name
+                QuotedLatinText.class::isInstance, // name
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 QuotedLatinText.QUOTED_LATIN_TEXT.or(SignedNumericLiteral.INSTANCE_OF), // identifier
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 Citation.INSTANCE_OF
                         .or(Uri.INSTANCE_OF)
                         .or(SignedNumericLiteral.INSTANCE_OF)
-                        .or(QuotedLatinText.QUOTED_LATIN_TEXT),
+                        .or(QuotedLatinText.class::isInstance),
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 Citation.INSTANCE_OF.or(Uri.INSTANCE_OF),
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 Uri.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     @Override

@@ -37,7 +37,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
         return switch (currentIndex) {
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> datumPredicate;
             case 5 -> SpecialSymbol.COMMA;

@@ -26,7 +26,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                 return switch (currentIndex) {
                     case 0 -> WktKeyword.GEODCRS.or(WktKeyword.GEODETICCRS).or(WktKeyword.GEOCCS).or(WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
-                    case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                    case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.INSTANCE_OF;
                     case 5 -> SpecialSymbol.COMMA;
@@ -59,7 +59,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                 return switch (currentIndex) {
                     case 0 -> WktKeyword.GEODCRS.or(WktKeyword.GEODETICCRS).or(WktKeyword.GEOCCS).or(WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
-                    case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                    case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.INSTANCE_OF;
                     case 5 -> SpecialSymbol.COMMA;

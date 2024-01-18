@@ -34,10 +34,10 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
     public List<Predicate<? super Token>> predicates() {
         return List.of(labels,
                 LeftDelimiter.class::isInstance,
-                QuotedLatinText.QUOTED_LATIN_TEXT,
+                QuotedLatinText.class::isInstance,
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Identifier.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                Identifier.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override
@@ -53,7 +53,8 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
 
         @Override
         public Method.MapProjectionMethod build() {
-            return new Method.MapProjectionMethod(first(), last(), index(), token(2), tokens(Identifier.INSTANCE_OF));
+            return new Method.MapProjectionMethod(
+                    first(), last(), index(), token(2), tokens(Identifier.class::isInstance));
         }
     }
 
@@ -65,7 +66,8 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
 
         @Override
         public Method.OperationMethod build() {
-            return new Method.OperationMethod(first(), last(), index(), token(2), tokens(Identifier.INSTANCE_OF));
+            return new Method.OperationMethod(
+                    first(), last(), index(), token(2), tokens(Identifier.class::isInstance));
         }
     }
 }

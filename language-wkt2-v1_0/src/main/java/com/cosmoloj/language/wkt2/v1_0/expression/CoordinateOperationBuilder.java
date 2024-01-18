@@ -23,7 +23,7 @@ public class CoordinateOperationBuilder
         return switch (currentIndex) {
             case 0 -> WktKeyword.COORDINATEOPERATION;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> OperationCrs.SourceCrs.INSTANCE_OF_SOURCE_CRS;
             case 5 -> SpecialSymbol.COMMA;
@@ -38,7 +38,7 @@ public class CoordinateOperationBuilder
                             .or(SimpleNumber.Accuracy.INSTANCE_OF)
                             .or(Scope.INSTANCE_OF)
                             .or(Extent.INSTANCE_OF)
-                            .or(Identifier.INSTANCE_OF)
+                            .or(Identifier.class::isInstance)
                             .or(Remark.INSTANCE_OF);
         };
     }
@@ -52,7 +52,7 @@ public class CoordinateOperationBuilder
                 firstToken(SimpleNumber.Accuracy.INSTANCE_OF),
                 firstToken(Scope.INSTANCE_OF),
                 tokens(Extent.INSTANCE_OF),
-                tokens(Identifier.INSTANCE_OF),
+                tokens(Identifier.class::isInstance),
                 firstToken(Remark.INSTANCE_OF));
     }
 }

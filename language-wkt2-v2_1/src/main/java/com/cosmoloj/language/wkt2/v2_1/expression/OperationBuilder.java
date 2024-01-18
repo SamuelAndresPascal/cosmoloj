@@ -42,16 +42,11 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
 
             return switch (currentIndex) {
                 case 1 -> LeftDelimiter.class::isInstance;
-                case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                case 2 -> QuotedLatinText.class::isInstance;
                 case 3 -> SpecialSymbol.COMMA;
                 case 4 -> Method.MapProjectionMethod.INSTANCE_OF_MAP_PROJECTION_METHOD;
-                default -> {
-                    if (odd()) {
-                        yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                    } else {
-                        yield Parameter.INSTANCE_OF.or(Identifier.INSTANCE_OF);
-                    }
-                }
+                default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
+                    : Parameter.INSTANCE_OF.or(Identifier.INSTANCE_OF);
             };
         }
 
@@ -74,10 +69,10 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
         public Operation.MapProjection build() {
 
             return new Operation.MapProjection(first(), last(), index(),
-                    firstToken(QuotedLatinText.QUOTED_LATIN_TEXT),
+                    firstToken(QuotedLatinText.class::isInstance),
                     firstToken(Method.MapProjectionMethod.INSTANCE_OF_MAP_PROJECTION_METHOD),
                     tokens(AbstractParam.INSTANCE_OF),
-                    tokens(Identifier.INSTANCE_OF));
+                    tokens(Identifier.class::isInstance));
         }
     }
 
@@ -90,14 +85,14 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
             return switch (currentIndex) {
                 case 0 -> WktKeyword.DERIVINGCONVERSION;
                 case 1 -> LeftDelimiter.class::isInstance;
-                case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                case 2 -> QuotedLatinText.class::isInstance;
                 case 3 -> SpecialSymbol.COMMA;
                 case 4 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
                 default -> {
                     if (odd()) {
                         yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                     } else {
-                        yield Parameter.INSTANCE_OF.or(Identifier.INSTANCE_OF);
+                        yield Parameter.INSTANCE_OF.or(Identifier.class::isInstance);
                     }
                 }
             };
@@ -109,7 +104,7 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
                 return switch (before) {
                     case 1 -> SpecialSymbol.COMMA;
                     case 2 -> Parameter.INSTANCE_OF.or(current(Parameter.INSTANCE_OF)
-                            ? Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD : Identifier.INSTANCE_OF);
+                            ? Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD : Identifier.class::isInstance);
                     default -> t -> true;
                 };
             }
@@ -121,7 +116,7 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
 
             return new Operation.DerivingConversion(first(), last(), index(), token(2), token(4),
                     tokens(AbstractParam.INSTANCE_OF),
-                    tokens(Identifier.INSTANCE_OF));
+                    tokens(Identifier.class::isInstance));
         }
     }
 }

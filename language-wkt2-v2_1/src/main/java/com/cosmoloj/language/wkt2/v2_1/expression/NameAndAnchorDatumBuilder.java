@@ -40,12 +40,12 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
         return switch (currentIndex) {
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             default -> {
                 if (odd()) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
-                    yield anchorPredicate.or(Identifier.INSTANCE_OF);
+                    yield anchorPredicate.or(Identifier.class::isInstance);
                 }
             }
         };
@@ -56,7 +56,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
         if (even() && beyond(2)) {
             return switch (before) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> current(anchorPredicate) ? QuotedLatinText.QUOTED_LATIN_TEXT : t -> true;
+                case 2 -> current(anchorPredicate) ? QuotedLatinText.class::isInstance : t -> true;
                 default -> t -> true;
             };
         }
@@ -75,7 +75,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             public NameAndAnchorDatum.VerticalDatum build() {
 
                 return new NameAndAnchorDatum.VerticalDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }
@@ -88,7 +88,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             public NameAndAnchorDatum.EngineeringDatum build() {
 
                 return new NameAndAnchorDatum.EngineeringDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }
@@ -100,7 +100,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             public NameAndAnchorDatum.ParametricDatum build() {
 
                 return new NameAndAnchorDatum.ParametricDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }
@@ -111,7 +111,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             public NameAndAnchorDatum.TemporalDatum build() {
 
                 return new NameAndAnchorDatum.TemporalDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }

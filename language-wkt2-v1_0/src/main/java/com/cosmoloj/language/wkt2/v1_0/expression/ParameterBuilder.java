@@ -30,7 +30,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                 return switch (currentIndex) {
                     case 0 -> WktKeyword.PARAMETER;
                     case 1 -> LeftDelimiter.class::isInstance;
-                    case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                    case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.INSTANCE_OF;
                     case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
@@ -38,7 +38,8 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                             .or(Unit.Angle.INSTANCE_OF_ANGLE)
                             .or(Unit.Length.INSTANCE_OF_LENGTH)
                             .or(Unit.Scale.INSTANCE_OF_SCALE);
-                    default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
+                    default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
+                        : Identifier.class::isInstance;
                 };
             }
 
@@ -52,7 +53,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                         : null;
 
                 return new Parameter(first(), last(), index(), token(2), token(4), unit,
-                        tokens(Identifier.INSTANCE_OF));
+                        tokens(Identifier.class::isInstance));
             }
         };
     }
@@ -69,7 +70,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                 return switch (currentIndex) {
                     case 0 -> WktKeyword.PARAMETER;
                     case 1 -> LeftDelimiter.class::isInstance;
-                    case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                    case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.INSTANCE_OF;
                     case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
@@ -78,14 +79,15 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                             .or(Unit.Parametric.INSTANCE_OF_PARAMETRIC)
                             .or(Unit.Scale.INSTANCE_OF_SCALE)
                             .or(Unit.Time.INSTANCE_OF_TIME);
-                    default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
+                    default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
+                        : Identifier.class::isInstance;
                 };
             }
 
             @Override
             public Parameter build() {
                 return new Parameter(first(), last(), index(), token(2), token(4), token(6),
-                        tokens(Identifier.INSTANCE_OF));
+                        tokens(Identifier.class::isInstance));
             }
         };
     }

@@ -24,7 +24,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     private final Predicate<? super Token> datumPredicate;
     private final WktKeyword label;
 
-    public BaseDatumCrsBuilder(final Predicate<? super Token> datumType, final WktKeyword label) {
+    protected BaseDatumCrsBuilder(final Predicate<? super Token> datumType, final WktKeyword label) {
         this.datumPredicate = datumType;
         this.label = label;
     }
@@ -33,10 +33,10 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     public List<Predicate<? super Token>> predicates() {
         return List.of(label,
                 LeftDelimiter.class::isInstance,
-                QuotedLatinText.QUOTED_LATIN_TEXT,
+                QuotedLatinText.class::isInstance,
                 SpecialSymbol.COMMA,
                 this.datumPredicate,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseVerticalCrs, NameAndAnchorDatum.VerticalDatum> baseVerticalCrs() {

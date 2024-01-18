@@ -30,7 +30,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                 return switch (currentIndex) {
                     case 0 -> WktKeyword.PARAMETER;
                     case 1 -> LeftDelimiter.class::isInstance;
-                    case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                    case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.INSTANCE_OF;
                     case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
@@ -75,7 +75,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                 return switch (currentIndex) {
                     case 0 -> WktKeyword.PARAMETER;
                     case 1 -> LeftDelimiter.class::isInstance;
-                    case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+                    case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.INSTANCE_OF;
                     case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
@@ -88,7 +88,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                         if (odd()) {
                             yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                         } else {
-                            yield Identifier.INSTANCE_OF;
+                            yield Identifier.class::isInstance;
                         }
                     }
                 };
@@ -97,7 +97,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
             @Override
             public Parameter build() {
                 return new Parameter(first(), last(), index(), token(2), token(4), token(6),
-                        tokens(Identifier.INSTANCE_OF));
+                        tokens(Identifier.class::isInstance));
             }
         };
     }

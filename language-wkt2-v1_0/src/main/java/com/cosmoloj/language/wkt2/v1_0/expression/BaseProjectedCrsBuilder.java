@@ -22,17 +22,16 @@ public class BaseProjectedCrsBuilder extends CheckTokenBuilder<Token, BaseProjec
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktKeyword.BASEPROJCRS,
                 LeftDelimiter.class::isInstance,
-                QuotedLatinText.QUOTED_LATIN_TEXT,
+                QuotedLatinText.class::isInstance,
                 SpecialSymbol.COMMA,
                 BaseGeodeticCrs.INSTANCE_OF,
                 SpecialSymbol.COMMA,
                 Operation.MapProjection.INSTANCE_OF_MAP_PROJECTION,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     @Override
     public BaseProjectedCrs build() {
-
         return new BaseProjectedCrs(first(), last(), index(), token(2), token(4), token(6));
     }
 }

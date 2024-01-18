@@ -29,8 +29,8 @@ public abstract class TaggedLatinTextBuilder<E extends Expression> extends Check
     public List<Predicate<? super Token>> predicates() {
         return List.of(this.tag,
                 LeftDelimiter.class::isInstance,
-                QuotedLatinText.QUOTED_LATIN_TEXT,
-                RightDelimiter.INSTANCE_OF);
+                QuotedLatinText.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     public static TaggedLatinTextBuilder<Area> area() {

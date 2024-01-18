@@ -24,7 +24,7 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
         return switch (currentIndex) {
             case 0 -> WktKeyword.PRIMEM.or(WktKeyword.PRIMEMERIDIAN);
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> SignedNumericLiteral.INSTANCE_OF;
             case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
@@ -33,7 +33,7 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
                 if (odd() && beyond(6)) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(7)) {
-                    yield Identifier.INSTANCE_OF;
+                    yield Identifier.class::isInstance;
                 }
                 yield t -> false;
             }
@@ -49,6 +49,6 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
     public PrimeMeridian build() {
         return new PrimeMeridian(first(), last(), index(), token(2), token(4),
                 firstToken(Unit.Angle.INSTANCE_OF_ANGLE),
-                tokens(Identifier.INSTANCE_OF));
+                tokens(Identifier.class::isInstance));
     }
 }

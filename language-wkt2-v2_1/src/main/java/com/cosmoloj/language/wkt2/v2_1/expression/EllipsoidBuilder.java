@@ -24,7 +24,7 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
         return switch (currentIndex) {
             case 0 -> WktKeyword.ELLIPSOID.or(WktKeyword.SPHEROID);
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3, 5 -> SpecialSymbol.COMMA;
             case 4, 6 -> SignedNumericLiteral.INSTANCE_OF;
             case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);

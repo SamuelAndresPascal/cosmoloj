@@ -22,7 +22,7 @@ public class AbridgedTransformationBuilder
         return switch (currentIndex) {
             case 0 -> WktKeyword.ABRIDGEDTRANSFORMATION;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
             default -> {

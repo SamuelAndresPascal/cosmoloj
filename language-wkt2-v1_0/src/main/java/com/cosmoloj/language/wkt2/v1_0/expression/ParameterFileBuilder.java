@@ -22,17 +22,17 @@ public class ParameterFileBuilder extends CheckTokenBuilder<Token, ParameterFile
         return switch (currentIndex) {
             case 0 -> WktKeyword.PARAMETERFILE;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 4 -> QuotedLatinText.class::isInstance;
             case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-            case 6 -> Identifier.INSTANCE_OF;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
+            case 6 -> Identifier.class::isInstance;
+            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
         };
     }
 
     @Override
     public ParameterFile build() {
-        return new ParameterFile(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+        return new ParameterFile(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
     }
 }

@@ -22,7 +22,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
         return switch (currentIndex) {
             case 0 -> WktKeyword.COMPOUNDCRS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> HorizontalCrs.HORIZONTAL_CRS;
             case 5 -> SpecialSymbol.COMMA;
@@ -33,7 +33,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
             case 8 -> SimpleCrsShell.TemporalCrs.INSTANCE_OF
                     .or(Scope.INSTANCE_OF)
                     .or(Extent.INSTANCE_OF)
-                    .or(Identifier.INSTANCE_OF)
+                    .or(Identifier.class::isInstance)
                     .or(Remark.INSTANCE_OF);
             default -> {
                 if (odd()) {
@@ -41,7 +41,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
                 } else {
                     yield Scope.INSTANCE_OF
                     .or(Extent.INSTANCE_OF)
-                    .or(Identifier.INSTANCE_OF)
+                    .or(Identifier.class::isInstance)
                     .or(Remark.INSTANCE_OF);
                 }
             }
@@ -54,7 +54,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
                 (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.INSTANCE_OF)) ? token(8) : null,
                 firstToken(Scope.INSTANCE_OF),
                 tokens(Extent.INSTANCE_OF),
-                tokens(Identifier.INSTANCE_OF),
+                tokens(Identifier.class::isInstance),
                 firstToken(Remark.INSTANCE_OF));
     }
 }

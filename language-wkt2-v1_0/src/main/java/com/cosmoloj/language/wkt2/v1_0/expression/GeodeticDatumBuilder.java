@@ -25,14 +25,14 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
         return switch (currentIndex) {
             case 0 -> WktKeyword.GEODETICDATUM.or(WktKeyword.DATUM);
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> Ellipsoid.INSTANCE_OF;
             default -> {
                 if (odd() && rightDelimiterIndex == NOT_CLOSED) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && rightDelimiterIndex == NOT_CLOSED) {
-                    yield Anchor.INSTANCE_OF.or(Identifier.INSTANCE_OF);
+                    yield Anchor.INSTANCE_OF.or(Identifier.class::isInstance);
                 } else if (odd()) {
                     yield PrimeMeridian.INSTANCE_OF;
                 } else {
@@ -45,7 +45,7 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
     @Override
     public void add(final Token token) {
         super.add(token);
-        if (rightDelimiterIndex == NOT_CLOSED && RightDelimiter.INSTANCE_OF.test(token)) {
+        if (rightDelimiterIndex == NOT_CLOSED && RightDelimiter.class.isInstance(token)) {
             rightDelimiterIndex = size() - 1;
         }
     }
@@ -55,7 +55,7 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
 
         return new GeodeticDatum(first(), last(), index(), token(2), token(4),
                 firstToken(Anchor.INSTANCE_OF),
-                tokens(Identifier.INSTANCE_OF),
+                tokens(Identifier.class::isInstance),
                 firstToken(PrimeMeridian.INSTANCE_OF));
     }
 }

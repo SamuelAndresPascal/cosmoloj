@@ -38,7 +38,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
         return switch (currentIndex) {
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedLatinText.QUOTED_LATIN_TEXT;
+            case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedNumericLiteral.INSTANCE_OF;
             default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
