@@ -14,7 +14,18 @@ import java.util.function.Predicate;
  */
 public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Token> {
 
-    cellCentre, cellCenter, cellCorner;
+    CELL_CENTRE("cellCentre"), CELL_CENTER("cellCenter"), CELL_CORNER("cellCorner");
+
+    private final String codePoints;
+
+    PixelInCell(final String codePoints) {
+        this.codePoints = codePoints;
+    }
+
+    @Override
+    public String getCodePoints() {
+        return this.codePoints;
+    }
 
     @Override
     public boolean test(final Token token) {
@@ -23,10 +34,6 @@ public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Token> {
 
     public static PixelInCell toEnum(final String candidate) {
         return LanguageUtil.toEnumIgnoreCase(candidate, values());
-    }
-
-    public static boolean exists(final String candidate) {
-        return toEnum(candidate) != null;
     }
 
     public static final class Lexeme extends EnumLexeme<PixelInCell> {
@@ -50,7 +57,7 @@ public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Token> {
     }
 
     public static EnumLexemeBuilder<PixelInCell> builder() {
-        return new EnumLexemeBuilder<PixelInCell>(PixelInCell.class, PixelInCell.values(),
+        return new EnumLexemeBuilder<>(PixelInCell.class, PixelInCell.values(),
                 EnumLexemeBuilder.Case.IGNORE, Locale.ROOT) {
 
             @Override

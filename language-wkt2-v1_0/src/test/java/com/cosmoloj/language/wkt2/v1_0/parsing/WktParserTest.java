@@ -100,7 +100,7 @@ public class WktParserTest {
         Assertions.assertNull(sourceEllipsoid.getUnit());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, sourceCs.getType().getSemantics());
         Assertions.assertEquals(2, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, sourceCs.getAxis().size());
 
@@ -138,7 +138,7 @@ public class WktParserTest {
         Assertions.assertNull(targetEllipsoid.getUnit());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, targetCs.getType().getSemantics());
         Assertions.assertEquals(2, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, targetCs.getAxis().size());
 
@@ -297,7 +297,7 @@ public class WktParserTest {
         Assertions.assertNull(sourceEllipsoid.getUnit());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, sourceCs.getType().getSemantics());
         Assertions.assertEquals(2, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, sourceCs.getAxis().size());
 
@@ -335,7 +335,7 @@ public class WktParserTest {
         Assertions.assertNull(targetEllipsoid.getUnit());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, targetCs.getType().getSemantics());
         Assertions.assertEquals(2, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, targetCs.getAxis().size());
 
@@ -422,7 +422,7 @@ public class WktParserTest {
         Assertions.assertNull(sourceEllipsoid.getUnit());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, sourceCs.getType().getSemantics());
         Assertions.assertEquals(2, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, sourceCs.getAxis().size());
 
@@ -460,7 +460,7 @@ public class WktParserTest {
         Assertions.assertNull(targetEllipsoid.getUnit());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, targetCs.getType().getSemantics());
         Assertions.assertEquals(2, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, targetCs.getAxis().size());
 
@@ -607,7 +607,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -654,7 +654,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -797,7 +797,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -843,7 +843,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -992,7 +992,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -1038,7 +1038,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -1152,7 +1152,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -1198,7 +1198,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -1392,7 +1392,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -1438,7 +1438,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -1556,7 +1556,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, interEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var interCs = inter.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, interCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, interCs.getType().getSemantics());
         Assertions.assertEquals(3, interCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, interCs.getAxis().size());
 
@@ -1646,7 +1646,7 @@ public class WktParserTest {
 
         final var cs = geodetic.getCoordinateSystem();
         Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -1675,7 +1675,7 @@ public class WktParserTest {
         Assertions.assertEquals("North American Vertical Datum 1983", verticalDatum.getName().getSemantics());
 
         final var verticalCs = verticalCrs.getCoordinateSystem();
-        Assertions.assertEquals(CsType.vertical, verticalCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.VERTICAL, verticalCs.getType().getSemantics());
         Assertions.assertEquals(1, verticalCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(1, verticalCs.getAxis().size());
 
@@ -1744,7 +1744,7 @@ public class WktParserTest {
 
         final var cs = geodetic.getCoordinateSystem();
         Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -1776,7 +1776,7 @@ public class WktParserTest {
         Assertions.assertEquals("Mean Sea Level = 1013.25 hPa", anchor.getDescription().getSemantics());
 
         final var parametricCs = parametricCrs.getCoordinateSystem();
-        Assertions.assertEquals(CsType.parametric, parametricCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.PARAMETRIC, parametricCs.getType().getSemantics());
         Assertions.assertEquals(1, parametricCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(1, parametricCs.getAxis().size());
 
@@ -1839,7 +1839,7 @@ public class WktParserTest {
 
         final var cs = geodetic.getCoordinateSystem();
         Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -1872,7 +1872,7 @@ public class WktParserTest {
         Assertions.assertEquals(LocalDate.of(1980, Month.JANUARY, 1), timeOrigin.getDescription().getSemantics());
 
         final var timeCs = timeCrs.getCoordinateSystem();
-        Assertions.assertEquals(CsType.temporal, timeCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.TEMPORAL, timeCs.getType().getSemantics());
         Assertions.assertEquals(1, timeCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(1, timeCs.getAxis().size());
 
@@ -1998,7 +1998,7 @@ public class WktParserTest {
         Assertions.assertTrue(paramC2.getIdentifiers().isEmpty());
 
         final var cs = derivedEngineering.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, cs.getAxis().size());
 
@@ -2448,7 +2448,7 @@ public class WktParserTest {
         Assertions.assertNull(idC9.getVersion());
 
         final var cs = derivedEngineering.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, cs.getAxis().size());
 
@@ -2573,7 +2573,7 @@ public class WktParserTest {
 
         final var cs = derivedGeodetic.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -2699,7 +2699,7 @@ public class WktParserTest {
 
         final var cs = temporal.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.temporal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.TEMPORAL, cs.getType().getSemantics());
         Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(1, cs.getAxis().size());
@@ -2767,7 +2767,7 @@ public class WktParserTest {
 
         final var cs = image.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.parametric, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.PARAMETRIC, cs.getType().getSemantics());
         Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(1, cs.getAxis().size());
@@ -2820,13 +2820,13 @@ public class WktParserTest {
         final var datum = image.getDatum();
 
         Assertions.assertEquals("P1", datum.getName().getSemantics());
-        Assertions.assertEquals(PixelInCell.cellCorner, datum.getPixelInCell().getSemantics());
+        Assertions.assertEquals(PixelInCell.CELL_CORNER, datum.getPixelInCell().getSemantics());
 
         Assertions.assertEquals("Peg in south corner", datum.getAnchor().getDescription().getSemantics());
 
         final var cs = image.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -2865,7 +2865,7 @@ public class WktParserTest {
         final var datum = parser.imageDatum();
 
         Assertions.assertEquals("P1", datum.getName().getSemantics());
-        Assertions.assertEquals(PixelInCell.cellCorner, datum.getPixelInCell().getSemantics());
+        Assertions.assertEquals(PixelInCell.CELL_CORNER, datum.getPixelInCell().getSemantics());
 
         Assertions.assertEquals("Peg in south corner", datum.getAnchor().getDescription().getSemantics());
     }
@@ -2895,7 +2895,7 @@ public class WktParserTest {
 
         final var cs = engineering.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -2958,7 +2958,7 @@ public class WktParserTest {
 
         final var cs = vertical.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.vertical, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.VERTICAL, cs.getType().getSemantics());
         Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(1, cs.getAxis().size());
@@ -3397,7 +3397,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -3516,7 +3516,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -3613,7 +3613,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -3705,7 +3705,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -4056,7 +4056,7 @@ public class WktParserTest {
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -4111,7 +4111,7 @@ public class WktParserTest {
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -4165,7 +4165,7 @@ public class WktParserTest {
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -4935,7 +4935,7 @@ public class WktParserTest {
         Assertions.assertNull(sourceEllipsoid.getUnit());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, sourceCs.getType().getSemantics());
         Assertions.assertEquals(2, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, sourceCs.getAxis().size());
 
@@ -4973,7 +4973,7 @@ public class WktParserTest {
         Assertions.assertNull(targetEllipsoid.getUnit());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, targetCs.getType().getSemantics());
         Assertions.assertEquals(2, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, targetCs.getAxis().size());
 
@@ -5132,7 +5132,7 @@ public class WktParserTest {
         Assertions.assertNull(sourceEllipsoid.getUnit());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, sourceCs.getType().getSemantics());
         Assertions.assertEquals(2, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, sourceCs.getAxis().size());
 
@@ -5170,7 +5170,7 @@ public class WktParserTest {
         Assertions.assertNull(targetEllipsoid.getUnit());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, targetCs.getType().getSemantics());
         Assertions.assertEquals(2, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, targetCs.getAxis().size());
 
@@ -5257,7 +5257,7 @@ public class WktParserTest {
         Assertions.assertNull(sourceEllipsoid.getUnit());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, sourceCs.getType().getSemantics());
         Assertions.assertEquals(2, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, sourceCs.getAxis().size());
 
@@ -5295,7 +5295,7 @@ public class WktParserTest {
         Assertions.assertNull(targetEllipsoid.getUnit());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.ellipsoidal, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, targetCs.getType().getSemantics());
         Assertions.assertEquals(2, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, targetCs.getAxis().size());
 
@@ -5442,7 +5442,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -5488,7 +5488,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -5631,7 +5631,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -5677,7 +5677,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -5826,7 +5826,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -5872,7 +5872,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -5986,7 +5986,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -6032,7 +6032,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -6226,7 +6226,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var sourceCs = source.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, sourceCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, sourceCs.getType().getSemantics());
         Assertions.assertEquals(3, sourceCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, sourceCs.getAxis().size());
 
@@ -6272,7 +6272,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, targetEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var targetCs = target.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, targetCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, targetCs.getType().getSemantics());
         Assertions.assertEquals(3, targetCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, targetCs.getAxis().size());
 
@@ -6390,7 +6390,7 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, interEllUnit.getConversionFactor().getSemantics().doubleValue());
 
         final var interCs = inter.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, interCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, interCs.getType().getSemantics());
         Assertions.assertEquals(3, interCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, interCs.getAxis().size());
 
@@ -6480,7 +6480,7 @@ public class WktParserTest {
 
         final var cs = geodetic.getCoordinateSystem();
         Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -6509,7 +6509,7 @@ public class WktParserTest {
         Assertions.assertEquals("North American Vertical Datum 1983", verticalDatum.getName().getSemantics());
 
         final var verticalCs = verticalCrs.getCoordinateSystem();
-        Assertions.assertEquals(CsType.vertical, verticalCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.VERTICAL, verticalCs.getType().getSemantics());
         Assertions.assertEquals(1, verticalCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(1, verticalCs.getAxis().size());
 
@@ -6578,7 +6578,7 @@ public class WktParserTest {
 
         final var cs = geodetic.getCoordinateSystem();
         Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -6610,7 +6610,7 @@ public class WktParserTest {
         Assertions.assertEquals("Mean Sea Level = 1013.25 hPa", anchor.getDescription().getSemantics());
 
         final var parametricCs = parametricCrs.getCoordinateSystem();
-        Assertions.assertEquals(CsType.parametric, parametricCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.PARAMETRIC, parametricCs.getType().getSemantics());
         Assertions.assertEquals(1, parametricCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(1, parametricCs.getAxis().size());
 
@@ -6673,7 +6673,7 @@ public class WktParserTest {
 
         final var cs = geodetic.getCoordinateSystem();
         Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -6706,7 +6706,7 @@ public class WktParserTest {
         Assertions.assertEquals(LocalDate.of(1980, Month.JANUARY, 1), timeOrigin.getDescription().getSemantics());
 
         final var timeCs = timeCrs.getCoordinateSystem();
-        Assertions.assertEquals(CsType.temporal, timeCs.getType().getSemantics());
+        Assertions.assertEquals(CsType.TEMPORAL, timeCs.getType().getSemantics());
         Assertions.assertEquals(1, timeCs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(1, timeCs.getAxis().size());
 
@@ -6831,7 +6831,7 @@ public class WktParserTest {
         Assertions.assertTrue(paramC2.getIdentifiers().isEmpty());
 
         final var cs = derivedEngineering.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(3, cs.getAxis().size());
 
@@ -7280,7 +7280,7 @@ public class WktParserTest {
         Assertions.assertNull(idC9.getVersion());
 
         final var cs = derivedEngineering.getCoordinateSystem();
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
         Assertions.assertEquals(2, cs.getAxis().size());
 
@@ -7405,7 +7405,7 @@ public class WktParserTest {
 
         final var cs = derivedGeodetic.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -7531,7 +7531,7 @@ public class WktParserTest {
 
         final var cs = temporal.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.temporal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.TEMPORAL, cs.getType().getSemantics());
         Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(1, cs.getAxis().size());
@@ -7599,7 +7599,7 @@ public class WktParserTest {
 
         final var cs = image.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.parametric, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.PARAMETRIC, cs.getType().getSemantics());
         Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(1, cs.getAxis().size());
@@ -7652,13 +7652,13 @@ public class WktParserTest {
         final var datum = image.getDatum();
 
         Assertions.assertEquals("P1", datum.getName().getSemantics());
-        Assertions.assertEquals(PixelInCell.cellCorner, datum.getPixelInCell().getSemantics());
+        Assertions.assertEquals(PixelInCell.CELL_CORNER, datum.getPixelInCell().getSemantics());
 
         Assertions.assertEquals("Peg in south corner", datum.getAnchor().getDescription().getSemantics());
 
         final var cs = image.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -7697,7 +7697,7 @@ public class WktParserTest {
         final var datum = parser.imageDatum();
 
         Assertions.assertEquals("P1", datum.getName().getSemantics());
-        Assertions.assertEquals(PixelInCell.cellCorner, datum.getPixelInCell().getSemantics());
+        Assertions.assertEquals(PixelInCell.CELL_CORNER, datum.getPixelInCell().getSemantics());
 
         Assertions.assertEquals("Peg in south corner", datum.getAnchor().getDescription().getSemantics());
     }
@@ -7727,7 +7727,7 @@ public class WktParserTest {
 
         final var cs = engineering.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(2, cs.getAxis().size());
@@ -7790,7 +7790,7 @@ public class WktParserTest {
 
         final var cs = vertical.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.vertical, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.VERTICAL, cs.getType().getSemantics());
         Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertEquals(1, cs.getAxis().size());
@@ -8229,7 +8229,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -8348,7 +8348,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -8445,7 +8445,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -8537,7 +8537,7 @@ public class WktParserTest {
 
         final var cs = crs.getCoordinateSystem();
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -8891,7 +8891,7 @@ public class WktParserTest {
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -8946,7 +8946,7 @@ public class WktParserTest {
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
-        Assertions.assertEquals(CsType.Cartesian, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.CARTESIAN, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
@@ -9000,7 +9000,7 @@ public class WktParserTest {
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
-        Assertions.assertEquals(CsType.ellipsoidal, cs.getType().getSemantics());
+        Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(3, cs.getDimension().getSemantics().intValue());
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());

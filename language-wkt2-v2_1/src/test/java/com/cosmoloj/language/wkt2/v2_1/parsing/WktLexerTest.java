@@ -25,7 +25,7 @@ public class WktLexerTest {
         final WktLexer lexer = WktLexer.initialize("cellCenter", LD, RD);
 
         lexer.lex(PixelInCell.class);
-        Assertions.assertEquals(PixelInCell.cellCenter, lexer.lexeme().getSemantics());
+        Assertions.assertEquals(PixelInCell.CELL_CENTER, lexer.lexeme().getSemantics());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class WktLexerTest {
         final WktLexer lexer = WktLexer.initialize("cellcenter", LD, RD);
 
         lexer.lex(PixelInCell.class);
-        Assertions.assertEquals(PixelInCell.cellCenter, lexer.lexeme().getSemantics());
+        Assertions.assertEquals(PixelInCell.CELL_CENTER, lexer.lexeme().getSemantics());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class WktLexerTest {
         final WktLexer lexer = WktLexer.initialize("affine", LD, RD);
 
         lexer.lex(CsType.class);
-        Assertions.assertEquals(CsType.affine, lexer.lexeme().getSemantics());
+        Assertions.assertEquals(CsType.AFFINE, lexer.lexeme().getSemantics());
     }
 
     @Test

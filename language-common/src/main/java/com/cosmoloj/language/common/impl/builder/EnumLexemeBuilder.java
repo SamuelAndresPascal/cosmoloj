@@ -21,11 +21,11 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
         SENTITIVE, IGNORE, LOWER
     }
 
-    public EnumLexemeBuilder(final Object lexemeType, final E[] values) {
+    protected EnumLexemeBuilder(final Object lexemeType, final E[] values) {
         this(lexemeType, values, Case.SENTITIVE, Locale.ROOT);
     }
 
-    public EnumLexemeBuilder(final Object lexemeType, final E[] values, final Case casePolicy, final Locale loc) {
+    protected EnumLexemeBuilder(final Object lexemeType, final E[] values, final Case casePolicy, final Locale loc) {
         super(lexemeType);
         this.values = values;
         this.casePolicy = casePolicy;

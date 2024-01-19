@@ -12,14 +12,14 @@ import com.cosmoloj.language.api.semantic.Lexeme;
  */
 public abstract class EnumLexeme<S extends Enum<S>> extends CharSequenceLexeme implements ParsableLexeme {
 
-    public EnumLexeme(final String codePoints, final int first, final int last, final int index) {
+    protected EnumLexeme(final String codePoints, final int first, final int last, final int index) {
         super(codePoints, first, last, index);
         if (getSemantics() == null) {
             throw new IllegalArgumentException();
         }
     }
 
-    public EnumLexeme(final Lexeme toMap) {
+    protected EnumLexeme(final Lexeme toMap) {
         super(toMap);
         if (getSemantics() == null) {
             throw new IllegalArgumentException();

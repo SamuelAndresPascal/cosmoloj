@@ -13,15 +13,18 @@ public interface SemanticEnum<T extends Enum<T>> {
 
     String name();
 
+    /**
+    Default, use enum name as code points.
+    */
     default String getCodePoints() {
         return name();
     }
 
     default int length() {
-        return name().length();
+        return getCodePoints().length();
     }
 
     default int codePointAt(final int index) {
-        return name().codePointAt(index);
+        return getCodePoints().codePointAt(index);
     }
 }

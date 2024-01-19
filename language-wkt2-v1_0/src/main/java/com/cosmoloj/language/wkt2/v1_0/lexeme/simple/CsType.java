@@ -13,7 +13,27 @@ import java.util.function.Predicate;
  */
 public enum CsType implements SemanticEnum<CsType>, Predicate<Object> {
 
-    affine, Cartesian, cylindrical, ellipsoidal, linear, parametric, polar, spherical, temporal, vertical;
+    AFFINE("affine"),
+    CARTESIAN("Cartesian"),
+    CYLINDRICAL("cylindrical"),
+    ELLIPSOIDAL("ellipsoidal"),
+    LINEAR("linear"),
+    PARAMETRIC("parametric"),
+    POLAR("polar"),
+    SPHERICAL("spherical"),
+    TEMPORAL("temporal"),
+    VERTICAL("vertical");
+
+    private final String codePoints;
+
+    CsType(final String codePoints) {
+        this.codePoints = codePoints;
+    }
+
+    @Override
+    public String getCodePoints() {
+        return this.codePoints;
+    }
 
     @Override
     public boolean test(final Object token) {
