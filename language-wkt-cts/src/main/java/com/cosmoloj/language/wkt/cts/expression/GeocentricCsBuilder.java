@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -22,18 +23,18 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
         return switch (size()) {
             case 0 -> WktName.GEOCCS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
+            case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> Datum.INSTANCE_OF;
             case 6 -> PrimeMeridian.INSTANCE_OF_CTS;
             case 8 -> Unit.INSTANCE_OF_CTS;
             case 10 -> Authority.INSTANCE_OF.or(Axis.INSTANCE_OF);
             case 12, 14 -> Axis.INSTANCE_OF;
-            case 16 -> Authority.INSTANCE_OF;
+            case 16 -> Authority.class::isInstance;
             default -> {
                 yield (odd() && beyond(8) && below(18))
                     ? SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF)
-                    : t -> false;
+                    : Predicates.no();
             }
         };
     }
@@ -50,10 +51,10 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
                             // un délimiteur de fermeture doit suivre une authorité
                             yield Authority.INSTANCE_OF.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS));
                         } else {
-                            yield t -> false;
+                            yield Predicates.no();
                         }
                     }
-                    yield t -> true;
+                    yield Predicates.yes();
                 }
             };
     }

@@ -21,12 +21,12 @@ public class FittedCsBuilder extends CheckTokenBuilder<Token, FittedCs> implemen
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.FITTED_CS,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
                 MathTransform.INSTANCE_OF,
                 SpecialSymbol.COMMA,
                 CoordinateSystem.class::isInstance,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     @Override

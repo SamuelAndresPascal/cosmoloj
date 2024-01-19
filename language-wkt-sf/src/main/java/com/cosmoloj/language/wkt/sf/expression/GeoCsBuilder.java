@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
 import com.cosmoloj.language.wkt.sf.lexeme.WktName;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -25,7 +26,7 @@ public abstract class GeoCsBuilder<O extends Expression> extends CheckTokenBuild
 
     private final WktName referenceLabel;
 
-    public GeoCsBuilder(final WktName referenceLabel) {
+    GeoCsBuilder(final WktName referenceLabel) {
         this.referenceLabel = referenceLabel;
         this.isGeogcs = t -> this.referenceLabel.equals(WktName.GEOGCS);
     }
@@ -34,23 +35,23 @@ public abstract class GeoCsBuilder<O extends Expression> extends CheckTokenBuild
     public List<Predicate<? super Token>> predicates() {
         return List.of(this.referenceLabel,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
                 Datum.INSTANCE_OF,
                 SpecialSymbol.COMMA,
                 PrimeMeridian.INSTANCE_OF,
                 SpecialSymbol.COMMA,
-                Unit.INSTANCE_OF,
+                Unit.class::isInstance,
                 // un GEOGCS 3D doit prévoir l'unité linéaire verticale
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA.and(this.isGeogcs)),
+                Predicates.of(RightDelimiter.class::isInstance).or(SpecialSymbol.COMMA.and(this.isGeogcs)),
                 // on continue uniquement si on n'a pas fermé l'expression au lexème précédent
-                Unit.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                Unit.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int index) {
-        return index == 10 ? SpecialSymbol.COMMA : t -> true;
+        return index == 10 ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     public static GeoCsBuilder<GeocentricCs> geoc() {

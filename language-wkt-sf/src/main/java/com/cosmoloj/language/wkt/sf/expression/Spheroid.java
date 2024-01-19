@@ -4,15 +4,12 @@ import com.cosmoloj.language.common.number.lexeme.compound.SignedNumericLiteral;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.WktName;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class Spheroid extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Spheroid;
 
     private final WktName.Lexeme label;
     private final QuotedName name;

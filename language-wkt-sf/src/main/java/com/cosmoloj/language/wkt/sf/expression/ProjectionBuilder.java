@@ -21,8 +21,8 @@ public class ProjectionBuilder extends CheckTokenBuilder<Token, Projection>
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.PROJECTION,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
-                RightDelimiter.INSTANCE_OF);
+                QuotedName.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

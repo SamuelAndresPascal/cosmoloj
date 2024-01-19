@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -22,10 +23,10 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.AXIS,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                AxisDirectionName.Lexeme.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                Predicates.or(AxisDirectionName.values()),
+                RightDelimiter.class::isInstance);
     }
 
     @Override

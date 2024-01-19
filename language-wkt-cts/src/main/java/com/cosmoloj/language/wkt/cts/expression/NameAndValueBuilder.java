@@ -12,6 +12,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -33,12 +34,12 @@ public abstract class NameAndValueBuilder<O extends Expression> extends CheckTok
     public List<Predicate<? super Token>> predicates() {
         return List.of(this.referenceLabel,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Authority.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                SignedNumericLiteral.class::isInstance,
+                Predicates.of(RightDelimiter.class::isInstance).or(SpecialSymbol.COMMA),
+                Authority.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override
@@ -47,10 +48,10 @@ public abstract class NameAndValueBuilder<O extends Expression> extends CheckTok
             case 0 -> switch (size()) {
                 case 5 -> current(SpecialSymbol.COMMA)
                 ? WktName.UNIT.or(WktName.PRIMEM).or(WktName.VERT_DATUM).or(WktName.LOCAL_DATUM)
-                : t -> true;
-                default -> t -> true;
+                : Predicates.yes();
+                default -> Predicates.yes();
             };
-            default -> t -> true;
+            default -> Predicates.yes();
         };
     }
 

@@ -23,7 +23,7 @@ public abstract class NameAndValueBuilder<O extends Expression> extends CheckTok
 
     private final WktName referenceLabel;
 
-    public NameAndValueBuilder(final WktName referenceLabel) {
+    NameAndValueBuilder(final WktName referenceLabel) {
         this.referenceLabel = referenceLabel;
     }
 
@@ -31,10 +31,10 @@ public abstract class NameAndValueBuilder<O extends Expression> extends CheckTok
     public List<Predicate<? super Token>> predicates() {
         return List.of(this.referenceLabel,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                SignedNumericLiteral.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     public static NameAndValueBuilder<Unit> unit() {

@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -23,15 +24,15 @@ public class ParamMtBuilder extends CheckTokenBuilder<Token, ParamMt>
         return switch (size()) {
             case 0 -> WktName.PARAM_MT;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
-            case 3 -> SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
+            case 2 -> QuotedName.class::isInstance;
+            case 3 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
             default -> {
                 if (even() && beyond(3)) {
                     yield Parameter.INSTANCE_OF;
                 } else if (odd() && beyond(4)) {
-                    yield SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
+                    yield SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }

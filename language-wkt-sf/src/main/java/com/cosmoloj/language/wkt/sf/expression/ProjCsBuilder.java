@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
 import com.cosmoloj.language.wkt.sf.lexeme.WktName;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -23,7 +24,7 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
         return switch (index) {
             case 0 -> WktName.PROJCS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
+            case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> GeographicCs.class::isInstance;
             case 6 -> Projection.INSTANCE_OF;
@@ -33,7 +34,7 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
                 } else if (odd() && beyond(8)) {
                     yield SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
                 } else {
-                    yield t -> false;
+                    yield Predicates.no();
                 }
             }
         };
@@ -49,10 +50,10 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             } else if (current(RightDelimiter.INSTANCE_OF)) {
                 return Unit.INSTANCE_OF;
             } else {
-                return t -> false;
+                return Predicates.no();
             }
         } else {
-            return t -> true;
+            return Predicates.yes();
         }
     }
 

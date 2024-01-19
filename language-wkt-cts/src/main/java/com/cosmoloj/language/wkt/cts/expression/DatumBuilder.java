@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,14 +24,14 @@ public class DatumBuilder extends CheckTokenBuilder<Token, Datum>
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.DATUM,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
                 Spheroid.INSTANCE_OF,
-                SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF),
-                Authority.INSTANCE_OF.or(ToWgs84.INSTANCE_OF),
-                SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF),
-                Authority.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance),
+                Predicates.of(Authority.class::isInstance).or(ToWgs84.INSTANCE_OF),
+                SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance),
+                Authority.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override
@@ -38,10 +39,10 @@ public class DatumBuilder extends CheckTokenBuilder<Token, Datum>
         return switch (before) {
             case 1 -> switch (index) {
                 case 6, 8 -> SpecialSymbol.COMMA;
-                default -> t -> true;
+                default -> Predicates.yes();
             };
-            case 2 -> index == 8 ? ToWgs84.INSTANCE_OF : t -> true;
-            default -> t -> true;
+            case 2 -> index == 8 ? ToWgs84.INSTANCE_OF : Predicates.yes();
+            default -> Predicates.yes();
         };
     }
 

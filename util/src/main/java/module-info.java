@@ -6,6 +6,7 @@ module com.cosmoloj.util {
     exports com.cosmoloj.util.bib;
     exports com.cosmoloj.util.bin;
     exports com.cosmoloj.util.conversion;
+    exports com.cosmoloj.util.function;
     exports com.cosmoloj.util.net;
     exports com.cosmoloj.util.security;
     exports com.cosmoloj.util.sql;

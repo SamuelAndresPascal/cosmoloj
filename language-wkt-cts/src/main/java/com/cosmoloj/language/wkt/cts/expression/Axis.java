@@ -1,6 +1,7 @@
 package com.cosmoloj.language.wkt.cts.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.wkt.cts.lexeme.AxisDirectionName;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import java.util.function.Predicate;
@@ -14,10 +15,10 @@ public class Axis extends AbstractExpression {
     public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Axis;
 
     private final QuotedName name;
-    private final AxisDirectionName.Lexeme direction;
+    private final EnumLexeme<AxisDirectionName> direction;
 
     public Axis(final int start, final int end, final int index, final QuotedName name,
-            final AxisDirectionName.Lexeme direction) {
+            final EnumLexeme<AxisDirectionName> direction) {
         super(start, end, index);
         this.name = name;
         this.direction = direction;
@@ -27,7 +28,7 @@ public class Axis extends AbstractExpression {
         return this.name;
     }
 
-    public AxisDirectionName.Lexeme getDirection() {
+    public EnumLexeme<AxisDirectionName> getDirection() {
         return this.direction;
     }
 }

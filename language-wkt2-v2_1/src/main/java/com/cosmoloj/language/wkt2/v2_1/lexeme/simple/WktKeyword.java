@@ -147,7 +147,7 @@ public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
     }
 
     public static EnumLexemeBuilder<WktKeyword> builder() {
-        return EnumLexemeBuilder.caseSensitive(WktKeyword.class, WktKeyword.values());
+        return EnumLexemeBuilder.ignoreCase(WktKeyword.class, WktKeyword.values());
     }
 
     public static boolean isUnit(final WktKeyword t) {

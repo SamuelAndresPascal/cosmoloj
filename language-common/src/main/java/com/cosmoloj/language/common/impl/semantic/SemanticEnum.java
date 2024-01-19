@@ -14,8 +14,9 @@ public interface SemanticEnum<T extends Enum<T>> {
     String name();
 
     /**
-    Default, use enum name as code points.
-    */
+     * Default, use enum name as code points.
+     * @return
+     */
     default String getCodePoints() {
         return name();
     }

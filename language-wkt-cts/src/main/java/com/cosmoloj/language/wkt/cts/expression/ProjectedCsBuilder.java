@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -24,7 +25,7 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
         return switch (size()) {
             case 0 -> WktName.PROJCS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
+            case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> GeographicCs.class::isInstance;
             case 6 -> Projection.INSTANCE_OF_CTS;
@@ -36,19 +37,11 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
                     } else if (beyond(7)) {
                         yield Parameter.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS);
                     } else {
-                        yield t -> false;
+                        yield Predicates.no();
                     }
                 }
-                case ODD -> {
-                    if (beyond(8)) {
-                        yield SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
-                    } else {
-                        yield t -> false;
-                    }
-                }
-                default -> {
-                    yield t -> false;
-                }
+                case ODD -> beyond(8) ? SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF) : Predicates.no();
+                default -> Predicates.no();
             };
         };
     }
@@ -57,18 +50,18 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
     public Predicate<? super Token> constraintBefore(final int before) {
 
         if (odd()) {
-            return t -> true;
+            return Predicates.yes();
         }
 
         return switch (before) {
-            case 1 -> beyond(7) ? SpecialSymbol.COMMA : t -> true;
+            case 1 -> beyond(7) ? SpecialSymbol.COMMA : Predicates.yes();
             case 2 -> {
                 if (beyond(9) && current(Axis.INSTANCE_OF.or(Authority.INSTANCE_OF))) {
                     yield Unit.INSTANCE_OF_CTS.or(Axis.INSTANCE_OF);
                 } else if (beyond(7) && current(Parameter.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS))) {
                     yield Parameter.INSTANCE_OF.or(Projection.INSTANCE_OF_CTS);
                 } else {
-                    yield t -> true;
+                    yield Predicates.yes();
                 }
             }
             case 4 -> {
@@ -78,13 +71,13 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
                     } else if (current(Authority.INSTANCE_OF)) {
                         yield Axis.INSTANCE_OF;
                     } else {
-                        yield t -> true;
+                        yield Predicates.yes();
                     }
                 } else {
-                    yield t -> true;
+                    yield Predicates.yes();
                 }
             }
-            default -> t -> true;
+            default -> Predicates.yes();
         };
     }
 

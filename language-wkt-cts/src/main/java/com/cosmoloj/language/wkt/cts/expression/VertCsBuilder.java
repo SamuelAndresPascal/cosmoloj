@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -22,15 +23,15 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
         return switch (size()) {
             case 0 -> WktName.VERT_CS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
+            case 2 -> QuotedName.class::isInstance;
             case 3, 5 -> SpecialSymbol.COMMA;
             case 4 -> VertDatum.INSTANCE_OF;
             case 6 -> Unit.INSTANCE_OF_CTS;
-            case 7, 9 -> SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
+            case 7, 9 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
             case 8 -> Authority.INSTANCE_OF.or(Axis.INSTANCE_OF);
             case 10 -> Authority.INSTANCE_OF;
-            case 11 -> RightDelimiter.INSTANCE_OF;
-            default -> t -> false;
+            case 11 -> RightDelimiter.class::isInstance;
+            default -> Predicates.no();
         };
     }
 
@@ -39,10 +40,10 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
         return switch (before) {
             case 1 -> switch (index) {
                 case 8, 10 -> SpecialSymbol.COMMA;
-                case 9 -> current(SpecialSymbol.COMMA) ? Axis.INSTANCE_OF : t -> true;
-                default -> t -> true;
+                case 9 -> current(SpecialSymbol.COMMA) ? Axis.INSTANCE_OF : Predicates.yes();
+                default -> Predicates.yes();
             };
-            default -> t -> true;
+            default -> Predicates.yes();
         };
     }
 

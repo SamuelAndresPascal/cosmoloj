@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -24,19 +25,19 @@ public class SpheroidBuilder extends CheckTokenBuilder<Token, Spheroid>
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.SPHEROID.or(WktName.ELLIPSOID),
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
                 SignedNumericLiteral.INSTANCE_OF,
                 SpecialSymbol.COMMA,
                 SignedNumericLiteral.INSTANCE_OF,
-                SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF),
+                SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance),
                 Authority.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int index) {
-        return index == 8 ? SpecialSymbol.COMMA : t -> true;
+        return index == 8 ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     @Override

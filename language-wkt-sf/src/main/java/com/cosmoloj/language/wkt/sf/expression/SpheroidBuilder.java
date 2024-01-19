@@ -24,12 +24,12 @@ public class SpheroidBuilder extends CheckTokenBuilder<Token, Spheroid>
         return List.of(
                 WktName.SPHEROID.or(WktName.ELLIPSOID),
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                SignedNumericLiteral.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

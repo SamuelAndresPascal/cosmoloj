@@ -21,9 +21,9 @@ public class DatumBuilder extends CheckTokenBuilder<Token, Datum> implements Pre
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.DATUM,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                Spheroid.INSTANCE_OF,
+                Spheroid.class::isInstance,
                 RightDelimiter.INSTANCE_OF);
     }
 

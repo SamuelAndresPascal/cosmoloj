@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -22,7 +23,7 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
         return switch (size()) {
             case 0 -> WktName.LOCAL_CS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
+            case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> LocalDatum.INSTANCE_OF;
             case 6 -> Unit.INSTANCE_OF_CTS;
@@ -33,7 +34,7 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
                 } else if (even() && beyond(9)) {
                     yield Authority.INSTANCE_OF.or(Axis.INSTANCE_OF);
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }
@@ -49,7 +50,7 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
         } else if (even() && beyond(9)) {
             return SpecialSymbol.COMMA;
         }
-        return t -> true;
+        return Predicates.yes();
     }
 
     @Override

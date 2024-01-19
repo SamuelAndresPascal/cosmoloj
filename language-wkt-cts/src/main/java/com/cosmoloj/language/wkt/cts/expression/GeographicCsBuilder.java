@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -22,21 +23,21 @@ public class GeographicCsBuilder extends CheckTokenBuilder<Token, GeographicCs>
         return switch (size()) {
             case 0 -> WktName.GEOGCS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> QuotedName.QUOTED_NAME;
+            case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> Datum.INSTANCE_OF;
             case 6 -> PrimeMeridian.INSTANCE_OF_CTS;
             case 8 -> Unit.INSTANCE_OF_CTS;
-            case 9 -> SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF); // inutile
+            case 9 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance); // inutile
             case 10 -> Unit.INSTANCE_OF_CTS // unité angulaire verticale pour la compatibilité GOGCS 3D
-                    .or(Axis.INSTANCE_OF.or(Authority.INSTANCE_OF));
-            case 12 -> Axis.INSTANCE_OF.or(Authority.INSTANCE_OF);
-            case 14 -> Axis.INSTANCE_OF.or(Authority.INSTANCE_OF);
+                    .or(Predicates.of(Axis.class::isInstance).or(Authority.class::isInstance));
+            case 12 -> Predicates.of(Axis.class::isInstance).or(Authority.class::isInstance);
+            case 14 -> Predicates.of(Axis.class::isInstance).or(Authority.class::isInstance);
             case 16 -> Authority.INSTANCE_OF;
             default -> {
                 final int position = size();
                 yield (position > 8 && position % 2 == 1)
-                    ? SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF) : t -> false;
+                    ? SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance) : Predicates.no();
             }
         };
 //        return checkFor0(WktName.GEOGCS)
@@ -65,10 +66,10 @@ public class GeographicCsBuilder extends CheckTokenBuilder<Token, GeographicCs>
         return switch (before) {
             case 1 -> switch (index) {
                 case 10, 14, 16 -> SpecialSymbol.COMMA;
-                default -> t -> true;
+                default -> Predicates.yes();
             };
-            case 2 -> index == 14 ? Axis.INSTANCE_OF : t -> true;
-            default -> t -> true;
+            case 2 -> index == 14 ? Axis.INSTANCE_OF : Predicates.yes();
+            default -> Predicates.yes();
         };
     }
 

@@ -21,10 +21,10 @@ public class AuthorityBuilder extends CheckTokenBuilder<Token, Authority> implem
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.AUTHORITY,
                 LeftDelimiter.class::isInstance,
-                QuotedName.QUOTED_NAME,
+                QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                QuotedName.QUOTED_NAME,
-                RightDelimiter.INSTANCE_OF);
+                QuotedName.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

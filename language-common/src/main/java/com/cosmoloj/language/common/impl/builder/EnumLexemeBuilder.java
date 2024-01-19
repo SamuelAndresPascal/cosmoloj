@@ -161,4 +161,15 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
             }
         };
     }
+
+
+    public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> ignoreCase(
+            final Class<E> type, final E[] values) {
+        return new EnumLexemeBuilder<>(type, values) {
+            @Override
+            public Lexeme build(final int first, final int last, final int index) {
+                return new EnumLexeme.IgnoreCase<>(codePoints(), first, last, index, values);
+            }
+        };
+    }
 }
