@@ -22,9 +22,9 @@ public abstract class AbstractPredictiveParser<L extends AbstractPredictiveLexer
     }
 
     //@SuppressWarnings("unchecked")
-    public <T extends Enum<T> & SemanticEnum<T>, L extends EnumLexeme<T>> L lexEnum(final Class<T> lexemeType)
+    public <T extends Enum<T> & SemanticEnum<T>, L extends EnumLexeme<T>> L lexEnum(final Class<T> lexId)
             throws LanguageException {
-        getLexer().lex(lexemeType);
+        getLexer().lex(lexId);
         try {
             return (L) getLexer().lexeme();
         } catch (final ClassCastException ex) {
@@ -33,9 +33,9 @@ public abstract class AbstractPredictiveParser<L extends AbstractPredictiveLexer
     }
 
     public <T extends Enum<T> & SemanticEnum<T>, L extends EnumLexeme<T>> L flushAndLexEnum(
-            final Class<T> lexemeType) throws LanguageException {
+            final Class<T> lexId) throws LanguageException {
         getLexer().flush();
-        return lexEnum(lexemeType);
+        return lexEnum(lexId);
     }
 
     public <T extends Enum<T> & SemanticEnum<T>, L extends EnumLexeme<T>> L lex(final T... semantics)
@@ -59,18 +59,18 @@ public abstract class AbstractPredictiveParser<L extends AbstractPredictiveLexer
         return lex(semantics);
     }
 
-    public <T extends Lexeme> T lex(final Class<T> lexemeType) throws LanguageException {
-        getLexer().lex(lexemeType);
+    public <T extends Lexeme> T lex(final Class<T> lexId) throws LanguageException {
+        getLexer().lex(lexId);
         try {
             return (T) getLexer().lexeme();
         } catch (final ClassCastException ex) {
-            throw unexpected(getLexer().lexeme()).types(lexemeType).exception();
+            throw unexpected(getLexer().lexeme()).types(lexId).exception();
         }
     }
 
-    public <T extends Lexeme> T flushAndLex(final Class<T> lexemeType) throws LanguageException {
+    public <T extends Lexeme> T flushAndLex(final Class<T> lexId) throws LanguageException {
         getLexer().flush();
-        return lex(lexemeType);
+        return lex(lexId);
     }
 
     protected ParserExceptionBuilder unexpected(final Token token) {

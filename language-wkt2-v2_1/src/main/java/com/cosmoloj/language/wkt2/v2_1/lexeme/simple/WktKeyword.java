@@ -1,9 +1,8 @@
 package com.cosmoloj.language.wkt2.v2_1.lexeme.simple;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
-import com.cosmoloj.language.common.LanguageUtil;
+import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
-import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import com.cosmoloj.util.bib.Reference;
 import com.cosmoloj.util.bib.SectionReference;
@@ -144,45 +143,11 @@ public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof WktKeyword.Lexeme k && this.equals(k.getSemantics());
-    }
-
-    public static WktKeyword toEnum(final String candidate) {
-        return LanguageUtil.toEnumIgnoreCase(candidate, values());
-    }
-
-    public static boolean exists(final String candidate) {
-        return toEnum(candidate) != null;
-    }
-
-    public static final class Lexeme extends EnumLexeme<WktKeyword> {
-
-        private Lexeme(final String codePoints, final int first, final int last, final int index) {
-            super(codePoints, first, last, index);
-        }
-
-        private Lexeme(final Lexeme toMap) {
-            super(toMap);
-        }
-
-        @Override
-        public WktKeyword parse(final String codePoints) {
-            return toEnum(codePoints);
-        }
-    }
-
-    public static Lexeme map(final Lexeme toMap) {
-        return new Lexeme(toMap);
+        return token instanceof Lexeme k && this.equals(k.getSemantics());
     }
 
     public static EnumLexemeBuilder<WktKeyword> builder() {
-        return new EnumLexemeBuilder<WktKeyword>(WktKeyword.class, WktKeyword.values()) {
-
-            @Override
-            public Lexeme build(final int first, final int last, final int index) {
-                return new Lexeme(codePoints(), first, last, index);
-            }
-        };
+        return EnumLexemeBuilder.caseSensitive(WktKeyword.class, WktKeyword.values());
     }
 
     public static boolean isUnit(final WktKeyword t) {

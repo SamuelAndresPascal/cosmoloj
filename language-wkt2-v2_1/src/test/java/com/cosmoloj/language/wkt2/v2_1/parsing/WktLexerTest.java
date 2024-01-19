@@ -101,7 +101,7 @@ public class WktLexerTest {
 
         final WktLexer lexer = WktLexer.initialize("LINES2TRING", LD, RD);
 
-        lexer.lex(WktKeyword.Lexeme.class);
+        lexer.lex(WktKeyword.class);
         Assertions.assertNull(lexer.lexeme().getSemantics());
     }
 

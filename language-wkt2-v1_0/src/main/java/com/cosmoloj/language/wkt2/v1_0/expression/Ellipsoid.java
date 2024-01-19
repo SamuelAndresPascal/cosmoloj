@@ -1,6 +1,7 @@
 package com.cosmoloj.language.wkt2.v1_0.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.number.lexeme.compound.SignedNumericLiteral;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
@@ -15,14 +16,14 @@ public class Ellipsoid extends AbstractExpression {
 
     public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Ellipsoid;
 
-    private final WktKeyword.Lexeme label;
+    private final EnumLexeme<WktKeyword> label;
     private final QuotedLatinText name;
     private final SignedNumericLiteral semiMajorAxis;
     private final SignedNumericLiteral inverseFlattening;
     private final Unit.Length unit;
     private final List<Identifier> identifiers;
 
-    public Ellipsoid(final int start, final int end, final int index, final WktKeyword.Lexeme label,
+    public Ellipsoid(final int start, final int end, final int index, final EnumLexeme<WktKeyword> label,
             final QuotedLatinText name, final SignedNumericLiteral semiMajorAxis,
             final SignedNumericLiteral inverseFlattening, final Unit.Length unit, final List<Identifier> identifiers) {
         super(start, end, index);
@@ -34,7 +35,7 @@ public class Ellipsoid extends AbstractExpression {
         this.identifiers = identifiers;
     }
 
-    public WktKeyword.Lexeme getLabel() {
+    public EnumLexeme<WktKeyword> getLabel() {
         return label;
     }
 
