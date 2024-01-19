@@ -8,17 +8,17 @@ import com.cosmoloj.language.api.builder.LexemeBuilder;
  */
 public abstract class CharSequenceLexemeBuilder implements LexemeBuilder {
 
-    private final Object lexemeType;
+    private final Object lexId;
     private final StringBuilder builder;
 
-    public CharSequenceLexemeBuilder(final Object lexemeType) {
-        this.lexemeType = lexemeType;
+    protected CharSequenceLexemeBuilder(final Object lexId) {
+        this.lexId = lexId;
         builder = new StringBuilder();
     }
 
     @Override
-    public final Object lexemeType() {
-        return lexemeType;
+    public final Object lexId() {
+        return lexId;
     }
 
     @Override

@@ -158,7 +158,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         final WktKeyword.Lexeme crsLabel = flushAndLexEnum(WktKeyword.class);
         final LeftDelimiter delimiter = flushAndLex(LeftDelimiter.class);
         final QuotedLatinText crsName = flushAndLex(QuotedLatinText.class);
-        final SpecialSymbol.Lexeme comma = flushAndLexEnum(SpecialSymbol.class);
+        final EnumLexeme<SpecialSymbol> comma = flushAndLexEnum(SpecialSymbol.class);
         final WktKeyword.Lexeme datumOrBaseLabel = flushAndLexEnum(WktKeyword.class);
 
         return switch (crsLabel.getSemantics()) {
@@ -225,7 +225,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public CompoundCrs compoundCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme horizontalCrsLabel) throws LanguageException {
 
         final TokenBuilder<Token, CompoundCrs> builder = new CompoundCrsBuilder().list(label,
@@ -247,7 +247,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
         if (comma()) {
 
-            final SpecialSymbol.Lexeme nextComma = lexEnum(SpecialSymbol.class);
+            final EnumLexeme<SpecialSymbol> nextComma = lexEnum(SpecialSymbol.class);
             final WktKeyword.Lexeme nextLabel = flushAndLexEnum(WktKeyword.class);
 
             switch (nextLabel.getSemantics()) {
@@ -316,7 +316,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public SimpleCrsShell.VerticalCrs verticalCrs(final WktKeyword.Lexeme label, final LeftDelimiter leftDelimiter,
-            final QuotedLatinText name, final SpecialSymbol.Lexeme comma, final WktKeyword.Lexeme datumLabel)
+            final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma, final WktKeyword.Lexeme datumLabel)
             throws LanguageException {
 
             // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -349,7 +349,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public SimpleCrsShell.EngineeringCrs engineeringCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme datumLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -382,7 +382,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public SimpleCrsShell.ParametricCrs parametricCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme datumLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -415,7 +415,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public SimpleCrsShell.TemporalCrs temporalCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme datumLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -501,7 +501,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public DerivedCrs.ProjectedCrs projectedCrs(final WktKeyword.Lexeme label, final LeftDelimiter leftDelimiter,
-            final QuotedLatinText name, final SpecialSymbol.Lexeme comma, final WktKeyword.Lexeme baseCrsLabel)
+            final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma, final WktKeyword.Lexeme baseCrsLabel)
             throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing de la projection
@@ -524,7 +524,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                     coordinateSystem(outCs));
         } else {
             builder.list(
-                    (SpecialSymbol.Lexeme) outProj[0],
+                    outProj[0],
                     coordinateSystem((WktKeyword.Lexeme) outProj[1], outCs));
         }
         return build(patternScopeExtentIdentifierRemark(
@@ -547,7 +547,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public GeodeticCrs.Geographic2DCrs geographic2dCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme datumLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du datum
@@ -587,7 +587,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public GeodeticCrs geodeticCrs(final WktKeyword.Lexeme label, final LeftDelimiter leftDelimiter,
-            final QuotedLatinText name, final SpecialSymbol.Lexeme comma, final WktKeyword.Lexeme datumLabel)
+            final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma, final WktKeyword.Lexeme datumLabel)
             throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du datum
@@ -646,7 +646,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 .list(flushAndLex(RightDelimiter.class));
 
         if (comma()) {
-            final SpecialSymbol.Lexeme comma = flushAndLexEnum(SpecialSymbol.class);
+            final EnumLexeme<SpecialSymbol> comma = flushAndLexEnum(SpecialSymbol.class);
 
             /*
             Comme on est à l'extérieur du délimiteur et que le méridien premier est optionnel, on n'est pas certain
@@ -710,7 +710,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public DerivedCrs.DerivedGeodeticCrs derivedGeodeticCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme baseCrsLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -741,7 +741,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public DerivedCrs.DerivedVerticalCrs derivedVerticalCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme baseCrsLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -772,7 +772,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public DerivedCrs.DerivedEngineeringCrs<? extends BaseCrs> derivedEngineeringCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme baseLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -803,7 +803,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public DerivedCrs.DerivedParametricCrs derivedParametricCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme baseCrsLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -834,7 +834,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public DerivedCrs.DerivedTemporalCrs derivedTemporalCrs(final WktKeyword.Lexeme label,
-            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final SpecialSymbol.Lexeme comma,
+            final LeftDelimiter leftDelimiter, final QuotedLatinText name, final EnumLexeme<SpecialSymbol> comma,
             final WktKeyword.Lexeme baseCrsLabel) throws LanguageException {
 
         // jetons éventuellement lus en trop lors du parsing du système de coordonnées
@@ -2023,7 +2023,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
         final TimeZoneDesignatorBuilder builder = new TimeZoneDesignatorBuilder();
 
-        final SpecialSymbol.Lexeme first = flushAndLexEnum(SpecialSymbol.class);
+        final EnumLexeme<SpecialSymbol> first = flushAndLexEnum(SpecialSymbol.class);
         builder.list(first);
 
         if (!SpecialSymbol.Z.test(first)) {
@@ -2111,7 +2111,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
         while (comma()) {
 
-            final SpecialSymbol.Lexeme key = flushAndLexEnum(SpecialSymbol.class);
+            final EnumLexeme<SpecialSymbol> key = flushAndLexEnum(SpecialSymbol.class);
             builder.list(key);
 
             final WktKeyword.Lexeme lex = flushAndLexEnum(WktKeyword.class);
@@ -2215,7 +2215,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             virgule a été lue à la suite du CS et qu'on n'a donc pas rencontré le délimiteur de fin du CRS.
             */
             accept = patternScopeExtentIdentifierRemark(
-                    (SpecialSymbol.Lexeme) outCs[0],
+                    (EnumLexeme<SpecialSymbol>) outCs[0],
                     (WktKeyword.Lexeme) outCs[1],
                     builder, accept);
         }
@@ -2230,7 +2230,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return builder;
     }
 
-    private int patternScopeExtentIdentifierRemark(final SpecialSymbol.Lexeme comma, final WktKeyword.Lexeme lex,
+    private int patternScopeExtentIdentifierRemark(final EnumLexeme<SpecialSymbol> comma, final WktKeyword.Lexeme lex,
             final TokenBuilder<Token, ?> builder, final int accept) throws LanguageException {
 
         builder.list(comma);

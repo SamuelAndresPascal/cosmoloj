@@ -46,7 +46,6 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
 
     @Override
     public ImageDatum build() {
-
         return new ImageDatum(first(), last(), index(), token(2), token(4),
                 (size() >= 8 && testToken(6, Anchor.INSTANCE_OF)) ? token(6) : null,
                 tokens(Identifier.class::isInstance));

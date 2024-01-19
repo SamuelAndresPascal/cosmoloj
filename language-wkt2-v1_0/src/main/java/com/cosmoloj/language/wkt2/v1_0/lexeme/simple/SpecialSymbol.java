@@ -1,8 +1,7 @@
 package com.cosmoloj.language.wkt2.v1_0.lexeme.simple;
 
-import com.cosmoloj.language.common.LanguageUtil;
+import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
-import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.function.Predicate;
 
@@ -33,7 +32,7 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
 
     @Override
     public boolean test(final Object token) {
-        return token instanceof SpecialSymbol.Lexeme s && this.equals(s.getSemantics());
+        return token instanceof Lexeme s && this.equals(s.getSemantics());
     }
 
     @Override
@@ -51,41 +50,7 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
         return codePoints.codePointAt(index);
     }
 
-    public static SpecialSymbol toEnum(final String candidate) {
-        return LanguageUtil.toEnum(candidate, values());
-    }
-
-    public static boolean exists(final String candidate) {
-        return toEnum(candidate) != null;
-    }
-
-    public static final class Lexeme extends EnumLexeme<SpecialSymbol> {
-
-        private Lexeme(final String chars, final int start, final int end, final int index) {
-            super(chars, start, end, index);
-        }
-
-        private Lexeme(final Lexeme toMap) {
-            super(toMap);
-        }
-
-        @Override
-        public SpecialSymbol parse(final String codePoints) {
-            return toEnum(codePoints);
-        }
-    }
-
-    public static Lexeme map(final Lexeme toMap) {
-        return new Lexeme(toMap);
-    }
-
     public static EnumLexemeBuilder<SpecialSymbol> builder() {
-        return new EnumLexemeBuilder<SpecialSymbol>(SpecialSymbol.class, SpecialSymbol.values()) {
-
-            @Override
-            public Lexeme build(final int first, final int last, final int index) {
-                return new Lexeme(codePoints(), first, last, index);
-            }
-        };
+        return EnumLexemeBuilder.caseSensitive(SpecialSymbol.class, SpecialSymbol.values());
     }
 }

@@ -1,6 +1,8 @@
 package com.cosmoloj.language.common.impl.builder;
 
+import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.LanguageUtil;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.HashSet;
 import java.util.Locale;
@@ -21,12 +23,12 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
         SENTITIVE, IGNORE, LOWER
     }
 
-    protected EnumLexemeBuilder(final Object lexemeType, final E[] values) {
-        this(lexemeType, values, Case.SENTITIVE, Locale.ROOT);
+    protected EnumLexemeBuilder(final Object lexId, final E[] values) {
+        this(lexId, values, Case.SENTITIVE, Locale.ROOT);
     }
 
-    protected EnumLexemeBuilder(final Object lexemeType, final E[] values, final Case casePolicy, final Locale loc) {
-        super(lexemeType);
+    protected EnumLexemeBuilder(final Object lexId, final E[] values, final Case casePolicy, final Locale loc) {
+        super(lexId);
         this.values = values;
         this.casePolicy = casePolicy;
         this.locale = loc;
@@ -140,5 +142,23 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
 
     @Override
     protected final void resetState() {
+    }
+
+    public static <E extends Enum<E> & SemanticEnum<E>> Lexeme map(final Case c, final E[] values, final Lexeme l) {
+        return switch (c) {
+            case SENTITIVE -> new EnumLexeme.CaseSensitive<>(l, values);
+            default -> throw new UnsupportedOperationException();
+        };
+    }
+
+
+    public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> caseSensitive(
+            final Class<E> type, final E[] values) {
+        return new EnumLexemeBuilder<>(type, values) {
+            @Override
+            public Lexeme build(final int first, final int last, final int index) {
+                return new EnumLexeme.CaseSensitive<>(codePoints(), first, last, index, values);
+            }
+        };
     }
 }

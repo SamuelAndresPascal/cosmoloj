@@ -47,7 +47,13 @@ public interface LexemeBuilder {
      */
     Lexeme build(int start, int end,  int index);
 
-    Object lexemeType();
+
+    /**
+     * <div class="fr">Permet d'identifier un type de lexème au constructeur courant utilisé dans une analyse
+     * syntaxique déterministe où le type de lexème est connu à l'avance.
+     * </div>
+     */
+    Object lexId();
 
     /**
      * <div class="fr">Permet de rendre le constructeur de jetons réutilisable pour la construction de nouveaux jetons.

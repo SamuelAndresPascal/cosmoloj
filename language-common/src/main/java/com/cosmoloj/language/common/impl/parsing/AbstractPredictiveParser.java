@@ -17,7 +17,7 @@ import java.util.Objects;
 public abstract class AbstractPredictiveParser<L extends AbstractPredictiveLexer & PredictiveLexer>
         extends AbstractParser<L> {
 
-    public AbstractPredictiveParser(final L lexer) {
+    protected AbstractPredictiveParser(final L lexer) {
         super(lexer);
     }
 

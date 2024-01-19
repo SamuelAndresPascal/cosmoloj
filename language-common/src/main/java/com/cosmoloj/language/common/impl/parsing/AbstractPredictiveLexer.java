@@ -37,11 +37,11 @@ public abstract class AbstractPredictiveLexer implements PredictiveLexer {
         this.indexes = indexes;
 
         for (final LexemeBuilder builder : builders) {
-            if (!this.builders.containsKey(builder.lexemeType())) {
-                this.builders.put(builder.lexemeType(), builder);
+            if (!this.builders.containsKey(builder.lexId())) {
+                this.builders.put(builder.lexId(), builder);
             } else {
                 throw new IllegalStateException(
-                        String.format("builder lexeme type %s is already defined", builder.lexemeType()));
+                        String.format("builder lex id %s is already defined", builder.lexId()));
             }
         }
     }

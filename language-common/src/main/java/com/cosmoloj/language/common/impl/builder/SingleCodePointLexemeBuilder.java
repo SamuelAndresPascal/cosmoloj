@@ -13,28 +13,28 @@ import java.util.Arrays;
 public abstract class SingleCodePointLexemeBuilder<L extends Lexeme> implements LexemeBuilder {
 
     private final int[] characterReferences;
-    private final Class<L> lexemeType;
+    private final Class<L> lexId;
 
     // L'initialisation du point de code à {@link Integer#MIN_VALUE} indique que le point de code est disponible.
     private int codePoint = Integer.MIN_VALUE;
 
-    public SingleCodePointLexemeBuilder(final int characterReference, final Class<L> lexemeType) {
+    public SingleCodePointLexemeBuilder(final int characterReference, final Class<L> lexId) {
         if (!Character.isValidCodePoint(characterReference)) {
             throw new IllegalArgumentException();
         }
-        this.lexemeType = lexemeType;
+        this.lexId = lexId;
         this.characterReferences = new int[]{characterReference};
     }
 
-    public SingleCodePointLexemeBuilder(final int[] characterReferences, final Class<L> lexemeType) {
-        this.lexemeType = lexemeType;
+    public SingleCodePointLexemeBuilder(final int[] characterReferences, final Class<L> lexId) {
+        this.lexId = lexId;
         this.characterReferences = characterReferences;
         Arrays.sort(this.characterReferences);
     }
 
     @Override
-    public final Object lexemeType() {
-        return lexemeType;
+    public final Object lexId() {
+        return lexId;
     }
 
     public int getCodePoint() {
