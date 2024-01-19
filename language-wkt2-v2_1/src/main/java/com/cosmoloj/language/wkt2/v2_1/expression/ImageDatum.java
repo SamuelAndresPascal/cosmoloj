@@ -1,10 +1,10 @@
 package com.cosmoloj.language.wkt2.v2_1.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.PixelInCell;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
@@ -12,15 +12,13 @@ import java.util.function.Predicate;
  */
 public class ImageDatum extends AbstractExpression {
 
-    public static final Predicate<Object> IMAGE_DATUM = t -> t instanceof ImageDatum;
-
     private final QuotedLatinText name;
-    private final PixelInCell.Lexeme pixelInCell;
+    private final EnumLexeme<PixelInCell> pixelInCell;
     private final Anchor anchor;
     private final List<Identifier> identifiers;
 
     public ImageDatum(final int start, final int end, final int index, final QuotedLatinText name,
-            final PixelInCell.Lexeme pixelInCell, final Anchor anchor, final List<Identifier> identifiers) {
+            final EnumLexeme<PixelInCell> pixelInCell, final Anchor anchor, final List<Identifier> identifiers) {
         super(start, end, index);
         this.name = name;
         this.pixelInCell = pixelInCell;
@@ -32,7 +30,7 @@ public class ImageDatum extends AbstractExpression {
         return this.name;
     }
 
-    public PixelInCell.Lexeme getPixelInCell() {
+    public EnumLexeme<PixelInCell> getPixelInCell() {
         return this.pixelInCell;
     }
 

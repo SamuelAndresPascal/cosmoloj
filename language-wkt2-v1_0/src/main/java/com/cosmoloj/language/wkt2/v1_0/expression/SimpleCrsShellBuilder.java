@@ -88,7 +88,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.ImageCrs, ImageDatum> imageCrs() {
-        return new SimpleCrsShellBuilder<>(ImageDatum.IMAGE_DATUM, WktKeyword.IMAGECRS) {
+        return new SimpleCrsShellBuilder<>(ImageDatum.class::isInstance, WktKeyword.IMAGECRS) {
 
             @Override
             public SimpleCrsShell.ImageCrs build() {

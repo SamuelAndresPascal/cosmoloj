@@ -1,5 +1,6 @@
 package com.cosmoloj.language.json.mapping;
 
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.json.expression.JsonArray;
 import com.cosmoloj.language.json.expression.JsonObject;
 import com.cosmoloj.language.json.expression.JsonValue;
@@ -19,10 +20,10 @@ public final class JsonMapping {
     }
 
     public static final Function<JsonValue, Boolean> KEYWORD = e -> {
-        if (e instanceof Keyword.Lexeme l) {
+        if (e instanceof EnumLexeme l && l.getSemantics() instanceof Keyword) {
             return switch (l.getSemantics()) {
-                case TRUE -> Boolean.TRUE;
-                case FALSE -> Boolean.FALSE;
+                case Keyword.TRUE -> Boolean.TRUE;
+                case Keyword.FALSE -> Boolean.FALSE;
                 default -> null;
             };
         } else if (e instanceof JsonSignedNumericLiteral nl && !nl.isDecimal()) {

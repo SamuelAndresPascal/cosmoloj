@@ -23,7 +23,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
     private final Predicate<? super Token> datumPredicate;
     private final Predicate<? super Token> labels;
 
-    public SimpleCrsShellBuilder(final Predicate<? super Token> datumType, final WktKeyword... labels) {
+    protected SimpleCrsShellBuilder(final Predicate<? super Token> datumType, final WktKeyword... labels) {
         this.datumPredicate = datumType;
         Predicate<? super Token> l = labels[0];
         for (int i = 1; i < labels.length; i++) {
@@ -31,6 +31,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
         }
         this.labels = l;
     }
+
     @Override
     public Predicate<? super Token> predicate(final int currentIndex) {
         return switch (currentIndex) {
@@ -87,7 +88,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.ImageCrs, ImageDatum> imageCrs() {
-        return new SimpleCrsShellBuilder<>(ImageDatum.IMAGE_DATUM, WktKeyword.IMAGECRS) {
+        return new SimpleCrsShellBuilder<>(ImageDatum.class::isInstance, WktKeyword.IMAGECRS) {
 
             @Override
             public SimpleCrsShell.ImageCrs build() {

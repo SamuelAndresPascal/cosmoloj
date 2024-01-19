@@ -28,7 +28,7 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> GeographicCs.class::isInstance;
-            case 6 -> Projection.INSTANCE_OF_CTS;
+            case 6 -> Projection.class::isInstance;
             default -> switch (parity()) {
                 case EVEN -> {
                     if (beyond(9)) {
@@ -59,7 +59,7 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
                 if (beyond(9) && current(Axis.INSTANCE_OF.or(Authority.INSTANCE_OF))) {
                     yield Unit.INSTANCE_OF_CTS.or(Axis.INSTANCE_OF);
                 } else if (beyond(7) && current(Parameter.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS))) {
-                    yield Parameter.INSTANCE_OF.or(Projection.INSTANCE_OF_CTS);
+                    yield Parameter.INSTANCE_OF.or(Projection.class::isInstance);
                 } else {
                     yield Predicates.yes();
                 }
@@ -101,6 +101,6 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
                 token(6), tokens(Parameter.INSTANCE_OF),
                 !units.isEmpty() ? units.get(0) : null,
                 axis1, axis2,
-                testToken(size() - 2, Authority.INSTANCE_OF) ? token(size() - 2) : null);
+                testToken(size() - 2, Authority.class::isInstance) ? token(size() - 2) : null);
     }
 }

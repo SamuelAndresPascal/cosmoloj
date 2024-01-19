@@ -45,7 +45,7 @@ public abstract class EnumLexeme<S extends Enum<S>> extends CharSequenceLexeme i
         }
     }
 
-    public static final class CaseSensitive<S extends Enum<S> & SemanticEnum<S>> extends CommonEnumLexeme<S> {
+    public static class CaseSensitive<S extends Enum<S> & SemanticEnum<S>> extends CommonEnumLexeme<S> {
 
         public CaseSensitive(final String chars, final int start, final int end, final int index, final S[] values) {
             super(chars, start, end, index, values);
@@ -61,7 +61,7 @@ public abstract class EnumLexeme<S extends Enum<S>> extends CharSequenceLexeme i
         }
     }
 
-    public static final class IgnoreCase<S extends Enum<S> & SemanticEnum<S>> extends CommonEnumLexeme<S> {
+    public static class IgnoreCase<S extends Enum<S> & SemanticEnum<S>> extends CommonEnumLexeme<S> {
 
         public IgnoreCase(final String chars, final int start, final int end, final int index, final S[] values) {
             super(chars, start, end, index, values);
@@ -74,6 +74,22 @@ public abstract class EnumLexeme<S extends Enum<S>> extends CharSequenceLexeme i
         @Override
         public S parse(final String codePoints) {
             return LanguageUtil.toEnumIgnoreCase(codePoints, this.values());
+        }
+    }
+
+    public static class LowerCase<S extends Enum<S> & SemanticEnum<S>> extends CommonEnumLexeme<S> {
+
+        public LowerCase(final String chars, final int start, final int end, final int index, final S[] values) {
+            super(chars, start, end, index, values);
+        }
+
+        public LowerCase(final Lexeme toMap, final S[] values) {
+            super(toMap, values);
+        }
+
+        @Override
+        public S parse(final String codePoints) {
+            return LanguageUtil.toEnumLowerCase(codePoints, this.values());
         }
     }
 }

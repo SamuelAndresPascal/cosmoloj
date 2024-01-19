@@ -26,9 +26,9 @@ public class DatumBuilder extends CheckTokenBuilder<Token, Datum>
                 LeftDelimiter.class::isInstance,
                 QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                Spheroid.INSTANCE_OF,
+                Spheroid.class::isInstance,
                 SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance),
-                Predicates.of(Authority.class::isInstance).or(ToWgs84.INSTANCE_OF),
+                Predicates.of(Authority.class::isInstance).or(ToWgs84.class::isInstance),
                 SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance),
                 Authority.class::isInstance,
                 RightDelimiter.class::isInstance);
@@ -41,7 +41,7 @@ public class DatumBuilder extends CheckTokenBuilder<Token, Datum>
                 case 6, 8 -> SpecialSymbol.COMMA;
                 default -> Predicates.yes();
             };
-            case 2 -> index == 8 ? ToWgs84.INSTANCE_OF : Predicates.yes();
+            case 2 -> index == 8 ? ToWgs84.class::isInstance : Predicates.yes();
             default -> Predicates.yes();
         };
     }

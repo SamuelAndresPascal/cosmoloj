@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.PixelInCell;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -26,7 +27,7 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> PixelInCell.Lexeme.class::isInstance;
+            case 4 -> Predicates.or(PixelInCell.values());
             default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
                 : Identifier.INSTANCE_OF.or(Anchor.INSTANCE_OF);
         };
@@ -37,11 +38,11 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
         if (even() && beyond(4)) {
             return switch (before) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> current(Anchor.INSTANCE_OF) ? PixelInCell.Lexeme.class::isInstance : t -> true;
-                default -> t -> true;
+                case 2 -> current(Anchor.INSTANCE_OF) ? Predicates.or(PixelInCell.values()) : Predicates.yes();
+                default -> Predicates.yes();
             };
         }
-        return t -> true;
+        return Predicates.yes();
     }
 
     @Override

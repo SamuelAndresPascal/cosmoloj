@@ -22,6 +22,8 @@ import com.cosmoloj.language.json.lexeme.simple.QuotedString;
 import com.cosmoloj.language.json.lexeme.simple.SpecialSymbol;
 import java.util.ArrayList;
 import com.cosmoloj.language.api.semantic.Lexeme;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
+import com.cosmoloj.language.common.number.lexeme.simple.Sign;
 
 /**
  *
@@ -61,7 +63,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
         return object(flushAndLex(SpecialSymbol.LEFT_OBJECT_DELIMITER));
     }
 
-    public JsonObject object(final SpecialSymbol.Lexeme leftDelimiter) throws LanguageException {
+    public JsonObject object(final EnumLexeme<SpecialSymbol> leftDelimiter) throws LanguageException {
 
         final JsonObjectBuilder builder = new JsonObjectBuilder();
 
@@ -69,7 +71,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
 
         final Lexeme lexeme = flushAndLex();
 
-        if (lexeme instanceof SpecialSymbol.Lexeme) {
+        if (lexeme instanceof EnumLexeme) {
             builder.list(lexeme);
         } else if (lexeme instanceof QuotedString) {
             builder.list(
@@ -77,7 +79,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
                     flushAndLex(SpecialSymbol.COLON),
                     value(flushAndLex()));
 
-            SpecialSymbol.Lexeme symbol = flushAndLexEnum(SpecialSymbol.class);
+            EnumLexeme<SpecialSymbol> symbol = flushAndLexEnum(SpecialSymbol.class);
             while (SpecialSymbol.COMMA.test(symbol)) {
                 builder.list(
                         symbol,
@@ -94,16 +96,23 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
     public JsonValue value(final Lexeme lexeme) throws LanguageException {
         if (lexeme instanceof QuotedString) {
             return (QuotedString) lexeme;
-        } else if (lexeme instanceof SpecialSymbol.Lexeme symbol) {
-            if (SpecialSymbol.LEFT_OBJECT_DELIMITER.test(symbol)) {
-                return object(symbol);
-            } else if (SpecialSymbol.LEFT_ARRAY_DELIMITER.test(symbol)) {
-                return array(symbol);
+        } else if (lexeme instanceof EnumLexeme enumLex) {
+            final Object sem = lexeme.getSemantics();
+            if (sem instanceof SpecialSymbol symbol) {
+                if (SpecialSymbol.LEFT_OBJECT_DELIMITER.equals(symbol)) {
+                    return object(enumLex);
+                } else if (SpecialSymbol.LEFT_ARRAY_DELIMITER.equals(symbol)) {
+                    return array(enumLex);
+                } else {
+                    throw new IllegalStateException("expected left object/array delimiter");
+                }
+            } else if (sem instanceof Keyword) {
+                return (JsonValue) enumLex;
+            } else if (lexeme instanceof Sign.Lexeme) {
+                return (JsonSignedNumericLiteral) numberParser.signedNumericLiteral(lexeme);
             } else {
-                throw new IllegalStateException();
+                throw new IllegalStateException("expected left object/array delimiter or keyword");
             }
-        } else if (lexeme instanceof Keyword.Lexeme keyword) {
-            return keyword;
         } else {
             return (JsonSignedNumericLiteral) numberParser.signedNumericLiteral(lexeme);
         }
@@ -113,7 +122,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
         return array(flushAndLex(SpecialSymbol.LEFT_ARRAY_DELIMITER));
     }
 
-    public JsonArray array(final SpecialSymbol.Lexeme leftDelimiter) throws LanguageException {
+    public JsonArray array(final EnumLexeme<SpecialSymbol> leftDelimiter) throws LanguageException {
 
         final JsonArrayBuilder builder = new JsonArrayBuilder();
 
@@ -126,7 +135,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
         } else {
             builder.list(value(lexeme));
 
-            SpecialSymbol.Lexeme symbol = flushAndLexEnum(SpecialSymbol.class);
+            EnumLexeme<SpecialSymbol> symbol = flushAndLexEnum(SpecialSymbol.class);
             while (SpecialSymbol.COMMA.test(symbol)) {
                 builder.list(symbol,
                         value(flushAndLex()));
@@ -140,7 +149,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
     @Override
     public JsonValue parse() throws LanguageException {
 
-        final SpecialSymbol.Lexeme first = flushAndLexEnum(SpecialSymbol.class);
+        final EnumLexeme<SpecialSymbol> first = flushAndLexEnum(SpecialSymbol.class);
 
         return switch (first.getSemantics()) {
             case LEFT_OBJECT_DELIMITER -> object(first);

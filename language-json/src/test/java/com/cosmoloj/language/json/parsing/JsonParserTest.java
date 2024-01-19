@@ -1,6 +1,7 @@
 package com.cosmoloj.language.json.parsing;
 
 import com.cosmoloj.language.api.exception.LanguageException;
+import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.parsing.DefaultStringScanner;
 import com.cosmoloj.language.json.expression.JsonArray;
 import com.cosmoloj.language.json.expression.JsonObject;
@@ -110,7 +111,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("tata", entry1.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.TRUE, ((Keyword.Lexeme) entry1.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.TRUE, ((Lexeme) entry1.getValue()).getSemantics());
     }
 
     @Test
@@ -136,7 +137,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("tata", entry1.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.TRUE, ((Keyword.Lexeme) entry1.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.TRUE, ((Lexeme) entry1.getValue()).getSemantics());
     }
 
     @Test
@@ -175,7 +176,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("tata", entry1.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.FALSE, ((Keyword.Lexeme) entry1.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.FALSE, ((Lexeme) entry1.getValue()).getSemantics());
     }
 
     @Test
@@ -205,7 +206,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("tata", entry1.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.FALSE, ((Keyword.Lexeme) entry1.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.FALSE, ((Lexeme) entry1.getValue()).getSemantics());
     }
 
     @Test
@@ -244,7 +245,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("tata", entry1.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.NULL, ((Keyword.Lexeme) entry1.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.NULL, ((Lexeme) entry1.getValue()).getSemantics());
     }
 
     @Test
@@ -274,7 +275,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("tata", entry1.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.NULL, ((Keyword.Lexeme) entry1.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.NULL, ((Lexeme) entry1.getValue()).getSemantics());
     }
 
     @Test
@@ -559,8 +560,8 @@ public class JsonParserTest {
 
         final JsonArray array = parser.array();
         Assertions.assertEquals(2, array.getList().size());
-        Assertions.assertEquals(Keyword.TRUE, ((Keyword.Lexeme) array.getList().get(0)).getSemantics());
-        Assertions.assertEquals(Keyword.FALSE, ((Keyword.Lexeme) array.getList().get(1)).getSemantics());
+        Assertions.assertEquals(Keyword.TRUE, ((Lexeme) array.getList().get(0)).getSemantics());
+        Assertions.assertEquals(Keyword.FALSE, ((Lexeme) array.getList().get(1)).getSemantics());
     }
 
     @Test
@@ -609,11 +610,11 @@ public class JsonParserTest {
 
         final var array10 = array1.getList().get(0);
 
-        Assertions.assertEquals(Keyword.TRUE, ((Keyword.Lexeme) array10).getSemantics());
+        Assertions.assertEquals(Keyword.TRUE, ((Lexeme) array10).getSemantics());
 
         final var array11 = array1.getList().get(1);
 
-        Assertions.assertEquals(Keyword.NULL, ((Keyword.Lexeme) array11).getSemantics());
+        Assertions.assertEquals(Keyword.NULL, ((Lexeme) array11).getSemantics());
 
         final var array12 = (JsonObject) array1.getList().get(2);
 
@@ -671,7 +672,7 @@ public class JsonParserTest {
 
         Assertions.assertEquals("yuyuyu", entry22.getKey().getSemantics());
 
-        Assertions.assertEquals(Keyword.FALSE, ((Keyword.Lexeme) entry22.getValue()).getSemantics());
+        Assertions.assertEquals(Keyword.FALSE, ((Lexeme) entry22.getValue()).getSemantics());
 
     }
 
@@ -712,7 +713,7 @@ public class JsonParserTest {
 
         final JsonArray array = (JsonArray) parser.parse();
         Assertions.assertEquals(2, array.getList().size());
-        Assertions.assertEquals(Keyword.TRUE, ((Keyword.Lexeme) array.getList().get(0)).getSemantics());
-        Assertions.assertEquals(Keyword.FALSE, ((Keyword.Lexeme) array.getList().get(1)).getSemantics());
+        Assertions.assertEquals(Keyword.TRUE, ((Lexeme) array.getList().get(0)).getSemantics());
+        Assertions.assertEquals(Keyword.FALSE, ((Lexeme) array.getList().get(1)).getSemantics());
     }
 }

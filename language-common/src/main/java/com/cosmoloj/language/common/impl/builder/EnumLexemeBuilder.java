@@ -23,8 +23,13 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
         SENTITIVE, IGNORE, LOWER
     }
 
+    @Deprecated(forRemoval = true) // use constructor with case policy
     protected EnumLexemeBuilder(final Object lexId, final E[] values) {
         this(lexId, values, Case.SENTITIVE, Locale.ROOT);
+    }
+
+    protected EnumLexemeBuilder(final Object lexId, final E[] values, final Case casePolicy) {
+        this(lexId, values, casePolicy, Locale.ROOT);
     }
 
     protected EnumLexemeBuilder(final Object lexId, final E[] values, final Case casePolicy, final Locale loc) {
@@ -154,7 +159,7 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
 
     public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> caseSensitive(
             final Class<E> type, final E[] values) {
-        return new EnumLexemeBuilder<>(type, values) {
+        return new EnumLexemeBuilder<>(type, values, Case.SENTITIVE) {
             @Override
             public Lexeme build(final int first, final int last, final int index) {
                 return new EnumLexeme.CaseSensitive<>(codePoints(), first, last, index, values);
@@ -165,10 +170,21 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
 
     public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> ignoreCase(
             final Class<E> type, final E[] values) {
-        return new EnumLexemeBuilder<>(type, values) {
+        return new EnumLexemeBuilder<>(type, values, Case.IGNORE) {
             @Override
             public Lexeme build(final int first, final int last, final int index) {
                 return new EnumLexeme.IgnoreCase<>(codePoints(), first, last, index, values);
+            }
+        };
+    }
+
+
+    public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> lowerCase(
+            final Class<E> type, final E[] values) {
+        return new EnumLexemeBuilder<>(type, values, Case.LOWER) {
+            @Override
+            public Lexeme build(final int first, final int last, final int index) {
+                return new EnumLexeme.LowerCase<>(codePoints(), first, last, index, values);
             }
         };
     }
