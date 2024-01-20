@@ -4,6 +4,7 @@ import com.cosmoloj.language.api.semantic.Token;
 import com.cosmoloj.language.common.impl.builder.CheckTokenBuilder;
 import com.cosmoloj.language.common.impl.builder.PredicateListTokenBuilder;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.Direction;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -16,7 +17,7 @@ public class AxisDirectionBuilder extends CheckTokenBuilder<Token, AxisDirection
 
     @Override
     public List<Predicate<? super Token>> predicates() {
-        return List.of(Direction.Lexeme.class::isInstance,
+        return List.of(Predicates.or(Direction.values()),
                 SimpleNumber.Bearing.INSTANCE_OF.or(Meridian.INSTANCE_OF));
     }
 

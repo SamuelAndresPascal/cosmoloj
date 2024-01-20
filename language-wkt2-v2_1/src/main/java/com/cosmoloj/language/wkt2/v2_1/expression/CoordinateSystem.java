@@ -1,6 +1,7 @@
 package com.cosmoloj.language.wkt2.v2_1.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.number.lexeme.simple.UnsignedInteger;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.CsType;
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.List;
  */
 public class CoordinateSystem extends AbstractExpression {
 
-    private final CsType.Lexeme type;
+    private final EnumLexeme<CsType> type;
     private final UnsignedInteger dimension;
     private final List<Identifier> identifiers;
     private final List<Axis> axis;
     private final Unit unit;
 
-    public CoordinateSystem(final int start, final int end, final int index, final CsType.Lexeme type,
+    public CoordinateSystem(final int start, final int end, final int index, final EnumLexeme<CsType> type,
             final UnsignedInteger dimension, final List<Identifier> identifiers, final List<Axis> axis,
             final Unit unit) {
         super(start, end, index);
@@ -28,7 +29,7 @@ public class CoordinateSystem extends AbstractExpression {
         this.unit = unit;
     }
 
-    public CsType.Lexeme getType() {
+    public EnumLexeme<CsType> getType() {
         return this.type;
     }
 
@@ -50,9 +51,9 @@ public class CoordinateSystem extends AbstractExpression {
 
     public static class Ellipsoidal2DCoordinateSystem extends CoordinateSystem {
 
-        public Ellipsoidal2DCoordinateSystem(final int start, final int end, final int index, final CsType.Lexeme type,
-                final UnsignedInteger dimension, final List<Identifier> identifiers, final List<Axis> axis,
-                final Unit unit) {
+        public Ellipsoidal2DCoordinateSystem(final int start, final int end, final int index,
+                final EnumLexeme<CsType> type, final UnsignedInteger dimension, final List<Identifier> identifiers,
+                final List<Axis> axis, final Unit unit) {
             super(start, end, index, type, dimension, identifiers, axis, unit);
         }
     }

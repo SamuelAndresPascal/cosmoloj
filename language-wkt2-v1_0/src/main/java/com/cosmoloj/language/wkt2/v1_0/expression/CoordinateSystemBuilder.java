@@ -3,12 +3,14 @@ package com.cosmoloj.language.wkt2.v1_0.expression;
 import com.cosmoloj.language.api.semantic.Token;
 import com.cosmoloj.language.common.impl.builder.CheckTokenBuilder;
 import com.cosmoloj.language.common.impl.builder.PredicateIndexTokenBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.number.lexeme.simple.UnsignedInteger;
 import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.CsType;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -32,7 +34,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         return switch (currentIndex) {
             case 0 -> WktKeyword.CS.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF)); // WKT-CTS compatibility
             case 1 -> SpecialSymbol.COMMA.and(this::wktCts).or(LeftDelimiter.class::isInstance);
-            case 2 -> CsType.Lexeme.INSTANCE_OF.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
+            case 2 -> Predicates.or(CsType.values()).or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedInteger.UNSIGNED_INTEGER.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
             default -> {
@@ -66,11 +68,11 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
     @Override
     public CoordinateSystem build() {
-        final List<Token> type = tokens(CsType.Lexeme.class::isInstance);
+        final List<Token> type = tokens(Predicates.or(CsType.values()));
         final List<Token> dimention = tokens(UnsignedInteger.UNSIGNED_INTEGER);
 
         return new CoordinateSystem(first(), last(), index(),
-                type.isEmpty() ? null : (CsType.Lexeme) type.get(0),
+                type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
                 dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
                 tokens(Identifier.INSTANCE_OF),
                 tokens(Axis.INSTANCE_OF),
@@ -104,11 +106,11 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
         @Override
         public CoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
-            final List<Token> type = tokens(CsType.Lexeme.class::isInstance);
+            final List<Token> type = tokens(Predicates.or(CsType.values()));
             final List<Token> dimention = tokens(UnsignedInteger.UNSIGNED_INTEGER);
 
             return new CoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
-                    type.isEmpty() ? null : (CsType.Lexeme) type.get(0),
+                    type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
                     dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
                     tokens(Identifier.INSTANCE_OF), tokens(Axis.INSTANCE_OF),
                     firstToken(Unit.INSTANCE_OF));

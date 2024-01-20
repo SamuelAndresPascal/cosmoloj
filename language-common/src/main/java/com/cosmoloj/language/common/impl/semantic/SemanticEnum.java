@@ -1,6 +1,8 @@
 package com.cosmoloj.language.common.impl.semantic;
 
+import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import java.util.function.Predicate;
 
 /**
  * <div class="fr">Sémantique de lexème ayant la forme d'une énumération.</div>
@@ -9,7 +11,7 @@ import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
  * @param <T> <span class="fr">type de l'énumération</span>
  * @see EnumLexemeBuilder
  */
-public interface SemanticEnum<T extends Enum<T>> {
+public interface SemanticEnum<T extends Enum<T>> extends Predicate<Object> {
 
     String name();
 
@@ -27,5 +29,10 @@ public interface SemanticEnum<T extends Enum<T>> {
 
     default int codePointAt(final int index) {
         return getCodePoints().codePointAt(index);
+    }
+
+    @Override
+    default boolean test(final Object lex) {
+        return lex instanceof Lexeme l && this.equals(l.getSemantics());
     }
 }

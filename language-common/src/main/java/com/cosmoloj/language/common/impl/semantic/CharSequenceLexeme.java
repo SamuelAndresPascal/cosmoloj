@@ -16,14 +16,14 @@ public abstract class CharSequenceLexeme implements Lexeme {
     private final int last;
     private final int order;
 
-    public CharSequenceLexeme(final String codePoints, final int first, final int last, final int order) {
+    protected CharSequenceLexeme(final String codePoints, final int first, final int last, final int order) {
         this.codePoints = codePoints;
         this.first = first;
         this.last = last;
         this.order = order;
     }
 
-    public CharSequenceLexeme(final Lexeme toMap) {
+    protected CharSequenceLexeme(final Lexeme toMap) {
         this.codePoints = toMap.getCodePoints();
         this.first = toMap.first();
         this.last = toMap.last();

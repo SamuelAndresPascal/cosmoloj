@@ -25,7 +25,7 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> AxisNameAbrev.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> AxisDirection.INSTANCE_OF;
+            case 4 -> AxisDirection.class::isInstance;
             case 6 -> AxisOrder.INSTANCE_OF.or(Unit.INSTANCE_OF).or(Identifier.INSTANCE_OF);
             case 8 -> Identifier.INSTANCE_OF.or(Unit.INSTANCE_OF);
             default -> {

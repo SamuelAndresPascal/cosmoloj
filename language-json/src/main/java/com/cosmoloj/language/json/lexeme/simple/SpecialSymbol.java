@@ -1,6 +1,5 @@
 package com.cosmoloj.language.json.lexeme.simple;
 
-import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.function.Predicate;
@@ -29,23 +28,8 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
     }
 
     @Override
-    public boolean test(final Object token) {
-        return token instanceof Lexeme l && this.equals(l.getSemantics());
-    }
-
-    @Override
     public String getCodePoints() {
         return codePoints;
-    }
-
-    @Override
-    public int length() {
-        return codePoints.length();
-    }
-
-    @Override
-    public int codePointAt(final int index) {
-        return codePoints.codePointAt(index);
     }
 
     public static EnumLexemeBuilder<SpecialSymbol> builder() {
