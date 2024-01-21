@@ -42,7 +42,7 @@ public class ParserExceptionBuilder {
     }
 
     @SuppressWarnings("unchecked")
-    public ParserExceptionBuilder types(final Class<? extends Token>... alternatives) {
+    public ParserExceptionBuilder types(final Class<?>... alternatives) {
         this.expectations.add(new TokenExpectation(List.of(alternatives)));
         return this;
     }
@@ -100,25 +100,28 @@ public class ParserExceptionBuilder {
         }
     }
 
-    private static class TokenExpectation extends AbstractExpectation<Class<? extends Token>> {
+    private static class TokenExpectation extends AbstractExpectation<Class<?>> {
 
-        TokenExpectation(final Collection<Class<? extends Token>> alternatives) {
+        TokenExpectation(final Collection<Class<?>> alternatives) {
             super(alternatives);
         }
 
         @Override
-        public String alternativeToString(final Class<? extends Token> alternative) {
-            if (EnumLexeme.class.isAssignableFrom(alternative)) {
-                    final Class<?> declaringClass = alternative.getDeclaringClass();
-                    if (Enum.class.isAssignableFrom(declaringClass)) {
-                        return alternative.getDeclaringClass().getSimpleName() + " : "
-                                + printEnumConstants(((Class<Enum>) declaringClass).getEnumConstants());
-                    } else {
-                        return alternative.getSimpleName();
-                    }
+        public String alternativeToString(final Class<?> alternative) {
+            if (Enum.class.isAssignableFrom(alternative)) {
+                return printEnumConstants(((Class<Enum>) alternative).getEnumConstants());
+            } else if (EnumLexeme.class.isAssignableFrom(alternative)) {
+                // cas à déprécier puis à supprimer
+                final Class<?> declaringClass = alternative.getDeclaringClass();
+                if (declaringClass != null && Enum.class.isAssignableFrom(declaringClass)) {
+                    return alternative.getDeclaringClass().getSimpleName() + " : "
+                            + printEnumConstants(((Class<Enum>) declaringClass).getEnumConstants());
                 } else {
                     return alternative.getSimpleName();
                 }
+            } else {
+                return alternative.getSimpleName();
+            }
         }
 
         private static String printEnumConstants(final Enum[] enumConstants) {

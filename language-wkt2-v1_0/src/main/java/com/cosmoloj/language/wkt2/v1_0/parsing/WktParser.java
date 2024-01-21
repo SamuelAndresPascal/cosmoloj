@@ -1790,7 +1790,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                                     .exception();
                         });
             } else {
-                throw unexpected(optional).types(UnsignedInteger.class, QuotedLatinText.class, EnumLexeme.class)
+                throw unexpected(optional).types(UnsignedInteger.class, QuotedLatinText.class, WktKeyword.class)
                         .exception();
             }
         }
