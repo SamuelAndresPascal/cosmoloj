@@ -2,7 +2,7 @@ package com.cosmoloj.language.common.impl.builder;
 
 import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.LanguageUtil;
-import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.HashSet;
 import java.util.Locale;
@@ -13,26 +13,17 @@ import java.util.Set;
  * @author Samuel Andrés
  * @param <E> <span class="fr">énumération des suites de caractères (mots réservés…)</span>
  */
-public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> extends CharSequenceLexemeBuilder {
+public class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> extends CharSequenceLexemeBuilder {
 
     private final E[] values;
-    private final Case casePolicy;
+    private final EnumCase casePolicy;
     private final Locale locale;
 
-    public enum Case {
-        SENTITIVE, IGNORE, LOWER
-    }
-
-    @Deprecated(forRemoval = true) // use constructor with case policy
-    protected EnumLexemeBuilder(final Object lexId, final E[] values) {
-        this(lexId, values, Case.SENTITIVE, Locale.ROOT);
-    }
-
-    protected EnumLexemeBuilder(final Object lexId, final E[] values, final Case casePolicy) {
+    public EnumLexemeBuilder(final Object lexId, final E[] values, final EnumCase casePolicy) {
         this(lexId, values, casePolicy, Locale.ROOT);
     }
 
-    protected EnumLexemeBuilder(final Object lexId, final E[] values, final Case casePolicy, final Locale loc) {
+    public EnumLexemeBuilder(final Object lexId, final E[] values, final EnumCase casePolicy, final Locale loc) {
         super(lexId);
         this.values = values;
         this.casePolicy = casePolicy;
@@ -149,43 +140,8 @@ public abstract class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> ext
     protected final void resetState() {
     }
 
-    public static <E extends Enum<E> & SemanticEnum<E>> Lexeme map(final Case c, final E[] values, final Lexeme l) {
-        return switch (c) {
-            case SENTITIVE -> new EnumLexeme.CaseSensitive<>(l, values);
-            default -> throw new UnsupportedOperationException();
-        };
-    }
-
-
-    public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> caseSensitive(
-            final Class<E> type, final E[] values) {
-        return new EnumLexemeBuilder<>(type, values, Case.SENTITIVE) {
-            @Override
-            public Lexeme build(final int first, final int last, final int index) {
-                return new EnumLexeme.CaseSensitive<>(codePoints(), first, last, index, values);
-            }
-        };
-    }
-
-
-    public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> ignoreCase(
-            final Class<E> type, final E[] values) {
-        return new EnumLexemeBuilder<>(type, values, Case.IGNORE) {
-            @Override
-            public Lexeme build(final int first, final int last, final int index) {
-                return new EnumLexeme.IgnoreCase<>(codePoints(), first, last, index, values);
-            }
-        };
-    }
-
-
-    public static <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> lowerCase(
-            final Class<E> type, final E[] values) {
-        return new EnumLexemeBuilder<>(type, values, Case.LOWER) {
-            @Override
-            public Lexeme build(final int first, final int last, final int index) {
-                return new EnumLexeme.LowerCase<>(codePoints(), first, last, index, values);
-            }
-        };
+    @Override
+    public Lexeme build(final int first, final int last, final int index) {
+        return casePolicy.lex(codePoints(), first, last, index, values);
     }
 }

@@ -1,6 +1,7 @@
 package com.cosmoloj.language.wkt2.v1_0.lexeme.simple;
 
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 
 /**
@@ -32,6 +33,6 @@ public enum CsType implements SemanticEnum<CsType> {
     }
 
     public static EnumLexemeBuilder<CsType> builder() {
-        return EnumLexemeBuilder.ignoreCase(CsType.class, CsType.values());
+        return EnumCase.IGNORE.builder(CsType.class, CsType.values());
     }
 }

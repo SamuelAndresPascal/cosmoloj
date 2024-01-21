@@ -1,6 +1,7 @@
 package com.cosmoloj.language.json.lexeme.simple;
 
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.function.Predicate;
 
@@ -33,6 +34,6 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
     }
 
     public static EnumLexemeBuilder<SpecialSymbol> builder() {
-        return EnumLexemeBuilder.caseSensitive(SpecialSymbol.class, SpecialSymbol.values());
+        return EnumCase.SENTITIVE.builder(SpecialSymbol.class, SpecialSymbol.values());
     }
 }

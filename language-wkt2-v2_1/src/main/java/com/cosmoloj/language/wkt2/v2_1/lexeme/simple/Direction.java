@@ -1,6 +1,7 @@
 package com.cosmoloj.language.wkt2.v2_1.lexeme.simple;
 
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 
 /**
@@ -51,6 +52,6 @@ public enum Direction implements SemanticEnum<Direction> {
     unspecified;
 
     public static EnumLexemeBuilder<Direction> builder() {
-        return EnumLexemeBuilder.ignoreCase(Direction.class, Direction.values());
+        return EnumCase.IGNORE.builder(Direction.class, Direction.values());
     }
 }

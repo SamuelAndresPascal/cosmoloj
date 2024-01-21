@@ -1,7 +1,7 @@
 package com.cosmoloj.language.wkt.sf.lexeme;
 
-import com.cosmoloj.language.common.LanguageUtil;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.function.Predicate;
@@ -45,7 +45,7 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
     }
 
     public static SpecialSymbol toEnum(final String candidate) {
-        return LanguageUtil.toEnum(candidate, values());
+        return EnumCase.SENTITIVE.parse(candidate, values());
     }
 
     public static boolean exists(final String candidate) {
@@ -55,11 +55,11 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
     public static final class Lexeme extends EnumLexeme<SpecialSymbol> {
 
         private Lexeme(final String chars, final int start, final int end, final int index) {
-            super(chars, start, end, index);
+            super(chars, start, end, index, SpecialSymbol.values(), EnumCase.SENTITIVE);
         }
 
         private Lexeme(final Lexeme toMap) {
-            super(toMap);
+            super(toMap, SpecialSymbol.values(), EnumCase.SENTITIVE);
         }
 
         @Override
@@ -73,7 +73,7 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol>, Predicate<Obje
     }
 
     public static EnumLexemeBuilder<SpecialSymbol> builder() {
-        return new EnumLexemeBuilder<SpecialSymbol>(SpecialSymbol.class, SpecialSymbol.values()) {
+        return new EnumLexemeBuilder<SpecialSymbol>(SpecialSymbol.class, SpecialSymbol.values(), EnumCase.SENTITIVE) {
 
             @Override
             public Lexeme build(final int first, final int last, final int index) {

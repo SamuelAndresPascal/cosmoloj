@@ -1,20 +1,19 @@
 package com.cosmoloj.language.wkt2.v2_1.lexeme.simple;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
-import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import com.cosmoloj.util.bib.Reference;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 @Reference(Cosmoloj.WKT_CRS_V2_1)
-public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
+public enum WktKeyword implements SemanticEnum<WktKeyword> {
 
     ABRIDGEDTRANSFORMATION,
     ANCHOR,
@@ -141,13 +140,8 @@ public enum WktKeyword implements SemanticEnum<WktKeyword>, Predicate<Object> {
 //    CONCAT_MT // pas de rétrocompatibilité
 //    TOWGS84,
 
-    @Override
-    public boolean test(final Object token) {
-        return token instanceof Lexeme k && this.equals(k.getSemantics());
-    }
-
     public static EnumLexemeBuilder<WktKeyword> builder() {
-        return EnumLexemeBuilder.ignoreCase(WktKeyword.class, WktKeyword.values());
+        return EnumCase.IGNORE.builder(WktKeyword.class, WktKeyword.values());
     }
 
     public static boolean isUnit(final WktKeyword t) {

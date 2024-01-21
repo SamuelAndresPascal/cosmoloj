@@ -1,13 +1,12 @@
 package com.cosmoloj.language.wkt.cts.lexeme;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
-import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import com.cosmoloj.util.bib.Reference;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
-import java.util.function.Predicate;
 
 /**
  *
@@ -15,7 +14,7 @@ import java.util.function.Predicate;
  */
 @Reference(Cosmoloj.CTS_REVISION_V1_0)
 @SectionReference(type = SectionReferenceType.SECTION, id = {"7", "8"})
-public enum WktName implements SemanticEnum<WktName>, Predicate<Object> {
+public enum WktName implements SemanticEnum<WktName> {
 
     AUTHORITY,
     AXIS,
@@ -43,12 +42,7 @@ public enum WktName implements SemanticEnum<WktName>, Predicate<Object> {
     PASSTHROUGH_MT,
     CONCAT_MT;
 
-    @Override
-    public boolean test(final Object token) {
-        return token instanceof Lexeme l && this.equals(l.getSemantics());
-    }
-
     public static EnumLexemeBuilder<WktName> builder() {
-        return EnumLexemeBuilder.ignoreCase(WktName.class, WktName.values());
+        return EnumCase.IGNORE.builder(WktName.class, WktName.values());
     }
 }

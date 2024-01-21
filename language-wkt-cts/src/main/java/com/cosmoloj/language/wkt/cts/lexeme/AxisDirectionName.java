@@ -1,6 +1,7 @@
 package com.cosmoloj.language.wkt.cts.lexeme;
 
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 
 /**
@@ -18,6 +19,6 @@ public enum AxisDirectionName implements SemanticEnum<AxisDirectionName> {
     OTHER;
 
     public static EnumLexemeBuilder<AxisDirectionName> builder() {
-        return EnumLexemeBuilder.caseSensitive(AxisDirectionName.class, AxisDirectionName.values());
+        return EnumCase.SENTITIVE.builder(AxisDirectionName.class, AxisDirectionName.values());
     }
 }

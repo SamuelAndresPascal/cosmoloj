@@ -1,7 +1,7 @@
 package com.cosmoloj.language.common.number.lexeme.simple;
 
-import com.cosmoloj.language.common.LanguageUtil;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.function.Predicate;
@@ -46,7 +46,7 @@ public enum Sign implements SemanticEnum<Sign>, Predicate<Object> {
     }
 
     public static Sign toEnum(final String candidate) {
-        return LanguageUtil.toEnum(candidate, values());
+        return EnumCase.SENTITIVE.parse(candidate, values());
     }
 
     public static boolean exists(final String candidate) {
@@ -56,11 +56,11 @@ public enum Sign implements SemanticEnum<Sign>, Predicate<Object> {
     public static final class Lexeme extends EnumLexeme<Sign> {
 
         private Lexeme(final String chars, final int start, final int end, final int index) {
-            super(chars, start, end, index);
+            super(chars, start, end, index, Sign.values(), EnumCase.SENTITIVE);
         }
 
         private Lexeme(final com.cosmoloj.language.api.semantic.Lexeme toMap) {
-            super(toMap);
+            super(toMap, Sign.values(), EnumCase.SENTITIVE);
         }
 
         @Override
@@ -74,7 +74,7 @@ public enum Sign implements SemanticEnum<Sign>, Predicate<Object> {
     }
 
     public static EnumLexemeBuilder<Sign> builder() {
-        return new EnumLexemeBuilder<Sign>(Sign.class, Sign.values()) {
+        return new EnumLexemeBuilder<Sign>(Sign.class, Sign.values(), EnumCase.SENTITIVE) {
 
             @Override
             public Lexeme build(final int first, final int last, final int index) {

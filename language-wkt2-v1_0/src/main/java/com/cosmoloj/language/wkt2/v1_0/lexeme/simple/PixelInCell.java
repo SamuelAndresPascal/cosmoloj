@@ -1,15 +1,14 @@
 package com.cosmoloj.language.wkt2.v1_0.lexeme.simple;
 
-import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
+import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
-public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Object> {
+public enum PixelInCell implements SemanticEnum<PixelInCell> {
 
     CELL_CENTRE("cellCentre"), CELL_CENTER("cellCenter"), CELL_CORNER("cellCorner");
 
@@ -24,12 +23,7 @@ public enum PixelInCell implements SemanticEnum<PixelInCell>, Predicate<Object> 
         return this.codePoints;
     }
 
-    @Override
-    public boolean test(final Object token) {
-        return token instanceof Lexeme p && this.equals(p.getSemantics());
-    }
-
     public static EnumLexemeBuilder<PixelInCell> builder() {
-        return EnumLexemeBuilder.ignoreCase(PixelInCell.class, PixelInCell.values());
+        return EnumCase.IGNORE.builder(PixelInCell.class, PixelInCell.values());
     }
 }
