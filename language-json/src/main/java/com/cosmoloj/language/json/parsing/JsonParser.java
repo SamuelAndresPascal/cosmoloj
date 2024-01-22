@@ -108,7 +108,7 @@ public class JsonParser extends AbstractPredictiveMappingUnpredictiveParser<Json
                 }
             } else if (sem instanceof Keyword) {
                 return (JsonValue) enumLex;
-            } else if (lexeme instanceof Sign.Lexeme) {
+            } else if (sem instanceof Sign) {
                 return (JsonSignedNumericLiteral) numberParser.signedNumericLiteral(lexeme);
             } else {
                 throw new IllegalStateException("expected left object/array delimiter or keyword");

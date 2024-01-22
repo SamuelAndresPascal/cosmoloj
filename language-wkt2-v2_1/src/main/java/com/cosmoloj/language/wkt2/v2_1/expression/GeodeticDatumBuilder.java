@@ -27,7 +27,7 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> Ellipsoid.INSTANCE_OF;
+            case 4 -> Ellipsoid.class::isInstance;
             default -> {
                 if (odd() && rightDelimiterIndex == NOT_CLOSED) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);

@@ -5,6 +5,7 @@ import com.cosmoloj.language.api.exception.LanguageException;
 import com.cosmoloj.language.api.semantic.Token;
 import com.cosmoloj.language.common.impl.parsing.AbstractPredictiveParser;
 import com.cosmoloj.language.common.impl.parsing.DefaultStringScanner;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.number.parsing.NumberParser;
 import com.cosmoloj.language.wkt.sf.expression.Datum;
 import com.cosmoloj.language.wkt.sf.expression.DatumBuilder;
@@ -46,7 +47,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
         return unit(flushAndLex(WktName.UNIT));
     }
 
-    private Unit unit(final WktName.Lexeme label) throws LanguageException {
+    private Unit unit(final EnumLexeme<WktName> label) throws LanguageException {
         return build(NameAndValueBuilder.unit().list(
                 label,
                 flushAndLex(LeftDelimiter.class),
@@ -70,7 +71,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
         return parameter(flushAndLex(WktName.PARAMETER));
     }
 
-    private Parameter parameter(final WktName.Lexeme name) throws LanguageException {
+    private Parameter parameter(final EnumLexeme<WktName> name) throws LanguageException {
         return build(NameAndValueBuilder.parameter().list(
                 name,
                 flushAndLex(LeftDelimiter.class),
@@ -114,7 +115,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
         return geoccs(flushAndLex(WktName.GEOCCS));
     }
 
-    public GeocentricCs geoccs(final WktName.Lexeme label) throws LanguageException {
+    public GeocentricCs geoccs(final EnumLexeme<WktName> label) throws LanguageException {
         return build(GeoCsBuilder.geoc().list(label,
                 flushAndLex(LeftDelimiter.class),
                 flushAndLex(QuotedName.class),
@@ -131,7 +132,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
         return geogcs(flushAndLex(WktName.GEOGCS));
     }
 
-    public GeographicCs geogcs(final WktName.Lexeme label) throws LanguageException {
+    public GeographicCs geogcs(final EnumLexeme<WktName> label) throws LanguageException {
 
         final TokenBuilder<Token, GeographicCs> builder = GeoCsBuilder.geog().list(label,
                 flushAndLex(LeftDelimiter.class),
@@ -160,7 +161,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
         return projcs(flushAndLex(WktName.PROJCS));
     }
 
-    public ProjectedCs projcs(final WktName.Lexeme label) throws LanguageException {
+    public ProjectedCs projcs(final EnumLexeme<WktName> label) throws LanguageException {
 
         final TokenBuilder<Token, ProjectedCs> builder = new ProjCsBuilder().list(
                 label,
@@ -172,7 +173,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
                 projection(),
                 flushAndLex(SpecialSymbol.COMMA));
 
-        WktName.Lexeme name = flushAndLex(WktName.PARAMETER, WktName.UNIT);
+        EnumLexeme<WktName> name = flushAndLex(WktName.PARAMETER, WktName.UNIT);
         while (WktName.PARAMETER.test(name)) {
             builder.list(
                     parameter(name),
@@ -188,7 +189,7 @@ public class WktParser extends AbstractPredictiveParser<WktLexer> {
     }
 
     public SpatialReferenceSystem coordinateSystem() throws LanguageException {
-        final WktName.Lexeme label = flushAndLex(WktName.PROJCS, WktName.GEOGCS, WktName.GEOCCS);
+        final EnumLexeme<WktName> label = flushAndLex(WktName.PROJCS, WktName.GEOGCS, WktName.GEOCCS);
 
         return switch (label.getSemantics()) {
             case PROJCS -> projcs(label);

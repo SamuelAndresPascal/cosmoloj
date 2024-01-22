@@ -64,7 +64,7 @@ public class WktLexerTest {
         });
         Assertions.assertEquals("""
                                 unexpected code point " at 1, but expected:
-                                P|S|D|E|U|G
+                                P|p|S|s|D|d|E|e|U|u|G|g
                                 """, ex.getMessage());
     }
 

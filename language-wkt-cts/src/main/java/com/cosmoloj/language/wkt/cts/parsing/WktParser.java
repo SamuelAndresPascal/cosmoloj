@@ -226,7 +226,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 spheroid());
 
         if (comma()) {
-            final SpecialSymbol.Lexeme comma = flushAndLex(SpecialSymbol.COMMA);
+            final EnumLexeme<SpecialSymbol> comma = flushAndLex(SpecialSymbol.COMMA);
             final EnumLexeme<WktName> toWgsOrAuth = flushAndLex(WktName.TOWGS84, WktName.AUTHORITY);
 
             switch (toWgsOrAuth.getSemantics()) {

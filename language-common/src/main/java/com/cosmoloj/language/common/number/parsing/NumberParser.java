@@ -20,6 +20,7 @@ import com.cosmoloj.language.common.number.lexeme.simple.Sign;
 import com.cosmoloj.language.common.number.lexeme.simple.UnsignedInteger;
 import java.util.Arrays;
 import com.cosmoloj.language.api.semantic.Lexeme;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 
 /**
  *
@@ -75,8 +76,8 @@ public class NumberParser<L extends AbstractPredictiveLexer & UnpredictiveLexer>
 
         final SignedIntegerBuilder builder = getSignedIntegerBuilder();
         // Y a-t-il un signe ?
-        if (lex instanceof Sign.Lexeme) {
-            switch (((Sign.Lexeme) lex).getSemantics()) {
+        if (lex instanceof EnumLexeme) {
+            switch ((Sign) lex.getSemantics()) {
                 case PLUS, MINUS -> builder.list(
                         lex,
                         flushAndLex(UnsignedInteger.class));
@@ -85,7 +86,7 @@ public class NumberParser<L extends AbstractPredictiveLexer & UnpredictiveLexer>
         } else if (lex instanceof UnsignedInteger) {
             builder.list(lex);
         } else {
-            throw unexpected(lex).types(Sign.Lexeme.class, UnsignedInteger.class).exception();
+            throw unexpected(lex).types(Sign.class, UnsignedInteger.class).exception();
         }
         return build(builder);
     }
@@ -258,8 +259,8 @@ public class NumberParser<L extends AbstractPredictiveLexer & UnpredictiveLexer>
 
         final SignedNumericLiteralBuilder builder = getSignedNumericLiteralBuilder();
 
-        if (lexeme instanceof Sign.Lexeme) {
-            switch (((Sign.Lexeme) lexeme).getSemantics()) {
+        if (lexeme instanceof EnumLexeme) {
+            switch ((Sign) lexeme.getSemantics()) {
                 case PLUS, MINUS -> builder.list(lexeme,
                         unsignedNumericLiteral(lex()));
                 default -> throw unexpected(lexeme).semantics(Sign.PLUS, Sign.MINUS).exception();

@@ -2,6 +2,7 @@ package com.cosmoloj.language.wkt.sf.expression;
 
 import com.cosmoloj.language.common.number.lexeme.compound.SignedNumericLiteral;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
 import com.cosmoloj.language.wkt.sf.lexeme.WktName;
 
@@ -11,13 +12,14 @@ import com.cosmoloj.language.wkt.sf.lexeme.WktName;
  */
 public class Spheroid extends AbstractExpression {
 
-    private final WktName.Lexeme label;
+    private final EnumLexeme<WktName> label;
     private final QuotedName name;
     private final SignedNumericLiteral semiMajorAxis;
     private final SignedNumericLiteral inverseFlattening;
 
-    public Spheroid(final int start, final int end, final int index, final WktName.Lexeme label, final QuotedName name,
-            final SignedNumericLiteral semiMajorAxis, final SignedNumericLiteral inverseFlattening) {
+    public Spheroid(final int start, final int end, final int index, final EnumLexeme<WktName> label,
+            final QuotedName name, final SignedNumericLiteral semiMajorAxis,
+            final SignedNumericLiteral inverseFlattening) {
         super(start, end, index);
         this.label = label;
         this.name = name;
@@ -25,7 +27,7 @@ public class Spheroid extends AbstractExpression {
         this.inverseFlattening = inverseFlattening;
     }
 
-    public WktName.Lexeme getLabel() {
+    public EnumLexeme<WktName> getLabel() {
         return this.label;
     }
 
