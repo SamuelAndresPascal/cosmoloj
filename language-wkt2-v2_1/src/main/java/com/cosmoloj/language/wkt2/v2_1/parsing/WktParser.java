@@ -27,8 +27,6 @@ import com.cosmoloj.language.wkt2.v2_1.expression.BaseGeodeticCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BaseGeodeticCrsBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.BaseProjectedCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BaseProjectedCrsBuilder;
-import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
-import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Citation;
 import com.cosmoloj.language.wkt2.v2_1.expression.CompoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.CompoundCrsBuilder;
@@ -105,6 +103,8 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
+import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
+import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
 
 /**
  *
@@ -1048,139 +1048,38 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 flushAndLexEnum(SpecialSymbol.class),
                 operationMethod());
 
+        int status = 0;
         while (comma()) {
 
             builder.list(flushAndLexEnum(SpecialSymbol.class));
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
+            final WktKeyword keyword = lex.getSemantics();
 
-            switch (lex.getSemantics()) {
-                case PARAMETER -> builder.list(abridgedTransformationParameter(lex));
-                case PARAMETERFILE -> builder.list(parameterFile(lex));
-                case INTERPOLATIONCRS -> {
-                    builder.list(interpolationCrs(lex));
-                    break;
-                }
-                case OPERATIONACCURACY -> {
-                    builder.list(operationAccuracy(lex));
-                    break;
-                }
-                case SCOPE -> {
-                    builder.list(scope(lex));
-                    break;
-                }
-                case ID, AUTHORITY -> {
-                    builder.list(identifier(lex));
-                    break;
-                }
-                case REMARK -> {
-                    builder.list(remark(lex));
-                    break;
-                }
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                        break;
-                    }
-                    throw new IllegalStateException();
-                }
-            }
-        }
-
-        if (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case INTERPOLATIONCRS -> builder.list(interpolationCrs(lex));
-                case OPERATIONACCURACY -> builder.list(operationAccuracy(lex));
-                case SCOPE -> builder.list(scope(lex));
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> builder.list(remark(lex));
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                    throw new IllegalStateException();
-                }
-            }
-        }
-
-        if (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case OPERATIONACCURACY -> builder.list(operationAccuracy(lex));
-                case SCOPE -> builder.list(scope(lex));
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> builder.list(remark(lex));
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        if (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case SCOPE -> builder.list(scope(lex));
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> builder.list(remark(lex));
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        while (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case ID, AUTHORITY -> {
-                    builder.list(identifier(lex));
-                    break;
-                }
-                case REMARK -> {
-                    builder.list(remark(lex));
-                    break;
-                }
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        while (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> {
-                    builder.list(remark(lex));
-                    break;
-                }
-                default -> throw new IllegalStateException();
+            if (WktKeyword.PARAMETER.equals(keyword) && status < 1) {
+                builder.list(abridgedTransformationParameter(lex));
+            } else if (WktKeyword.PARAMETERFILE.equals(keyword) && status < 1) {
+                builder.list(parameterFile(lex));
+            } else if (WktKeyword.INTERPOLATIONCRS.equals(keyword) && status < 1) {
+                status = 1;
+                builder.list(interpolationCrs(lex));
+            } else if (WktKeyword.OPERATIONACCURACY.equals(keyword) && status < 2) {
+                status = 2;
+                builder.list(operationAccuracy(lex));
+            } else if (WktKeyword.SCOPE.equals(keyword) && status < 3) {
+                status = 3;
+                builder.list(scope(lex));
+            } else if (WktKeyword.isExtent(keyword) && status < 4) {
+                status = 3;
+                builder.list(extent(lex));
+            } else if ((WktKeyword.ID.equals(keyword) || WktKeyword.AUTHORITY.equals(keyword)) && status < 5) {
+                status = 4;
+                builder.list(identifier(lex));
+            } else if (WktKeyword.REMARK.equals(keyword) && status < 6) {
+                status = 6;
+                builder.list(remark(lex));
+            } else {
+                throw new IllegalStateException();
             }
         }
 
@@ -1200,138 +1099,38 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 flushAndLexEnum(SpecialSymbol.class),
                 operationMethod());
 
+        int status = 0;
         while (comma()) {
 
             builder.list(flushAndLexEnum(SpecialSymbol.class));
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
+            final WktKeyword keyword = lex.getSemantics();
 
-            switch (lex.getSemantics()) {
-                case PARAMETER -> builder.list(derivingOrCoordinateOperationParameter(lex));
-                case PARAMETERFILE -> builder.list(parameterFile(lex));
-                case INTERPOLATIONCRS -> {
-                    builder.list(interpolationCrs(lex));
-                    break;
-                }
-                case OPERATIONACCURACY -> {
-                    builder.list(operationAccuracy(lex));
-                    break;
-                }
-                case SCOPE -> {
-                    builder.list(scope(lex));
-                    break;
-                }
-                case ID, AUTHORITY -> {
-                    builder.list(identifier(lex));
-                    break;
-                }
-                case REMARK -> {
-                    builder.list(remark(lex));
-                    break;
-                }
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                        break;
-                    }
-                    throw new IllegalStateException();
-                }
-            }
-        }
-
-        if (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case INTERPOLATIONCRS -> builder.list(interpolationCrs(lex));
-                case OPERATIONACCURACY -> builder.list(operationAccuracy(lex));
-                case SCOPE -> builder.list(scope(lex));
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> builder.list(remark(lex));
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        if (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case OPERATIONACCURACY -> builder.list(operationAccuracy(lex));
-                case SCOPE -> builder.list(scope(lex));
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> builder.list(remark(lex));
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        if (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case SCOPE -> builder.list(scope(lex));
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> builder.list(remark(lex));
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        while (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case ID, AUTHORITY -> {
-                    builder.list(identifier(lex));
-                    break;
-                }
-                case REMARK -> {
-                    builder.list(remark(lex));
-                    break;
-                }
-                default -> {
-                    if (WktKeyword.isExtent(lex.getSemantics())) {
-                        builder.list(extent(lex));
-                    }
-                }
-            }
-        }
-
-        while (comma()) {
-
-            builder.list(flushAndLexEnum(SpecialSymbol.class));
-
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-            switch (lex.getSemantics()) {
-                case ID, AUTHORITY -> builder.list(identifier(lex));
-                case REMARK -> {
-                    builder.list(remark(lex));
-                    break;
-                }
-                default -> throw new IllegalStateException();
+            if (WktKeyword.PARAMETER.equals(keyword) && status < 1) {
+                builder.list(derivingOrCoordinateOperationParameter(lex));
+            } else if (WktKeyword.PARAMETERFILE.equals(keyword) && status < 1) {
+                builder.list(parameterFile(lex));
+            } else if (WktKeyword.INTERPOLATIONCRS.equals(keyword) && status < 1) {
+                status = 1;
+                builder.list(interpolationCrs(lex));
+            } else if (WktKeyword.OPERATIONACCURACY.equals(keyword) && status < 2) {
+                status = 2;
+                builder.list(operationAccuracy(lex));
+            } else if (WktKeyword.SCOPE.equals(keyword) && status < 3) {
+                status = 3;
+                builder.list(scope(lex));
+            } else if (WktKeyword.isExtent(keyword) && status < 4) {
+                status = 3;
+                builder.list(extent(lex));
+            } else if ((WktKeyword.ID.equals(keyword) || WktKeyword.AUTHORITY.equals(keyword)) && status < 5) {
+                status = 4;
+                builder.list(identifier(lex));
+            } else if (WktKeyword.REMARK.equals(keyword) && status < 6) {
+                status = 6;
+                builder.list(remark(lex));
+            } else {
+                throw new IllegalStateException();
             }
         }
 

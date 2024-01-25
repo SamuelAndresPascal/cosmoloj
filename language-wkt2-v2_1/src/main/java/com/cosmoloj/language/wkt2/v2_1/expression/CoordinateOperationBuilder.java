@@ -40,7 +40,7 @@ public class CoordinateOperationBuilder
                             .or(OperationCrs.InterpolationCrs.INSTANCE_OF_INTERPOLATION_CRS)
                             .or(SimpleNumber.Accuracy.INSTANCE_OF)
                             .or(Scope.INSTANCE_OF)
-                            .or(Extent.INSTANCE_OF)
+                            .or(Extent.class::isInstance)
                             .or(Identifier.class::isInstance)
                             .or(Remark.INSTANCE_OF);
                 }
@@ -56,7 +56,7 @@ public class CoordinateOperationBuilder
                 firstToken(OperationCrs.InterpolationCrs.INSTANCE_OF_INTERPOLATION_CRS),
                 firstToken(SimpleNumber.Accuracy.INSTANCE_OF),
                 firstToken(Scope.INSTANCE_OF),
-                tokens(Extent.INSTANCE_OF),
+                tokens(Extent.class::isInstance),
                 tokens(Identifier.class::isInstance),
                 firstToken(Remark.INSTANCE_OF));
     }

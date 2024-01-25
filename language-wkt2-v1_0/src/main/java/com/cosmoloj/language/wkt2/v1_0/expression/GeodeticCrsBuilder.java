@@ -33,7 +33,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                     case 6 -> CoordinateSystem.class::isInstance;
                     default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
                                : Scope.INSTANCE_OF
-                                    .or(Extent.INSTANCE_OF)
+                                    .or(Extent.class::isInstance)
                                     .or(Identifier.INSTANCE_OF)
                                     .or(Remark.INSTANCE_OF);
                 };
@@ -44,7 +44,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
 
                 return new GeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
                         firstToken(Scope.INSTANCE_OF),
-                        tokens(Extent.INSTANCE_OF),
+                        tokens(Extent.class::isInstance),
                         tokens(Identifier.INSTANCE_OF),
                         firstToken(Remark.INSTANCE_OF));
             }
@@ -66,7 +66,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                     case 6 -> CoordinateSystem.Ellipsoidal2DCoordinateSystem.class::isInstance;
                     default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
                                : Scope.INSTANCE_OF
-                                    .or(Extent.INSTANCE_OF)
+                                    .or(Extent.class::isInstance)
                                     .or(Identifier.INSTANCE_OF)
                                     .or(Remark.INSTANCE_OF);
                 };
@@ -77,7 +77,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
 
                 return new GeodeticCrs.Geographic2DCrs(first(), last(), index(), token(2), token(4), token(6),
                         firstToken(Scope.INSTANCE_OF),
-                        tokens(Extent.INSTANCE_OF),
+                        tokens(Extent.class::isInstance),
                         tokens(Identifier.INSTANCE_OF),
                         firstToken(Remark.INSTANCE_OF));
             }

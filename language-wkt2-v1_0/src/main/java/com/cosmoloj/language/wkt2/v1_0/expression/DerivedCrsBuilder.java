@@ -53,7 +53,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
             case 8 -> CoordinateSystem.class::isInstance;
             default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
                        : Scope.INSTANCE_OF
-                        .or(Extent.INSTANCE_OF)
+                        .or(Extent.class::isInstance)
                         .or(Identifier.INSTANCE_OF)
                         .or(Remark.INSTANCE_OF);
         };
@@ -71,7 +71,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.ProjectedCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }
@@ -90,7 +90,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedGeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }
@@ -109,7 +109,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedVerticalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }
@@ -130,7 +130,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                                 token(6),
                                 token(8),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }
@@ -150,7 +150,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                                 token(6),
                                 token(8),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }
@@ -169,7 +169,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedTemporalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }

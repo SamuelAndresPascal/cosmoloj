@@ -29,7 +29,7 @@ public class AbridgedTransformationBuilder
                        : ParameterAbridged.PARAMETER_ABRIDGED
                             .or(ParameterFile.INSTANCE_OF)
                             .or(Scope.INSTANCE_OF)
-                            .or(Extent.INSTANCE_OF)
+                            .or(Extent.class::isInstance)
                             .or(Identifier.INSTANCE_OF)
                             .or(Remark.INSTANCE_OF);
         };
@@ -41,7 +41,7 @@ public class AbridgedTransformationBuilder
         return new Operation.AbridgedTransformation(first(), last(), index(), token(2), token(4),
                 tokens(AbstractParam.INSTANCE_OF),
                 firstToken(Scope.INSTANCE_OF),
-                tokens(Extent.INSTANCE_OF),
+                tokens(Extent.class::isInstance),
                 tokens(Identifier.INSTANCE_OF),
                 firstToken(Remark.INSTANCE_OF));
     }

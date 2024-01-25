@@ -47,7 +47,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Scope.INSTANCE_OF
-                            .or(Extent.INSTANCE_OF)
+                            .or(Extent.class::isInstance)
                             .or(Identifier.INSTANCE_OF)
                             .or(Remark.INSTANCE_OF);
                 }
@@ -63,7 +63,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
                     public SimpleCrsShell.VerticalCrs build() {
                         return new SimpleCrsShell.VerticalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }
@@ -80,7 +80,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
                             return new SimpleCrsShell.EngineeringCrs(first(), last(), index(), token(2), token(4),
                                     token(6),
                                     firstToken(Scope.INSTANCE_OF),
-                                    tokens(Extent.INSTANCE_OF),
+                                    tokens(Extent.class::isInstance),
                                     tokens(Identifier.INSTANCE_OF),
                                     firstToken(Remark.INSTANCE_OF));
                         }
@@ -94,7 +94,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
             public SimpleCrsShell.ImageCrs build() {
                 return new SimpleCrsShell.ImageCrs(first(), last(), index(), token(2), token(4), token(6),
                         firstToken(Scope.INSTANCE_OF),
-                        tokens(Extent.INSTANCE_OF),
+                        tokens(Extent.class::isInstance),
                         tokens(Identifier.INSTANCE_OF),
                         firstToken(Remark.INSTANCE_OF));
             }
@@ -111,7 +111,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
                             return new SimpleCrsShell.ParametricCrs(first(), last(), index(), token(2), token(4),
                                     token(6),
                                     firstToken(Scope.INSTANCE_OF),
-                                    tokens(Extent.INSTANCE_OF),
+                                    tokens(Extent.class::isInstance),
                                     tokens(Identifier.INSTANCE_OF),
                                     firstToken(Remark.INSTANCE_OF));
                         }
@@ -126,7 +126,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
                     public SimpleCrsShell.TemporalCrs build() {
                         return new SimpleCrsShell.TemporalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 firstToken(Scope.INSTANCE_OF),
-                                tokens(Extent.INSTANCE_OF),
+                                tokens(Extent.class::isInstance),
                                 tokens(Identifier.INSTANCE_OF),
                                 firstToken(Remark.INSTANCE_OF));
                     }

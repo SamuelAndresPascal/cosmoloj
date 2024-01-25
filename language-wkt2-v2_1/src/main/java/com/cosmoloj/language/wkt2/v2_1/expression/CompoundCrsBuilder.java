@@ -27,22 +27,22 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
             case 4 -> HorizontalCrs.HORIZONTAL_CRS;
             case 5 -> SpecialSymbol.COMMA;
             case 6 -> SimpleCrsShell.VerticalCrs.INSTANCE_OF
-                    .or(SimpleCrsShell.ParametricCrs.INSTANCE_OF)
-                    .or(SimpleCrsShell.TemporalCrs.INSTANCE_OF);
+                    .or(SimpleCrsShell.ParametricCrs.class::isInstance)
+                    .or(SimpleCrsShell.TemporalCrs.class::isInstance);
             case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
             case 8 -> SimpleCrsShell.TemporalCrs.INSTANCE_OF
-                    .or(Scope.INSTANCE_OF)
-                    .or(Extent.INSTANCE_OF)
+                    .or(Scope.class::isInstance)
+                    .or(Extent.class::isInstance)
                     .or(Identifier.class::isInstance)
-                    .or(Remark.INSTANCE_OF);
+                    .or(Remark.class::isInstance);
             default -> {
                 if (odd()) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield Scope.INSTANCE_OF
-                    .or(Extent.INSTANCE_OF)
+                    .or(Extent.class::isInstance)
                     .or(Identifier.class::isInstance)
-                    .or(Remark.INSTANCE_OF);
+                    .or(Remark.class::isInstance);
                 }
             }
         };
@@ -51,10 +51,10 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
     @Override
     public CompoundCrs build() {
         return new CompoundCrs(first(), last(), index(), token(2), token(4), token(6),
-                (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.INSTANCE_OF)) ? token(8) : null,
-                firstToken(Scope.INSTANCE_OF),
-                tokens(Extent.INSTANCE_OF),
+                (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.class::isInstance)) ? token(8) : null,
+                firstToken(Scope.class::isInstance),
+                tokens(Extent.class::isInstance),
                 tokens(Identifier.class::isInstance),
-                firstToken(Remark.INSTANCE_OF));
+                firstToken(Remark.class::isInstance));
     }
 }

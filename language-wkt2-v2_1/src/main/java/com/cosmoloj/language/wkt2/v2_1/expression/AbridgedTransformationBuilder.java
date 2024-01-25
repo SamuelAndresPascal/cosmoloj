@@ -30,11 +30,11 @@ public class AbridgedTransformationBuilder
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
                     yield ParameterAbridged.PARAMETER_ABRIDGED
-                            .or(ParameterFile.INSTANCE_OF)
-                            .or(Scope.INSTANCE_OF)
-                            .or(Extent.INSTANCE_OF)
-                            .or(Identifier.INSTANCE_OF)
-                            .or(Remark.INSTANCE_OF);
+                            .or(ParameterFile.class::isInstance)
+                            .or(Scope.class::isInstance)
+                            .or(Extent.class::isInstance)
+                            .or(Identifier.class::isInstance)
+                            .or(Remark.class::isInstance);
                 }
             }
         };
@@ -44,10 +44,10 @@ public class AbridgedTransformationBuilder
     public Operation.AbridgedTransformation build() {
 
         return new Operation.AbridgedTransformation(first(), last(), index(), token(2), token(4),
-                tokens(AbstractParam.INSTANCE_OF),
-                firstToken(Scope.INSTANCE_OF),
-                tokens(Extent.INSTANCE_OF),
-                tokens(Identifier.INSTANCE_OF),
-                firstToken(Remark.INSTANCE_OF));
+                tokens(AbstractParam.class::isInstance),
+                firstToken(Scope.class::isInstance),
+                tokens(Extent.class::isInstance),
+                tokens(Identifier.class::isInstance),
+                firstToken(Remark.class::isInstance));
     }
 }
