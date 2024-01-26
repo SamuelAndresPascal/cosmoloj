@@ -10,7 +10,7 @@ import com.cosmoloj.language.api.semantic.ParsableLexeme;
  */
 public abstract class StringLexeme extends CharSequenceLexeme implements ParsableLexeme<String> {
 
-    public StringLexeme(final String codePoints, final int first, final int last, final int index) {
+    protected StringLexeme(final String codePoints, final int first, final int last, final int index) {
         super(codePoints, first, last, index);
     }
 

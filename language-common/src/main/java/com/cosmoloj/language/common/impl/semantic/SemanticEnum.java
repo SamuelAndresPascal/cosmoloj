@@ -35,4 +35,12 @@ public interface SemanticEnum<T extends Enum<T>> extends Predicate<Object> {
     default boolean test(final Object lex) {
         return lex instanceof Lexeme l && this.equals(l.getSemantics());
     }
+
+    static String loadCodePoints(final int... codePoints) {
+        final StringBuilder sb = new StringBuilder();
+        for (final int codePoint : codePoints) {
+            sb.appendCodePoint(codePoint);
+        }
+        return sb.toString();
+    }
 }

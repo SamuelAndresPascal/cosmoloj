@@ -22,11 +22,7 @@ public enum SpecialSymbol implements SemanticEnum<SpecialSymbol> {
     private final String codePoints;
 
     SpecialSymbol(final int... codePoints) {
-        final StringBuilder sb = new StringBuilder();
-        for (final int codePoint : codePoints) {
-            sb.appendCodePoint(codePoint);
-        }
-        this.codePoints = sb.toString();
+        this.codePoints = SemanticEnum.loadCodePoints(codePoints);
     }
 
     @Override

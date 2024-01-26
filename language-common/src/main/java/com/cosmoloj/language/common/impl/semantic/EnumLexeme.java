@@ -14,22 +14,32 @@ public class EnumLexeme<S extends Enum<S> & SemanticEnum<S>> extends CharSequenc
 
     private final S[] values;
     private final EnumCase ec;
+    private final S semantics;
 
     public EnumLexeme(final String codePoints, final int first, final int last, final int index, final S[] values,
             final EnumCase ec) {
         super(codePoints, first, last, index);
         this.values = values;
         this.ec = ec;
+        // computes semantics once and for all
+        this.semantics = parse(getCodePoints());
     }
 
     public EnumLexeme(final Lexeme toMap, final S[] values, final EnumCase ec) {
         super(toMap);
         this.values = values;
         this.ec = ec;
+        // computes semantics once and for all
+        this.semantics = parse(getCodePoints());
     }
 
     @Override
-    public S parse(final String codePoints) {
+    public S getSemantics() {
+        return semantics;
+    }
+
+    @Override
+    public final S parse(final String codePoints) {
         return ec.parse(codePoints, this.values);
     }
 }

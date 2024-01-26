@@ -126,6 +126,15 @@ public class WktLexerTest {
     }
 
     @Test
+    public void readWktKeywordLexeme_5() throws LanguageException {
+
+        final WktLexer lexer = WktLexer.initialize("USAGE", LD, RD);
+
+        lexer.lex(WktKeyword.class);
+        Assertions.assertEquals(WktKeyword.USAGE, lexer.lexeme().getSemantics());
+    }
+
+    @Test
     public void characterStringLiteralLexeme_1() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"135\"", LD, RD);

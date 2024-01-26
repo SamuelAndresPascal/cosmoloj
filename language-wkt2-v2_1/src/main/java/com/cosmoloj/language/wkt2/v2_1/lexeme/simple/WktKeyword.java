@@ -3,10 +3,12 @@ package com.cosmoloj.language.wkt2.v2_1.lexeme.simple;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
 import com.cosmoloj.language.common.impl.semantic.EnumCase;
+import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import com.cosmoloj.util.bib.Reference;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
+import com.cosmoloj.util.function.Predicates;
 
 /**
  *
@@ -144,19 +146,21 @@ public enum WktKeyword implements SemanticEnum<WktKeyword> {
         return EnumCase.IGNORE.builder(WktKeyword.class, WktKeyword.values());
     }
 
-    public static boolean isUnit(final WktKeyword t) {
-            return WktKeyword.UNIT.equals(t)
-                    || WktKeyword.ANGLEUNIT.equals(t)
-                    || WktKeyword.LENGTHUNIT.equals(t)
-                    || WktKeyword.SCALEUNIT.equals(t)
-                    || WktKeyword.PARAMETRICUNIT.equals(t)
-                    || WktKeyword.TIMEUNIT.equals(t);
+    public static boolean isUnit(final EnumLexeme<WktKeyword> t) {
+            return Predicates.of(WktKeyword.UNIT)
+                    .or(WktKeyword.ANGLEUNIT)
+                    .or(WktKeyword.LENGTHUNIT)
+                    .or(WktKeyword.SCALEUNIT)
+                    .or(WktKeyword.PARAMETRICUNIT)
+                    .or(WktKeyword.TIMEUNIT)
+                    .test(t);
     }
 
-    public static boolean isExtent(final WktKeyword t) {
-            return WktKeyword.AREA.equals(t)
-                    || WktKeyword.BBOX.equals(t)
-                    || WktKeyword.VERTICALEXTENT.equals(t)
-                    || WktKeyword.TIMEEXTENT.equals(t);
+    public static boolean isExtent(final EnumLexeme<WktKeyword> t) {
+            return Predicates.of(WktKeyword.AREA)
+                    .or(WktKeyword.BBOX)
+                    .or(WktKeyword.VERTICALEXTENT)
+                    .or(WktKeyword.TIMEEXTENT)
+                    .test(t);
     }
 }

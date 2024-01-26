@@ -1054,28 +1054,27 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             builder.list(flushAndLexEnum(SpecialSymbol.class));
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-            final WktKeyword keyword = lex.getSemantics();
 
-            if (WktKeyword.PARAMETER.equals(keyword) && status < 1) {
+            if (WktKeyword.PARAMETER.test(lex) && status < 1) {
                 builder.list(abridgedTransformationParameter(lex));
-            } else if (WktKeyword.PARAMETERFILE.equals(keyword) && status < 1) {
+            } else if (WktKeyword.PARAMETERFILE.test(lex) && status < 1) {
                 builder.list(parameterFile(lex));
-            } else if (WktKeyword.INTERPOLATIONCRS.equals(keyword) && status < 1) {
+            } else if (WktKeyword.INTERPOLATIONCRS.test(lex) && status < 1) {
                 status = 1;
                 builder.list(interpolationCrs(lex));
-            } else if (WktKeyword.OPERATIONACCURACY.equals(keyword) && status < 2) {
+            } else if (WktKeyword.OPERATIONACCURACY.test(lex) && status < 2) {
                 status = 2;
                 builder.list(operationAccuracy(lex));
-            } else if (WktKeyword.SCOPE.equals(keyword) && status < 3) {
+            } else if (WktKeyword.SCOPE.test(lex) && status < 3) {
                 status = 3;
                 builder.list(scope(lex));
-            } else if (WktKeyword.isExtent(keyword) && status < 4) {
+            } else if (WktKeyword.isExtent(lex) && status < 4) {
                 status = 3;
                 builder.list(extent(lex));
-            } else if ((WktKeyword.ID.equals(keyword) || WktKeyword.AUTHORITY.equals(keyword)) && status < 5) {
+            } else if ((WktKeyword.ID.test(lex) || WktKeyword.AUTHORITY.test(lex)) && status < 5) {
                 status = 4;
                 builder.list(identifier(lex));
-            } else if (WktKeyword.REMARK.equals(keyword) && status < 6) {
+            } else if (WktKeyword.REMARK.test(lex) && status < 6) {
                 status = 6;
                 builder.list(remark(lex));
             } else {
@@ -1105,28 +1104,27 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             builder.list(flushAndLexEnum(SpecialSymbol.class));
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-            final WktKeyword keyword = lex.getSemantics();
 
-            if (WktKeyword.PARAMETER.equals(keyword) && status < 1) {
+            if (WktKeyword.PARAMETER.test(lex) && status < 1) {
                 builder.list(derivingOrCoordinateOperationParameter(lex));
-            } else if (WktKeyword.PARAMETERFILE.equals(keyword) && status < 1) {
+            } else if (WktKeyword.PARAMETERFILE.test(lex) && status < 1) {
                 builder.list(parameterFile(lex));
-            } else if (WktKeyword.INTERPOLATIONCRS.equals(keyword) && status < 1) {
+            } else if (WktKeyword.INTERPOLATIONCRS.test(lex) && status < 1) {
                 status = 1;
                 builder.list(interpolationCrs(lex));
-            } else if (WktKeyword.OPERATIONACCURACY.equals(keyword) && status < 2) {
+            } else if (WktKeyword.OPERATIONACCURACY.test(lex) && status < 2) {
                 status = 2;
                 builder.list(operationAccuracy(lex));
-            } else if (WktKeyword.SCOPE.equals(keyword) && status < 3) {
+            } else if (WktKeyword.SCOPE.test(lex) && status < 3) {
                 status = 3;
                 builder.list(scope(lex));
-            } else if (WktKeyword.isExtent(keyword) && status < 4) {
+            } else if (WktKeyword.isExtent(lex) && status < 4) {
                 status = 3;
                 builder.list(extent(lex));
-            } else if ((WktKeyword.ID.equals(keyword) || WktKeyword.AUTHORITY.equals(keyword)) && status < 5) {
+            } else if ((WktKeyword.ID.test(lex) || WktKeyword.AUTHORITY.test(lex)) && status < 5) {
                 status = 4;
                 builder.list(identifier(lex));
-            } else if (WktKeyword.REMARK.equals(keyword) && status < 6) {
+            } else if (WktKeyword.REMARK.test(lex) && status < 6) {
                 status = 6;
                 builder.list(remark(lex));
             } else {
@@ -1901,17 +1899,12 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                     .list(flushAndLex(RightDelimiter.class));
         } else {
 
-            switch (label.getSemantics()) {
-                case AXIS -> builder.list(axis(label));
-                default -> {
-                    if (WktKeyword.isUnit(label.getSemantics())) {
-                        builder.list(unit(label));
-                        break;
-                    } else {
-                        // dans ce cas, on a dépassé la fin du CS, il faut récupérer les lexèmes lus en trop et sortir
-                        throw new IllegalStateException();
-                    }
-                }
+            if (WktKeyword.AXIS.test(label)) {
+                builder.list(axis(label));
+            } else if (WktKeyword.isUnit(label)) {
+                builder.list(unit(label));
+            } else {
+                throw new IllegalStateException();
             }
         }
 
@@ -1922,19 +1915,16 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
 
-            switch (lex.getSemantics()) {
-                case AXIS -> builder.list(axis(lex));
-                default -> {
-                    if (WktKeyword.isUnit(lex.getSemantics())) {
-                        builder.list(unit(lex));
-                        break;
-                    } else {
-                        // dans ce cas, on a dépassé la fin du CS, il faut récupérer les lexèmes lus en trop et sortir
-                        out[0] = key;
-                        out[1] = lex;
-                        break;
-                    }
-                }
+            if (WktKeyword.AXIS.test(lex)) {
+                builder.list(axis(lex));
+            } else if (WktKeyword.isUnit(lex)) {
+                builder.list(unit(lex));
+                break;
+            } else {
+                // dans ce cas, on a dépassé la fin du CS, il faut récupérer les lexèmes lus en trop et sortir
+                out[0] = key;
+                out[1] = lex;
+                break;
             }
         }
 
