@@ -1,15 +1,12 @@
 package com.cosmoloj.language.wkt2.v2_1.expression;
 
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class BaseGeodeticCrs extends BaseCrs.BaseDatumCrs<GeodeticDatum> {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof BaseGeodeticCrs;
 
     private final Unit.Angle unit;
 

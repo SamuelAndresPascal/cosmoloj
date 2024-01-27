@@ -22,8 +22,8 @@ public class AxisOrderBuilder extends CheckTokenBuilder<Lexeme, AxisOrder>
         return List.of(
                 WktKeyword.ORDER,
                 LeftDelimiter.class::isInstance,
-                UnsignedInteger.UNSIGNED_INTEGER,
-                RightDelimiter.INSTANCE_OF);
+                UnsignedInteger.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

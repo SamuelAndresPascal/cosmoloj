@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -25,26 +26,21 @@ public class CoordinateOperationBuilder
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> OperationCrs.SourceCrs.INSTANCE_OF_SOURCE_CRS;
+            case 4 -> OperationCrs.SourceCrs.class::isInstance;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> OperationCrs.TargetCrs.INSTANCE_OF_TARGET_CRS;
+            case 6 -> OperationCrs.TargetCrs.class::isInstance;
             case 7 -> SpecialSymbol.COMMA;
-            case 8 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield Parameter.INSTANCE_OF
-                            .or(ParameterFile.INSTANCE_OF)
-                            .or(SimpleNumber.Accuracy.INSTANCE_OF)
-                            .or(OperationCrs.InterpolationCrs.INSTANCE_OF_INTERPOLATION_CRS)
-                            .or(SimpleNumber.Accuracy.INSTANCE_OF)
-                            .or(Scope.INSTANCE_OF)
+            case 8 -> Method.OperationMethod.class::isInstance;
+            default -> odd() ? Predicates.of(RightDelimiter.class::isInstance).or(SpecialSymbol.COMMA)
+                : Predicates.of(Parameter.class::isInstance)
+                            .or(ParameterFile.class::isInstance)
+                            .or(SimpleNumber.Accuracy.class::isInstance)
+                            .or(OperationCrs.InterpolationCrs.class::isInstance)
+                            .or(SimpleNumber.Accuracy.class::isInstance)
+                            .or(Scope.class::isInstance)
                             .or(Extent.class::isInstance)
                             .or(Identifier.class::isInstance)
-                            .or(Remark.INSTANCE_OF);
-                }
-            }
+                            .or(Remark.class::isInstance);
         };
     }
 
@@ -52,12 +48,12 @@ public class CoordinateOperationBuilder
     public Operation.CoordinateOperation build() {
 
         return new Operation.CoordinateOperation(first(), last(), index(), token(2), token(4), token(6), token(8),
-                tokens(AbstractParam.INSTANCE_OF),
-                firstToken(OperationCrs.InterpolationCrs.INSTANCE_OF_INTERPOLATION_CRS),
-                firstToken(SimpleNumber.Accuracy.INSTANCE_OF),
-                firstToken(Scope.INSTANCE_OF),
+                tokens(AbstractParam.class::isInstance),
+                firstToken(OperationCrs.InterpolationCrs.class::isInstance),
+                firstToken(SimpleNumber.Accuracy.class::isInstance),
+                firstToken(Scope.class::isInstance),
                 tokens(Extent.class::isInstance),
                 tokens(Identifier.class::isInstance),
-                firstToken(Remark.INSTANCE_OF));
+                firstToken(Remark.class::isInstance));
     }
 }

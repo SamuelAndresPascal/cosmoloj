@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -22,20 +23,20 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
         return switch (currentIndex) {
             case 0 -> WktKeyword.BOUNDCRS;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2 -> OperationCrs.SourceCrs.INSTANCE_OF_SOURCE_CRS;
+            case 2 -> OperationCrs.SourceCrs.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> OperationCrs.TargetCrs.INSTANCE_OF_TARGET_CRS;
+            case 4 -> OperationCrs.TargetCrs.class::isInstance;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> Operation.AbridgedTransformation.INSTANCE_OF_ABRIDGED_TRANSFORMATION;
+            case 6 -> Operation.AbridgedTransformation.class::isInstance;
             default -> {
                 if (odd() && beyond(8)) {
-                    yield RightDelimiter.INSTANCE_OF;
+                    yield RightDelimiter.class::isInstance;
                 } else if (even() && beyond(7)) {
-                    yield Identifier.INSTANCE_OF.or(Remark.INSTANCE_OF);
+                    yield Predicates.of(Identifier.class::isInstance).or(Remark.class::isInstance);
                 } else if (odd() && beyond(6)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+                    yield Predicates.of(RightDelimiter.class::isInstance).or(SpecialSymbol.COMMA);
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }
@@ -47,18 +48,14 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
                 if (even() && beyond(7)) {
                     yield SpecialSymbol.COMMA;
                 } else if (odd() && beyond(8)) {
-                    yield Identifier.INSTANCE_OF.or(Remark.INSTANCE_OF);
+                    yield Predicates.of(Identifier.class::isInstance).or(Remark.class::isInstance);
                 }
-                yield t -> true;
+                yield Predicates.yes();
             }
-            case 2 -> {
-                if (odd() && beyond(8)) {
-                    yield Identifier.INSTANCE_OF
-                            .or(Operation.AbridgedTransformation.INSTANCE_OF_ABRIDGED_TRANSFORMATION);
-                }
-                yield t -> true;
-            }
-            default -> t -> true;
+            case 2 -> odd() && beyond(8)
+                ? Predicates.of(Identifier.class::isInstance).or(Operation.AbridgedTransformation.class::isInstance)
+                : Predicates.yes();
+            default -> Predicates.yes();
         };
     }
 
@@ -66,6 +63,6 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
     public BoundCrs build() {
 
         return new BoundCrs(first(), last(), index(), token(2), token(4), token(6),
-                tokens(Identifier.INSTANCE_OF), firstToken(Remark.INSTANCE_OF));
+                tokens(Identifier.class::isInstance), firstToken(Remark.class::isInstance));
     }
 }

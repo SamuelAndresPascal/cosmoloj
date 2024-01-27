@@ -17,8 +17,8 @@ public class AxisDirectionBuilder extends CheckTokenBuilder<Token, AxisDirection
 
     @Override
     public List<Predicate<? super Token>> predicates() {
-        return List.of(Predicates.or(Direction.values()),
-                SimpleNumber.Bearing.INSTANCE_OF.or(Meridian.class::isInstance));
+        return List.of(Predicates.or(Direction.class),
+                builder(SimpleNumber.Bearing.class, Meridian.class));
     }
 
     @Override

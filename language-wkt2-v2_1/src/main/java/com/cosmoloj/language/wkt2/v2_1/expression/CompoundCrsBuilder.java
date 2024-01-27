@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -39,7 +40,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
                 if (odd()) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
-                    yield Scope.INSTANCE_OF
+                    yield Predicates.of(Scope.class::isInstance)
                     .or(Extent.class::isInstance)
                     .or(Identifier.class::isInstance)
                     .or(Remark.class::isInstance);

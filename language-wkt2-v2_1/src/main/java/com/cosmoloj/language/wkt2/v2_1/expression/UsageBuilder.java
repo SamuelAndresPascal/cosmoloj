@@ -3,7 +3,6 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 import com.cosmoloj.language.api.semantic.Token;
 import com.cosmoloj.language.common.impl.builder.CheckTokenBuilder;
 import com.cosmoloj.language.common.impl.builder.PredicateListTokenBuilder;
-import com.cosmoloj.language.common.number.lexeme.compound.SignedNumericLiteral;
 import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
@@ -15,24 +14,21 @@ import java.util.function.Predicate;
  *
  * @author Samuel Andrés
  */
-public class BBoxBuilder extends CheckTokenBuilder<Token, BBox> implements PredicateListTokenBuilder<Token> {
+public class UsageBuilder extends CheckTokenBuilder<Token, Usage>
+        implements PredicateListTokenBuilder<Token> {
 
     @Override
     public List<Predicate<? super Token>> predicates() {
-        return List.of(WktKeyword.BBOX,
+        return List.of(WktKeyword.USAGE,
                 LeftDelimiter.class::isInstance,
-                SignedNumericLiteral.class::isInstance,
+                Scope.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.class::isInstance,
-                SpecialSymbol.COMMA,
-                SignedNumericLiteral.class::isInstance,
-                SpecialSymbol.COMMA,
-                SignedNumericLiteral.class::isInstance,
+                Extent.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 
     @Override
-    public BBox build() {
-        return new BBox(first(), last(), index(), token(2), token(4), token(6), token(8));
+    public Usage build() {
+        return new Usage(first(), last(), index(), token(2), token(4));
     }
 }

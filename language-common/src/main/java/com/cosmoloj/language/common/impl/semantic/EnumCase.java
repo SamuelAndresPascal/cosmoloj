@@ -1,7 +1,6 @@
 package com.cosmoloj.language.common.impl.semantic;
 
 import com.cosmoloj.language.api.semantic.Lexeme;
-import com.cosmoloj.language.common.LanguageUtil;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
 import java.util.Locale;
 
@@ -54,7 +53,7 @@ public enum EnumCase {
             for (final E value : values) {
                 if (value.length() == candidate.length()) {
                     for (int i = 0, n = value.length(); i < n; i++) {
-                        if (!LanguageUtil.equalCharacterIgnoreCase(value.codePointAt(i), candidate.codePointAt(i))) {
+                        if (!equalCharacterIgnoreCase(value.codePointAt(i), candidate.codePointAt(i))) {
                             break;
                         }
                         if (i + 1 == value.length()) {
@@ -116,5 +115,18 @@ public enum EnumCase {
 
     public <E extends Enum<E> & SemanticEnum<E>> EnumLexemeBuilder<E> builder(final Object lexId, final E[] values) {
         return new EnumLexemeBuilder<>(lexId, values, this);
+    }
+
+    /**
+     * <div class="fr">Vérifie l'égalité de deux points de code, indépendamment de la casse.</div>
+     *
+     * @param reference
+     * @param candidate
+     * @return
+     */
+    public static boolean equalCharacterIgnoreCase(final int reference, final int candidate) {
+        return reference == candidate
+                || (Character.isLowerCase(candidate) && reference == Character.toUpperCase(candidate))
+                || (Character.isUpperCase(candidate) && reference == Character.toLowerCase(candidate));
     }
 }

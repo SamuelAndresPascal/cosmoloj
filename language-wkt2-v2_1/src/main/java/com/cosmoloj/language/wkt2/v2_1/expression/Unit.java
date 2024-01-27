@@ -12,8 +12,6 @@ import java.util.function.Predicate;
  */
 public class Unit extends AbstractExpression {
 
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Unit;
-
     private final QuotedLatinText name;
     private final UnsignedNumericLiteral conversionFactor;
     private final List<Identifier> identifiers;

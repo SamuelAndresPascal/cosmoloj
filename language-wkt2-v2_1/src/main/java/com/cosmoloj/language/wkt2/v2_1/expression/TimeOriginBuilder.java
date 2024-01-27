@@ -22,7 +22,7 @@ public class TimeOriginBuilder extends CheckTokenBuilder<Lexeme, TimeOrigin>
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(WktKeyword.TIMEORIGIN,
                 LeftDelimiter.class::isInstance,
-                Datetime.INSTANCE_OF.or(QuotedLatinText.class::isInstance),
+                builder(Datetime.class, QuotedLatinText.class),
                 RightDelimiter.class::isInstance);
     }
 

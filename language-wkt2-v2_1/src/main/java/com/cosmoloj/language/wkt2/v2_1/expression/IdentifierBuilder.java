@@ -29,14 +29,11 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
                 QuotedLatinText.QUOTED_LATIN_TEXT.or(SignedNumericLiteral.INSTANCE_OF), // identifier
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Citation.INSTANCE_OF
-                        .or(Uri.INSTANCE_OF)
-                        .or(SignedNumericLiteral.INSTANCE_OF)
-                        .or(QuotedLatinText.class::isInstance),
+                builder(Citation.class, Uri.class, SignedNumericLiteral.class, QuotedLatinText.class),
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Citation.INSTANCE_OF.or(Uri.INSTANCE_OF),
+                builder(Citation.class, Uri.class),
                 RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Uri.INSTANCE_OF,
+                Uri.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 
@@ -53,9 +50,9 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
         final Uri uri;
         if (size == 12) {
             uri = (Uri) token(10);
-        } else if (size == 10 && testToken(8, Uri.INSTANCE_OF)) {
+        } else if (size == 10 && testToken(8, Uri.class::isInstance)) {
             uri = (Uri) token(8);
-        } else if (size == 8 && testToken(6, Uri.INSTANCE_OF)) {
+        } else if (size == 8 && testToken(6, Uri.class::isInstance)) {
             uri = (Uri) token(6);
         } else {
             uri = null;
@@ -65,14 +62,14 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
         if (size == 12) {
             citation = (Citation) token(8);
         } else if (size == 10) {
-            if (testToken(8, Citation.INSTANCE_OF)) {
+            if (testToken(8, Citation.class::isInstance)) {
                 citation = (Citation) token(8);
-            } else if (testToken(6, Citation.INSTANCE_OF)) {
+            } else if (testToken(6, Citation.class::isInstance)) {
                 citation = (Citation) token(6);
             } else {
                 citation = null;
             }
-        } else if (size == 8 && testToken(6, Citation.INSTANCE_OF)) {
+        } else if (size == 8 && testToken(6, Citation.class::isInstance)) {
             citation = (Citation) token(6);
         } else {
             citation = null;

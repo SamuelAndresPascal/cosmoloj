@@ -32,9 +32,9 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
                 if (odd() && rightDelimiterIndex == NOT_CLOSED) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && rightDelimiterIndex == NOT_CLOSED) {
-                    yield Anchor.INSTANCE_OF.or(Identifier.class::isInstance);
+                    yield builder(Anchor.class, Identifier.class);
                 } else if (odd()) {
-                    yield PrimeMeridian.INSTANCE_OF;
+                    yield PrimeMeridian.class::isInstance;
                 } else {
                     yield SpecialSymbol.COMMA;
                 }
@@ -54,8 +54,8 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
     public GeodeticDatum build() {
 
         return new GeodeticDatum(first(), last(), index(), token(2), token(4),
-                firstToken(Anchor.INSTANCE_OF),
+                firstToken(Anchor.class::isInstance),
                 tokens(Identifier.class::isInstance),
-                firstToken(PrimeMeridian.INSTANCE_OF));
+                firstToken(PrimeMeridian.class::isInstance));
     }
 }

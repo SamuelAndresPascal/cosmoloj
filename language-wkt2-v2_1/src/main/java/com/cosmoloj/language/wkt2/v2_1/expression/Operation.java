@@ -48,8 +48,6 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
 
     public static class MapProjection extends Operation<Method.MapProjectionMethod, Parameter> {
 
-        public static final Predicate<Object> INSTANCE_OF_MAP_PROJECTION = t -> t instanceof MapProjection;
-
         public MapProjection(final int start, final int end, final int index, final QuotedLatinText name,
                 final Method.MapProjectionMethod method, final List<Parameter> parameters,
                 final List<Identifier> identifiers) {
@@ -58,8 +56,6 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
     }
 
     public static class DerivingConversion extends Operation<Method.OperationMethod, AbstractParam> {
-
-        public static final Predicate<Object> INSTANCE_OF_DERIVING_CONVERSION = t -> t instanceof DerivingConversion;
 
         public DerivingConversion(final int start, final int end, final int index, final QuotedLatinText name,
                 final Method.OperationMethod method, final List<AbstractParam> parameters,
@@ -70,8 +66,6 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
 
     public static class CoordinateOperation extends Operation<Method.OperationMethod, AbstractParam>
             implements ScopeExtentIdentifierRemark {
-
-        public static final Predicate<Object> INSTANCE_OF_COORDINATE_OPERATION = t -> t instanceof CoordinateOperation;
 
         private final OperationCrs.SourceCrs source;
         private final OperationCrs.TargetCrs target;
@@ -132,9 +126,6 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
 
     public static class AbridgedTransformation extends Operation<Method.OperationMethod, AbstractParam>
             implements ScopeExtentIdentifierRemark {
-
-        public static final Predicate<Object> INSTANCE_OF_ABRIDGED_TRANSFORMATION
-                = t -> t instanceof AbridgedTransformation;
 
         private final Scope scope;
         private final List<Extent> extents;

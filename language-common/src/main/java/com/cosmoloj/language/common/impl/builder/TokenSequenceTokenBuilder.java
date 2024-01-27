@@ -4,6 +4,7 @@ import com.cosmoloj.language.api.builder.TokenBuilder;
 import com.cosmoloj.language.api.exception.ParserException;
 import com.cosmoloj.language.api.semantic.Token;
 import com.cosmoloj.language.common.impl.exception.ParserExceptionBuilder;
+import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,14 @@ public abstract class TokenSequenceTokenBuilder<I extends Token, O extends Token
         StateCheckTokenBuilder<I> {
 
     private final List<I> tokens = new ArrayList<>();
+
+    protected static PredicateBuilder builder(final Class<?> c, final Class<?>... others) {
+        return others.length == 0 ? PredicateBuilder.of(c) : PredicateBuilder.of(c).or(others);
+    }
+
+    protected static PredicateBuilder builder(final SemanticEnum<?> e, final SemanticEnum<?>... others) {
+        return others.length == 0 ? PredicateBuilder.of(e) : PredicateBuilder.of(e).or(others);
+    }
 
     @Override
     public void add(final I token) {

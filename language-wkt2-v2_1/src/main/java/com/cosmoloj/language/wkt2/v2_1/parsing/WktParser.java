@@ -105,6 +105,8 @@ import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.Usage;
+import com.cosmoloj.language.wkt2.v2_1.expression.UsageBuilder;
 
 /**
  *
@@ -1356,9 +1358,9 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     public Predicate<? super Token> baseEngineeringCrsClass(final EnumLexeme<WktKeyword> label)
             throws LanguageException {
         return switch (label.getSemantics()) {
-            case BASEPROJCRS -> BaseProjectedCrs.INSTANCE_OF;
-            case BASEGEODCRS -> BaseGeodeticCrs.INSTANCE_OF;
-            case BASEENGCRS -> BaseCrs.BaseEngineeringCrs.BASE_ENGINEERING_CRS;
+            case BASEPROJCRS -> BaseProjectedCrs.class::isInstance;
+            case BASEGEODCRS -> BaseGeodeticCrs.class::isInstance;
+            case BASEENGCRS -> BaseCrs.BaseEngineeringCrs.class::isInstance;
             default -> throw new IllegalStateException();
         };
     }
@@ -1708,6 +1710,20 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             case TIMEEXTENT -> temporalExtent(label);
             default -> throw new IllegalStateException();
         };
+    }
+
+    public Usage usage() throws LanguageException {
+        return usage(flushAndLexEnum(WktKeyword.class));
+    }
+
+    public Usage usage(final EnumLexeme<WktKeyword> label) throws LanguageException {
+        return build(new UsageBuilder().list(
+                label,
+                flushAndLex(LeftDelimiter.class),
+                scope(),
+                flushAndLex(SpecialSymbol.COMMA),
+                extent(),
+                flushAndLex(RightDelimiter.class)));
     }
 
     public Area areaDescription() throws LanguageException {

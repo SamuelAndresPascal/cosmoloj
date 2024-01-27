@@ -3,15 +3,12 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class AbstractParam extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof AbstractParam;
 
     private final QuotedLatinText name;
     private final List<Identifier> identifiers;

@@ -42,21 +42,13 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
             case 4 -> datumPredicate;
             case 5 -> SpecialSymbol.COMMA;
             case 6 -> CoordinateSystem.class::isInstance;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield Scope.INSTANCE_OF
-                            .or(Extent.class::isInstance)
-                            .or(Identifier.class::isInstance)
-                            .or(Remark.class::isInstance);
-                }
-            }
+            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : builder(Scope.class, Extent.class, Identifier.class, Remark.class);
         };
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.VerticalCrs, NameAndAnchorDatum.VerticalDatum> verticalCrs() {
-        return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.VerticalDatum.VERTICAL_DATUM,
+        return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.VerticalDatum.class::isInstance,
                 WktKeyword.VERTCRS, WktKeyword.VERTICALCRS, WktKeyword.VERT_CS) {
 
                     @Override
@@ -72,7 +64,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.EngineeringCrs, NameAndAnchorDatum.EngineeringDatum>
         engineeringCrs() {
-            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.EngineeringDatum.ENGINEERING_DATUM,
+            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.EngineeringDatum.class::isInstance,
                     WktKeyword.ENGCRS, WktKeyword.ENGINEERINGCRS, WktKeyword.LOCAL_CS) {
 
                         @Override
@@ -103,7 +95,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.ParametricCrs, NameAndAnchorDatum.ParametricDatum>
         parametricCrs() {
-            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.ParametricDatum.PARAMETRIC_DATUM,
+            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.ParametricDatum.class::isInstance,
                     WktKeyword.PARAMETRICCRS) {
 
                         @Override
@@ -119,7 +111,7 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.TemporalCrs, NameAndAnchorDatum.TemporalDatum> temporalCrs() {
-            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.TemporalDatum.TEMPORAL_DATUM,
+            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.TemporalDatum.class::isInstance,
                 WktKeyword.TIMECRS) {
 
                     @Override

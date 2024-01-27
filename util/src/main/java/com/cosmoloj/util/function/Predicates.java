@@ -31,6 +31,10 @@ public final class Predicates {
         return result;
     }
 
+    public static <T extends Enum<T> & Predicate<Object>> Predicate<Object> or(final Class<T> c) {
+        return or(c.getEnumConstants());
+    }
+
     public static Predicate<Object> and(final Predicate<Object>[] values) {
         Predicate<Object> result = t -> true;
         for (final Predicate<Object> value : values) {

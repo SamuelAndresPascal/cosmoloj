@@ -40,7 +40,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     }
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseVerticalCrs, NameAndAnchorDatum.VerticalDatum> baseVerticalCrs() {
-        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.VerticalDatum.VERTICAL_DATUM, WktKeyword.BASEVERTCRS) {
+        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.VerticalDatum.class::isInstance, WktKeyword.BASEVERTCRS) {
 
             @Override
             public BaseCrs.BaseVerticalCrs build() {
@@ -51,7 +51,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseEngineeringCrs, NameAndAnchorDatum.EngineeringDatum>
         baseEngineeringCrs() {
-            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.EngineeringDatum.ENGINEERING_DATUM,
+            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.EngineeringDatum.class::isInstance,
                     WktKeyword.BASEENGCRS) {
 
                 @Override
@@ -63,7 +63,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseParametricCrs, NameAndAnchorDatum.ParametricDatum>
         baseParametricCrs() {
-            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.ParametricDatum.PARAMETRIC_DATUM,
+            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.ParametricDatum.class::isInstance,
                     WktKeyword.BASEPARAMCRS) {
 
                 @Override
@@ -74,7 +74,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     }
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseTemporalCrs, NameAndAnchorDatum.TemporalDatum> baseTemporalCrs() {
-        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.TemporalDatum.TEMPORAL_DATUM, WktKeyword.BASETIMECRS) {
+        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.TemporalDatum.class::isInstance, WktKeyword.BASETIMECRS) {
 
             @Override
             public BaseCrs.BaseTemporalCrs build() {

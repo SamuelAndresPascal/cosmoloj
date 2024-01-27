@@ -68,7 +68,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.VerticalDatum, Anchor> verticalDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.INSTANCE_OF, WktKeyword.VDATUM, WktKeyword.VERTICALDATUM,
+        return new NameAndAnchorDatumBuilder<>(Anchor.class::isInstance, WktKeyword.VDATUM, WktKeyword.VERTICALDATUM,
                 WktKeyword.VERT_DATUM) {
 
             @Override
@@ -81,7 +81,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.EngineeringDatum, Anchor> engineeringDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.INSTANCE_OF, WktKeyword.EDATUM, WktKeyword.ENGINEERINGDATUM,
+        return new NameAndAnchorDatumBuilder<>(Anchor.class::isInstance, WktKeyword.EDATUM, WktKeyword.ENGINEERINGDATUM,
                 WktKeyword.LOCAL_DATUM) {
 
             @Override
@@ -94,7 +94,8 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.ParametricDatum, Anchor> parametricDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.INSTANCE_OF, WktKeyword.PDATUM, WktKeyword.PARAMETRICDATUM) {
+        return new NameAndAnchorDatumBuilder<>(
+                Anchor.class::isInstance, WktKeyword.PDATUM, WktKeyword.PARAMETRICDATUM) {
 
             @Override
             public NameAndAnchorDatum.ParametricDatum build() {
@@ -106,7 +107,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.TemporalDatum, TimeOrigin> temporalDatum() {
-        return new NameAndAnchorDatumBuilder<>(TimeOrigin.INSTANCE_OF, WktKeyword.TDATUM, WktKeyword.TIMEDATUM) {
+        return new NameAndAnchorDatumBuilder<>(TimeOrigin.class::isInstance, WktKeyword.TDATUM, WktKeyword.TIMEDATUM) {
             @Override
             public NameAndAnchorDatum.TemporalDatum build() {
 

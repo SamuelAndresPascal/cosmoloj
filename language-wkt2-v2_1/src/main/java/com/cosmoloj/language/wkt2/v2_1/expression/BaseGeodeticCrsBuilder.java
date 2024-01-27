@@ -25,8 +25,8 @@ public class BaseGeodeticCrsBuilder extends CheckTokenBuilder<Token, BaseGeodeti
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance,
                 SpecialSymbol.COMMA,
-                GeodeticDatum.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
+                GeodeticDatum.class::isInstance,
+                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
                 Unit.Angle.INSTANCE_OF_ANGLE,
                 RightDelimiter.class::isInstance);
     }

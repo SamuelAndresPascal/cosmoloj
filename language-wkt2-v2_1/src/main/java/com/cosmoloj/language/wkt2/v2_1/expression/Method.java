@@ -3,7 +3,6 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
@@ -14,7 +13,7 @@ public abstract class Method extends AbstractExpression {
     private final QuotedLatinText name;
     private final List<Identifier> identifiers;
 
-    public Method(final int start, final int end, final int index, final QuotedLatinText name,
+    protected Method(final int start, final int end, final int index, final QuotedLatinText name,
             final List<Identifier> identifiers) {
         super(start, end, index);
         this.name = name;
@@ -31,8 +30,6 @@ public abstract class Method extends AbstractExpression {
 
     public static class MapProjectionMethod extends Method {
 
-        public static final Predicate<Object> INSTANCE_OF_MAP_PROJECTION_METHOD = t -> t instanceof MapProjectionMethod;
-
         public MapProjectionMethod(final int start, final int end, final int index, final QuotedLatinText name,
                 final List<Identifier> identifiers) {
             super(start, end, index, name, identifiers);
@@ -40,8 +37,6 @@ public abstract class Method extends AbstractExpression {
     }
 
     public static class OperationMethod extends Method {
-
-        public static final Predicate<Object> INSTANCE_OF_OPERATION_METHOD = t -> t instanceof OperationMethod;
 
         public OperationMethod(final int start, final int end, final int index, final QuotedLatinText name,
                 final List<Identifier> identifiers) {

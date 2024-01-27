@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.AxisNameAbrev;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -26,38 +27,39 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
             case 2 -> AxisNameAbrev.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> AxisDirection.class::isInstance;
-            case 6 -> AxisOrder.INSTANCE_OF.or(Unit.INSTANCE_OF).or(Identifier.INSTANCE_OF);
-            case 8 -> Identifier.INSTANCE_OF.or(Unit.INSTANCE_OF);
+            case 6 -> builder(AxisOrder.class, Unit.class, Identifier.class);
+            case 8 -> builder(Identifier.class, Unit.class);
             default -> {
                 if (odd() && beyond(4)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+                    yield builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(8)) {
-                    yield Identifier.INSTANCE_OF;
+                    yield builder(Identifier.class);
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return (even() && beyond(5)) ? SpecialSymbol.COMMA : t -> true;
+        return (even() && beyond(5)) ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     @Override
     public Axis build() {
 
-        final AxisOrder order = (size() >= 8 && testToken(6, AxisOrder.INSTANCE_OF)) ?  token(6) : null;
+        final AxisOrder order = (size() >= 8 && testToken(6, AxisOrder.class::isInstance)) ?  token(6) : null;
 
         final Unit unit;
-        if (size() >= 8 && testToken(6, Unit.INSTANCE_OF)) {
+        if (size() >= 8 && testToken(6, Unit.class::isInstance)) {
             unit = token(6);
-        } else if (size() >= 10 && testToken(8, Unit.INSTANCE_OF)) {
+        } else if (size() >= 10 && testToken(8, Unit.class::isInstance)) {
             unit = token(8);
         } else {
             unit = null;
         }
 
-        return new Axis(first(), last(), index(), token(2), token(4), order, unit, tokens(Identifier.INSTANCE_OF));
+        return new Axis(first(), last(), index(),
+                token(2), token(4), order, unit, tokens(Identifier.class::isInstance));
     }
 }

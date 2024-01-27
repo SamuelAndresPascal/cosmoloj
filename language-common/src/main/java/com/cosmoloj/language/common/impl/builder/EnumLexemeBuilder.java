@@ -1,7 +1,6 @@
 package com.cosmoloj.language.common.impl.builder;
 
 import com.cosmoloj.language.api.semantic.Lexeme;
-import com.cosmoloj.language.common.LanguageUtil;
 import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import java.util.HashSet;
@@ -45,7 +44,7 @@ public class EnumLexemeBuilder<E extends Enum<E> & SemanticEnum<E>> extends Char
                 for (final E value : this.values) {
                     if (value.getCodePoints().toUpperCase(this.locale).startsWith(codePointsUc)
                             && value.length() > codePointsUc.length()
-                            && LanguageUtil.equalCharacterIgnoreCase(
+                            && EnumCase.equalCharacterIgnoreCase(
                                     value.codePointAt(codePointsUc.length()), codePoint)) {
                         return true;
                     }

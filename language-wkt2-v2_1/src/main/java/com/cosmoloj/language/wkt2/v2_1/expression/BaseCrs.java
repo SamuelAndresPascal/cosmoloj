@@ -2,7 +2,6 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
-import java.util.function.Predicate;
 
 /**
  *
@@ -24,7 +23,7 @@ public abstract class BaseCrs extends AbstractExpression {
     public abstract static class BaseDatumCrs<D extends AbstractExpression> extends BaseCrs {
         private final D datum;
 
-        public BaseDatumCrs(final int start, final int end, final int index, final QuotedLatinText name,
+        protected BaseDatumCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final D datum) {
             super(start, end, index, name);
             this.datum = datum;
@@ -37,8 +36,6 @@ public abstract class BaseCrs extends AbstractExpression {
 
     public static class BaseVerticalCrs extends BaseDatumCrs<NameAndAnchorDatum.VerticalDatum> {
 
-        public static final Predicate<Object> BASE_VERTICAL_CRS = t -> t instanceof BaseVerticalCrs;
-
         public BaseVerticalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.VerticalDatum datum) {
             super(start, end, index, name, datum);
@@ -46,8 +43,6 @@ public abstract class BaseCrs extends AbstractExpression {
     }
 
     public static class BaseEngineeringCrs extends BaseDatumCrs<NameAndAnchorDatum.EngineeringDatum> {
-
-        public static final Predicate<Object> BASE_ENGINEERING_CRS = t -> t instanceof BaseEngineeringCrs;
 
         public BaseEngineeringCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.EngineeringDatum datum) {
@@ -57,8 +52,6 @@ public abstract class BaseCrs extends AbstractExpression {
 
     public static class BaseParametricCrs extends BaseDatumCrs<NameAndAnchorDatum.ParametricDatum> {
 
-        public static final Predicate<Object> BASE_PARAMETRIC_CRS = t -> t instanceof BaseParametricCrs;
-
         public BaseParametricCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.ParametricDatum datum) {
             super(start, end, index, name, datum);
@@ -66,8 +59,6 @@ public abstract class BaseCrs extends AbstractExpression {
     }
 
     public static class BaseTemporalCrs extends BaseDatumCrs<NameAndAnchorDatum.TemporalDatum> {
-
-        public static final Predicate<Object> BASE_TEMPORAL_CRS = t -> t instanceof BaseTemporalCrs;
 
         public BaseTemporalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.TemporalDatum datum) {

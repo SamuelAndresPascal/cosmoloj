@@ -1,7 +1,7 @@
 module com.cosmoloj.language.common {
-    requires com.cosmoloj.language.api;
     requires org.slf4j;
-    exports com.cosmoloj.language.common;
+    requires com.cosmoloj.util;
+    requires com.cosmoloj.language.api;
     exports com.cosmoloj.language.common.impl.semantic;
     exports com.cosmoloj.language.common.text.lexeme.simple;
     exports com.cosmoloj.language.common.impl.builder;

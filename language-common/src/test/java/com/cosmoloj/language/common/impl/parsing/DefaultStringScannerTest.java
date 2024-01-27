@@ -1,7 +1,6 @@
-package com.cosmoloj.language.common.parsing;
+package com.cosmoloj.language.common.impl.parsing;
 
 import com.cosmoloj.language.api.parsing.Scanner;
-import com.cosmoloj.language.common.impl.parsing.DefaultStringScanner;
 import com.cosmoloj.language.api.exception.LanguageException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
