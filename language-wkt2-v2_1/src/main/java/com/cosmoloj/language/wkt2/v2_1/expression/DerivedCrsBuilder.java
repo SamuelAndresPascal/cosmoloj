@@ -57,8 +57,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                 if (odd()) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
-                    yield Predicates.of(Scope.class::isInstance)
-                    .or(Extent.class::isInstance)
+                    yield Predicates.of(Usage.class::isInstance)
                     .or(Identifier.class::isInstance)
                     .or(Remark.class::isInstance);
                 }
@@ -77,8 +76,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.ProjectedCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
+                                tokens(Usage.class::isInstance),
                                 tokens(Identifier.class::isInstance),
                                 firstToken(Remark.class::isInstance));
                     }
@@ -96,8 +94,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.DerivedGeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
+                                tokens(Usage.class::isInstance),
                                 tokens(Identifier.class::isInstance),
                                 firstToken(Remark.class::isInstance));
                     }
@@ -115,8 +112,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.DerivedVerticalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
+                                tokens(Usage.class::isInstance),
                                 tokens(Identifier.class::isInstance),
                                 firstToken(Remark.class::isInstance));
                     }
@@ -136,8 +132,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedEngineeringCrs<>(first(), last(), index(), token(2), token(4),
                                 token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
+                                tokens(Usage.class::isInstance),
                                 tokens(Identifier.class::isInstance),
                                 firstToken(Remark.class::isInstance));
                     }
@@ -156,8 +151,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedParametricCrs(first(), last(), index(), token(2), token(4),
                                 token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
+                                tokens(Usage.class::isInstance),
                                 tokens(Identifier.class::isInstance),
                                 firstToken(Remark.class::isInstance));
                     }
@@ -175,8 +169,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.DerivedTemporalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
+                                tokens(Usage.class::isInstance),
                                 tokens(Identifier.class::isInstance),
                                 firstToken(Remark.class::isInstance));
                     }

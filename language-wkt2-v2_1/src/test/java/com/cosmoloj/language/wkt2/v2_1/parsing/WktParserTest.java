@@ -12,6 +12,7 @@ import com.cosmoloj.language.wkt2.v2_1.expression.BaseProjectedCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.Citation;
 import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateSystem;
 import com.cosmoloj.language.wkt2.v2_1.expression.DerivedCrs;
+import com.cosmoloj.language.wkt2.v2_1.expression.Extent;
 import com.cosmoloj.language.wkt2.v2_1.expression.GeodeticCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.Identifier;
 import com.cosmoloj.language.wkt2.v2_1.expression.Meridian;
@@ -767,7 +768,8 @@ public class WktParserTest {
                 + "PARAMETER[\"Y-axis translation\",-53.0,LENGTHUNIT[\"metre\",1.0]],"
                 + "PARAMETER[\"Z-axis translation\",153.4,LENGTHUNIT[\"metre\",1.0]],"
                 + "OPERATIONACCURACY[5],"
-                + "AREA[\"Australia onshore\"],BBOX[-43.7,112.85,-9.87,153.68],"
+                + "USAGE[SCOPE[\"area\"],AREA[\"Australia onshore\"]],"
+                + "USAGE[SCOPE[\"bbox\"],BBOX[-43.7,112.85,-9.87,153.68]],"
                 + "REMARK[\"Use NTv2 file for better accuracy\"]]";
 
         final WktParser parser = WktParser.of(text);
@@ -823,7 +825,6 @@ public class WktParserTest {
         Assertions.assertEquals(1.0, sourceCsUnit.getConversionFactor().getSemantics().doubleValue());
 
         // target
-
         Assertions.assertTrue(coordOp.getTarget().getCrs() instanceof GeodeticCrs);
         final var target = (GeodeticCrs) coordOp.getTarget().getCrs();
         Assertions.assertEquals("JGD2000", target.getName().getSemantics());
@@ -919,12 +920,12 @@ public class WktParserTest {
         Assertions.assertTrue(acc.getValue().getSemantics() instanceof Integer);
         Assertions.assertEquals(5, acc.getValue().getSemantics().intValue());
 
-        Assertions.assertEquals(2, coordOp.getExtents().size());
-        Assertions.assertTrue(coordOp.getExtents().get(0) instanceof Area);
-        final var area = (Area) coordOp.getExtents().get(0);
+        Assertions.assertEquals(2, coordOp.getUsages().size());
+        Assertions.assertTrue(coordOp.getUsages().get(0).getExtent() instanceof Area);
+        final var area = (Area) coordOp.getUsages().get(0).getExtent();
         Assertions.assertEquals("Australia onshore", area.getName().getSemantics());
-        Assertions.assertTrue(coordOp.getExtents().get(1) instanceof BBox);
-        final var bbox = (BBox) coordOp.getExtents().get(1);
+        Assertions.assertTrue(coordOp.getUsages().get(1).getExtent() instanceof BBox);
+        final var bbox = (BBox) coordOp.getUsages().get(1).getExtent();
         Assertions.assertTrue(bbox.getLowerLeftLatitude().getSemantics() instanceof Double);
         Assertions.assertEquals(-43.7, bbox.getLowerLeftLatitude().getSemantics().doubleValue());
         Assertions.assertTrue(bbox.getLowerLeftLongitude().getSemantics() instanceof Double);
@@ -1585,7 +1586,7 @@ public class WktParserTest {
         Assertions.assertTrue(acc.getValue().getSemantics() instanceof Double);
         Assertions.assertEquals(0.1, acc.getValue().getSemantics().doubleValue());
 
-        Assertions.assertTrue(coordOp.getExtents().isEmpty());
+        Assertions.assertTrue(coordOp.getUsages().isEmpty());
 
         Assertions.assertEquals("Determined at 427 points. RMS residual 0.002m, maximum residual 0.007m",
                 coordOp.getRemark().getText().getSemantics());
@@ -2715,7 +2716,7 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(86400.0, unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertTrue(temporal.getExtents().isEmpty());
+        Assertions.assertTrue(temporal.getUsages().isEmpty());
     }
 
     @Test
@@ -2783,7 +2784,7 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(100., unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertTrue(image.getExtents().isEmpty());
+        Assertions.assertTrue(image.getUsages().isEmpty());
     }
 
     @Test
@@ -2809,7 +2810,7 @@ public class WktParserTest {
                 + "AXIS[\"site east\",southWest,ORDER[1]],"
                 + "AXIS[\"site north\",southEast,ORDER[2]],"
                 + "LENGTHUNIT[\"metre\",1.0],"
-                + "TIMEEXTENT[\"date/time t1\",\"date/time t2\"]]";
+                + "USAGE[SCOPE[\"scope\"],TIMEEXTENT[\"date/time t1\",\"date/time t2\"]]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -2847,10 +2848,10 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(1., unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertEquals(1, image.getExtents().size());
-        Assertions.assertTrue(image.getExtents().get(0) instanceof TemporalExtent);
+        Assertions.assertEquals(1, image.getUsages().size());
+        Assertions.assertTrue(image.getUsages().get(0).getExtent() instanceof TemporalExtent);
 
-        final var extent = (TemporalExtent) image.getExtents().get(0);
+        final var extent = (TemporalExtent) image.getUsages().get(0).getExtent();
         Assertions.assertEquals("date/time t1", extent.getExtentStart().getSemantics());
         Assertions.assertEquals("date/time t2", extent.getExtentEnd().getSemantics());
     }
@@ -2879,7 +2880,7 @@ public class WktParserTest {
                 + "AXIS[\"site east\",southWest,ORDER[1]],"
                 + "AXIS[\"site north\",southEast,ORDER[2]],"
                 + "LENGTHUNIT[\"metre\",1.0],"
-                + "TIMEEXTENT[\"date/time t1\",\"date/time t2\"]]";
+                + "USAGE[SCOPE[\"scope1\"],TIMEEXTENT[\"date/time t1\", \"date/time t2\"]]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -2916,10 +2917,10 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(1., unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertEquals(1, engineering.getExtents().size());
-        Assertions.assertTrue(engineering.getExtents().get(0) instanceof TemporalExtent);
+        Assertions.assertEquals(1, engineering.getUsages().size());
+        Assertions.assertTrue(engineering.getUsages().get(0).getExtent() instanceof TemporalExtent);
 
-        final var extent = (TemporalExtent) engineering.getExtents().get(0);
+        final var extent = (TemporalExtent) engineering.getUsages().get(0).getExtent();
         Assertions.assertEquals("date/time t1", extent.getExtentStart().getSemantics());
         Assertions.assertEquals("date/time t2", extent.getExtentEnd().getSemantics());
     }
@@ -3003,8 +3004,8 @@ public class WktParserTest {
                 + "AXIS[\"(Y)\",north,ORDER[1]],"
                 + "AXIS[\"(X)\",east,ORDER[2]],"
                 + "LENGTHUNIT[\"metre\",1.0],"
-                + "SCOPE[\"Description of a purpose\"],"
-                + "AREA[\"An area description\"],"
+                + "USAGE[SCOPE[\"Description of a purpose\"],"
+                + "AREA[\"An area description\"]],"
                 + "ID[\"EuroGeographics\",\"ETRS-LAEA\"]]";
 
         final WktParser parser = WktParser.of(text);
@@ -3025,7 +3026,8 @@ public class WktParserTest {
 
         Assertions.assertEquals("GRS 80", baseDatumEll.getName().getSemantics());
 
-        Assertions.assertEquals("An area description", ((Area) projected.getExtents().get(0)).getName().getSemantics());
+        Assertions.assertEquals("An area description",
+                ((Area) projected.getUsages().get(0).getExtent()).getName().getSemantics());
         Assertions.assertEquals("EuroGeographics", projected.getIdentifiers().get(0).getName().getSemantics());
         Assertions.assertEquals("ETRS-LAEA", projected.getIdentifiers().get(0).getId().getSemantics());
     }
@@ -3359,10 +3361,10 @@ public class WktParserTest {
                + "AXIS[\"(Y)\",geocentricY],"
                + "AXIS[\"(Z)\",geocentricZ],"
                + "LENGTHUNIT[\"metre\",1.0],"
-               + "SCOPE[\"Geodesy, topographic mapping and cadastre\"],"
+               + "USAGE[SCOPE[\"Geodesy, topographic mapping and cadastre\"],"
                + "AREA[\"Japan\"],"
                + "BBOX[17.09,122.38,46.05,157.64],"
-               + "TIMEEXTENT[2002-04-01,2011-10-21],"
+               + "TIMEEXTENT[2002-04-01,2011-10-21]],"
                + "ID[\"EPSG\",4946,URI[\"urn:ogc:def:crs:EPSG::4946\"]],"
                + "REMARK[\"注：JGD2000ジオセントリックは現在JGD2011に代わりました。\"]]";
 
@@ -3436,17 +3438,15 @@ public class WktParserTest {
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
         Assertions.assertEquals("Geodesy, topographic mapping and cadastre",
-                crs.getScope().getDescription().getSemantics());
+                crs.getUsages().get(0).getScope().getDescription().getSemantics());
 
-        Assertions.assertEquals(3, crs.getExtents().size());
-        Assertions.assertTrue(crs.getExtents().get(0) instanceof Area);
-        Assertions.assertTrue(crs.getExtents().get(1) instanceof BBox);
-        Assertions.assertTrue(crs.getExtents().get(2) instanceof TemporalExtent);
+        Assertions.assertEquals(1, crs.getUsages().size());
+        Assertions.assertTrue(crs.getUsages().get(0).getExtent() instanceof Extent.Coumpound);
 
-        final Area area = (Area) crs.getExtents().get(0);
+        final Area area = ((Extent.Coumpound) crs.getUsages().get(0).getExtent()).getArea();
         Assertions.assertEquals("Japan", area.getName().getSemantics());
 
-        final BBox bbox = (BBox) crs.getExtents().get(1);
+        final BBox bbox = ((Extent.Coumpound) crs.getUsages().get(0).getExtent()).getBbox();
         Assertions.assertTrue(bbox.getLowerLeftLatitude().getSemantics() instanceof Double);
         Assertions.assertTrue(bbox.getLowerLeftLongitude().getSemantics() instanceof Double);
         Assertions.assertTrue(bbox.getUpperRightLatitude().getSemantics() instanceof Double);
@@ -3456,7 +3456,7 @@ public class WktParserTest {
         Assertions.assertEquals(46.05, bbox.getUpperRightLatitude().getSemantics().doubleValue());
         Assertions.assertEquals(157.64, bbox.getUpperRightLongitude().getSemantics().doubleValue());
 
-        final TemporalExtent timeExtent = (TemporalExtent) crs.getExtents().get(2);
+        final TemporalExtent timeExtent = ((Extent.Coumpound) crs.getUsages().get(0).getExtent()).getTemporal();
         Assertions.assertTrue(timeExtent.getExtentStart().getSemantics() instanceof LocalDate);
         Assertions.assertTrue(timeExtent.getExtentEnd().getSemantics() instanceof LocalDate);
         Assertions.assertEquals(LocalDate.of(2002, Month.APRIL, 1), timeExtent.getExtentStart().getSemantics());
@@ -3566,8 +3566,7 @@ public class WktParserTest {
 
         Assertions.assertNull(cs.getUnit());
 
-        Assertions.assertNull(crs.getScope());
-        Assertions.assertTrue(crs.getExtents().isEmpty());
+        Assertions.assertTrue(crs.getUsages().isEmpty());
         Assertions.assertTrue(crs.getIdentifiers().isEmpty());
         Assertions.assertNull(crs.getRemark());
     }
@@ -3644,8 +3643,7 @@ public class WktParserTest {
         ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
-        Assertions.assertNull(crs.getScope());
-        Assertions.assertTrue(crs.getExtents().isEmpty());
+        Assertions.assertTrue(crs.getUsages().isEmpty());
         Assertions.assertEquals(1, crs.getIdentifiers().size());
 
         final var crsId = crs.getIdentifiers().get(0);
@@ -3736,8 +3734,7 @@ public class WktParserTest {
         ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
-        Assertions.assertNull(crs.getScope());
-        Assertions.assertTrue(crs.getExtents().isEmpty());
+        Assertions.assertTrue(crs.getUsages().isEmpty());
         Assertions.assertTrue(crs.getIdentifiers().isEmpty());
 
         final var remark = crs.getRemark();
@@ -5601,7 +5598,7 @@ public class WktParserTest {
                 + "PARAMETER(\"Y-axis translation\",-53.0,LENGTHUNIT(\"metre\",1.0)),"
                 + "PARAMETER(\"Z-axis translation\",153.4,LENGTHUNIT(\"metre\",1.0)),"
                 + "OPERATIONACCURACY(5),"
-                + "AREA(\"Australia onshore\"),BBOX(-43.7,112.85,-9.87,153.68),"
+                + "USAGE(SCOPE(\"scope\"),AREA(\"Australia onshore\"),BBOX(-43.7,112.85,-9.87,153.68)),"
                 + "REMARK(\"Use NTv2 file for better accuracy\"))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
@@ -5753,12 +5750,11 @@ public class WktParserTest {
         Assertions.assertTrue(acc.getValue().getSemantics() instanceof Integer);
         Assertions.assertEquals(5, acc.getValue().getSemantics().intValue());
 
-        Assertions.assertEquals(2, coordOp.getExtents().size());
-        Assertions.assertTrue(coordOp.getExtents().get(0) instanceof Area);
-        final var area = (Area) coordOp.getExtents().get(0);
+        Assertions.assertEquals(1, coordOp.getUsages().size());
+        Assertions.assertTrue(coordOp.getUsages().get(0).getExtent() instanceof Extent.Coumpound);
+        final var area = ((Extent.Coumpound) coordOp.getUsages().get(0).getExtent()).getArea();
         Assertions.assertEquals("Australia onshore", area.getName().getSemantics());
-        Assertions.assertTrue(coordOp.getExtents().get(1) instanceof BBox);
-        final var bbox = (BBox) coordOp.getExtents().get(1);
+        final var bbox = ((Extent.Coumpound) coordOp.getUsages().get(0).getExtent()).getBbox();
         Assertions.assertTrue(bbox.getLowerLeftLatitude().getSemantics() instanceof Double);
         Assertions.assertEquals(-43.7, bbox.getLowerLeftLatitude().getSemantics().doubleValue());
         Assertions.assertTrue(bbox.getLowerLeftLongitude().getSemantics() instanceof Double);
@@ -6419,7 +6415,7 @@ public class WktParserTest {
         Assertions.assertTrue(acc.getValue().getSemantics() instanceof Double);
         Assertions.assertEquals(0.1, acc.getValue().getSemantics().doubleValue());
 
-        Assertions.assertTrue(coordOp.getExtents().isEmpty());
+        Assertions.assertTrue(coordOp.getUsages().isEmpty());
 
         Assertions.assertEquals("Determined at 427 points. RMS residual 0.002m, maximum residual 0.007m",
                 coordOp.getRemark().getText().getSemantics());
@@ -7547,7 +7543,7 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(86400.0, unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertTrue(temporal.getExtents().isEmpty());
+        Assertions.assertTrue(temporal.getUsages().isEmpty());
     }
 
     @Test
@@ -7615,7 +7611,7 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(100., unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertTrue(image.getExtents().isEmpty());
+        Assertions.assertTrue(image.getUsages().isEmpty());
     }
 
     @Test
@@ -7641,7 +7637,7 @@ public class WktParserTest {
                 + "AXIS(\"site east\",southWest,ORDER(1)),"
                 + "AXIS(\"site north\",southEast,ORDER(2)),"
                 + "LENGTHUNIT(\"metre\",1.0),"
-                + "TIMEEXTENT(\"date/time t1\",\"date/time t2\"))";
+                + "USAGE(SCOPE(\"scope\"),TIMEEXTENT(\"date/time t1\",\"date/time t2\")))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -7679,10 +7675,10 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(1., unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertEquals(1, image.getExtents().size());
-        Assertions.assertTrue(image.getExtents().get(0) instanceof TemporalExtent);
+        Assertions.assertEquals(1, image.getUsages().size());
+        Assertions.assertTrue(image.getUsages().get(0).getExtent() instanceof TemporalExtent);
 
-        final var extent = (TemporalExtent) image.getExtents().get(0);
+        final var extent = (TemporalExtent) image.getUsages().get(0).getExtent();
         Assertions.assertEquals("date/time t1", extent.getExtentStart().getSemantics());
         Assertions.assertEquals("date/time t2", extent.getExtentEnd().getSemantics());
     }
@@ -7711,7 +7707,7 @@ public class WktParserTest {
                 + "AXIS(\"site east\",southWest,ORDER(1)),"
                 + "AXIS(\"site north\",southEast,ORDER(2)),"
                 + "LENGTHUNIT(\"metre\",1.0),"
-                + "TIMEEXTENT(\"date/time t1\",\"date/time t2\"))";
+                + "USAGE(SCOPE(\"scope\"),TIMEEXTENT(\"date/time t1\",\"date/time t2\")))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -7748,10 +7744,10 @@ public class WktParserTest {
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
         Assertions.assertEquals(1., unit.getConversionFactor().getSemantics().doubleValue());
 
-        Assertions.assertEquals(1, engineering.getExtents().size());
-        Assertions.assertTrue(engineering.getExtents().get(0) instanceof TemporalExtent);
+        Assertions.assertEquals(1, engineering.getUsages().size());
+        Assertions.assertTrue(engineering.getUsages().get(0).getExtent() instanceof TemporalExtent);
 
-        final var extent = (TemporalExtent) engineering.getExtents().get(0);
+        final var extent = (TemporalExtent) engineering.getUsages().get(0).getExtent();
         Assertions.assertEquals("date/time t1", extent.getExtentStart().getSemantics());
         Assertions.assertEquals("date/time t2", extent.getExtentEnd().getSemantics());
     }
@@ -7834,8 +7830,8 @@ public class WktParserTest {
                 + "AXIS(\"(Y)\",north,ORDER(1)),"
                 + "AXIS(\"(X)\",east,ORDER(2)),"
                 + "LENGTHUNIT(\"metre\",1.0),"
-                + "SCOPE(\"Description of a purpose\"),"
-                + "AREA(\"An area description\"),"
+                + "USAGE(SCOPE(\"Description of a purpose\"),"
+                + "AREA(\"An area description\")),"
                 + "ID(\"EuroGeographics\",\"ETRS-LAEA\"))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
@@ -7856,7 +7852,8 @@ public class WktParserTest {
 
         Assertions.assertEquals("GRS 80", baseDatumEll.getName().getSemantics());
 
-        Assertions.assertEquals("An area description", ((Area) projected.getExtents().get(0)).getName().getSemantics());
+        Assertions.assertEquals("An area description",
+                ((Area) projected.getUsages().get(0).getExtent()).getName().getSemantics());
         Assertions.assertEquals("EuroGeographics", projected.getIdentifiers().get(0).getName().getSemantics());
         Assertions.assertEquals("ETRS-LAEA", projected.getIdentifiers().get(0).getId().getSemantics());
 
@@ -8191,10 +8188,10 @@ public class WktParserTest {
                 + "AXIS(\"(Y)\",geocentricY),"
                 + "AXIS(\"(Z)\",geocentricZ),"
                 + "LENGTHUNIT(\"metre\",1.0),"
-                + "SCOPE(\"Geodesy, topographic mapping and cadastre\"),"
+                + "USAGE(SCOPE(\"Geodesy, topographic mapping and cadastre\"),"
                 + "AREA(\"Japan\"),"
                 + "BBOX(17.09,122.38,46.05,157.64),"
-                + "TIMEEXTENT(2002-04-01,2011-10-21),"
+                + "TIMEEXTENT(2002-04-01,2011-10-21)),"
                 + "ID(\"EPSG\",4946,URI(\"urn:ogc:def:crs:EPSG::4946\")),"
                 + "REMARK(\"注：JGD2000ジオセントリックは現在JGD2011に代わりました。\"))";
 
@@ -8268,17 +8265,15 @@ public class WktParserTest {
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
         Assertions.assertEquals("Geodesy, topographic mapping and cadastre",
-                crs.getScope().getDescription().getSemantics());
+                crs.getUsages().get(0).getScope().getDescription().getSemantics());
 
-        Assertions.assertEquals(3, crs.getExtents().size());
-        Assertions.assertTrue(crs.getExtents().get(0) instanceof Area);
-        Assertions.assertTrue(crs.getExtents().get(1) instanceof BBox);
-        Assertions.assertTrue(crs.getExtents().get(2) instanceof TemporalExtent);
+        Assertions.assertEquals(1, crs.getUsages().size());
+        Assertions.assertTrue(crs.getUsages().get(0).getExtent() instanceof Extent.Coumpound);
 
-        final Area area = (Area) crs.getExtents().get(0);
+        final Area area = ((Extent.Coumpound) crs.getUsages().get(0).getExtent()).getArea();
         Assertions.assertEquals("Japan", area.getName().getSemantics());
 
-        final BBox bbox = (BBox) crs.getExtents().get(1);
+        final BBox bbox = ((Extent.Coumpound) crs.getUsages().get(0).getExtent()).getBbox();
         Assertions.assertTrue(bbox.getLowerLeftLatitude().getSemantics() instanceof Double);
         Assertions.assertTrue(bbox.getLowerLeftLongitude().getSemantics() instanceof Double);
         Assertions.assertTrue(bbox.getUpperRightLatitude().getSemantics() instanceof Double);
@@ -8288,7 +8283,7 @@ public class WktParserTest {
         Assertions.assertEquals(46.05, bbox.getUpperRightLatitude().getSemantics().doubleValue());
         Assertions.assertEquals(157.64, bbox.getUpperRightLongitude().getSemantics().doubleValue());
 
-        final TemporalExtent timeExtent = (TemporalExtent) crs.getExtents().get(2);
+        final TemporalExtent timeExtent = ((Extent.Coumpound) crs.getUsages().get(0).getExtent()).getTemporal();
         Assertions.assertTrue(timeExtent.getExtentStart().getSemantics() instanceof LocalDate);
         Assertions.assertTrue(timeExtent.getExtentEnd().getSemantics() instanceof LocalDate);
         Assertions.assertEquals(LocalDate.of(2002, Month.APRIL, 1), timeExtent.getExtentStart().getSemantics());
@@ -8398,8 +8393,7 @@ public class WktParserTest {
 
         Assertions.assertNull(cs.getUnit());
 
-        Assertions.assertNull(crs.getScope());
-        Assertions.assertTrue(crs.getExtents().isEmpty());
+        Assertions.assertTrue(crs.getUsages().isEmpty());
         Assertions.assertTrue(crs.getIdentifiers().isEmpty());
         Assertions.assertNull(crs.getRemark());
     }
@@ -8476,8 +8470,7 @@ public class WktParserTest {
         ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
-        Assertions.assertNull(crs.getScope());
-        Assertions.assertTrue(crs.getExtents().isEmpty());
+        Assertions.assertTrue(crs.getUsages().isEmpty());
         Assertions.assertEquals(1, crs.getIdentifiers().size());
 
         final var crsId = crs.getIdentifiers().get(0);
@@ -8568,8 +8561,7 @@ public class WktParserTest {
         ((Double) csUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(csUnit.getIdentifiers().isEmpty());
 
-        Assertions.assertNull(crs.getScope());
-        Assertions.assertTrue(crs.getExtents().isEmpty());
+        Assertions.assertTrue(crs.getUsages().isEmpty());
         Assertions.assertTrue(crs.getIdentifiers().isEmpty());
 
         final var remark = crs.getRemark();

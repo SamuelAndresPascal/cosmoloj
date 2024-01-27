@@ -13,9 +13,9 @@ public class GeodeticCrs extends Crs {
     private final CoordinateSystem coordinateSystem;
 
     public GeodeticCrs(final int start, final int end, final int index, final QuotedLatinText name,
-            final GeodeticDatum datum, final CoordinateSystem coordinateSystem, final Scope scope,
-            final List<Extent> extents, final List<Identifier> identifiers, final Remark remark) {
-        super(start, end, index, name, scope, extents, identifiers, remark);
+            final GeodeticDatum datum, final CoordinateSystem coordinateSystem,
+            final List<Usage> extents, final List<Identifier> identifiers, final Remark remark) {
+        super(start, end, index, name, extents, identifiers, remark);
         this.datum = datum;
         this.coordinateSystem = coordinateSystem;
     }
@@ -32,9 +32,9 @@ public class GeodeticCrs extends Crs {
 
         public Geographic2DCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final GeodeticDatum datum, final CoordinateSystem.Ellipsoidal2DCoordinateSystem coordinateSystem,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
+                final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
-            super(start, end, index, name, datum, coordinateSystem, scope, extents, identifiers, remark);
+            super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);
         }
     }
 }

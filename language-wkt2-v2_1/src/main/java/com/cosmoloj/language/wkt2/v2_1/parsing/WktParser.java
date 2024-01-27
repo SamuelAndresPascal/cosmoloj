@@ -105,6 +105,7 @@ import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.ExtentBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Usage;
 import com.cosmoloj.language.wkt2.v2_1.expression.UsageBuilder;
 
@@ -1117,12 +1118,9 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             } else if (WktKeyword.OPERATIONACCURACY.test(lex) && status < 2) {
                 status = 2;
                 builder.list(operationAccuracy(lex));
-            } else if (WktKeyword.SCOPE.test(lex) && status < 3) {
+            } else if (WktKeyword.USAGE.test(lex) && status < 4) {
                 status = 3;
-                builder.list(scope(lex));
-            } else if (WktKeyword.isExtent(lex) && status < 4) {
-                status = 3;
-                builder.list(extent(lex));
+                builder.list(usage(lex));
             } else if ((WktKeyword.ID.test(lex) || WktKeyword.AUTHORITY.test(lex)) && status < 5) {
                 status = 4;
                 builder.list(identifier(lex));
@@ -1702,14 +1700,38 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return extent(flushAndLexEnum(WktKeyword.class));
     }
 
-    public Extent extent(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return switch (label.getSemantics()) {
-            case AREA -> areaDescription(label);
-            case BBOX -> geographicBoundingBox(label);
-            case VERTICALEXTENT -> verticalExtent(label);
-            case TIMEEXTENT -> temporalExtent(label);
-            default -> throw new IllegalStateException();
-        };
+    public Extent extent(final EnumLexeme<WktKeyword> initialLabel) throws LanguageException {
+
+        final ExtentBuilder builder = new ExtentBuilder();
+
+        EnumLexeme<WktKeyword> label = initialLabel;
+
+        int status = 0;
+        do {
+            if (WktKeyword.AREA.test(label) && status < 1) {
+                status = 1;
+                builder.list(areaDescription(label));
+            } else if (WktKeyword.BBOX.test(label) && status < 2) {
+                status = 2;
+                builder.list(geographicBoundingBox(label));
+            } else if (WktKeyword.VERTICALEXTENT.test(label) && status < 3) {
+                status = 3;
+                builder.list(verticalExtent(label));
+            } else if (WktKeyword.TIMEEXTENT.test(label) && status < 4) {
+                status = 4;
+                builder.list(temporalExtent(label));
+            } else {
+                throw new IllegalStateException();
+            }
+
+            if (comma()) {
+                builder.list(flushAndLex(SpecialSymbol.COMMA));
+                label = flushAndLexEnum(WktKeyword.class);
+            } else {
+                break;
+            }
+        } while (true);
+        return build(builder);
     }
 
     public Usage usage() throws LanguageException {
@@ -1895,8 +1917,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         throw new UnsupportedOperationException();
     }
 
-    private static final int ACCEPT_SCOPE_EXTENT_ID_REMARK = 4;
-    private static final int ACCEPT_EXTENT_ID_REMARK = 3;
+    private static final int ACCEPT_USAGE_ID_REMARK = 3;
     private static final int ACCEPT_ID_REMARK = 2;
     private static final int ACCEPT_REMARK = 1;
 
@@ -2017,7 +2038,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     private <O extends Token> TokenBuilder<Token, O> patternScopeExtentIdentifierRemark(
             final TokenBuilder<Token, O> builder, final Token[] outCs) throws LanguageException {
 
-        int accept = ACCEPT_SCOPE_EXTENT_ID_REMARK;
+        int accept = ACCEPT_USAGE_ID_REMARK;
 
         if (outCs[0] != null && outCs[1] != null) {
             /*
@@ -2049,17 +2070,10 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         builder.list(comma);
 
         return switch (lex.getSemantics()) {
-            case SCOPE -> {
-                if (accept == ACCEPT_SCOPE_EXTENT_ID_REMARK) {
-                    builder.list(scope(lex));
-                    yield ACCEPT_EXTENT_ID_REMARK;
-                }
-                throw new IllegalStateException();
-            }
-            case AREA, BBOX, VERTICALEXTENT, TIMEEXTENT -> {
-                if (accept >= ACCEPT_EXTENT_ID_REMARK) {
-                    builder.list(extent(lex));
-                    yield ACCEPT_EXTENT_ID_REMARK;
+            case USAGE -> {
+                if (accept == ACCEPT_USAGE_ID_REMARK) {
+                    builder.list(usage(lex));
+                    yield ACCEPT_USAGE_ID_REMARK;
                 }
                 throw new IllegalStateException();
             }

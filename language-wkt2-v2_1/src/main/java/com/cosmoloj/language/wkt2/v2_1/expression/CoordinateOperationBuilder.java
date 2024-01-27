@@ -37,8 +37,7 @@ public class CoordinateOperationBuilder
                             .or(SimpleNumber.Accuracy.class::isInstance)
                             .or(OperationCrs.InterpolationCrs.class::isInstance)
                             .or(SimpleNumber.Accuracy.class::isInstance)
-                            .or(Scope.class::isInstance)
-                            .or(Extent.class::isInstance)
+                            .or(Usage.class::isInstance)
                             .or(Identifier.class::isInstance)
                             .or(Remark.class::isInstance);
         };
@@ -51,8 +50,7 @@ public class CoordinateOperationBuilder
                 tokens(AbstractParam.class::isInstance),
                 firstToken(OperationCrs.InterpolationCrs.class::isInstance),
                 firstToken(SimpleNumber.Accuracy.class::isInstance),
-                firstToken(Scope.class::isInstance),
-                tokens(Extent.class::isInstance),
+                tokens(Usage.class::isInstance),
                 tokens(Identifier.class::isInstance),
                 firstToken(Remark.class::isInstance));
     }

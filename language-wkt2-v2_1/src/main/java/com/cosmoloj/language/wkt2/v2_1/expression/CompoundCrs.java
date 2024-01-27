@@ -15,9 +15,9 @@ public class CompoundCrs extends Crs {
 
     public CompoundCrs(final int start, final int end, final int index, final QuotedLatinText name,
             final HorizontalCrs horizontal, final Crs second,
-            final SimpleCrsShell.TemporalCrs temporal, final Scope scope, final List<Extent> extents,
+            final SimpleCrsShell.TemporalCrs temporal, final List<Usage> usages,
             final List<Identifier> identifiers, final Remark remark) {
-        super(start, end, index, name, scope, extents, identifiers, remark);
+        super(start, end, index, name, usages, identifiers, remark);
         this.horizontal = horizontal;
         this.second = second;
         this.temporal = temporal;

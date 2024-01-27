@@ -28,8 +28,7 @@ public class AbridgedTransformationBuilder
             default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
                 : builder(ParameterAbridged.class,
                         ParameterFile.class,
-                        Scope.class,
-                        Extent.class,
+                        Usage.class,
                         Identifier.class,
                         Remark.class);
         };
@@ -40,8 +39,7 @@ public class AbridgedTransformationBuilder
 
         return new Operation.AbridgedTransformation(first(), last(), index(), token(2), token(4),
                 tokens(AbstractParam.class::isInstance),
-                firstToken(Scope.class::isInstance),
-                tokens(Extent.class::isInstance),
+                tokens(Usage.class::isInstance),
                 tokens(Identifier.class::isInstance),
                 firstToken(Remark.class::isInstance));
     }

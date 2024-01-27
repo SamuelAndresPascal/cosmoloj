@@ -36,8 +36,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                         if (odd()) {
                             yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                         } else {
-                            yield Predicates.of(Scope.class::isInstance)
-                                    .or(Extent.class::isInstance)
+                            yield Predicates.of(Usage.class::isInstance)
                                     .or(Identifier.class::isInstance)
                                     .or(Remark.class::isInstance);
                         }
@@ -49,8 +48,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
             public GeodeticCrs build() {
 
                 return new GeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
-                        firstToken(Scope.class::isInstance),
-                        tokens(Extent.class::isInstance),
+                        tokens(Usage.class::isInstance),
                         tokens(Identifier.class::isInstance),
                         firstToken(Remark.class::isInstance));
             }
@@ -74,8 +72,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
                         if (odd()) {
                             yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                         } else {
-                            yield Predicates.of(Scope.class::isInstance)
-                                    .or(Extent.class::isInstance)
+                            yield Predicates.of(Usage.class::isInstance)
                                     .or(Identifier.class::isInstance)
                                     .or(Remark.class::isInstance);
                         }
@@ -87,8 +84,7 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
             public GeodeticCrs.Geographic2DCrs build() {
 
                 return new GeodeticCrs.Geographic2DCrs(first(), last(), index(), token(2), token(4), token(6),
-                        firstToken(Scope.class::isInstance),
-                        tokens(Extent.class::isInstance),
+                        tokens(Usage.class::isInstance),
                         tokens(Identifier.class::isInstance),
                         firstToken(Remark.class::isInstance));
             }

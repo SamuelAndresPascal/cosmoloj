@@ -72,23 +72,20 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
         private final OperationCrs.InterpolationCrs interpolation;
         private final SimpleNumber.Accuracy accuracy;
 
-        private final Scope scope;
-        private final List<Extent> extents;
+        private final List<Usage> usages;
         private final Remark remark;
 
         public CoordinateOperation(final int start, final int end, final int index, final QuotedLatinText name,
                 final OperationCrs.SourceCrs source, final OperationCrs.TargetCrs target,
                 final Method.OperationMethod method, final List<AbstractParam> parameters,
                 final OperationCrs.InterpolationCrs interpolation, final SimpleNumber.Accuracy accuracy,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
-                final Remark remark) {
+                final List<Usage> usages, final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, method, parameters, identifiers);
             this.source = source;
             this.target = target;
             this.interpolation = interpolation;
             this.accuracy = accuracy;
-            this.scope = scope;
-            this.extents = extents;
+            this.usages = usages;
             this.remark = remark;
         }
 
@@ -109,13 +106,8 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
         }
 
         @Override
-        public Scope getScope() {
-            return this.scope;
-        }
-
-        @Override
-        public List<Extent> getExtents() {
-            return this.extents;
+        public List<Usage> getUsages() {
+            return this.usages;
         }
 
         @Override
@@ -127,28 +119,20 @@ public class Operation<M extends Method, P extends AbstractParam> extends Abstra
     public static class AbridgedTransformation extends Operation<Method.OperationMethod, AbstractParam>
             implements ScopeExtentIdentifierRemark {
 
-        private final Scope scope;
-        private final List<Extent> extents;
+        private final List<Usage> usages;
         private final Remark remark;
 
         public AbridgedTransformation(final int start, final int end, final int index, final QuotedLatinText name,
-                final Method.OperationMethod method, final List<AbstractParam> parameters,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
-                final Remark remark) {
+                final Method.OperationMethod method, final List<AbstractParam> parameters, final List<Usage> usages,
+                final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, method, parameters, identifiers);
-            this.scope = scope;
-            this.extents = extents;
+            this.usages = usages;
             this.remark = remark;
         }
 
         @Override
-        public Scope getScope() {
-            return this.scope;
-        }
-
-        @Override
-        public List<Extent> getExtents() {
-            return this.extents;
+        public List<Usage> getUsages() {
+            return this.usages;
         }
 
         @Override

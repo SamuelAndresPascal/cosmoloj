@@ -15,10 +15,10 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
     private final D datum;
     private final CoordinateSystem coordinateSystem;
 
-    public SimpleCrsShell(final int start, final int end, final int index, final QuotedLatinText name,
-            final D datum, final CoordinateSystem coordinateSystem, final Scope scope,
-            final List<Extent> extents, final List<Identifier> identifiers, final Remark remark) {
-        super(start, end, index, name, scope, extents, identifiers, remark);
+    protected SimpleCrsShell(final int start, final int end, final int index, final QuotedLatinText name,
+            final D datum, final CoordinateSystem coordinateSystem,
+            final List<Usage> extents, final List<Identifier> identifiers, final Remark remark) {
+        super(start, end, index, name, extents, identifiers, remark);
         this.datum = datum;
         this.coordinateSystem = coordinateSystem;
     }
@@ -37,9 +37,9 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
         public VerticalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.VerticalDatum datum, final CoordinateSystem coordinateSystem,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
+                final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
-            super(start, end, index, name, datum, coordinateSystem, scope, extents, identifiers, remark);
+            super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);
         }
     }
 
@@ -50,9 +50,9 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
         public EngineeringCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.EngineeringDatum datum, final CoordinateSystem coordinateSystem,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
+                final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
-            super(start, end, index, name, datum, coordinateSystem, scope, extents, identifiers, remark);
+            super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);
         }
     }
 
@@ -62,9 +62,9 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
         public ImageCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final ImageDatum datum, final CoordinateSystem coordinateSystem,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
+                final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
-            super(start, end, index, name, datum, coordinateSystem, scope, extents, identifiers, remark);
+            super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);
         }
     }
 
@@ -74,9 +74,9 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
         public ParametricCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.ParametricDatum datum, final CoordinateSystem coordinateSystem,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
+                final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
-            super(start, end, index, name, datum, coordinateSystem, scope, extents, identifiers, remark);
+            super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);
         }
     }
 
@@ -86,9 +86,9 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
         public TemporalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.TemporalDatum datum, final CoordinateSystem coordinateSystem,
-                final Scope scope, final List<Extent> extents, final List<Identifier> identifiers,
+                final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
-            super(start, end, index, name, datum, coordinateSystem, scope, extents, identifiers, remark);
+            super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);
         }
     }
 }

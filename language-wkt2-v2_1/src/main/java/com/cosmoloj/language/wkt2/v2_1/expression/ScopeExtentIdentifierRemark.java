@@ -10,9 +10,7 @@ import java.util.List;
  */
 public interface ScopeExtentIdentifierRemark extends Expression {
 
-    Scope getScope();
-
-    List<Extent> getExtents();
+    List<Usage> getUsages();
 
     List<Identifier> getIdentifiers();
 
@@ -20,28 +18,21 @@ public interface ScopeExtentIdentifierRemark extends Expression {
 
     class Default extends AbstractExpression implements ScopeExtentIdentifierRemark {
 
-        private final Scope scope;
-        private final List<Extent> extents;
+        private final List<Usage> usages;
         private final List<Identifier> identifiers;
         private final Remark remark;
 
-        public Default(final int start, final int end, final int index, final Scope scope,
-                final List<Extent> extents, final List<Identifier> identifiers, final Remark remark) {
+        public Default(final int start, final int end, final int index, final List<Usage> usages,
+                final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index);
-            this.scope = scope;
-            this.extents = extents;
+            this.usages = usages;
             this.identifiers = identifiers;
             this.remark = remark;
         }
 
         @Override
-        public Scope getScope() {
-            return this.scope;
-        }
-
-        @Override
-        public List<Extent> getExtents() {
-            return this.extents;
+        public List<Usage> getUsages() {
+            return this.usages;
         }
 
         @Override

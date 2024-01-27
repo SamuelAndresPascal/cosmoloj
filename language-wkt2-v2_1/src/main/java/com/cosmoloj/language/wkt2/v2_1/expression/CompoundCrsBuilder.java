@@ -32,16 +32,14 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
                     .or(SimpleCrsShell.TemporalCrs.class::isInstance);
             case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
             case 8 -> SimpleCrsShell.TemporalCrs.INSTANCE_OF
-                    .or(Scope.class::isInstance)
-                    .or(Extent.class::isInstance)
+                    .or(Usage.class::isInstance)
                     .or(Identifier.class::isInstance)
                     .or(Remark.class::isInstance);
             default -> {
                 if (odd()) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else {
-                    yield Predicates.of(Scope.class::isInstance)
-                    .or(Extent.class::isInstance)
+                    yield Predicates.of(Usage.class::isInstance)
                     .or(Identifier.class::isInstance)
                     .or(Remark.class::isInstance);
                 }
@@ -53,8 +51,7 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
     public CompoundCrs build() {
         return new CompoundCrs(first(), last(), index(), token(2), token(4), token(6),
                 (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.class::isInstance)) ? token(8) : null,
-                firstToken(Scope.class::isInstance),
-                tokens(Extent.class::isInstance),
+                tokens(Usage.class::isInstance),
                 tokens(Identifier.class::isInstance),
                 firstToken(Remark.class::isInstance));
     }
