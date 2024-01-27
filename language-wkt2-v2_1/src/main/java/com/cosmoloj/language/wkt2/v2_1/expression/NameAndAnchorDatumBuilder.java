@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -41,13 +42,8 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield anchorPredicate.or(Identifier.class::isInstance);
-                }
-            }
+            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : anchorPredicate.or(Identifier.class::isInstance);
         };
     }
 
@@ -56,11 +52,11 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
         if (even() && beyond(2)) {
             return switch (before) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> current(anchorPredicate) ? QuotedLatinText.class::isInstance : t -> true;
-                default -> t -> true;
+                case 2 -> current(anchorPredicate) ? QuotedLatinText.class::isInstance : Predicates.yes();
+                default -> Predicates.yes();
             };
         }
-        return t -> true;
+        return Predicates.yes();
     }
 
     protected final A extractAnchor() {

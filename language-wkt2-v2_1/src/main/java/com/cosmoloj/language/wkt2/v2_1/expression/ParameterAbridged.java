@@ -3,15 +3,12 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 import com.cosmoloj.language.common.number.lexeme.compound.SignedNumericLiteral;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class ParameterAbridged extends AbstractParam {
-
-    public static final Predicate<Object> PARAMETER_ABRIDGED = t -> t instanceof ParameterAbridged;
 
     private final SignedNumericLiteral value;
 

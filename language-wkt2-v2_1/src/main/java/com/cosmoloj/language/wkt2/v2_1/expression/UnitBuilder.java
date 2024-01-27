@@ -9,7 +9,6 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
-import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -42,7 +41,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedNumericLiteral.class::isInstance;
-            default -> odd() ? Predicates.of(RightDelimiter.class::isInstance).or(SpecialSymbol.COMMA)
+            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
                 : Identifier.class::isInstance;
         };
     }

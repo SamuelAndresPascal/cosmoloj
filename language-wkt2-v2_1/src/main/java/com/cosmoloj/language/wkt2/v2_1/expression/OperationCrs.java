@@ -10,7 +10,7 @@ public abstract class OperationCrs extends AbstractExpression {
 
     private final Crs crs;
 
-    public OperationCrs(final int first, final int last, final int index, final Crs crs) {
+    protected OperationCrs(final int first, final int last, final int index, final Crs crs) {
         super(first, last, index);
         this.crs = crs;
     }

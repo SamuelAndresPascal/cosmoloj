@@ -2,15 +2,12 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public abstract class Crs extends ScopeExtentIdentifierRemark.Default {
-
-    public static final Predicate<Object> CRS = t -> t instanceof Crs;
 
     private final QuotedLatinText name;
 

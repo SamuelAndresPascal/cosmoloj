@@ -21,13 +21,13 @@ public class BaseGeodeticCrsBuilder extends CheckTokenBuilder<Token, BaseGeodeti
 
     @Override
     public List<Predicate<? super Token>> predicates() {
-        return List.of(WktKeyword.BASEGEODCRS.or(WktKeyword.GEOGCS).or(WktKeyword.GEOCCS),
+        return List.of(builder(WktKeyword.BASEGEODCRS, WktKeyword.GEOGCS, WktKeyword.GEOCCS),
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance,
                 SpecialSymbol.COMMA,
                 GeodeticDatum.class::isInstance,
                 builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
-                Unit.Angle.INSTANCE_OF_ANGLE,
+                Unit.Angle.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 
@@ -39,6 +39,6 @@ public class BaseGeodeticCrsBuilder extends CheckTokenBuilder<Token, BaseGeodeti
     @Override
     public BaseGeodeticCrs build() {
         return new BaseGeodeticCrs(first(), last(), index(), token(2), token(4),
-                firstToken(Unit.Angle.INSTANCE_OF_ANGLE));
+                firstToken(Unit.Angle.class::isInstance));
     }
 }

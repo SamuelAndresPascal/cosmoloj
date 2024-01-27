@@ -30,7 +30,7 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
             case 4 -> Ellipsoid.class::isInstance;
             default -> {
                 if (odd() && rightDelimiterIndex == NOT_CLOSED) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+                    yield builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && rightDelimiterIndex == NOT_CLOSED) {
                     yield builder(Anchor.class, Identifier.class);
                 } else if (odd()) {

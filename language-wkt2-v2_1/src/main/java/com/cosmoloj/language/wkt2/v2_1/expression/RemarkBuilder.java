@@ -20,8 +20,8 @@ public class RemarkBuilder extends CheckTokenBuilder<Token, Remark> implements P
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktKeyword.REMARK,
                 LeftDelimiter.class::isInstance,
-                QuotedUnicodeText.INSTANCE_OF_QUOTED_UNICODE_TEXT,
-                RightDelimiter.INSTANCE_OF);
+                QuotedUnicodeText.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

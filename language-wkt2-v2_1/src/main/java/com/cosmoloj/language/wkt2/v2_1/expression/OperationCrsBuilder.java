@@ -19,7 +19,7 @@ public abstract class OperationCrsBuilder<E extends OperationCrs> extends CheckT
 
     private final WktKeyword tag;
 
-    public OperationCrsBuilder(final WktKeyword tag) {
+    protected OperationCrsBuilder(final WktKeyword tag) {
         this.tag = tag;
     }
 
@@ -27,8 +27,8 @@ public abstract class OperationCrsBuilder<E extends OperationCrs> extends CheckT
     public List<Predicate<? super Token>> predicates() {
         return List.of(this.tag,
                 LeftDelimiter.class::isInstance,
-                Crs.CRS,
-                RightDelimiter.INSTANCE_OF);
+                Crs.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     public static OperationCrsBuilder<OperationCrs.SourceCrs> source() {

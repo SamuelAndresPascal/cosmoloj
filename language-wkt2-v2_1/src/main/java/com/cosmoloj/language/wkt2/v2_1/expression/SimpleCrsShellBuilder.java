@@ -14,11 +14,11 @@ import java.util.function.Predicate;
 /**
  *
  * @author Samuel Andrés
- * @param <CRS>
+ * @param <S>
  * @param <D>
  */
-public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D extends AbstractExpression>
-        extends CheckTokenBuilder<Token, CRS> implements PredicateIndexTokenBuilder<Token> {
+public abstract class SimpleCrsShellBuilder<S extends SimpleCrsShell<D>, D extends AbstractExpression>
+        extends CheckTokenBuilder<Token, S> implements PredicateIndexTokenBuilder<Token> {
 
     private final Predicate<? super Token> datumPredicate;
     private final Predicate<? super Token> labels;

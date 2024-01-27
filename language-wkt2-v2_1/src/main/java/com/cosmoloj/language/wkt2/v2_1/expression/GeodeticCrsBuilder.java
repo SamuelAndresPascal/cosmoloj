@@ -8,16 +8,15 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
-import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
- * @param <SEIR>
+ * @param <S>
  */
-public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemark>
-        extends CheckTokenBuilder<Token, SEIR> implements PredicateIndexTokenBuilder<Token> {
+public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
+        extends CheckTokenBuilder<Token, S> implements PredicateIndexTokenBuilder<Token> {
 
     public static GeodeticCrsBuilder<GeodeticCrs> geodeticCrs() {
         return new GeodeticCrsBuilder<>() {
@@ -25,22 +24,15 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
             @Override
             public Predicate<? super Token> predicate(final int currentIndex) {
                 return switch (currentIndex) {
-                    case 0 -> WktKeyword.GEODCRS.or(WktKeyword.GEODETICCRS).or(WktKeyword.GEOCCS).or(WktKeyword.GEOGCS);
+                    case 0 -> builder(WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.class::isInstance;
                     case 5 -> SpecialSymbol.COMMA;
                     case 6 -> CoordinateSystem.class::isInstance;
-                    default -> {
-                        if (odd()) {
-                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                        } else {
-                            yield Predicates.of(Usage.class::isInstance)
-                                    .or(Identifier.class::isInstance)
-                                    .or(Remark.class::isInstance);
-                        }
-                    }
+                    default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                        : builder(Usage.class, Identifier.class, Remark.class);
                 };
             }
 
@@ -61,22 +53,15 @@ public abstract class GeodeticCrsBuilder<SEIR extends ScopeExtentIdentifierRemar
             @Override
             public Predicate<? super Token> predicate(final int currentIndex) {
                 return switch (currentIndex) {
-                    case 0 -> WktKeyword.GEODCRS.or(WktKeyword.GEODETICCRS).or(WktKeyword.GEOCCS).or(WktKeyword.GEOGCS);
+                    case 0 -> builder(WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.class::isInstance;
                     case 5 -> SpecialSymbol.COMMA;
                     case 6 -> CoordinateSystem.Ellipsoidal2DCoordinateSystem.class::isInstance;
-                    default -> {
-                        if (odd()) {
-                            yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                        } else {
-                            yield Predicates.of(Usage.class::isInstance)
-                                    .or(Identifier.class::isInstance)
-                                    .or(Remark.class::isInstance);
-                        }
-                    }
+                    default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                        : builder(Usage.class, Identifier.class, Remark.class);
                 };
             }
 

@@ -3,7 +3,6 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
@@ -33,8 +32,6 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
     public static class VerticalCrs extends SimpleCrsShell<NameAndAnchorDatum.VerticalDatum> {
 
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof VerticalCrs;
-
         public VerticalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.VerticalDatum datum, final CoordinateSystem coordinateSystem,
                 final List<Usage> extents, final List<Identifier> identifiers,
@@ -46,8 +43,6 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
     public static class EngineeringCrs extends SimpleCrsShell<NameAndAnchorDatum.EngineeringDatum>
             implements HorizontalCrs {
 
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof EngineeringCrs;
-
         public EngineeringCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.EngineeringDatum datum, final CoordinateSystem coordinateSystem,
                 final List<Usage> extents, final List<Identifier> identifiers,
@@ -57,8 +52,6 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
     }
 
     public static class ImageCrs extends SimpleCrsShell<ImageDatum> {
-
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof ImageCrs;
 
         public ImageCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final ImageDatum datum, final CoordinateSystem coordinateSystem,
@@ -70,8 +63,6 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
 
     public static class ParametricCrs extends SimpleCrsShell<NameAndAnchorDatum.ParametricDatum> {
 
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof ParametricCrs;
-
         public ParametricCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.ParametricDatum datum, final CoordinateSystem coordinateSystem,
                 final List<Usage> extents, final List<Identifier> identifiers,
@@ -81,8 +72,6 @@ public abstract class SimpleCrsShell<D extends AbstractExpression> extends Crs {
     }
 
     public static class TemporalCrs extends SimpleCrsShell<NameAndAnchorDatum.TemporalDatum> {
-
-        public static final Predicate<Object> INSTANCE_OF = t -> t instanceof TemporalCrs;
 
         public TemporalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final NameAndAnchorDatum.TemporalDatum datum, final CoordinateSystem coordinateSystem,

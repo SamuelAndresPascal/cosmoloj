@@ -15,11 +15,11 @@ import java.util.function.Predicate;
 /**
  *
  * @author Samuel Andrés
- * @param <BD>
+ * @param <B>
  * @param <D>
  */
-public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D extends AbstractExpression>
-        extends CheckTokenBuilder<Token, BD> implements PredicateListTokenBuilder<Token> {
+public abstract class BaseDatumCrsBuilder<B extends BaseCrs.BaseDatumCrs<D>, D extends AbstractExpression>
+        extends CheckTokenBuilder<Token, B> implements PredicateListTokenBuilder<Token> {
 
     private final Predicate<? super Token> datumPredicate;
     private final WktKeyword label;

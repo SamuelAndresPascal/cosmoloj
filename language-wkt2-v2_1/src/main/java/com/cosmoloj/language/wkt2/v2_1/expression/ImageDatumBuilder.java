@@ -29,7 +29,7 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> Predicates.or(PixelInCell.class);
             default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                : builder(Identifier.class).or(Anchor.class);
+                : builder(Identifier.class, Anchor.class);
         };
     }
 

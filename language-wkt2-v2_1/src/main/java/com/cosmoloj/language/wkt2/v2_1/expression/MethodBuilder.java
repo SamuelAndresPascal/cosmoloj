@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -42,7 +43,7 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return currentIndex == 4 ? SpecialSymbol.COMMA : t -> true;
+        return currentIndex == 4 ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     public static class MapProjectionMethodBuilder extends MethodBuilder<Method.MapProjectionMethod> {

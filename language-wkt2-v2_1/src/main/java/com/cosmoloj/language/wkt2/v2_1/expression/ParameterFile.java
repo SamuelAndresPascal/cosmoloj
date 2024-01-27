@@ -2,15 +2,12 @@ package com.cosmoloj.language.wkt2.v2_1.expression;
 
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class ParameterFile extends AbstractParam {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof ParameterFile;
 
     private final QuotedLatinText fileName;
 

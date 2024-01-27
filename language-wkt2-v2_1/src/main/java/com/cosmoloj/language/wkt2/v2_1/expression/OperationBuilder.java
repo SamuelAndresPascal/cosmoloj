@@ -34,7 +34,7 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
             }
 
             if (Predicates.of(Method.MapProjectionMethod.class::isInstance).test(token(0))) {
-                return odd() ? SpecialSymbol.COMMA : Parameter.INSTANCE_OF.or(Identifier.class::isInstance);
+                return odd() ? SpecialSymbol.COMMA : builder(Parameter.class, Identifier.class);
             }
 
             return switch (currentIndex) {
@@ -42,8 +42,8 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
                 case 2 -> QuotedLatinText.class::isInstance;
                 case 3 -> SpecialSymbol.COMMA;
                 case 4 -> Method.MapProjectionMethod.class::isInstance;
-                default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
-                    : Parameter.INSTANCE_OF.or(Identifier.class::isInstance);
+                default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                    : builder(Parameter.class, Identifier.class);
             };
         }
 
@@ -52,7 +52,7 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
             if (even() && beyond(4)) {
                 return switch (before) {
                     case 1 -> SpecialSymbol.COMMA;
-                    case 2 -> Parameter.INSTANCE_OF.or(
+                    case 2 -> builder(Parameter.class).or(
                             current(Parameter.class::isInstance)
                                     ? Method.MapProjectionMethod.class::isInstance
                                     : Identifier.class::isInstance);
@@ -85,8 +85,8 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
                 case 2 -> QuotedLatinText.class::isInstance;
                 case 3 -> SpecialSymbol.COMMA;
                 case 4 -> Method.OperationMethod.class::isInstance;
-                default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
-                    : Parameter.INSTANCE_OF.or(Identifier.class::isInstance);
+                default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                    : builder(Parameter.class, Identifier.class);
             };
         }
 
@@ -95,12 +95,14 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
             if (even() && beyond(4)) {
                 return switch (before) {
                     case 1 -> SpecialSymbol.COMMA;
-                    case 2 -> Parameter.INSTANCE_OF.or(current(Parameter.class::isInstance)
-                            ? Method.OperationMethod.class::isInstance : Identifier.class::isInstance);
-                    default -> t -> true;
+                    case 2 -> builder(Parameter.class)
+                            .or(current(Parameter.class::isInstance)
+                                    ? Method.OperationMethod.class::isInstance
+                                    : Identifier.class::isInstance);
+                    default -> Predicates.yes();
                 };
             }
-            return t -> true;
+            return Predicates.yes();
         }
 
         @Override

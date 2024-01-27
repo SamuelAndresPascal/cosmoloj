@@ -8,7 +8,6 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
-import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -25,25 +24,18 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> HorizontalCrs.HORIZONTAL_CRS;
+            case 4 -> HorizontalCrs.class::isInstance;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> SimpleCrsShell.VerticalCrs.INSTANCE_OF
-                    .or(SimpleCrsShell.ParametricCrs.class::isInstance)
-                    .or(SimpleCrsShell.TemporalCrs.class::isInstance);
+            case 6 -> builder(SimpleCrsShell.VerticalCrs.class,
+                    SimpleCrsShell.ParametricCrs.class,
+                    SimpleCrsShell.TemporalCrs.class);
             case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-            case 8 -> SimpleCrsShell.TemporalCrs.INSTANCE_OF
-                    .or(Usage.class::isInstance)
-                    .or(Identifier.class::isInstance)
-                    .or(Remark.class::isInstance);
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield Predicates.of(Usage.class::isInstance)
-                    .or(Identifier.class::isInstance)
-                    .or(Remark.class::isInstance);
-                }
-            }
+            case 8 -> builder(SimpleCrsShell.TemporalCrs.class)
+                    .or(Usage.class)
+                    .or(Identifier.class)
+                    .or(Remark.class);
+            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : builder(Usage.class, Identifier.class, Remark.class);
         };
     }
 

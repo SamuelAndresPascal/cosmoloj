@@ -8,7 +8,6 @@ import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
-import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -26,7 +25,7 @@ public class VerticalExtentBuilder extends CheckTokenBuilder<Token, VerticalExte
                 SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
                 SignedNumericLiteral.class::isInstance,
-                Predicates.of(RightDelimiter.class::isInstance).or(SpecialSymbol.COMMA),
+                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
                 Unit.Length.class::isInstance,
                 RightDelimiter.class::isInstance);
     }

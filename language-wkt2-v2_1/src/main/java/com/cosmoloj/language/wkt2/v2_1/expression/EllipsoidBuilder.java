@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -26,30 +27,30 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3, 5 -> SpecialSymbol.COMMA;
-            case 4, 6 -> SignedNumericLiteral.INSTANCE_OF;
-            case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-            case 8 -> Identifier.INSTANCE_OF.or(Unit.Length.INSTANCE_OF_LENGTH);
+            case 4, 6 -> SignedNumericLiteral.class::isInstance;
+            case 7 -> builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
+            case 8 -> builder(Identifier.class, Unit.Length.class);
             default -> {
                 if (odd() && beyond(8)) {
                     yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(9)) {
-                    yield Identifier.INSTANCE_OF;
+                    yield Identifier.class::isInstance;
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return (even() && beyond(9)) ? SpecialSymbol.COMMA : t -> true;
+        return (even() && beyond(9)) ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     @Override
     public Ellipsoid build() {
 
         return new Ellipsoid(first(), last(), index(), token(0), token(2), token(4), token(6),
-                (size() >= 10 && testToken(8, Unit.Length.INSTANCE_OF_LENGTH)) ? token(8) : null,
-                tokens(Identifier.INSTANCE_OF));
+                (size() >= 10 && testToken(8, Unit.Length.class::isInstance)) ? token(8) : null,
+                tokens(Identifier.class::isInstance));
     }
 }
