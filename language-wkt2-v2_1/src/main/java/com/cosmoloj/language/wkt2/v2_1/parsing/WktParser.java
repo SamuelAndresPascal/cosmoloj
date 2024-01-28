@@ -1507,7 +1507,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public Unit abstractUnit(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return patternUnit(label, new UnitBuilder<>());
+        return patternSpaceUnit(label, new UnitBuilder<>());
     }
 
     public Unit.Time timeUnit() throws LanguageException {
@@ -1515,7 +1515,25 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public Unit.Time timeUnit(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return patternUnit(label, new UnitBuilder.TimeUnitBuilder());
+        final UnitBuilder.TimeUnitBuilder builder = new UnitBuilder.TimeUnitBuilder();
+
+        builder.list(
+                label,
+                flushAndLex(LeftDelimiter.class),
+                flushAndLex(QuotedLatinText.class));
+
+        if (comma()) {
+            builder.list(lexEnum(SpecialSymbol.class));
+            if (Character.isAlphabetic(flushTo())) {
+                final EnumLexeme<WktKeyword> id = lex(WktKeyword.ID);
+                builder.list(identifier(id));
+            } else {
+                builder.list(numberParser.unsignedNumericLiteral());
+            }
+        }
+
+        return build(patternIndentifiers(builder)
+                .list(flushAndLex(RightDelimiter.class)));
     }
 
     public Unit.Parametric parametricUnit() throws LanguageException {
@@ -1523,7 +1541,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public Unit.Parametric parametricUnit(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return patternUnit(label, new UnitBuilder.ParametricUnitBuilder());
+        return patternSpaceUnit(label, new UnitBuilder.ParametricUnitBuilder());
     }
 
     public Unit.Scale scaleUnit() throws LanguageException {
@@ -1531,7 +1549,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public Unit.Scale scaleUnit(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return patternUnit(label, new UnitBuilder.ScaleUnitBuilder());
+        return patternSpaceUnit(label, new UnitBuilder.ScaleUnitBuilder());
     }
 
     public Unit.Length lengthUnit() throws LanguageException {
@@ -1539,7 +1557,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public Unit.Length lengthUnit(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return patternUnit(label, new UnitBuilder.LengthUnitBuilder());
+        return patternSpaceUnit(label, new UnitBuilder.LengthUnitBuilder());
     }
 
     public Unit.Angle angleUnit() throws LanguageException {
@@ -1547,7 +1565,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
     public Unit.Angle angleUnit(final EnumLexeme<WktKeyword> label) throws LanguageException {
-        return patternUnit(label, new UnitBuilder.AngleUnitBuilder());
+        return patternSpaceUnit(label, new UnitBuilder.AngleUnitBuilder());
     }
 
     public Identifier identifier() throws LanguageException {
@@ -1980,7 +1998,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 .list(flushAndLex(RightDelimiter.class)));
     }
 
-    public <U extends Unit> U patternUnit(final EnumLexeme<WktKeyword> label, final UnitBuilder<U> builder)
+    public <U extends Unit> U patternSpaceUnit(final EnumLexeme<WktKeyword> label, final UnitBuilder<U> builder)
             throws LanguageException {
 
         builder.list(

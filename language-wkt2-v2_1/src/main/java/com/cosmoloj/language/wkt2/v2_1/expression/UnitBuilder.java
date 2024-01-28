@@ -22,15 +22,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
     private final Predicate<? super Token> labels;
 
     public UnitBuilder(final WktKeyword... labels) {
-        if (labels.length == 0) {
-            this.labels = WktKeyword.UNIT;
-        } else {
-            Predicate<? super Token> l = labels[0];
-            for (int i = 1; i < labels.length; i++) {
-                l = l.or(labels[i]);
-            }
-            this.labels = l;
-        }
+        this.labels = labels.length == 0 ? WktKeyword.UNIT : pb(labels[0], labels);
     }
 
     @Override
@@ -99,15 +91,26 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
         }
     }
 
-    public static class TimeUnitBuilder extends UnitBuilder<Unit.Time> {
+    public static class TimeUnitBuilder extends CheckTokenBuilder<Token, Unit.Time>
+        implements PredicateIndexTokenBuilder<Token> {
 
-        public TimeUnitBuilder() {
-            super(WktKeyword.TIMEUNIT, WktKeyword.TEMPORALQUANTITY);
+        @Override
+        public Predicate<? super Token> predicate(final int currentIndex) {
+            return switch (currentIndex) {
+                case 0 -> WktKeyword.TIMEUNIT.or(WktKeyword.TEMPORALQUANTITY);
+                case 1 -> LeftDelimiter.class::isInstance;
+                case 2 -> QuotedLatinText.class::isInstance;
+                case 3 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
+                case 4 -> pb(RightDelimiter.class, UnsignedNumericLiteral.class, Identifier.class);
+                default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
+            };
         }
 
         @Override
         public Unit.Time build() {
-            return new Unit.Time(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
+            return new Unit.Time(first(), last(), index(), token(2),
+                    firstToken(UnsignedNumericLiteral.class::isInstance),
+                    tokens(Identifier.class::isInstance));
         }
     }
 }

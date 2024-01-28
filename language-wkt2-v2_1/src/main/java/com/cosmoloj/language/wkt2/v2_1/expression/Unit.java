@@ -35,7 +35,16 @@ public class Unit extends AbstractExpression {
         return identifiers;
     }
 
-    public static class Angle extends Unit {
+    public abstract static class Space extends Unit {
+
+        protected Space(final int start, final int end, final int index, final QuotedLatinText name,
+                final UnsignedNumericLiteral conversionFactor, final List<Identifier> identifiers) {
+            super(start, end, index, name, conversionFactor, identifiers);
+        }
+
+    }
+
+    public static class Angle extends Space {
 
         public Angle(final int start, final int end, final int index, final QuotedLatinText name,
                 final UnsignedNumericLiteral conversionFactor, final List<Identifier> identifiers) {
@@ -43,7 +52,7 @@ public class Unit extends AbstractExpression {
         }
     }
 
-    public static class Length extends Unit {
+    public static class Length extends Space {
 
         public Length(final int start, final int end, final int index, final QuotedLatinText name,
                 final UnsignedNumericLiteral conversionFactor, final List<Identifier> identifiers) {
@@ -51,7 +60,7 @@ public class Unit extends AbstractExpression {
         }
     }
 
-    public static class Scale extends Unit {
+    public static class Scale extends Space {
 
         public Scale(final int start, final int end, final int index, final QuotedLatinText name,
                 final UnsignedNumericLiteral conversionFactor, final List<Identifier> identifiers) {
@@ -59,7 +68,7 @@ public class Unit extends AbstractExpression {
         }
     }
 
-    public static class Parametric extends Unit {
+    public static class Parametric extends Space {
 
         public Parametric(final int start, final int end, final int index, final QuotedLatinText name,
                 final UnsignedNumericLiteral conversionFactor, final List<Identifier> identifiers) {
@@ -67,7 +76,7 @@ public class Unit extends AbstractExpression {
         }
     }
 
-    public static class Time extends Unit {
+    public static class Time extends Space {
 
         public Time(final int start, final int end, final int index, final QuotedLatinText name,
                 final UnsignedNumericLiteral conversionFactor, final List<Identifier> identifiers) {

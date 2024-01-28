@@ -233,6 +233,36 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals("citation", citation1.getText().getSemantics());
     }
 
+    @Test
+    public void time_unit_test_c_1() throws LanguageException {
+
+        final var text = """
+                         TEMPORALQUANTITY["calendar second"]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final Unit.Time unit = parser.timeUnit();
+
+        Assertions.assertEquals("calendar second", unit.getName().getSemantics());
+        Assertions.assertNull(unit.getConversionFactor());
+        Assertions.assertTrue(unit.getIdentifiers().isEmpty());
+    }
+
+    @Test
+    public void time_unit_test_d_1() throws LanguageException {
+
+        final var text = """
+                         TEMPORALQUANTITY["calendar second",ID["AUTH",1],ID["AUTH","1"]]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final Unit.Time unit = parser.timeUnit();
+
+        Assertions.assertEquals("calendar second", unit.getName().getSemantics());
+        Assertions.assertNull(unit.getConversionFactor());
+        Assertions.assertEquals(2, unit.getIdentifiers().size());
+    }
+
 
     @Test
     public void usage_area_test_2() throws LanguageException {
@@ -443,5 +473,35 @@ public class WktParserTestM2m1 {
 
         final var citation1 = id1.getCitation();
         Assertions.assertEquals("citation", citation1.getText().getSemantics());
+    }
+
+    @Test
+    public void time_unit_test_c_2() throws LanguageException {
+
+        final var text = """
+                         TEMPORALQUANTITY("calendar second")""";
+
+        final WktParser parser = WktParser.of(text, '(', ')');
+
+        final Unit.Time unit = parser.timeUnit();
+
+        Assertions.assertEquals("calendar second", unit.getName().getSemantics());
+        Assertions.assertNull(unit.getConversionFactor());
+        Assertions.assertTrue(unit.getIdentifiers().isEmpty());
+    }
+
+    @Test
+    public void time_unit_test_d_2() throws LanguageException {
+
+        final var text = """
+                         TEMPORALQUANTITY("calendar second",ID("AUTH",1),ID("AUTH","1"))""";
+
+        final WktParser parser = WktParser.of(text, '(', ')');
+
+        final Unit.Time unit = parser.timeUnit();
+
+        Assertions.assertEquals("calendar second", unit.getName().getSemantics());
+        Assertions.assertNull(unit.getConversionFactor());
+        Assertions.assertEquals(2, unit.getIdentifiers().size());
     }
 }
