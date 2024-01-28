@@ -153,6 +153,7 @@ public enum WktKeyword implements SemanticEnum<WktKeyword> {
                     .or(WktKeyword.SCALEUNIT)
                     .or(WktKeyword.PARAMETRICUNIT)
                     .or(WktKeyword.TIMEUNIT)
+                    .or(WktKeyword.TEMPORALQUANTITY)
                     .test(t);
     }
 

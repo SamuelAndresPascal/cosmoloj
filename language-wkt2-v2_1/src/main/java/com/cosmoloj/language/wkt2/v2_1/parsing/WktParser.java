@@ -879,7 +879,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
         builder.list(
                 switch (lex.getSemantics()) {
-                    case LENGTHUNIT, ANGLEUNIT, SCALEUNIT, TIMEUNIT, PARAMETRICUNIT -> unit(lex);
+                    case LENGTHUNIT, ANGLEUNIT, SCALEUNIT, TIMEUNIT, TEMPORALQUANTITY, PARAMETRICUNIT -> unit(lex);
                     default -> throw new IllegalStateException();
                 });
 
@@ -1480,7 +1480,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             case LENGTHUNIT -> lengthUnit(label);
             case SCALEUNIT -> scaleUnit(label);
             case PARAMETRICUNIT -> parametricUnit(label);
-            case TIMEUNIT -> timeUnit(label);
+            case TIMEUNIT, TEMPORALQUANTITY -> timeUnit(label);
             case UNIT -> abstractUnit(label);
             default -> throw new IllegalStateException();
         };

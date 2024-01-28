@@ -41,8 +41,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedNumericLiteral.class::isInstance;
-            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                : Identifier.class::isInstance;
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
         };
     }
 
@@ -103,7 +102,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
     public static class TimeUnitBuilder extends UnitBuilder<Unit.Time> {
 
         public TimeUnitBuilder() {
-            super(WktKeyword.TIMEUNIT);
+            super(WktKeyword.TIMEUNIT, WktKeyword.TEMPORALQUANTITY);
         }
 
         @Override
