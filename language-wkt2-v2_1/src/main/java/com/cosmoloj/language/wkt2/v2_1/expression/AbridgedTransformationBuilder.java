@@ -25,12 +25,8 @@ public class AbridgedTransformationBuilder
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> Method.OperationMethod.class::isInstance;
-            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                : builder(ParameterAbridged.class,
-                        ParameterFile.class,
-                        Usage.class,
-                        Identifier.class,
-                        Remark.class);
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : pb(ParameterAbridged.class, ParameterFile.class, Usage.class, Identifier.class, Remark.class);
         };
     }
 

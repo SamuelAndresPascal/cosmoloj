@@ -3026,6 +3026,8 @@ public class WktParserTest {
 
         Assertions.assertEquals("GRS 80", baseDatumEll.getName().getSemantics());
 
+        Assertions.assertEquals("Description of a purpose",
+                projected.getUsages().get(0).getScope().getDescription().getSemantics());
         Assertions.assertEquals("An area description",
                 ((Area) projected.getUsages().get(0).getExtent()).getName().getSemantics());
         Assertions.assertEquals("EuroGeographics", projected.getIdentifiers().get(0).getName().getSemantics());

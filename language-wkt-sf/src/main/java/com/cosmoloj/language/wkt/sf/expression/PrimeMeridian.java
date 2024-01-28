@@ -3,15 +3,12 @@ package com.cosmoloj.language.wkt.sf.expression;
 import com.cosmoloj.language.common.number.lexeme.compound.SignedNumericLiteral;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class PrimeMeridian extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof PrimeMeridian;
 
     private final QuotedName name;
     private final SignedNumericLiteral longitude;

@@ -24,14 +24,14 @@ public class AbridgedTransformationBuilder
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
-                       : ParameterAbridged.PARAMETER_ABRIDGED
-                            .or(ParameterFile.INSTANCE_OF)
-                            .or(Scope.INSTANCE_OF)
-                            .or(Extent.class::isInstance)
-                            .or(Identifier.INSTANCE_OF)
-                            .or(Remark.INSTANCE_OF);
+            case 4 -> Method.OperationMethod.class::isInstance;
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                       : pb(ParameterAbridged.class,
+                               ParameterFile.class,
+                               Scope.class,
+                               Extent.class,
+                               Identifier.class,
+                               Remark.class);
         };
     }
 

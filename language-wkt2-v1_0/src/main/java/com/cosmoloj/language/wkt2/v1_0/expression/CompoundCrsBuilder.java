@@ -26,35 +26,23 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> HorizontalCrs.HORIZONTAL_CRS;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> SimpleCrsShell.VerticalCrs.INSTANCE_OF
-                    .or(SimpleCrsShell.ParametricCrs.INSTANCE_OF)
-                    .or(SimpleCrsShell.TemporalCrs.INSTANCE_OF);
-            case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-            case 8 -> SimpleCrsShell.TemporalCrs.INSTANCE_OF
-                    .or(Scope.INSTANCE_OF)
-                    .or(Extent.class::isInstance)
-                    .or(Identifier.INSTANCE_OF)
-                    .or(Remark.INSTANCE_OF);
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield Scope.INSTANCE_OF
-                    .or(Extent.class::isInstance)
-                    .or(Identifier.INSTANCE_OF)
-                    .or(Remark.INSTANCE_OF);
-                }
-            }
+            case 6 -> pb(SimpleCrsShell.VerticalCrs.class,
+                    SimpleCrsShell.ParametricCrs.class,
+                    SimpleCrsShell.TemporalCrs.class);
+            case 7 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+            case 8 -> pb(SimpleCrsShell.TemporalCrs.class, Scope.class, Extent.class, Identifier.class, Remark.class);
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : pb(Scope.class, Extent.class, Identifier.class, Remark.class);
         };
     }
 
     @Override
     public CompoundCrs build() {
         return new CompoundCrs(first(), last(), index(), token(2), token(4), token(6),
-                (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.INSTANCE_OF)) ? token(8) : null,
-                firstToken(Scope.INSTANCE_OF),
+                (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.class::isInstance)) ? token(8) : null,
+                firstToken(Scope.class::isInstance),
                 tokens(Extent.class::isInstance),
-                tokens(Identifier.INSTANCE_OF),
-                firstToken(Remark.INSTANCE_OF));
+                tokens(Identifier.class::isInstance),
+                firstToken(Remark.class::isInstance));
     }
 }

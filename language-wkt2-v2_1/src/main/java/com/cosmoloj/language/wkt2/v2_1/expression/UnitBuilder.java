@@ -41,7 +41,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> UnsignedNumericLiteral.class::isInstance;
-            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
                 : Identifier.class::isInstance;
         };
     }

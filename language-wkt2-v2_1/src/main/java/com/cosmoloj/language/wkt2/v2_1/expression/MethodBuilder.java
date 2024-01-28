@@ -36,7 +36,7 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
         return List.of(labels,
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance,
-                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
                 Identifier.class::isInstance,
                 RightDelimiter.class::isInstance);
     }

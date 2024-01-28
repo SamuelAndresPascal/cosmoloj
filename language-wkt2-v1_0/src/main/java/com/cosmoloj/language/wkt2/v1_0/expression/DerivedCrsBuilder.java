@@ -13,15 +13,15 @@ import java.util.function.Predicate;
 /**
  *
  * @author Samuel Andrés
- * @param <CRS>
+ * @param <S>
  * @param <B>
  * @param <O>
  * @param <M>
  * @param <P>
  */
-public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
+public abstract class DerivedCrsBuilder<S extends DerivedCrs<B, O, M, P>,
         B extends BaseCrs, O extends Operation<M, P>, M extends Method, P extends AbstractParam>
-        extends CheckTokenBuilder<Token, CRS>
+        extends CheckTokenBuilder<Token, S>
         implements PredicateIndexTokenBuilder<Token> {
 
     private final Predicate<? super Token> basePredicate;
@@ -51,11 +51,8 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
             case 6 -> operationPredicate;
             case 7 -> SpecialSymbol.COMMA;
             case 8 -> CoordinateSystem.class::isInstance;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
-                       : Scope.INSTANCE_OF
-                        .or(Extent.class::isInstance)
-                        .or(Identifier.INSTANCE_OF)
-                        .or(Remark.INSTANCE_OF);
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                       : pb(Scope.class, Extent.class, Identifier.class, Remark.class);
         };
     }
 
@@ -70,10 +67,10 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.ProjectedCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
             }
@@ -89,10 +86,10 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.DerivedGeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
             }
@@ -108,10 +105,10 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.DerivedVerticalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
             }
@@ -129,10 +126,10 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedEngineeringCrs<>(first(), last(), index(), token(2), token(4),
                                 token(6),
                                 token(8),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
             }
@@ -149,10 +146,10 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
                         return new DerivedCrs.DerivedParametricCrs(first(), last(), index(), token(2), token(4),
                                 token(6),
                                 token(8),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
             }
@@ -168,10 +165,10 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
 
                         return new DerivedCrs.DerivedTemporalCrs(first(), last(), index(), token(2), token(4), token(6),
                                 token(8),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
             }

@@ -8,7 +8,6 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
-import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -53,15 +52,8 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
             case 6 -> operationPredicate;
             case 7 -> SpecialSymbol.COMMA;
             case 8 -> CoordinateSystem.class::isInstance;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield Predicates.of(Usage.class::isInstance)
-                    .or(Identifier.class::isInstance)
-                    .or(Remark.class::isInstance);
-                }
-            }
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : pb(Usage.class, Identifier.class, Remark.class);
         };
     }
 

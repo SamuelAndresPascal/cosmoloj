@@ -31,7 +31,7 @@ public final class Predicates {
         return result;
     }
 
-    public static <T extends Enum<T> & Predicate<Object>> Predicate<Object> or(final Class<T> c) {
+    public static <T extends Enum<T> & Predicate<Object>> Predicate<Object> in(final Class<T> c) {
         return or(c.getEnumConstants());
     }
 

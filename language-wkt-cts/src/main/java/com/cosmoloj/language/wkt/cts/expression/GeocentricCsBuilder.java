@@ -25,15 +25,15 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
-            case 4 -> Datum.INSTANCE_OF;
-            case 6 -> PrimeMeridian.INSTANCE_OF_CTS;
-            case 8 -> Unit.INSTANCE_OF_CTS;
-            case 10 -> Authority.INSTANCE_OF.or(Axis.INSTANCE_OF);
-            case 12, 14 -> Axis.INSTANCE_OF;
+            case 4 -> Datum.class::isInstance;
+            case 6 -> PrimeMeridian.class::isInstance;
+            case 8 -> Unit.class::isInstance;
+            case 10 -> pb(Authority.class, Axis.class);
+            case 12, 14 -> Axis.class::isInstance;
             case 16 -> Authority.class::isInstance;
             default -> {
                 yield (odd() && beyond(8) && below(18))
-                    ? SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF)
+                    ? SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance)
                     : Predicates.no();
             }
         };
@@ -46,10 +46,10 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
                 default -> {
                     if (odd() && beyond(8)) {
                         if (below(16) && current(SpecialSymbol.COMMA)) {
-                            yield Axis.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS);
-                        } else if (below(18) && current(RightDelimiter.INSTANCE_OF)) {
+                            yield pb(Axis.class, Unit.class);
+                        } else if (below(18) && current(RightDelimiter.class::isInstance)) {
                             // un délimiteur de fermeture doit suivre une authorité
-                            yield Authority.INSTANCE_OF.or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS));
+                            yield pb(Authority.class, Axis.class, Unit.class);
                         } else {
                             yield Predicates.no();
                         }
@@ -61,9 +61,9 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
 
     @Override
     public GeocentricCs build() {
-        final boolean hasAxis = size() > 10 && testToken(10, Axis.INSTANCE_OF);
-        final boolean hasAuthority = (size() > 16 && testToken(16, Authority.INSTANCE_OF))
-                || (size() > 10 && testToken(10, Authority.INSTANCE_OF));
+        final boolean hasAxis = size() > 10 && testToken(10, Axis.class::isInstance);
+        final boolean hasAuthority = (size() > 16 && testToken(16, Authority.class::isInstance))
+                || (size() > 10 && testToken(10, Authority.class::isInstance));
         return new GeocentricCs(first(), last(), index(), token(2), token(4), token(6), token(8),
                 hasAxis ? token(10) : null,
                 hasAxis ? token(12) : null,

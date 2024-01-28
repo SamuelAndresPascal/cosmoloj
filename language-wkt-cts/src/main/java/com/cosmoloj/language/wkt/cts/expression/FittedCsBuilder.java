@@ -23,7 +23,7 @@ public class FittedCsBuilder extends CheckTokenBuilder<Token, FittedCs> implemen
                 LeftDelimiter.class::isInstance,
                 QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                MathTransform.INSTANCE_OF,
+                MathTransform.class::isInstance,
                 SpecialSymbol.COMMA,
                 CoordinateSystem.class::isInstance,
                 RightDelimiter.class::isInstance);

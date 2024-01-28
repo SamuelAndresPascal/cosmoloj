@@ -25,11 +25,11 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedName.class::isInstance;
             case 3, 5 -> SpecialSymbol.COMMA;
-            case 4 -> VertDatum.INSTANCE_OF;
-            case 6 -> Unit.INSTANCE_OF_CTS;
+            case 4 -> VertDatum.class::isInstance;
+            case 6 -> Unit.class::isInstance;
             case 7, 9 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
-            case 8 -> Authority.INSTANCE_OF.or(Axis.INSTANCE_OF);
-            case 10 -> Authority.INSTANCE_OF;
+            case 8 -> pb(Authority.class, Axis.class);
+            case 10 -> Authority.class::isInstance;
             case 11 -> RightDelimiter.class::isInstance;
             default -> Predicates.no();
         };
@@ -40,7 +40,7 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
         return switch (before) {
             case 1 -> switch (index) {
                 case 8, 10 -> SpecialSymbol.COMMA;
-                case 9 -> current(SpecialSymbol.COMMA) ? Axis.INSTANCE_OF : Predicates.yes();
+                case 9 -> current(SpecialSymbol.COMMA) ? Axis.class::isInstance : Predicates.yes();
                 default -> Predicates.yes();
             };
             default -> Predicates.yes();
@@ -50,9 +50,9 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
     @Override
     public VertCs build() {
         final int size = size();
-        final Axis axis = size > 9 && testToken(8, Axis.INSTANCE_OF) ? token(8) : null;
+        final Axis axis = size > 9 && testToken(8, Axis.class::isInstance) ? token(8) : null;
         final Authority authority = size == 12 ? token(10)
-                : ((size == 10 && testToken(8, Authority.INSTANCE_OF)) ? token(8) : null);
+                : ((size == 10 && testToken(8, Authority.class::isInstance)) ? token(8) : null);
         return new VertCs(first(), last(), index(), token(2), token(4), token(6), axis, authority);
     }
 }

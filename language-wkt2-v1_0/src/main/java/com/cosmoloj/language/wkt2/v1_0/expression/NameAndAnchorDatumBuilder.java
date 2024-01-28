@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -41,8 +42,8 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
-                       : anchorPredicate.or(Identifier.INSTANCE_OF);
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                       : anchorPredicate.or(Identifier.class::isInstance);
         };
     }
 
@@ -51,7 +52,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
         if (even() && beyond(2)) {
             return switch (before) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> current(anchorPredicate) ? QuotedLatinText.class::isInstance : t -> true;
+                case 2 -> current(anchorPredicate) ? QuotedLatinText.class::isInstance : Predicates.yes();
                 default -> t -> true;
             };
         }
@@ -63,50 +64,51 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.VerticalDatum, Anchor> verticalDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.INSTANCE_OF, WktKeyword.VDATUM, WktKeyword.VERTICALDATUM,
-                WktKeyword.VERT_DATUM) {
+        return new NameAndAnchorDatumBuilder<>(
+                Anchor.class::isInstance, WktKeyword.VDATUM, WktKeyword.VERTICALDATUM, WktKeyword.VERT_DATUM) {
 
             @Override
             public NameAndAnchorDatum.VerticalDatum build() {
 
                 return new NameAndAnchorDatum.VerticalDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.EngineeringDatum, Anchor> engineeringDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.INSTANCE_OF, WktKeyword.EDATUM, WktKeyword.ENGINEERINGDATUM,
-                WktKeyword.LOCAL_DATUM) {
+        return new NameAndAnchorDatumBuilder<>(
+                Anchor.class::isInstance, WktKeyword.EDATUM, WktKeyword.ENGINEERINGDATUM, WktKeyword.LOCAL_DATUM) {
 
             @Override
             public NameAndAnchorDatum.EngineeringDatum build() {
 
                 return new NameAndAnchorDatum.EngineeringDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.ParametricDatum, Anchor> parametricDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.INSTANCE_OF, WktKeyword.PDATUM, WktKeyword.PARAMETRICDATUM) {
+        return new NameAndAnchorDatumBuilder<>(
+                Anchor.class::isInstance, WktKeyword.PDATUM, WktKeyword.PARAMETRICDATUM) {
 
             @Override
             public NameAndAnchorDatum.ParametricDatum build() {
 
                 return new NameAndAnchorDatum.ParametricDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.TemporalDatum, TimeOrigin> temporalDatum() {
-        return new NameAndAnchorDatumBuilder<>(TimeOrigin.INSTANCE_OF, WktKeyword.TDATUM, WktKeyword.TIMEDATUM) {
+        return new NameAndAnchorDatumBuilder<>(TimeOrigin.class::isInstance, WktKeyword.TDATUM, WktKeyword.TIMEDATUM) {
             @Override
             public NameAndAnchorDatum.TemporalDatum build() {
 
                 return new NameAndAnchorDatum.TemporalDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.INSTANCE_OF));
+                        extractAnchor(), tokens(Identifier.class::isInstance));
             }
         };
     }

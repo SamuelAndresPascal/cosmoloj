@@ -33,10 +33,9 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                     case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.class::isInstance;
-                    case 5 -> builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
-                    case 6 -> builder(Identifier.class, Unit.Angle.class, Unit.Length.class, Unit.Scale.class);
-                    default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                        : Identifier.class::isInstance;
+                    case 5 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+                    case 6 -> pb(Identifier.class, Unit.Angle.class, Unit.Length.class, Unit.Scale.class);
+                    default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
                 };
             }
 
@@ -44,7 +43,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
             public Parameter build() {
 
                 final Unit unit = (size() >= 8
-                        && testToken(6, builder(Unit.Length.class, Unit.Angle.class, Unit.Scale.class)))
+                        && testToken(6, pb(Unit.Length.class, Unit.Angle.class, Unit.Scale.class)))
                         ? token(6)
                         : null;
 
@@ -69,11 +68,10 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                     case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> SignedNumericLiteral.class::isInstance;
-                    case 5 -> builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
-                    case 6 -> builder(Unit.Angle.class, Unit.Length.class, Unit.Parametric.class, Unit.Scale.class,
+                    case 5 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+                    case 6 -> pb(Unit.Angle.class, Unit.Length.class, Unit.Parametric.class, Unit.Scale.class,
                             Unit.Time.class);
-                    default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                        : Identifier.class::isInstance;
+                    default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
                 };
             }
 

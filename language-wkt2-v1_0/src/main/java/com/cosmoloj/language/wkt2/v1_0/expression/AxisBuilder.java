@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.AxisNameAbrev;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -26,15 +27,15 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
             case 2 -> AxisNameAbrev.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> AxisDirection.class::isInstance;
-            case 6 -> AxisOrder.INSTANCE_OF.or(Unit.INSTANCE_OF).or(Identifier.INSTANCE_OF);
-            case 8 -> Identifier.INSTANCE_OF.or(Unit.INSTANCE_OF);
+            case 6 -> pb(AxisOrder.class, Unit.class, Identifier.class);
+            case 8 -> pb(Identifier.class, Unit.class);
             default -> {
                 if (odd() && beyond(4)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+                    yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(8)) {
-                    yield Identifier.INSTANCE_OF;
+                    yield Identifier.class::isInstance;
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }

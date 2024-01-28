@@ -28,7 +28,7 @@ public class ParamMtBuilder extends CheckTokenBuilder<Token, ParamMt>
             case 3 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
             default -> {
                 if (even() && beyond(3)) {
-                    yield Parameter.INSTANCE_OF;
+                    yield Parameter.class::isInstance;
                 } else if (odd() && beyond(4)) {
                     yield SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
                 }
@@ -42,13 +42,13 @@ public class ParamMtBuilder extends CheckTokenBuilder<Token, ParamMt>
         if (even() && beyond(3)) {
             return SpecialSymbol.COMMA;
         } else if (odd() && beyond(4)) {
-            return Parameter.INSTANCE_OF;
+            return Parameter.class::isInstance;
         }
         return t -> true;
     }
 
     @Override
     public ParamMt build() {
-        return new ParamMt(first(), last(), index(), token(2), tokens(Parameter.INSTANCE_OF));
+        return new ParamMt(first(), last(), index(), token(2), tokens(Parameter.class::isInstance));
     }
 }

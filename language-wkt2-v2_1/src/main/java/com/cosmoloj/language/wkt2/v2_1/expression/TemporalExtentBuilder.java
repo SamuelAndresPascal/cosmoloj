@@ -23,9 +23,9 @@ public class TemporalExtentBuilder extends CheckTokenBuilder<Lexeme, TemporalExt
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(WktKeyword.TIMEEXTENT,
                 LeftDelimiter.class::isInstance,
-                builder(Datetime.class, QuotedLatinText.class),
+                pb(Datetime.class, QuotedLatinText.class),
                 SpecialSymbol.COMMA,
-                builder(Datetime.class, QuotedLatinText.class),
+                pb(Datetime.class, QuotedLatinText.class),
                 RightDelimiter.class::isInstance);
     }
 

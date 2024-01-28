@@ -2,15 +2,12 @@ package com.cosmoloj.language.wkt.cts.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class Datum extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Datum;
 
     private final QuotedName name;
     private final Spheroid spheroid;

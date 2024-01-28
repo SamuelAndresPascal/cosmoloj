@@ -22,12 +22,12 @@ public class VerticalExtentBuilder extends CheckTokenBuilder<Token, VerticalExte
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktKeyword.VERTICALEXTENT,
                 LeftDelimiter.class::isInstance,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Unit.Length.INSTANCE_OF_LENGTH,
-                RightDelimiter.INSTANCE_OF);
+                SignedNumericLiteral.class::isInstance,
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                Unit.Length.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

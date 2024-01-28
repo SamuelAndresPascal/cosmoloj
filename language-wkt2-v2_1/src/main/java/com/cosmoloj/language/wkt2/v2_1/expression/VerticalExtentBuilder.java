@@ -25,7 +25,7 @@ public class VerticalExtentBuilder extends CheckTokenBuilder<Token, VerticalExte
                 SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
                 SignedNumericLiteral.class::isInstance,
-                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
                 Unit.Length.class::isInstance,
                 RightDelimiter.class::isInstance);
     }

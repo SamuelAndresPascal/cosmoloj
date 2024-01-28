@@ -21,10 +21,10 @@ public class MeridianBuilder extends CheckTokenBuilder<Token, Meridian> implemen
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktKeyword.MERIDIAN,
                 LeftDelimiter.class::isInstance,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                Unit.Angle.INSTANCE_OF_ANGLE,
-                RightDelimiter.INSTANCE_OF);
+                Unit.Angle.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

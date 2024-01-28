@@ -25,9 +25,9 @@ public class ParameterFileBuilder extends CheckTokenBuilder<Token, ParameterFile
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> QuotedLatinText.class::isInstance;
-            case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+            case 5 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
             case 6 -> Identifier.class::isInstance;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
         };
     }
 

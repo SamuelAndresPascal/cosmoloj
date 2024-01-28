@@ -11,6 +11,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -26,23 +27,20 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
         return List.of(WktKeyword.ID.or(WktKeyword.AUTHORITY),
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance, // name
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                QuotedLatinText.QUOTED_LATIN_TEXT.or(SignedNumericLiteral.INSTANCE_OF), // identifier
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Citation.INSTANCE_OF
-                        .or(Uri.INSTANCE_OF)
-                        .or(SignedNumericLiteral.INSTANCE_OF)
-                        .or(QuotedLatinText.class::isInstance),
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Citation.INSTANCE_OF.or(Uri.INSTANCE_OF),
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Uri.INSTANCE_OF,
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(QuotedLatinText.class, SignedNumericLiteral.class), // identifier
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(Citation.class, Uri.class, SignedNumericLiteral.class, QuotedLatinText.class),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(Citation.class, Uri.class),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                Uri.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return currentIndex == 6 || currentIndex == 8 || currentIndex == 10 ? SpecialSymbol.COMMA : t -> true;
+        return currentIndex == 6 || currentIndex == 8 || currentIndex == 10 ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     @Override
@@ -53,9 +51,9 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
         final Uri uri;
         if (size == 12) {
             uri = (Uri) token(10);
-        } else if (size == 10 && testToken(8, Uri.INSTANCE_OF)) {
+        } else if (size == 10 && testToken(8, Uri.class::isInstance)) {
             uri = (Uri) token(8);
-        } else if (size == 8 && testToken(6, Uri.INSTANCE_OF)) {
+        } else if (size == 8 && testToken(6, Uri.class::isInstance)) {
             uri = (Uri) token(6);
         } else {
             uri = null;
@@ -65,14 +63,14 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
         if (size == 12) {
             citation = (Citation) token(8);
         } else if (size == 10) {
-            if (testToken(8, Citation.INSTANCE_OF)) {
+            if (testToken(8, Citation.class::isInstance)) {
                 citation = (Citation) token(8);
-            } else if (testToken(6, Citation.INSTANCE_OF)) {
+            } else if (testToken(6, Citation.class::isInstance)) {
                 citation = (Citation) token(6);
             } else {
                 citation = null;
             }
-        } else if (size == 8 && testToken(6, Citation.INSTANCE_OF)) {
+        } else if (size == 8 && testToken(6, Citation.class::isInstance)) {
             citation = (Citation) token(6);
         } else {
             citation = null;

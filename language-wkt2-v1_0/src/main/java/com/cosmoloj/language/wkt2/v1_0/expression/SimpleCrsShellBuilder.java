@@ -14,11 +14,11 @@ import java.util.function.Predicate;
 /**
  *
  * @author Samuel Andrés
- * @param <CRS>
+ * @param <S>
  * @param <D>
  */
-public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D extends AbstractExpression>
-        extends CheckTokenBuilder<Token, CRS> implements PredicateIndexTokenBuilder<Token> {
+public abstract class SimpleCrsShellBuilder<S extends SimpleCrsShell<D>, D extends AbstractExpression>
+        extends CheckTokenBuilder<Token, S> implements PredicateIndexTokenBuilder<Token> {
 
     private final Predicate<? super Token> datumPredicate;
     private final Predicate<? super Token> labels;
@@ -42,16 +42,8 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
             case 4 -> datumPredicate;
             case 5 -> SpecialSymbol.COMMA;
             case 6 -> CoordinateSystem.class::isInstance;
-            default -> {
-                if (odd()) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-                } else {
-                    yield Scope.INSTANCE_OF
-                            .or(Extent.class::isInstance)
-                            .or(Identifier.INSTANCE_OF)
-                            .or(Remark.INSTANCE_OF);
-                }
-            }
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : pb(Scope.class, Extent.class, Identifier.class, Remark.class);
         };
     }
 
@@ -62,10 +54,10 @@ public abstract class SimpleCrsShellBuilder<CRS extends SimpleCrsShell<D>, D ext
                     @Override
                     public SimpleCrsShell.VerticalCrs build() {
                         return new SimpleCrsShell.VerticalCrs(first(), last(), index(), token(2), token(4), token(6),
-                                firstToken(Scope.INSTANCE_OF),
+                                firstToken(Scope.class::isInstance),
                                 tokens(Extent.class::isInstance),
-                                tokens(Identifier.INSTANCE_OF),
-                                firstToken(Remark.INSTANCE_OF));
+                                tokens(Identifier.class::isInstance),
+                                firstToken(Remark.class::isInstance));
                     }
                 };
     }

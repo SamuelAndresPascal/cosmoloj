@@ -28,15 +28,15 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> SignedNumericLiteral.class::isInstance;
-            case 5 -> builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
-            case 6 -> builder(Identifier.class, Unit.Angle.class);
+            case 5 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+            case 6 -> pb(Identifier.class, Unit.Angle.class);
             default -> {
                 if (odd() && beyond(6)) {
-                    yield builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
+                    yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(7)) {
                     yield Identifier.class::isInstance;
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }

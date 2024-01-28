@@ -27,11 +27,11 @@ public class SpheroidBuilder extends CheckTokenBuilder<Token, Spheroid>
                 LeftDelimiter.class::isInstance,
                 QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance),
-                Authority.INSTANCE_OF,
+                Authority.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 

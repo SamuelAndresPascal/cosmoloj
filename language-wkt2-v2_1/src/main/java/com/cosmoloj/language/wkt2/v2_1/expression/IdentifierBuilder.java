@@ -26,13 +26,13 @@ public class IdentifierBuilder extends CheckTokenBuilder<Token, Identifier>
         return List.of(WktKeyword.ID.or(WktKeyword.AUTHORITY),
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance, // name
-                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
-                QuotedLatinText.QUOTED_LATIN_TEXT.or(SignedNumericLiteral.INSTANCE_OF), // identifier
-                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
-                builder(Citation.class, Uri.class, SignedNumericLiteral.class, QuotedLatinText.class),
-                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
-                builder(Citation.class, Uri.class),
-                builder(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(QuotedLatinText.class).or(SignedNumericLiteral.class), // identifier
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(Citation.class, Uri.class, SignedNumericLiteral.class, QuotedLatinText.class),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                pb(Citation.class, Uri.class),
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
                 Uri.class::isInstance,
                 RightDelimiter.class::isInstance);
     }

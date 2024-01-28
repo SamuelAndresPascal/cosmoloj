@@ -22,10 +22,10 @@ public class PassthroughMtBuilder extends CheckTokenBuilder<Token, PassthroughMt
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.PASSTHROUGH_MT,
                 LeftDelimiter.class::isInstance,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                MathTransform.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                MathTransform.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

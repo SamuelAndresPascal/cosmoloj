@@ -26,16 +26,13 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> HorizontalCrs.class::isInstance;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> builder(SimpleCrsShell.VerticalCrs.class,
+            case 6 -> pb(SimpleCrsShell.VerticalCrs.class,
                     SimpleCrsShell.ParametricCrs.class,
                     SimpleCrsShell.TemporalCrs.class);
-            case 7 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-            case 8 -> builder(SimpleCrsShell.TemporalCrs.class)
-                    .or(Usage.class)
-                    .or(Identifier.class)
-                    .or(Remark.class);
-            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                : builder(Usage.class, Identifier.class, Remark.class);
+            case 7 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+            case 8 -> pb(SimpleCrsShell.TemporalCrs.class, Usage.class, Identifier.class, Remark.class);
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : pb(Usage.class, Identifier.class, Remark.class);
         };
     }
 

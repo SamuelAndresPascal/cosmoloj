@@ -24,7 +24,7 @@ public class DatumBuilder extends CheckTokenBuilder<Token, Datum> implements Pre
                 QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
                 Spheroid.class::isInstance,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     @Override

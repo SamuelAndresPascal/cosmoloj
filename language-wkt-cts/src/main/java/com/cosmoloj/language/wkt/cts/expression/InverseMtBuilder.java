@@ -19,8 +19,8 @@ public class InverseMtBuilder extends CheckTokenBuilder<Token, InverseMt> implem
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktName.INVERSE_MT,
                 LeftDelimiter.class::isInstance,
-                MathTransform.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                MathTransform.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

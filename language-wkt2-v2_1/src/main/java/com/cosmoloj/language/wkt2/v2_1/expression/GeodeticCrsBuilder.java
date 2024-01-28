@@ -24,15 +24,15 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
             @Override
             public Predicate<? super Token> predicate(final int currentIndex) {
                 return switch (currentIndex) {
-                    case 0 -> builder(WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS);
+                    case 0 -> pb(WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.class::isInstance;
                     case 5 -> SpecialSymbol.COMMA;
                     case 6 -> CoordinateSystem.class::isInstance;
-                    default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                        : builder(Usage.class, Identifier.class, Remark.class);
+                    default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                        : pb(Usage.class, Identifier.class, Remark.class);
                 };
             }
 
@@ -53,15 +53,15 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
             @Override
             public Predicate<? super Token> predicate(final int currentIndex) {
                 return switch (currentIndex) {
-                    case 0 -> builder(WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS);
+                    case 0 -> pb(WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS);
                     case 1 -> LeftDelimiter.class::isInstance;
                     case 2 -> QuotedLatinText.class::isInstance;
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.class::isInstance;
                     case 5 -> SpecialSymbol.COMMA;
                     case 6 -> CoordinateSystem.Ellipsoidal2DCoordinateSystem.class::isInstance;
-                    default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                        : builder(Usage.class, Identifier.class, Remark.class);
+                    default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                        : pb(Usage.class, Identifier.class, Remark.class);
                 };
             }
 

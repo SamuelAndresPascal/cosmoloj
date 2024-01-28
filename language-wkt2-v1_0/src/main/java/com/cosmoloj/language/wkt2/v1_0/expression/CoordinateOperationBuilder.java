@@ -25,21 +25,21 @@ public class CoordinateOperationBuilder
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> OperationCrs.SourceCrs.INSTANCE_OF_SOURCE_CRS;
+            case 4 -> OperationCrs.SourceCrs.class::isInstance;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> OperationCrs.TargetCrs.INSTANCE_OF_TARGET_CRS;
+            case 6 -> OperationCrs.TargetCrs.class::isInstance;
             case 7 -> SpecialSymbol.COMMA;
-            case 8 -> Method.OperationMethod.INSTANCE_OF_OPERATION_METHOD;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA)
-                       : Parameter.INSTANCE_OF
-                            .or(ParameterFile.INSTANCE_OF)
-                            .or(SimpleNumber.Accuracy.INSTANCE_OF)
-                            .or(OperationCrs.InterpolationCrs.INSTANCE_OF_INTERPOLATION_CRS)
-                            .or(SimpleNumber.Accuracy.INSTANCE_OF)
-                            .or(Scope.INSTANCE_OF)
-                            .or(Extent.class::isInstance)
-                            .or(Identifier.class::isInstance)
-                            .or(Remark.INSTANCE_OF);
+            case 8 -> Method.OperationMethod.class::isInstance;
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                       : pb(Parameter.class,
+                               ParameterFile.class,
+                               SimpleNumber.Accuracy.class,
+                               OperationCrs.InterpolationCrs.class,
+                               SimpleNumber.Accuracy.class,
+                               Scope.class,
+                               Extent.class,
+                               Identifier.class,
+                               Remark.class);
         };
     }
 
@@ -47,12 +47,12 @@ public class CoordinateOperationBuilder
     public Operation.CoordinateOperation build() {
 
         return new Operation.CoordinateOperation(first(), last(), index(), token(2), token(4), token(6), token(8),
-                tokens(AbstractParam.INSTANCE_OF),
-                firstToken(OperationCrs.InterpolationCrs.INSTANCE_OF_INTERPOLATION_CRS),
-                firstToken(SimpleNumber.Accuracy.INSTANCE_OF),
-                firstToken(Scope.INSTANCE_OF),
+                tokens(AbstractParam.class::isInstance),
+                firstToken(OperationCrs.InterpolationCrs.class::isInstance),
+                firstToken(SimpleNumber.Accuracy.class::isInstance),
+                firstToken(Scope.class::isInstance),
                 tokens(Extent.class::isInstance),
                 tokens(Identifier.class::isInstance),
-                firstToken(Remark.INSTANCE_OF));
+                firstToken(Remark.class::isInstance));
     }
 }

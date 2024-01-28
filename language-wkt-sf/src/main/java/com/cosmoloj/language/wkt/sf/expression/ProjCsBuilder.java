@@ -27,12 +27,12 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
             case 4 -> GeographicCs.class::isInstance;
-            case 6 -> Projection.INSTANCE_OF;
+            case 6 -> Projection.class::isInstance;
             default -> {
                 if (even() && beyond(7)) {
-                    yield Parameter.INSTANCE_OF.or(Unit.INSTANCE_OF);
+                    yield pb(Parameter.class, Unit.class);
                 } else if (odd() && beyond(8)) {
-                    yield SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
+                    yield SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
                 } else {
                     yield Predicates.no();
                 }
@@ -46,9 +46,9 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             return SpecialSymbol.COMMA;
         } else if (odd() && beyond(8)) {
             if (current(SpecialSymbol.COMMA)) {
-                return Parameter.INSTANCE_OF;
-            } else if (current(RightDelimiter.INSTANCE_OF)) {
-                return Unit.INSTANCE_OF;
+                return Parameter.class::isInstance;
+            } else if (current(RightDelimiter.class::isInstance)) {
+                return Unit.class::isInstance;
             } else {
                 return Predicates.no();
             }
@@ -60,6 +60,6 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
     @Override
     public ProjectedCs build() {
         return new ProjectedCs(first(), last(), index(),
-                token(2), token(4), token(6), tokens(Parameter.INSTANCE_OF), token(size() - 2));
+                token(2), token(4), token(6), tokens(Parameter.class::isInstance), token(size() - 2));
     }
 }

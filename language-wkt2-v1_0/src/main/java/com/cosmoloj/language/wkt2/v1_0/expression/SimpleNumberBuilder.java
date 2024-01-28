@@ -28,8 +28,8 @@ public abstract class SimpleNumberBuilder<N extends SimpleNumber> extends CheckT
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(this.label,
                 LeftDelimiter.class::isInstance,
-                SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                SignedNumericLiteral.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     public static class BearingBuilder extends SimpleNumberBuilder<SimpleNumber.Bearing> {

@@ -20,12 +20,50 @@ public abstract class TokenSequenceTokenBuilder<I extends Token, O extends Token
 
     private final List<I> tokens = new ArrayList<>();
 
-    protected static PredicateBuilder builder(final Class<?> c, final Class<?>... others) {
+    /**
+     * <div class="fr">Retourne un constructueur de prédicats construit comma le disjonction de vérification d'instance
+     * des classes indiquées en paramètres.</div>
+     *
+     * @param c
+     * @param others
+     * @return
+     */
+    protected static PredicateBuilder predicateBuilder(final Class<?> c, final Class<?>... others) {
         return others.length == 0 ? PredicateBuilder.of(c) : PredicateBuilder.of(c).or(others);
     }
 
-    protected static PredicateBuilder builder(final SemanticEnum<?> e, final SemanticEnum<?>... others) {
+    /**
+     * <div class="fr">Retourne un constructueur de prédicats construit comma le disjonction de vérification des
+     * prédicats d'instances d'énumérations indiquées en paramètres.</div>
+     *
+     * @param e
+     * @param others
+     * @return
+     */
+    protected static PredicateBuilder predicateBuilder(final SemanticEnum<?> e, final SemanticEnum<?>... others) {
         return others.length == 0 ? PredicateBuilder.of(e) : PredicateBuilder.of(e).or(others);
+    }
+
+    /**
+     * <div class="en">Shortcut to {@link #predicateBuilder(java.lang.Class, java.lang.Class...) }.</div>
+     * @param c
+     * @param others
+     * @return
+     */
+    protected static PredicateBuilder pb(final Class<?> c, final Class<?>... others) {
+        return predicateBuilder(c, others);
+    }
+
+    /**
+     * <div class="en">Shortcut to {@link #predicateBuilder(com.cosmoloj.language.common.impl.semantic.SemanticEnum,
+     * com.cosmoloj.language.common.impl.semantic.SemanticEnum...) }.</div>
+     *
+     * @param e
+     * @param others
+     * @return
+     */
+    protected static PredicateBuilder pb(final SemanticEnum<?> e, final SemanticEnum<?>... others) {
+        return predicateBuilder(e, others);
     }
 
     @Override

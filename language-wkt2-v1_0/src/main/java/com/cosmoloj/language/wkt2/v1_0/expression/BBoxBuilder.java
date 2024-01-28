@@ -21,14 +21,14 @@ public class BBoxBuilder extends CheckTokenBuilder<Token, BBox> implements Predi
     public List<Predicate<? super Token>> predicates() {
         return List.of(WktKeyword.BBOX,
                 LeftDelimiter.class::isInstance,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
+                SignedNumericLiteral.class::isInstance,
                 SpecialSymbol.COMMA,
-                SignedNumericLiteral.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF);
+                SignedNumericLiteral.class::isInstance,
+                RightDelimiter.class::isInstance);
     }
 
     @Override

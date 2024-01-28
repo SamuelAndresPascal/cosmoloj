@@ -40,15 +40,15 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> UnsignedNumericLiteral.INSTANCE_OF;
-            default -> odd() ? RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA) : Identifier.INSTANCE_OF;
+            case 4 -> UnsignedNumericLiteral.class::isInstance;
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : Identifier.class::isInstance;
 
         };
     }
 
     @Override
     public U build() {
-        return (U) new Unit(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+        return (U) new Unit(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
     }
 
     public static class AngleUnitBuilder extends UnitBuilder<Unit.Angle> {
@@ -59,7 +59,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
 
         @Override
         public Unit.Angle build() {
-            return new Unit.Angle(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+            return new Unit.Angle(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
         }
     }
 
@@ -71,7 +71,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
 
         @Override
         public Unit.Length build() {
-            return new Unit.Length(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+            return new Unit.Length(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
         }
     }
 
@@ -83,7 +83,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
 
         @Override
         public Unit.Scale build() {
-            return new Unit.Scale(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+            return new Unit.Scale(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
         }
     }
 
@@ -95,7 +95,8 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
 
         @Override
         public Unit.Parametric build() {
-            return new Unit.Parametric(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+            return new Unit.Parametric(first(), last(), index(), token(2), token(4),
+                    tokens(Identifier.class::isInstance));
         }
     }
 
@@ -107,7 +108,7 @@ public class UnitBuilder<U extends Token> extends CheckTokenBuilder<Token, U>
 
         @Override
         public Unit.Time build() {
-            return new Unit.Time(first(), last(), index(), token(2), token(4), tokens(Identifier.INSTANCE_OF));
+            return new Unit.Time(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
         }
     }
 }

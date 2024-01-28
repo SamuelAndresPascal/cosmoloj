@@ -15,13 +15,13 @@ public class ExtentBuilder extends CheckTokenBuilder<Token, Extent> implements P
 
     @Override
     public List<Predicate<? super Token>> predicates() {
-        return List.of(builder(Area.class, BBox.class, VerticalExtent.class, TemporalExtent.class),
+        return List.of(pb(Area.class, BBox.class, VerticalExtent.class, TemporalExtent.class),
                 SpecialSymbol.COMMA,
-                builder(BBox.class, VerticalExtent.class, TemporalExtent.class),
+                pb(BBox.class, VerticalExtent.class, TemporalExtent.class),
                 SpecialSymbol.COMMA,
-                builder(VerticalExtent.class, TemporalExtent.class),
+                pb(VerticalExtent.class, TemporalExtent.class),
                 SpecialSymbol.COMMA,
-                builder(TemporalExtent.class));
+                pb(TemporalExtent.class));
     }
 
     @Override

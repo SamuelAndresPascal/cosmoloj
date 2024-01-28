@@ -42,7 +42,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
             case 0 -> labels;
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
-            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
                 : anchorPredicate.or(Identifier.class::isInstance);
         };
     }

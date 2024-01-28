@@ -4,15 +4,12 @@ import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.wkt.cts.lexeme.AxisDirectionName;
 import com.cosmoloj.language.wkt.sf.lexeme.QuotedName;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class Axis extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Axis;
 
     private final QuotedName name;
     private final EnumLexeme<AxisDirectionName> direction;

@@ -32,15 +32,14 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             default -> switch (parity()) {
                 case EVEN -> {
                     if (beyond(9)) {
-                        yield Axis.INSTANCE_OF.or(Authority.INSTANCE_OF)
-                                .or(Parameter.INSTANCE_OF).or(Unit.INSTANCE_OF_CTS);
+                        yield pb(Axis.class, Authority.class, Parameter.class, Unit.class);
                     } else if (beyond(7)) {
-                        yield Parameter.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS);
+                        yield pb(Parameter.class, Unit.class);
                     } else {
                         yield Predicates.no();
                     }
                 }
-                case ODD -> beyond(8) ? SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF) : Predicates.no();
+                case ODD -> beyond(8) ? SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance) : Predicates.no();
                 default -> Predicates.no();
             };
         };
@@ -56,20 +55,20 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
         return switch (before) {
             case 1 -> beyond(7) ? SpecialSymbol.COMMA : Predicates.yes();
             case 2 -> {
-                if (beyond(9) && current(Axis.INSTANCE_OF.or(Authority.INSTANCE_OF))) {
-                    yield Unit.INSTANCE_OF_CTS.or(Axis.INSTANCE_OF);
-                } else if (beyond(7) && current(Parameter.INSTANCE_OF.or(Unit.INSTANCE_OF_CTS))) {
-                    yield Parameter.INSTANCE_OF.or(Projection.class::isInstance);
+                if (beyond(9) && current(pb(Axis.class, Authority.class))) {
+                    yield pb(Unit.class, Axis.class);
+                } else if (beyond(7) && current(pb(Parameter.class, Unit.class))) {
+                    yield pb(Parameter.class, Projection.class);
                 } else {
                     yield Predicates.yes();
                 }
             }
             case 4 -> {
-                if (beyond(9) && previous(2, Axis.INSTANCE_OF)) {
-                    if (current(Axis.INSTANCE_OF)) {
-                        yield Axis.INSTANCE_OF.negate();
-                    } else if (current(Authority.INSTANCE_OF)) {
-                        yield Axis.INSTANCE_OF;
+                if (beyond(9) && previous(2, Axis.class::isInstance)) {
+                    if (current(Axis.class::isInstance)) {
+                        yield pb(Axis.class).negate();
+                    } else if (current(Authority.class::isInstance)) {
+                        yield Axis.class::isInstance;
                     } else {
                         yield Predicates.yes();
                     }
@@ -84,8 +83,8 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
     @Override
     public ProjectedCs build() {
 
-        final List<Axis> axis = tokens(Axis.INSTANCE_OF);
-        final List<Unit> units = tokens(Unit.INSTANCE_OF_CTS);
+        final List<Axis> axis = tokens(Axis.class::isInstance);
+        final List<Unit> units = tokens(Unit.class::isInstance);
 
         final Axis axis1;
         final Axis axis2;
@@ -98,7 +97,7 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
         }
 
         return new ProjectedCs(first(), last(), index(), token(2), token(4),
-                token(6), tokens(Parameter.INSTANCE_OF),
+                token(6), tokens(Parameter.class::isInstance),
                 !units.isEmpty() ? units.get(0) : null,
                 axis1, axis2,
                 testToken(size() - 2, Authority.class::isInstance) ? token(size() - 2) : null);

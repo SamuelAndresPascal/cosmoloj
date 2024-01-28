@@ -25,14 +25,14 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
-            case 4 -> LocalDatum.INSTANCE_OF;
-            case 6 -> Unit.INSTANCE_OF_CTS;
-            case 8 -> Axis.INSTANCE_OF;
+            case 4 -> LocalDatum.class::isInstance;
+            case 6 -> Unit.class::isInstance;
+            case 8 -> Axis.class::isInstance;
             default -> {
                 if (odd() && beyond(8)) {
-                    yield SpecialSymbol.COMMA.or(RightDelimiter.INSTANCE_OF);
+                    yield SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance);
                 } else if (even() && beyond(9)) {
-                    yield Authority.INSTANCE_OF.or(Axis.INSTANCE_OF);
+                    yield pb(Authority.class, Axis.class);
                 }
                 yield Predicates.no();
             }
@@ -42,10 +42,10 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
     @Override
     public Predicate<? super Token> constraintLast(final int index) {
         if (odd() && beyond(8)) {
-            if (current(RightDelimiter.INSTANCE_OF)) {
-                return Axis.INSTANCE_OF.or(Authority.INSTANCE_OF);
+            if (current(RightDelimiter.class::isInstance)) {
+                return pb(Axis.class, Authority.class);
             } else if (current(SpecialSymbol.COMMA)) {
-                return Axis.INSTANCE_OF;
+                return Axis.class::isInstance;
             }
         } else if (even() && beyond(9)) {
             return SpecialSymbol.COMMA;
@@ -56,7 +56,8 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
     @Override
     public LocalCs build() {
 
-        return new LocalCs(first(), last(), index(), token(2), token(4), token(6), tokens(Axis.INSTANCE_OF),
-                firstToken(Authority.INSTANCE_OF));
+        return new LocalCs(first(), last(), index(), token(2), token(4), token(6),
+                tokens(Axis.class::isInstance),
+                firstToken(Authority.class::isInstance));
     }
 }

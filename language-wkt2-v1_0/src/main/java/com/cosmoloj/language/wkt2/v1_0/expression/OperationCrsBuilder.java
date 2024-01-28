@@ -28,7 +28,7 @@ public abstract class OperationCrsBuilder<E extends OperationCrs> extends CheckT
         return List.of(this.tag,
                 LeftDelimiter.class::isInstance,
                 Crs.CRS,
-                RightDelimiter.INSTANCE_OF);
+                RightDelimiter.class::isInstance);
     }
 
     public static OperationCrsBuilder<OperationCrs.SourceCrs> source() {

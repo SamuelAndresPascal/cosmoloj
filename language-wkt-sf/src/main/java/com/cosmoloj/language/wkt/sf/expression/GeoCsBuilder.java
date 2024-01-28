@@ -37,9 +37,9 @@ public abstract class GeoCsBuilder<O extends Expression> extends CheckTokenBuild
                 LeftDelimiter.class::isInstance,
                 QuotedName.class::isInstance,
                 SpecialSymbol.COMMA,
-                Datum.INSTANCE_OF,
+                Datum.class::isInstance,
                 SpecialSymbol.COMMA,
-                PrimeMeridian.INSTANCE_OF,
+                PrimeMeridian.class::isInstance,
                 SpecialSymbol.COMMA,
                 Unit.class::isInstance,
                 // un GEOGCS 3D doit prévoir l'unité linéaire verticale

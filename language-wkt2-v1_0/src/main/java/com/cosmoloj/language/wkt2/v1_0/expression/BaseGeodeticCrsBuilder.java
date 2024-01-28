@@ -9,6 +9,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -25,20 +26,20 @@ public class BaseGeodeticCrsBuilder extends CheckTokenBuilder<Token, BaseGeodeti
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance,
                 SpecialSymbol.COMMA,
-                GeodeticDatum.INSTANCE_OF,
-                RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA),
-                Unit.Angle.INSTANCE_OF_ANGLE,
+                GeodeticDatum.class::isInstance,
+                pb(RightDelimiter.class).or(SpecialSymbol.COMMA),
+                Unit.Angle.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 
     @Override
     public Predicate<? super Token> constraintLast(final int index) {
-        return index == 6 ? SpecialSymbol.COMMA : t -> true;
+        return index == 6 ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     @Override
     public BaseGeodeticCrs build() {
         return new BaseGeodeticCrs(first(), last(), index(), token(2), token(4),
-                firstToken(Unit.Angle.INSTANCE_OF_ANGLE));
+                firstToken(Unit.Angle.class::isInstance));
     }
 }

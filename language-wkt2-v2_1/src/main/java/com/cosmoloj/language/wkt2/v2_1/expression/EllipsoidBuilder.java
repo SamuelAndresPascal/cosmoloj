@@ -28,11 +28,11 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
             case 2 -> QuotedLatinText.class::isInstance;
             case 3, 5 -> SpecialSymbol.COMMA;
             case 4, 6 -> SignedNumericLiteral.class::isInstance;
-            case 7 -> builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
-            case 8 -> builder(Identifier.class, Unit.Length.class);
+            case 7 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+            case 8 -> pb(Identifier.class, Unit.Length.class);
             default -> {
                 if (odd() && beyond(8)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+                    yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(9)) {
                     yield Identifier.class::isInstance;
                 }

@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -26,16 +27,16 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> SignedNumericLiteral.INSTANCE_OF;
-            case 5 -> RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
-            case 6 -> Identifier.INSTANCE_OF.or(Unit.Angle.INSTANCE_OF_ANGLE);
+            case 4 -> SignedNumericLiteral.class::isInstance;
+            case 5 -> pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
+            case 6 -> pb(Identifier.class, Unit.Angle.class);
             default -> {
                 if (odd() && beyond(6)) {
-                    yield RightDelimiter.INSTANCE_OF.or(SpecialSymbol.COMMA);
+                    yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(7)) {
                     yield Identifier.class::isInstance;
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }
@@ -48,7 +49,7 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
     @Override
     public PrimeMeridian build() {
         return new PrimeMeridian(first(), last(), index(), token(2), token(4),
-                firstToken(Unit.Angle.INSTANCE_OF_ANGLE),
+                firstToken(Unit.Angle.class::isInstance),
                 tokens(Identifier.class::isInstance));
     }
 }

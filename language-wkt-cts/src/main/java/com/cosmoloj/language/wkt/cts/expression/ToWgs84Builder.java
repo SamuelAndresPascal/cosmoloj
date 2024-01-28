@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt.cts.lexeme.WktName;
 import com.cosmoloj.language.wkt.sf.lexeme.LeftDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt.sf.lexeme.SpecialSymbol;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -21,10 +22,10 @@ public class ToWgs84Builder extends CheckTokenBuilder<Token, ToWgs84> implements
         return switch (index) {
             case 0 -> WktName.TOWGS84;
             case 1 -> LeftDelimiter.class::isInstance;
-            case 2, 4, 6, 8, 10, 12, 14 -> SignedNumericLiteral.INSTANCE_OF;
+            case 2, 4, 6, 8, 10, 12, 14 -> SignedNumericLiteral.class::isInstance;
             case 3, 5, 7, 9, 11, 13 -> SpecialSymbol.COMMA;
-            case 15 -> RightDelimiter.INSTANCE_OF;
-            default -> t -> false;
+            case 15 -> RightDelimiter.class::isInstance;
+            default -> Predicates.no();
         };
     }
 

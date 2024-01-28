@@ -27,13 +27,13 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
             case 2 -> AxisNameAbrev.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> AxisDirection.class::isInstance;
-            case 6 -> builder(AxisOrder.class, Unit.class, Identifier.class);
-            case 8 -> builder(Identifier.class, Unit.class);
+            case 6 -> pb(AxisOrder.class, Unit.class, Identifier.class);
+            case 8 -> pb(Identifier.class, Unit.class);
             default -> {
                 if (odd() && beyond(4)) {
-                    yield builder(RightDelimiter.class).or(SpecialSymbol.COMMA);
+                    yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
                 } else if (even() && beyond(8)) {
-                    yield builder(Identifier.class);
+                    yield pb(Identifier.class);
                 }
                 yield Predicates.no();
             }

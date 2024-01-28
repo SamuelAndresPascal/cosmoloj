@@ -27,9 +27,9 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedLatinText.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
-            case 4 -> Predicates.or(PixelInCell.class);
-            default -> odd() ? builder(RightDelimiter.class).or(SpecialSymbol.COMMA)
-                : builder(Identifier.class, Anchor.class);
+            case 4 -> Predicates.in(PixelInCell.class);
+            default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
+                : pb(Identifier.class, Anchor.class);
         };
     }
 
@@ -38,7 +38,7 @@ public class ImageDatumBuilder extends CheckTokenBuilder<Token, ImageDatum>
         if (even() && beyond(4)) {
             return switch (before) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> current(Anchor.class::isInstance) ? Predicates.or(PixelInCell.class) : Predicates.yes();
+                case 2 -> current(Anchor.class::isInstance) ? Predicates.in(PixelInCell.class) : Predicates.yes();
                 default -> Predicates.yes();
             };
         }

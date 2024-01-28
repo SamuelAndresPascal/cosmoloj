@@ -25,15 +25,14 @@ public class GeographicCsBuilder extends CheckTokenBuilder<Token, GeographicCs>
             case 1 -> LeftDelimiter.class::isInstance;
             case 2 -> QuotedName.class::isInstance;
             case 3, 5, 7 -> SpecialSymbol.COMMA;
-            case 4 -> Datum.INSTANCE_OF;
-            case 6 -> PrimeMeridian.INSTANCE_OF_CTS;
-            case 8 -> Unit.INSTANCE_OF_CTS;
+            case 4 -> Datum.class::isInstance;
+            case 6 -> PrimeMeridian.class::isInstance;
+            case 8 -> Unit.class::isInstance;
             case 9 -> SpecialSymbol.COMMA.or(RightDelimiter.class::isInstance); // inutile
-            case 10 -> Unit.INSTANCE_OF_CTS // unité angulaire verticale pour la compatibilité GOGCS 3D
-                    .or(Predicates.of(Axis.class::isInstance).or(Authority.class::isInstance));
-            case 12 -> Predicates.of(Axis.class::isInstance).or(Authority.class::isInstance);
-            case 14 -> Predicates.of(Axis.class::isInstance).or(Authority.class::isInstance);
-            case 16 -> Authority.INSTANCE_OF;
+            case 10 -> pb(Unit.class, // unité angulaire verticale pour la compatibilité GOGCS 3D
+                    Axis.class, Authority.class);
+            case 12, 14 -> pb(Axis.class, Authority.class);
+            case 16 -> Authority.class::isInstance;
             default -> {
                 final int position = size();
                 yield (position > 8 && position % 2 == 1)
@@ -68,7 +67,7 @@ public class GeographicCsBuilder extends CheckTokenBuilder<Token, GeographicCs>
                 case 10, 14, 16 -> SpecialSymbol.COMMA;
                 default -> Predicates.yes();
             };
-            case 2 -> index == 14 ? Axis.INSTANCE_OF : Predicates.yes();
+            case 2 -> index == 14 ? Axis.class::isInstance : Predicates.yes();
             default -> Predicates.yes();
         };
     }
