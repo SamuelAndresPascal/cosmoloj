@@ -63,6 +63,6 @@ public class BoundCrsBuilder extends CheckTokenBuilder<Token, BoundCrs> implemen
     public BoundCrs build() {
 
         return new BoundCrs(first(), last(), index(), token(2), token(4), token(6),
-                tokens(Identifier.INSTANCE_OF), firstToken(Remark.INSTANCE_OF));
+                tokens(Identifier.class::isInstance), firstToken(Remark.class::isInstance));
     }
 }

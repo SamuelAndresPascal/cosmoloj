@@ -20,8 +20,8 @@ public class SignedIntegerBuilder extends LexemeSequenceLexemeBuilder<SignedInte
 
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
-        return List.of(UnsignedInteger.UNSIGNED_INTEGER.or(Sign.PLUS).or(Sign.MINUS),
-                UnsignedInteger.UNSIGNED_INTEGER);
+        return List.of(pb(UnsignedInteger.class).or(Sign.PLUS).or(Sign.MINUS),
+                UnsignedInteger.class::isInstance);
     }
 
     @Override

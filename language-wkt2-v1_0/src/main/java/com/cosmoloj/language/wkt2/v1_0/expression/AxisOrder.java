@@ -2,15 +2,12 @@ package com.cosmoloj.language.wkt2.v1_0.expression;
 
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.common.number.lexeme.simple.UnsignedInteger;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class AxisOrder extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof AxisOrder;
 
     private final UnsignedInteger value;
 

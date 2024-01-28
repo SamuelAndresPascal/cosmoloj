@@ -74,9 +74,9 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         return new CoordinateSystem(first(), last(), index(),
                 type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
                 dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
-                tokens(Identifier.INSTANCE_OF),
-                tokens(Axis.INSTANCE_OF),
-                firstToken(Unit.INSTANCE_OF));
+                tokens(Identifier.class::isInstance),
+                tokens(Axis.class::isInstance),
+                firstToken(Unit.class::isInstance));
     }
 
     public static class Ellipsoidal2DCoordinateSystemBuilder extends CoordinateSystemBuilder {
@@ -88,8 +88,9 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
                 case 1 -> SpecialSymbol.COMMA.and(this::wktCts).or(LeftDelimiter.class::isInstance);
                 case 2 -> CsType.ELLIPSOIDAL.or(pb(Axis.class, Unit.class).and(this::wktCts));
                 case 3 -> SpecialSymbol.COMMA;
-                case 4 -> UnsignedInteger.UNSIGNED_INTEGER.and(t -> ((UnsignedInteger) t).getSemantics().equals(2))
-                        .or(Axis.INSTANCE_OF.or(Unit.INSTANCE_OF).and(this::wktCts));
+                case 4 -> pb(UnsignedInteger.class)
+                        .and(t -> ((UnsignedInteger) t).getSemantics().equals(2))
+                        .or(pb(Axis.class, Unit.class).and(this::wktCts));
                 default -> {
                     if (odd() && !isClosed()) {
                         yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
@@ -106,14 +107,15 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
         @Override
         public CoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
-            final List<Token> type = tokens(Predicates.or(CsType.values()));
-            final List<Token> dimention = tokens(UnsignedInteger.UNSIGNED_INTEGER);
+            final List<Token> type = tokens(Predicates.in(CsType.class));
+            final List<Token> dimention = tokens(UnsignedInteger.class::isInstance);
 
             return new CoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
                     type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
                     dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
-                    tokens(Identifier.INSTANCE_OF), tokens(Axis.INSTANCE_OF),
-                    firstToken(Unit.INSTANCE_OF));
+                    tokens(Identifier.class::isInstance),
+                    tokens(Axis.class::isInstance),
+                    firstToken(Unit.class::isInstance));
         }
     }
 }

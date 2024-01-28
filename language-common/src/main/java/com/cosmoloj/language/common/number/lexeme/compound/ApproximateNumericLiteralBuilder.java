@@ -16,9 +16,9 @@ public class ApproximateNumericLiteralBuilder extends LexemeSequenceLexemeBuilde
 
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
-        return List.of(ExactNumericLiteral.EXACT_NUMERIC_LITERAL,
-                ExponentSeparator.EXPONENT_SEPARATOR,
-                SignedInteger.SIGNED_INTEGER);
+        return List.of(ExactNumericLiteral.class::isInstance,
+                ExponentSeparator.class::isInstance,
+                SignedInteger.class::isInstance);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.cosmoloj.language.wkt2.v1_0.expression;
 import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.semantic.AbstractExpression;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
-import java.util.function.Predicate;
 
 /**
  *
@@ -12,8 +11,6 @@ import java.util.function.Predicate;
  * @param <V>
  */
 public class Identifier<I extends Lexeme, V extends Lexeme> extends AbstractExpression {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof Identifier;
 
     private final QuotedLatinText name;
     private final I id;

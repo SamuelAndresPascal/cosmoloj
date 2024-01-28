@@ -22,12 +22,12 @@ public class ClockBuilder extends LexemeSequenceLexemeBuilder<Clock> implements 
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(SpecialSymbol.T,
-                UnsignedInteger.UNSIGNED_INTEGER,
-                TimeZoneDesignator.INSTANCE_OF.or(SpecialSymbol.COLON),
-                UnsignedInteger.UNSIGNED_INTEGER,
-                TimeZoneDesignator.INSTANCE_OF.or(SpecialSymbol.COLON),
-                ExactNumericLiteral.EXACT_NUMERIC_LITERAL,
-                TimeZoneDesignator.INSTANCE_OF);
+                UnsignedInteger.class::isInstance,
+                pb(TimeZoneDesignator.class).or(SpecialSymbol.COLON),
+                UnsignedInteger.class::isInstance,
+                pb(TimeZoneDesignator.class).or(SpecialSymbol.COLON),
+                ExactNumericLiteral.class::isInstance,
+                TimeZoneDesignator.class::isInstance);
     }
 
     @Override

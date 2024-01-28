@@ -8,6 +8,7 @@ import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import java.util.List;
 import java.util.function.Predicate;
 import com.cosmoloj.language.api.semantic.Lexeme;
+import com.cosmoloj.util.function.Predicates;
 
 /**
  * <pre>
@@ -24,9 +25,9 @@ public class TimeZoneDesignatorBuilder extends LexemeSequenceLexemeBuilder<TimeZ
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(SpecialSymbol.Z.or(SpecialSymbol.PLUS_SIGN).or(SpecialSymbol.MINUS_SIGN),
-                UnsignedInteger.UNSIGNED_INTEGER,
+                UnsignedInteger.class::isInstance,
                 SpecialSymbol.COLON,
-                UnsignedInteger.UNSIGNED_INTEGER);
+                UnsignedInteger.class::isInstance);
     }
 
     @Override
@@ -36,6 +37,6 @@ public class TimeZoneDesignatorBuilder extends LexemeSequenceLexemeBuilder<TimeZ
 
     @Override
     public Predicate<? super Lexeme> constraintLast(final int currentIndex) {
-        return currentIndex == 1 ? SpecialSymbol.PLUS_SIGN.or(SpecialSymbol.MINUS_SIGN) : t -> true;
+        return currentIndex == 1 ? SpecialSymbol.PLUS_SIGN.or(SpecialSymbol.MINUS_SIGN) : Predicates.yes();
     }
 }

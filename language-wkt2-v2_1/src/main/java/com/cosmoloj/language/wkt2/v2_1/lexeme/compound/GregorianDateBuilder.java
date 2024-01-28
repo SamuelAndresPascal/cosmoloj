@@ -6,6 +6,7 @@ import com.cosmoloj.language.common.number.lexeme.simple.UnsignedInteger;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import java.util.function.Predicate;
 import com.cosmoloj.language.api.semantic.Lexeme;
+import com.cosmoloj.util.function.Predicates;
 
 /**
  * <pre>
@@ -21,14 +22,14 @@ public class GregorianDateBuilder extends LexemeSequenceLexemeBuilder<GregorianD
     @Override
     public Predicate<? super Lexeme> predicate(final int currentIndex) {
         return switch (currentIndex) {
-            case 0 -> UnsignedInteger.UNSIGNED_INTEGER;
+            case 0 -> UnsignedInteger.class::isInstance;
             default -> {
                 if (even()) {
-                    yield UnsignedInteger.UNSIGNED_INTEGER;
+                    yield UnsignedInteger.class::isInstance;
                 } else if (below(5)) {
                     yield SpecialSymbol.MINUS_SIGN;
                 }
-                yield t -> false;
+                yield Predicates.no();
             }
         };
     }

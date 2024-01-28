@@ -3,7 +3,6 @@ package com.cosmoloj.language.wkt2.v1_0.lexeme.compound;
 import com.cosmoloj.language.api.semantic.ParsableLexeme;
 import com.cosmoloj.language.common.impl.semantic.CharSequenceLexeme;
 import java.time.ZoneOffset;
-import java.util.function.Predicate;
 
 /**
  * <span class="fr">Un lexème interprétant une liste de jetons comme la représentation d'une date.</span>
@@ -11,8 +10,6 @@ import java.util.function.Predicate;
  * @author Samuel Andrés
  */
 public class TimeZoneDesignator extends CharSequenceLexeme implements ParsableLexeme<ZoneOffset> {
-
-    public static final Predicate<Object> INSTANCE_OF = t -> t instanceof TimeZoneDesignator;
 
     public TimeZoneDesignator(final String codePoints, final int start, final int end, final int index) {
         super(codePoints, start, end, index);

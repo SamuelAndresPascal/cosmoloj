@@ -24,9 +24,9 @@ public class TimeZoneDesignatorBuilder extends LexemeSequenceLexemeBuilder<TimeZ
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(SpecialSymbol.Z.or(SpecialSymbol.PLUS_SIGN).or(SpecialSymbol.MINUS_SIGN),
-                UnsignedInteger.UNSIGNED_INTEGER,
+                UnsignedInteger.class::isInstance,
                 SpecialSymbol.COLON,
-                UnsignedInteger.UNSIGNED_INTEGER);
+                UnsignedInteger.class::isInstance);
     }
 
     @Override

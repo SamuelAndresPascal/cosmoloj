@@ -39,10 +39,10 @@ public class AbridgedTransformationBuilder
     public Operation.AbridgedTransformation build() {
 
         return new Operation.AbridgedTransformation(first(), last(), index(), token(2), token(4),
-                tokens(AbstractParam.INSTANCE_OF),
-                firstToken(Scope.INSTANCE_OF),
+                tokens(AbstractParam.class::isInstance),
+                firstToken(Scope.class::isInstance),
                 tokens(Extent.class::isInstance),
-                tokens(Identifier.INSTANCE_OF),
-                firstToken(Remark.INSTANCE_OF));
+                tokens(Identifier.class::isInstance),
+                firstToken(Remark.class::isInstance));
     }
 }

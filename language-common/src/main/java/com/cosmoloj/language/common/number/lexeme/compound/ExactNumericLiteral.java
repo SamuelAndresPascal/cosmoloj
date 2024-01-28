@@ -1,14 +1,10 @@
 package com.cosmoloj.language.common.number.lexeme.compound;
 
-import java.util.function.Predicate;
-
 /**
  *
  * @author Samuel Andrés
  */
 public class ExactNumericLiteral extends UnsignedNumericLiteral {
-
-    public static final Predicate<Object> EXACT_NUMERIC_LITERAL = t -> t instanceof ExactNumericLiteral;
 
     private final boolean decimal;
 

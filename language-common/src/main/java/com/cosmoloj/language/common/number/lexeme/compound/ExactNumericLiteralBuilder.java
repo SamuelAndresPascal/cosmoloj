@@ -25,14 +25,14 @@ public class ExactNumericLiteralBuilder extends LexemeSequenceLexemeBuilder<Exac
 
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
-        return List.of(UnsignedInteger.UNSIGNED_INTEGER.or(DecimalSeparator.DECIMAL_SEPARATOR),
-                DecimalSeparator.DECIMAL_SEPARATOR.or(UnsignedInteger.UNSIGNED_INTEGER),
-                UnsignedInteger.UNSIGNED_INTEGER);
+        return List.of(pb(UnsignedInteger.class, DecimalSeparator.class),
+                pb(UnsignedInteger.class, DecimalSeparator.class),
+                UnsignedInteger.class::isInstance);
     }
 
     @Override
     public void add(final Lexeme token) {
-        if (DecimalSeparator.DECIMAL_SEPARATOR.test(token)) {
+        if (token instanceof DecimalSeparator) {
             decimal = true;
         }
         super.add(token);
