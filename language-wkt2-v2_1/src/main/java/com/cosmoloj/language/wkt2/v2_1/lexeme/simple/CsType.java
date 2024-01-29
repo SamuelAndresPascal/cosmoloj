@@ -10,26 +10,40 @@ import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
  */
 public enum CsType implements SemanticEnum<CsType> {
 
-    AFFINE("affine"),
-    CARTESIAN("Cartesian"),
-    CYLINDRICAL("cylindrical"),
-    ELLIPSOIDAL("ellipsoidal"),
-    LINEAR("linear"),
-    PARAMETRIC("parametric"),
-    POLAR("polar"),
-    SPHERICAL("spherical"),
-    TEMPORAL("temporal"),
-    VERTICAL("vertical");
+    AFFINE("affine", Type.SPATIAL),
+    CARTESIAN("Cartesian", Type.SPATIAL),
+    CYLINDRICAL("cylindrical", Type.SPATIAL),
+    ELLIPSOIDAL("ellipsoidal", Type.SPATIAL),
+    LINEAR("linear", Type.SPATIAL),
+    PARAMETRIC("parametric", Type.SPATIAL),
+    POLAR("polar", Type.SPATIAL),
+    SPHERICAL("spherical", Type.SPATIAL),
+    VERTICAL("vertical", Type.TEMPORAL),
+    @Deprecated TEMPORAL("temporal", Type.TEMPORAL),
+    TEMPORAL_COUNT("temporalCount", Type.TEMPORAL),
+    TEMPORAL_MEASURE("temporalMeasure", Type.TEMPORAL),
+    ORDINAL("ordinal", Type.ORDINAL),
+    TEMPORAL_DATE_TIME("temporalDateTime", Type.ORDINAL);
+
+    public enum Type {
+        SPATIAL, TEMPORAL, ORDINAL
+    }
 
     private final String codePoints;
+    private final Type type;
 
-    CsType(final String codePoints) {
+    CsType(final String codePoints, final Type type) {
         this.codePoints = codePoints;
+        this.type = type;
     }
 
     @Override
     public String getCodePoints() {
         return this.codePoints;
+    }
+
+    public Type getType() {
+        return this.type;
     }
 
     public static EnumLexemeBuilder<CsType> builder() {

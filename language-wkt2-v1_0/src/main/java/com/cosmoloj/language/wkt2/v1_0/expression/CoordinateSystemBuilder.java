@@ -25,30 +25,47 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     private int rightDelimiterIndex = NOT_CLOSED;
     private boolean includeCs = false; // WKT-CTS compatibility
 
-    protected boolean isClosed() {
+    protected boolean isOpen() {
         return rightDelimiterIndex != NOT_CLOSED;
     }
 
     @Override
     public Predicate<? super Token> predicate(final int currentIndex) {
-        return switch (currentIndex) {
-            case 0 -> WktKeyword.CS.or(pb(Axis.class, Unit.class)); // WKT-CTS compatibility
-            case 1 -> SpecialSymbol.COMMA.and(this::wktCts).or(LeftDelimiter.class::isInstance);
-            case 2 -> Predicates.in(CsType.class).or(pb(Axis.class, Unit.class).and(this::wktCts));
-            case 3 -> SpecialSymbol.COMMA;
-            case 4 -> pb(UnsignedInteger.class).or(pb(Axis.class, Unit.class).and(this::wktCts));
-            default -> {
-                if (odd() && !isClosed()) {
-                    yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
-                } else if (even() && !isClosed()) {
-                    yield pb(Identifier.class).or(pb(Axis.class, Unit.class).and(this::wktCts));
-                } else if (odd()) {
-                    yield SpecialSymbol.COMMA;
-                } else {
-                    yield pb(Axis.class, Unit.class);
+
+        if (currentIndex == 0) {
+            return WktKeyword.CS.or(pb(Axis.class, Unit.class)); // WKT-CTS compatibility
+        }
+
+        if (includeCs) {
+
+            return switch (currentIndex) {
+                case 1 -> LeftDelimiter.class::isInstance;
+                case 2 -> Predicates.in(CsType.class);
+                case 3 -> SpecialSymbol.COMMA;
+                case 4 -> UnsignedInteger.class::isInstance;
+                default -> {
+                    if (isOpen()) {
+                        yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
+                    } else {
+                        yield odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
+                    }
                 }
-            }
-        };
+            };
+
+        } else {
+            // WKT CTS compatibility
+            return switch (currentIndex) {
+                case 1 -> SpecialSymbol.COMMA;
+                case 2 -> pb(Axis.class, Unit.class);
+                case 3 -> SpecialSymbol.COMMA;
+                default -> {
+                    if (size() == 8) {
+                        yield Predicates.no();
+                    }
+                    yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Axis.class, Unit.class);
+                }
+            };
+        }
     }
 
     protected boolean wktCts(final Object token) {
@@ -61,7 +78,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         if (size() == 1 && WktKeyword.CS.test(token)) {
             includeCs = true;
         }
-        if (!isClosed() && token instanceof RightDelimiter) {
+        if (isOpen() && token instanceof RightDelimiter) {
             rightDelimiterIndex = size() - 1;
         }
     }
@@ -92,9 +109,9 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
                         .and(t -> ((UnsignedInteger) t).getSemantics().equals(2))
                         .or(pb(Axis.class, Unit.class).and(this::wktCts));
                 default -> {
-                    if (odd() && !isClosed()) {
+                    if (odd() && isOpen()) {
                         yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
-                    } else if (even() && !isClosed()) {
+                    } else if (even() && isOpen()) {
                         yield pb(Identifier.class).or(pb(Axis.class, Unit.class).and(this::wktCts));
                     } else if (odd()) {
                         yield SpecialSymbol.COMMA;
