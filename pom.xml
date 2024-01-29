@@ -101,6 +101,7 @@
     <module>processor-bibliography</module>
     <module>bibliography-cosmoloj</module>
     <module>math-tabular</module>
+    <module>language-wkt-geom</module>
     <module>language-wkt-sf</module>
     <module>language-wkt-cts</module>
     <module>language-wkt2-v1_0</module>
@@ -113,6 +114,7 @@
     <module>time</module>
     <module>unit-simple-api</module>
     <module>unit-simple-impl</module>
+    <module>learning</module>
     <!-- utilitaire d'agrégation -->
     <module>reports-cosmoloj</module>
   </modules>
@@ -216,6 +218,11 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>language-wkt-geom</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>language-wkt-sf</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -272,6 +279,11 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>unit-simple-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>learning</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>

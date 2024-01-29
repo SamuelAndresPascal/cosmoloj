@@ -58,6 +58,10 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>language-wkt-geom</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>language-wkt-sf</artifactId>
     </dependency>
     <dependency>
@@ -104,6 +108,10 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>unit-simple-impl</artifactId>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>learning</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -148,12 +156,12 @@
                   <groupId>${project.groupId}</groupId>
                   <artifactId>util</artifactId>
                   <version>${project.version}</version>
-	              </artifactItem>
-		            <artifactItem>
-		              <groupId>${project.groupId}</groupId>
-		              <artifactId>format-csv</artifactId>
-		              <version>${project.version}</version>
-		            </artifactItem>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>format-csv</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>math-util</artifactId>
@@ -192,6 +200,11 @@
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>math-tabular</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>language-wkt-geom</artifactId>
                   <version>${project.version}</version>
                 </artifactItem>
                 <artifactItem>
@@ -247,6 +260,21 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
                   <!--                            <destFileName>optional-new-name.jar</destFileName>-->
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>unit-simple-api</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>unit-simple-impl</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>learning</artifactId>
+                  <version>${project.version}</version>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${dependency.plugin.output.cosmoloj.modules}</outputDirectory>
