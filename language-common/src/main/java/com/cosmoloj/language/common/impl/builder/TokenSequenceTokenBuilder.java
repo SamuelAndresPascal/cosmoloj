@@ -66,15 +66,18 @@ public abstract class TokenSequenceTokenBuilder<I extends Token, O extends Token
         return predicateBuilder(e, others);
     }
 
-    @Override
-    public void add(final I token) {
-        tokens.add(token);
+    protected void beforeAdd(final I token) {
+    }
+
+    protected void afterAdd(final I token) {
     }
 
     @Override
     public void checkAndAdd(final I token) throws ParserException {
         if (check(token)) {
-            add(token);
+            beforeAdd(token);
+            tokens.add(token);
+            afterAdd(token);
         } else {
             final Class<? extends I>[] expectations = null; //expectations();
             if (expectations != null) {

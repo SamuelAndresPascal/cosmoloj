@@ -31,11 +31,10 @@ public class ExactNumericLiteralBuilder extends LexemeSequenceLexemeBuilder<Exac
     }
 
     @Override
-    public void add(final Lexeme token) {
+    protected void beforeAdd(final Lexeme token) {
         if (token instanceof DecimalSeparator) {
             decimal = true;
         }
-        super.add(token);
     }
 
     @Override

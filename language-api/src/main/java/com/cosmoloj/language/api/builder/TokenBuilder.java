@@ -25,16 +25,6 @@ public interface TokenBuilder<I extends Token, O extends Token> {
     boolean check(I token);
 
     /**
-     * <div class="fr">Intègre si le {@link Token} au {@link TokenBuilder}.
-     * La méthode {@link TokenBuilder#add(com.cosmoloj.language.util.Token) } ne devrait pas être appelée sans
-     * que la methode {@link TokenBuilder#check(com.cosmoloj.language.util.Token) } ne l'ait été au préalable et
-     * n'ait retourné {@code true}.</div>
-     *
-     * @param token <span class="fr">le {@link Token} à accepter</span>
-     */
-    void add(I token);
-
-    /**
      * <div class="fr">Teste puis accepte le {@link Token} si le test est réussi et lance une exception dans le cas
      * contraire.</div>
      *

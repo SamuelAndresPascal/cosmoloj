@@ -73,8 +73,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     }
 
     @Override
-    public void add(final Token token) {
-        super.add(token);
+    protected void afterAdd(final Token token) {
         if (size() == 1 && WktKeyword.CS.test(token)) {
             includeCs = true;
         }

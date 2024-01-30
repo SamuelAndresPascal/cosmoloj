@@ -43,8 +43,7 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
     }
 
     @Override
-    public void add(final Token token) {
-        super.add(token);
+    protected void afterAdd(final Token token) {
         if (rightDelimiterIndex == NOT_CLOSED && RightDelimiter.class.isInstance(token)) {
             rightDelimiterIndex = size() - 1;
         }
