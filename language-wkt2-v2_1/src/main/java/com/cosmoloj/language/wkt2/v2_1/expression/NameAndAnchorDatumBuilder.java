@@ -27,8 +27,8 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     private final Predicate<? super Token> anchorPredicate;
     private final Predicate<? super Token> labels;
 
-    NameAndAnchorDatumBuilder(final Predicate<? super Token> anchorPredicate, final WktKeyword... labels) {
-        this.anchorPredicate = anchorPredicate;
+    NameAndAnchorDatumBuilder(final Class<?> type, final WktKeyword... labels) {
+        this.anchorPredicate = type::isInstance;
         Predicate<? super Token> l = labels[0];
         for (int i = 1; i < labels.length; i++) {
             l = l.or(labels[i]);
@@ -52,7 +52,7 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
         if (even() && beyond(2)) {
             return switch (before) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> current(anchorPredicate) ? QuotedLatinText.class::isInstance : Predicates.yes();
+                case 2 -> waiting(anchorPredicate) ? QuotedLatinText.class::isInstance : Predicates.yes();
                 default -> Predicates.yes();
             };
         }
@@ -64,51 +64,51 @@ public abstract class NameAndAnchorDatumBuilder<D extends NameAndAnchorDatum<A>,
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.VerticalDatum, Anchor> verticalDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.class::isInstance, WktKeyword.VDATUM, WktKeyword.VERTICALDATUM,
+        return new NameAndAnchorDatumBuilder<>(Anchor.class, WktKeyword.VDATUM, WktKeyword.VERTICALDATUM,
                 WktKeyword.VERT_DATUM) {
 
             @Override
             public NameAndAnchorDatum.VerticalDatum build() {
 
                 return new NameAndAnchorDatum.VerticalDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.class::isInstance));
+                        extractAnchor(), tokens(Identifier.class));
             }
         };
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.EngineeringDatum, Anchor> engineeringDatum() {
-        return new NameAndAnchorDatumBuilder<>(Anchor.class::isInstance, WktKeyword.EDATUM, WktKeyword.ENGINEERINGDATUM,
+        return new NameAndAnchorDatumBuilder<>(Anchor.class, WktKeyword.EDATUM, WktKeyword.ENGINEERINGDATUM,
                 WktKeyword.LOCAL_DATUM) {
 
             @Override
             public NameAndAnchorDatum.EngineeringDatum build() {
 
                 return new NameAndAnchorDatum.EngineeringDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.class::isInstance));
+                        extractAnchor(), tokens(Identifier.class));
             }
         };
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.ParametricDatum, Anchor> parametricDatum() {
         return new NameAndAnchorDatumBuilder<>(
-                Anchor.class::isInstance, WktKeyword.PDATUM, WktKeyword.PARAMETRICDATUM) {
+                Anchor.class, WktKeyword.PDATUM, WktKeyword.PARAMETRICDATUM) {
 
             @Override
             public NameAndAnchorDatum.ParametricDatum build() {
 
                 return new NameAndAnchorDatum.ParametricDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.class::isInstance));
+                        extractAnchor(), tokens(Identifier.class));
             }
         };
     }
 
     public static NameAndAnchorDatumBuilder<NameAndAnchorDatum.TemporalDatum, TimeOrigin> temporalDatum() {
-        return new NameAndAnchorDatumBuilder<>(TimeOrigin.class::isInstance, WktKeyword.TDATUM, WktKeyword.TIMEDATUM) {
+        return new NameAndAnchorDatumBuilder<>(TimeOrigin.class, WktKeyword.TDATUM, WktKeyword.TIMEDATUM) {
             @Override
             public NameAndAnchorDatum.TemporalDatum build() {
 
                 return new NameAndAnchorDatum.TemporalDatum(first(), last(), index(), token(2),
-                        extractAnchor(), tokens(Identifier.class::isInstance));
+                        extractAnchor(), tokens(Identifier.class));
             }
         };
     }

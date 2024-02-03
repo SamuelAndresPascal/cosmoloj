@@ -10,6 +10,7 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
+import com.cosmoloj.util.function.Predicates;
 import java.util.function.Predicate;
 
 /**
@@ -52,7 +53,7 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
                 return switch (before) {
                     case 1 -> SpecialSymbol.COMMA;
                     case 2 -> Parameter.INSTANCE_OF.or(
-                            current(Parameter.class::isInstance)
+                            waiting(Parameter.class)
                                     ? Method.MapProjectionMethod.class::isInstance
                                     : Identifier.class::isInstance);
                     default -> t -> true;
@@ -65,10 +66,10 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
         public Operation.MapProjection build() {
 
             return new Operation.MapProjection(first(), last(), index(),
-                    firstToken(QuotedLatinText.class::isInstance),
-                    firstToken(Method.MapProjectionMethod.class::isInstance),
-                    tokens(AbstractParam.class::isInstance),
-                    tokens(Identifier.class::isInstance));
+                    firstToken(QuotedLatinText.class),
+                    firstToken(Method.MapProjectionMethod.class),
+                    tokens(AbstractParam.class),
+                    tokens(Identifier.class));
         }
     }
 
@@ -94,9 +95,9 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
             if (even() && beyond(4)) {
                 return switch (before) {
                     case 1 -> SpecialSymbol.COMMA;
-                    case 2 -> Parameter.INSTANCE_OF.or(current(Parameter.class::isInstance)
-                            ? Method.OperationMethod.class::isInstance : Identifier.class::isInstance);
-                    default -> t -> true;
+                    case 2 -> Parameter.INSTANCE_OF.or(
+                            pb(waiting(Parameter.class) ? Method.OperationMethod.class : Identifier.class));
+                    default -> Predicates.yes();
                 };
             }
             return t -> true;
@@ -105,9 +106,11 @@ public interface OperationBuilder<O extends Operation<M, P>, M extends Method, P
         @Override
         public Operation.DerivingConversion build() {
 
-            return new Operation.DerivingConversion(first(), last(), index(), token(2), token(4),
-                    tokens(AbstractParam.class::isInstance),
-                    tokens(Identifier.class::isInstance));
+            return new Operation.DerivingConversion(first(), last(), index(),
+                    token(2),
+                    token(4),
+                    tokens(AbstractParam.class),
+                    tokens(Identifier.class));
         }
     }
 }

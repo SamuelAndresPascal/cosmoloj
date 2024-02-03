@@ -3,15 +3,12 @@ package com.cosmoloj.language.json.lexeme.simple;
 import com.cosmoloj.language.common.text.lexeme.simple.StringLiteral;
 import com.cosmoloj.language.common.text.lexeme.simple.StringLiteralBuilder;
 import com.cosmoloj.language.json.expression.JsonValue;
-import java.util.function.Predicate;
 
 /**
  *
  * @author Samuel Andrés
  */
 public class QuotedString extends StringLiteral implements JsonValue {
-
-    public static final Predicate<Object> INSTANCE_OF = QuotedString.class::isInstance;
 
     private static final int[][] MAP = new int[][]{{'n', '\n'},
         {'/', '/'},

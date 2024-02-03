@@ -45,9 +45,9 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
         if (even() && beyond(7)) {
             return SpecialSymbol.COMMA;
         } else if (odd() && beyond(8)) {
-            if (current(SpecialSymbol.COMMA)) {
+            if (waiting(SpecialSymbol.COMMA)) {
                 return Parameter.class::isInstance;
-            } else if (current(RightDelimiter.class::isInstance)) {
+            } else if (waiting(RightDelimiter.class)) {
                 return Unit.class::isInstance;
             } else {
                 return Predicates.no();
@@ -60,6 +60,10 @@ public class ProjCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
     @Override
     public ProjectedCs build() {
         return new ProjectedCs(first(), last(), index(),
-                token(2), token(4), token(6), tokens(Parameter.class::isInstance), token(size() - 2));
+                token(2),
+                token(4),
+                token(6),
+                tokens(Parameter.class),
+                token(size() - 2));
     }
 }

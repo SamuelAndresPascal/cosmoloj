@@ -21,10 +21,10 @@ public class JsonObjectBuilder extends CheckTokenBuilder<Token, JsonObject>
     public Predicate<? super Token> predicate() {
         return switch (size()) {
             case 0 -> SpecialSymbol.LEFT_OBJECT_DELIMITER;
-            case 1 -> SpecialSymbol.RIGHT_OBJECT_DELIMITER.or(QuotedString.INSTANCE_OF);
+            case 1 -> SpecialSymbol.RIGHT_OBJECT_DELIMITER.or(QuotedString.class::isInstance);
             default -> even()
                 ? SpecialSymbol.COLON.or(SpecialSymbol.COMMA).or(SpecialSymbol.RIGHT_OBJECT_DELIMITER)
-                : QuotedString.INSTANCE_OF.or(JsonValue.JSON_VALUE);
+                : pb(QuotedString.class).or(JsonValue.class);
         };
     }
 
@@ -49,17 +49,17 @@ public class JsonObjectBuilder extends CheckTokenBuilder<Token, JsonObject>
     public Predicate<? super Token> constraintBeforeIndex(final int before, final int index) {
         if (index > 1 && before == 1) {
             if (even()) {
-                if (current(SpecialSymbol.COLON)) {
-                    return QuotedString.INSTANCE_OF;
-                } else if (current(SpecialSymbol.COMMA.or(SpecialSymbol.RIGHT_OBJECT_DELIMITER))) {
-                    return JsonValue.JSON_VALUE;
+                if (waiting(SpecialSymbol.COLON)) {
+                    return QuotedString.class::isInstance;
+                } else if (waiting(SpecialSymbol.COMMA.or(SpecialSymbol.RIGHT_OBJECT_DELIMITER))) {
+                    return JsonValue.class::isInstance;
                 } else {
                     return t -> false;
                 }
             } else {
-                if (current(JsonValue.JSON_VALUE.and(QuotedString.INSTANCE_OF.negate()))) {
+                if (waiting(pb(JsonValue.class).and(pb(QuotedString.class).negate()))) {
                     return SpecialSymbol.COLON;
-                } else if (current(QuotedString.INSTANCE_OF)) {
+                } else if (waiting(QuotedString.class)) {
                     return SpecialSymbol.COLON.or(SpecialSymbol.COMMA);
                 }
             }

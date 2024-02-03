@@ -45,9 +45,9 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
                 case 10, 12, 14, 16 -> SpecialSymbol.COMMA;
                 default -> {
                     if (odd() && beyond(8)) {
-                        if (below(16) && current(SpecialSymbol.COMMA)) {
+                        if (below(16) && waiting(SpecialSymbol.COMMA)) {
                             yield pb(Axis.class, Unit.class);
-                        } else if (below(18) && current(RightDelimiter.class::isInstance)) {
+                        } else if (below(18) && waiting(RightDelimiter.class)) {
                             // un délimiteur de fermeture doit suivre une authorité
                             yield pb(Authority.class, Axis.class, Unit.class);
                         } else {
@@ -61,10 +61,14 @@ public class GeocentricCsBuilder extends CheckTokenBuilder<Token, GeocentricCs>
 
     @Override
     public GeocentricCs build() {
-        final boolean hasAxis = size() > 10 && testToken(10, Axis.class::isInstance);
-        final boolean hasAuthority = (size() > 16 && testToken(16, Authority.class::isInstance))
-                || (size() > 10 && testToken(10, Authority.class::isInstance));
-        return new GeocentricCs(first(), last(), index(), token(2), token(4), token(6), token(8),
+        final boolean hasAxis = size() > 10 && testToken(10, Axis.class);
+        final boolean hasAuthority = (size() > 16 && testToken(16, Authority.class))
+                || (size() > 10 && testToken(10, Authority.class));
+        return new GeocentricCs(first(), last(), index(),
+                token(2),
+                token(4),
+                token(6),
+                token(8),
                 hasAxis ? token(10) : null,
                 hasAxis ? token(12) : null,
                 hasAxis ? token(14) : null,

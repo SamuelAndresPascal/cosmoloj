@@ -46,7 +46,7 @@ public abstract class NameAndValueBuilder<O extends Expression> extends CheckTok
     public Predicate<? super Token> constraint(final int index) {
         return switch (index) {
             case 0 -> switch (size()) {
-                case 5 -> current(SpecialSymbol.COMMA)
+                case 5 -> waiting(SpecialSymbol.COMMA)
                 ? WktName.UNIT.or(WktName.PRIMEM).or(WktName.VERT_DATUM).or(WktName.LOCAL_DATUM)
                 : Predicates.yes();
                 default -> Predicates.yes();

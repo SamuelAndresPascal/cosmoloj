@@ -85,12 +85,24 @@ public interface StateCheckTokenBuilder<I extends Token> {
         return (List<T>) tokens().stream().filter(p).toList();
     }
 
+    default <T extends I> List<T> tokens(final Class<?> type) {
+        return tokens(type::isInstance);
+    }
+
     default <T extends I> T firstToken(final Predicate<? super I> p) {
         return (T) tokens().stream().filter(p).findFirst().orElse(null);
     }
 
-    default boolean testToken(final int position, Predicate<? super I> predicate) {
+    default <T extends I> T firstToken(final Class<?> type) {
+        return firstToken(type::isInstance);
+    }
+
+    default boolean testToken(final int position, final Predicate<? super I> predicate) {
         return predicate.test(tokens().get(position));
+    }
+
+    default boolean testToken(final int position, final Class<?> type) {
+        return testToken(position, type::isInstance);
     }
 
     default boolean testLast(final Predicate<? super I> predicate) {
@@ -101,8 +113,12 @@ public interface StateCheckTokenBuilder<I extends Token> {
         return predicate.test(tokens().get(size() - positionBefore));
     }
 
-    default boolean current(final Predicate<? super I> p) {
+    default boolean waiting(final Predicate<? super I> p) {
         return p.test(waiting());
+    }
+
+    default boolean waiting(final Class<?> type) {
+        return waiting(type::isInstance);
     }
 
     default boolean i(final int i, final Predicate<? super I> p) {

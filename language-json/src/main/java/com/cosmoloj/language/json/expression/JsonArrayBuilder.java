@@ -17,8 +17,10 @@ public class JsonArrayBuilder extends CheckTokenBuilder<Token, JsonArray>
     public Predicate<? super Token> predicate() {
         return switch (size()) {
             case 0 -> SpecialSymbol.LEFT_ARRAY_DELIMITER;
-            case 1 -> SpecialSymbol.RIGHT_OBJECT_DELIMITER.or(JsonValue.JSON_VALUE);
-            default -> even() ? SpecialSymbol.COMMA.or(SpecialSymbol.RIGHT_ARRAY_DELIMITER) : JsonValue.JSON_VALUE;
+            case 1 -> SpecialSymbol.RIGHT_OBJECT_DELIMITER.or(JsonValue.class::isInstance);
+            default -> even()
+                ? SpecialSymbol.COMMA.or(SpecialSymbol.RIGHT_ARRAY_DELIMITER)
+                : JsonValue.class::isInstance;
         };
     }
 
@@ -26,10 +28,10 @@ public class JsonArrayBuilder extends CheckTokenBuilder<Token, JsonArray>
     public Predicate<? super Token> constraintBeforeIndex(final int before, final int index) {
 
         if (index > 1 && before == 1) {
-            if (odd() && current(JsonValue.JSON_VALUE)) {
+            if (odd() && waiting(JsonValue.class)) {
                 return SpecialSymbol.COMMA;
-            } else if (even() && current(SpecialSymbol.COMMA)) {
-                return JsonValue.JSON_VALUE;
+            } else if (even() && waiting(SpecialSymbol.COMMA)) {
+                return JsonValue.class::isInstance;
             } else {
                 return t -> false;
             }
@@ -39,6 +41,6 @@ public class JsonArrayBuilder extends CheckTokenBuilder<Token, JsonArray>
 
     @Override
     public JsonArray build() {
-        return new JsonArray(first(), last(), index(), tokens(JsonValue.JSON_VALUE));
+        return new JsonArray(first(), last(), index(), tokens(JsonValue.class::isInstance));
     }
 }

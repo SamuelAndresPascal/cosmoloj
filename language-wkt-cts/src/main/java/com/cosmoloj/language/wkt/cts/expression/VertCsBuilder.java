@@ -40,7 +40,7 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
         return switch (before) {
             case 1 -> switch (index) {
                 case 8, 10 -> SpecialSymbol.COMMA;
-                case 9 -> current(SpecialSymbol.COMMA) ? Axis.class::isInstance : Predicates.yes();
+                case 9 -> waiting(SpecialSymbol.COMMA) ? Axis.class::isInstance : Predicates.yes();
                 default -> Predicates.yes();
             };
             default -> Predicates.yes();

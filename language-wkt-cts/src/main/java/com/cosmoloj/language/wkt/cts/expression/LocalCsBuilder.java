@@ -42,9 +42,9 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
     @Override
     public Predicate<? super Token> constraintLast(final int index) {
         if (odd() && beyond(8)) {
-            if (current(RightDelimiter.class::isInstance)) {
+            if (waiting(RightDelimiter.class)) {
                 return pb(Axis.class, Authority.class);
-            } else if (current(SpecialSymbol.COMMA)) {
+            } else if (waiting(SpecialSymbol.COMMA)) {
                 return Axis.class::isInstance;
             }
         } else if (even() && beyond(9)) {
@@ -56,8 +56,11 @@ public class LocalCsBuilder extends CheckTokenBuilder<Token, LocalCs>
     @Override
     public LocalCs build() {
 
-        return new LocalCs(first(), last(), index(), token(2), token(4), token(6),
-                tokens(Axis.class::isInstance),
-                firstToken(Authority.class::isInstance));
+        return new LocalCs(first(), last(), index(),
+                token(2),
+                token(4),
+                token(6),
+                tokens(Axis.class),
+                firstToken(Authority.class));
     }
 }

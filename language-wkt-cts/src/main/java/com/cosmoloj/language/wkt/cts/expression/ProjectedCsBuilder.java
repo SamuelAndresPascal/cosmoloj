@@ -55,9 +55,9 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
         return switch (before) {
             case 1 -> beyond(7) ? SpecialSymbol.COMMA : Predicates.yes();
             case 2 -> {
-                if (beyond(9) && current(pb(Axis.class, Authority.class))) {
+                if (beyond(9) && waiting(pb(Axis.class, Authority.class))) {
                     yield pb(Unit.class, Axis.class);
-                } else if (beyond(7) && current(pb(Parameter.class, Unit.class))) {
+                } else if (beyond(7) && waiting(pb(Parameter.class, Unit.class))) {
                     yield pb(Parameter.class, Projection.class);
                 } else {
                     yield Predicates.yes();
@@ -65,9 +65,9 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             }
             case 4 -> {
                 if (beyond(9) && previous(2, Axis.class::isInstance)) {
-                    if (current(Axis.class::isInstance)) {
+                    if (waiting(Axis.class)) {
                         yield pb(Axis.class).negate();
-                    } else if (current(Authority.class::isInstance)) {
+                    } else if (waiting(Authority.class)) {
                         yield Axis.class::isInstance;
                     } else {
                         yield Predicates.yes();
@@ -83,8 +83,8 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
     @Override
     public ProjectedCs build() {
 
-        final List<Axis> axis = tokens(Axis.class::isInstance);
-        final List<Unit> units = tokens(Unit.class::isInstance);
+        final List<Axis> axis = tokens(Axis.class);
+        final List<Unit> units = tokens(Unit.class);
 
         final Axis axis1;
         final Axis axis2;
@@ -96,10 +96,13 @@ public class ProjectedCsBuilder extends CheckTokenBuilder<Token, ProjectedCs>
             axis2 = null;
         }
 
-        return new ProjectedCs(first(), last(), index(), token(2), token(4),
-                token(6), tokens(Parameter.class::isInstance),
+        return new ProjectedCs(first(), last(), index(),
+                token(2),
+                token(4),
+                token(6),
+                tokens(Parameter.class),
                 !units.isEmpty() ? units.get(0) : null,
                 axis1, axis2,
-                testToken(size() - 2, Authority.class::isInstance) ? token(size() - 2) : null);
+                testToken(size() - 2, Authority.class) ? token(size() - 2) : null);
     }
 }
