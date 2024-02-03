@@ -20,7 +20,7 @@ public abstract class SimpleNumberBuilder<N extends SimpleNumber> extends CheckT
 
     private final WktKeyword label;
 
-    public SimpleNumberBuilder(final WktKeyword label) {
+    protected SimpleNumberBuilder(final WktKeyword label) {
         this.label = label;
     }
 

@@ -13,8 +13,8 @@ import java.util.function.Predicate;
 public interface PredicateTokenBuilder<I extends Token> extends StateCheckTokenBuilder<I> {
 
     @Override
-    default boolean check() {
-        return predicate().test(waiting());
+    default boolean acceptWaiting() {
+        return predicate().test(waitingToken());
     }
 
     Predicate<? super I> predicate();

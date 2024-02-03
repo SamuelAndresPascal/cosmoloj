@@ -28,8 +28,7 @@ public abstract class DerivedCrsBuilder<S extends DerivedCrs<B, O, M, P>,
     private final Predicate<? super Token> operationPredicate;
     private final Predicate<? super Token> labelPredicate;
 
-    protected DerivedCrsBuilder(final Class<?> baseCrsType,
-            final Class<?> operationType, final WktKeyword... labels) {
+    protected DerivedCrsBuilder(final Class<?> baseCrsType, final Class<?> operationType, final WktKeyword... labels) {
         this.basePredicate = baseCrsType::isInstance;
         this.operationPredicate = operationType::isInstance;
         Predicate<? super Token> l = labels[0];

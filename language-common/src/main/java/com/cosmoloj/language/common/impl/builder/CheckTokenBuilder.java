@@ -14,7 +14,7 @@ import com.cosmoloj.language.api.semantic.Token;
 public abstract class CheckTokenBuilder<I extends Token, O extends Token> extends TokenSequenceTokenBuilder<I, O> {
 
     // jeton en cours de vérification
-    private I token;
+    private I waitingForValidation;
 
     /**
      * <div class="fr">Affecte le jeton à vérifier au jeton courant, puis appelle une méthode de vérification à
@@ -25,9 +25,9 @@ public abstract class CheckTokenBuilder<I extends Token, O extends Token> extend
      */
     @Override
     public final boolean check(final I in) {
-        this.token = in;
-        final boolean result = check();
-        this.token = null;
+        this.waitingForValidation = in;
+        final boolean result = acceptWaiting();
+        this.waitingForValidation = null;
         return result;
     }
 
@@ -36,7 +36,7 @@ public abstract class CheckTokenBuilder<I extends Token, O extends Token> extend
      * @return <span class="fr">jeton courant en cours de vérification</span>
      */
     @Override
-    public I waiting() {
-        return token;
+    public I waitingToken() {
+        return waitingForValidation;
     }
 }

@@ -49,10 +49,19 @@ public class VertCsBuilder extends CheckTokenBuilder<Token, VertCs>
 
     @Override
     public VertCs build() {
-        final int size = size();
-        final Axis axis = size > 9 && testToken(8, Axis.class::isInstance) ? token(8) : null;
-        final Authority authority = size == 12 ? token(10)
-                : ((size == 10 && testToken(8, Authority.class::isInstance)) ? token(8) : null);
-        return new VertCs(first(), last(), index(), token(2), token(4), token(6), axis, authority);
+        return new VertCs(first(), last(), index(),
+                token(2),
+                token(4),
+                token(6),
+                size() > 9 && token(8) instanceof Axis ? token(8) : null,
+                authority());
+    }
+
+    private Authority authority() {
+        if (size() == 12) {
+            return token(10);
+        } else {
+            return size() == 10 && token(8) instanceof Authority ? token(8) : null;
+        }
     }
 }

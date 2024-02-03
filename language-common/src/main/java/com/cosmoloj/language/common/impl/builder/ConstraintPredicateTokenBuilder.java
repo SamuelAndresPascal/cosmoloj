@@ -14,8 +14,9 @@ import java.util.function.Predicate;
 public interface ConstraintPredicateTokenBuilder<I extends Token> extends PredicateTokenBuilder<I> {
 
     @Override
-    default boolean check() {
-        if (predicate().test(waiting())) {
+    default boolean acceptWaiting() {
+        final boolean accept = PredicateTokenBuilder.super.acceptWaiting();
+        if (accept) {
             for (int i = 0; i < tokens().size(); i++) {
                 if (!constraint(i).test(tokens().get(i))) {
                     return false;

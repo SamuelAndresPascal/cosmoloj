@@ -15,7 +15,7 @@ public interface StateCheckTokenBuilder<I extends Token> {
      *
      * @return <span class="fr">validation du jeton courant</span>
      */
-    boolean check();
+    boolean acceptWaiting();
 
     /**
      *
@@ -27,7 +27,7 @@ public interface StateCheckTokenBuilder<I extends Token> {
      *
      * @return <span class="fr">jeton en cours de validation</span>
      */
-    I waiting();
+    I waitingToken();
 
     default int size() {
         return tokens().size();
@@ -114,18 +114,14 @@ public interface StateCheckTokenBuilder<I extends Token> {
     }
 
     default boolean waiting(final Predicate<? super I> p) {
-        return p.test(waiting());
+        return p.test(waitingToken());
     }
 
     default boolean waiting(final Class<?> type) {
         return waiting(type::isInstance);
     }
 
-    default boolean i(final int i, final Predicate<? super I> p) {
-        return p.test(tokens().get(i));
-    }
-
     default boolean previous(final int before, final Predicate<? super I> p) {
-        return i(size() - before, p);
+        return testToken(size() - before, p);
     }
 }
