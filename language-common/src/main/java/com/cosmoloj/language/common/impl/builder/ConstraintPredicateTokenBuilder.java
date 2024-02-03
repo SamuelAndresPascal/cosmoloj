@@ -15,7 +15,7 @@ public interface ConstraintPredicateTokenBuilder<I extends Token> extends Predic
 
     @Override
     default boolean check() {
-        if (predicate().test(current())) {
+        if (predicate().test(waiting())) {
             for (int i = 0; i < tokens().size(); i++) {
                 if (!constraint(i).test(tokens().get(i))) {
                     return false;

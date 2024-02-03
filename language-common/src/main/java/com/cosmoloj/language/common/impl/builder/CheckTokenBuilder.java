@@ -36,7 +36,7 @@ public abstract class CheckTokenBuilder<I extends Token, O extends Token> extend
      * @return <span class="fr">jeton courant en cours de vérification</span>
      */
     @Override
-    public I current() {
+    public I waiting() {
         return token;
     }
 }

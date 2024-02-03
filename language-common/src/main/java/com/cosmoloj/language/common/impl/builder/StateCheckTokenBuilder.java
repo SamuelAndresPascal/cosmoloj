@@ -27,7 +27,7 @@ public interface StateCheckTokenBuilder<I extends Token> {
      *
      * @return <span class="fr">jeton en cours de validation</span>
      */
-    I current();
+    I waiting();
 
     default int size() {
         return tokens().size();
@@ -102,7 +102,7 @@ public interface StateCheckTokenBuilder<I extends Token> {
     }
 
     default boolean current(final Predicate<? super I> p) {
-        return p.test(current());
+        return p.test(waiting());
     }
 
     default boolean i(final int i, final Predicate<? super I> p) {

@@ -14,7 +14,7 @@ public interface PredicateTokenBuilder<I extends Token> extends StateCheckTokenB
 
     @Override
     default boolean check() {
-        return predicate().test(current());
+        return predicate().test(waiting());
     }
 
     Predicate<? super I> predicate();
