@@ -28,10 +28,10 @@ public abstract class DerivedCrsBuilder<S extends DerivedCrs<B, O, M, P>,
     private final Predicate<? super Token> operationPredicate;
     private final Predicate<? super Token> labelPredicate;
 
-    protected DerivedCrsBuilder(final Predicate<? super Token> baseCrsType,
-            final Predicate<? super Token> operationType, final WktKeyword... labels) {
-        this.basePredicate = baseCrsType;
-        this.operationPredicate = operationType;
+    protected DerivedCrsBuilder(final Class<?> baseCrsType,
+            final Class<?> operationType, final WktKeyword... labels) {
+        this.basePredicate = baseCrsType::isInstance;
+        this.operationPredicate = operationType::isInstance;
         Predicate<? super Token> l = labels[0];
         for (int i = 1; i < labels.length; i++) {
             l = l.or(labels[i]);
@@ -59,116 +59,132 @@ public abstract class DerivedCrsBuilder<S extends DerivedCrs<B, O, M, P>,
     public static DerivedCrsBuilder<DerivedCrs.ProjectedCrs, BaseGeodeticCrs, Operation.MapProjection,
             Method.MapProjectionMethod, Parameter> projectedCrs() {
 
-                return new DerivedCrsBuilder<>(BaseGeodeticCrs.INSTANCE_OF,
-                        Operation.MapProjection.INSTANCE_OF_MAP_PROJECTION,
+                return new DerivedCrsBuilder<>(BaseGeodeticCrs.class,
+                        Operation.MapProjection.class,
                         WktKeyword.PROJCRS, WktKeyword.PROJECTEDCRS, WktKeyword.PROJCS) {
                     @Override
                     public DerivedCrs.ProjectedCrs build() {
 
-                        return new DerivedCrs.ProjectedCrs(first(), last(), index(), token(2), token(4), token(6),
+                        return new DerivedCrs.ProjectedCrs(first(), last(), index(),
+                                token(2),
+                                token(4),
+                                token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
             }
 
     public static DerivedCrsBuilder<DerivedCrs.DerivedGeodeticCrs, BaseGeodeticCrs, Operation.DerivingConversion,
             Method.OperationMethod, AbstractParam> derivedGeodeticCrs() {
-                return new DerivedCrsBuilder<>(BaseGeodeticCrs.INSTANCE_OF,
-                        Operation.DerivingConversion.INSTANCE_OF_DERIVING_CONVERSION,
+                return new DerivedCrsBuilder<>(BaseGeodeticCrs.class,
+                        Operation.DerivingConversion.class,
                         WktKeyword.GEODCRS, WktKeyword.GEODETICCRS, WktKeyword.GEOCCS, WktKeyword.GEOGCS) {
 
                     @Override
                     public DerivedCrs.DerivedGeodeticCrs build() {
 
-                        return new DerivedCrs.DerivedGeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
+                        return new DerivedCrs.DerivedGeodeticCrs(first(), last(), index(),
+                                token(2),
+                                token(4),
+                                token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
             }
 
     public static DerivedCrsBuilder<DerivedCrs.DerivedVerticalCrs, BaseCrs.BaseVerticalCrs,
             Operation.DerivingConversion, Method.OperationMethod, AbstractParam> derivedVerticalCrs() {
-                return new DerivedCrsBuilder<>(BaseCrs.BaseVerticalCrs.BASE_VERTICAL_CRS,
-                        Operation.DerivingConversion.INSTANCE_OF_DERIVING_CONVERSION,
+                return new DerivedCrsBuilder<>(BaseCrs.BaseVerticalCrs.class,
+                        Operation.DerivingConversion.class,
                         WktKeyword.VERTCRS, WktKeyword.VERTICALCRS, WktKeyword.VERT_CS) {
 
                     @Override
                     public DerivedCrs.DerivedVerticalCrs build() {
 
-                        return new DerivedCrs.DerivedVerticalCrs(first(), last(), index(), token(2), token(4), token(6),
+                        return new DerivedCrs.DerivedVerticalCrs(first(), last(), index(),
+                                token(2),
+                                token(4),
+                                token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
             }
 
     public static <B extends BaseCrs> DerivedCrsBuilder<DerivedCrs.DerivedEngineeringCrs<B>, B,
             Operation.DerivingConversion, Method.OperationMethod, AbstractParam> derivedEngineeringCrs(
-                    final Predicate<? super Token> baseCrsType) {
+                    final Class<?> baseCrsType) {
                 return new DerivedCrsBuilder<>(baseCrsType,
-                        Operation.DerivingConversion.INSTANCE_OF_DERIVING_CONVERSION,
+                        Operation.DerivingConversion.class,
                         WktKeyword.ENGCRS, WktKeyword.ENGINEERINGCRS, WktKeyword.LOCAL_CS) {
 
                     @Override
                     public DerivedCrs.DerivedEngineeringCrs<B> build() {
 
-                        return new DerivedCrs.DerivedEngineeringCrs<>(first(), last(), index(), token(2), token(4),
+                        return new DerivedCrs.DerivedEngineeringCrs<>(first(), last(), index(),
+                                token(2),
+                                token(4),
                                 token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
             }
 
     public static DerivedCrsBuilder<DerivedCrs.DerivedParametricCrs, BaseCrs.BaseParametricCrs,
             Operation.DerivingConversion, Method.OperationMethod, AbstractParam> derivedParametricCrs() {
-                return new DerivedCrsBuilder<>(BaseCrs.BaseParametricCrs.BASE_PARAMETRIC_CRS,
-                        Operation.DerivingConversion.INSTANCE_OF_DERIVING_CONVERSION,
+                return new DerivedCrsBuilder<>(BaseCrs.BaseParametricCrs.class,
+                        Operation.DerivingConversion.class,
                         WktKeyword.PARAMETRICCRS) {
 
                     @Override
                     public DerivedCrs.DerivedParametricCrs build() {
 
-                        return new DerivedCrs.DerivedParametricCrs(first(), last(), index(), token(2), token(4),
+                        return new DerivedCrs.DerivedParametricCrs(first(), last(), index(),
+                                token(2),
+                                token(4),
                                 token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
             }
 
     public static DerivedCrsBuilder<DerivedCrs.DerivedTemporalCrs, BaseCrs.BaseTemporalCrs,
             Operation.DerivingConversion, Method.OperationMethod, AbstractParam> derivedTemporalCrs() {
-                return new DerivedCrsBuilder<>(BaseCrs.BaseTemporalCrs.BASE_TEMPORAL_CRS,
-                        Operation.DerivingConversion.INSTANCE_OF_DERIVING_CONVERSION,
+                return new DerivedCrsBuilder<>(BaseCrs.BaseTemporalCrs.class,
+                        Operation.DerivingConversion.class,
                         WktKeyword.TIMECRS) {
 
                     @Override
                     public DerivedCrs.DerivedTemporalCrs build() {
 
-                        return new DerivedCrs.DerivedTemporalCrs(first(), last(), index(), token(2), token(4), token(6),
+                        return new DerivedCrs.DerivedTemporalCrs(first(), last(), index(),
+                                token(2),
+                                token(4),
+                                token(6),
                                 token(8),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
             }

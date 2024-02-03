@@ -38,11 +38,14 @@ public class CompoundCrsBuilder extends CheckTokenBuilder<Token, CompoundCrs>
 
     @Override
     public CompoundCrs build() {
-        return new CompoundCrs(first(), last(), index(), token(2), token(4), token(6),
-                (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.class::isInstance)) ? token(8) : null,
-                firstToken(Scope.class::isInstance),
-                tokens(Extent.class::isInstance),
-                tokens(Identifier.class::isInstance),
-                firstToken(Remark.class::isInstance));
+        return new CompoundCrs(first(), last(), index(),
+                token(2),
+                token(4),
+                token(6),
+                (size() >= 10 && testToken(8, SimpleCrsShell.TemporalCrs.class)) ? token(8) : null,
+                firstToken(Scope.class),
+                tokens(Extent.class),
+                tokens(Identifier.class),
+                firstToken(Remark.class));
     }
 }

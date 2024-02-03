@@ -49,7 +49,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
                         : null;
 
                 return new Parameter(first(), last(), index(), token(2), token(4), unit,
-                        tokens(Identifier.class::isInstance));
+                        tokens(Identifier.class));
             }
         };
     }
@@ -83,7 +83,7 @@ public abstract class ParameterBuilder extends CheckTokenBuilder<Token, Paramete
             @Override
             public Parameter build() {
                 return new Parameter(first(), last(), index(), token(2), token(4), token(6),
-                        tokens(Identifier.class::isInstance));
+                        tokens(Identifier.class));
             }
         };
     }

@@ -48,8 +48,10 @@ public class PrimeMeridianBuilder extends CheckTokenBuilder<Token, PrimeMeridian
 
     @Override
     public PrimeMeridian build() {
-        return new PrimeMeridian(first(), last(), index(), token(2), token(4),
-                firstToken(Unit.Angle.class::isInstance),
-                tokens(Identifier.class::isInstance));
+        return new PrimeMeridian(first(), last(), index(),
+                token(2),
+                token(4),
+                firstToken(Unit.Angle.class),
+                tokens(Identifier.class));
     }
 }

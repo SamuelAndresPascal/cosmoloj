@@ -44,7 +44,7 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
 
     @Override
     protected void afterAdd(final Token token) {
-        if (rightDelimiterIndex == NOT_CLOSED && RightDelimiter.class.isInstance(token)) {
+        if (rightDelimiterIndex == NOT_CLOSED && token instanceof RightDelimiter) {
             rightDelimiterIndex = size() - 1;
         }
     }
@@ -53,8 +53,8 @@ public class GeodeticDatumBuilder extends CheckTokenBuilder<Token, GeodeticDatum
     public GeodeticDatum build() {
 
         return new GeodeticDatum(first(), last(), index(), token(2), token(4),
-                firstToken(Anchor.class::isInstance),
-                tokens(Identifier.class::isInstance),
-                firstToken(PrimeMeridian.class::isInstance));
+                firstToken(Anchor.class),
+                tokens(Identifier.class),
+                firstToken(PrimeMeridian.class));
     }
 }

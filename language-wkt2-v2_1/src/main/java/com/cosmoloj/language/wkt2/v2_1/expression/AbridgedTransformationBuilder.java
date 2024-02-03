@@ -33,10 +33,12 @@ public class AbridgedTransformationBuilder
     @Override
     public Operation.AbridgedTransformation build() {
 
-        return new Operation.AbridgedTransformation(first(), last(), index(), token(2), token(4),
-                tokens(AbstractParam.class::isInstance),
-                tokens(Usage.class::isInstance),
-                tokens(Identifier.class::isInstance),
-                firstToken(Remark.class::isInstance));
+        return new Operation.AbridgedTransformation(first(), last(), index(),
+                token(2),
+                token(4),
+                tokens(AbstractParam.class),
+                tokens(Usage.class),
+                tokens(Identifier.class),
+                firstToken(Remark.class));
     }
 }

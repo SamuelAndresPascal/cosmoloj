@@ -55,7 +55,7 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
         @Override
         public Method.MapProjectionMethod build() {
             return new Method.MapProjectionMethod(
-                    first(), last(), index(), token(2), tokens(Identifier.class::isInstance));
+                    first(), last(), index(), token(2), tokens(Identifier.class));
         }
     }
 
@@ -68,7 +68,7 @@ public abstract class MethodBuilder<M extends Method> extends CheckTokenBuilder<
         @Override
         public Method.OperationMethod build() {
             return new Method.OperationMethod(
-                    first(), last(), index(), token(2), tokens(Identifier.class::isInstance));
+                    first(), last(), index(), token(2), tokens(Identifier.class));
         }
     }
 }

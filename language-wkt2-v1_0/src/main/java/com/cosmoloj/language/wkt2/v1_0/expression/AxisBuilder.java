@@ -42,24 +42,28 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
 
     @Override
     public Predicate<? super Token> constraintLast(final int currentIndex) {
-        return (even() && beyond(5)) ? SpecialSymbol.COMMA : t -> true;
+        return (even() && beyond(5)) ? SpecialSymbol.COMMA : Predicates.yes();
     }
 
     @Override
     public Axis build() {
 
-        final AxisOrder order = (size() >= 8 && testToken(6, AxisOrder.class::isInstance)) ?  token(6) : null;
+        final AxisOrder order = (size() >= 8 && testToken(6, AxisOrder.class)) ?  token(6) : null;
 
         final Unit unit;
-        if (size() >= 8 && testToken(6, Unit.class::isInstance)) {
+        if (size() >= 8 && testToken(6, Unit.class)) {
             unit = token(6);
-        } else if (size() >= 10 && testToken(8, Unit.class::isInstance)) {
+        } else if (size() >= 10 && testToken(8, Unit.class)) {
             unit = token(8);
         } else {
             unit = null;
         }
 
-        return new Axis(first(), last(), index(), token(2), token(4), order, unit,
-                tokens(Identifier.class::isInstance));
+        return new Axis(first(), last(), index(),
+                token(2),
+                token(4),
+                order,
+                unit,
+                tokens(Identifier.class));
     }
 }

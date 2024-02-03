@@ -40,10 +40,10 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
             public GeodeticCrs build() {
 
                 return new GeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
-                        firstToken(Scope.class::isInstance),
-                        tokens(Extent.class::isInstance),
-                        tokens(Identifier.class::isInstance),
-                        firstToken(Remark.class::isInstance));
+                        firstToken(Scope.class),
+                        tokens(Extent.class),
+                        tokens(Identifier.class),
+                        firstToken(Remark.class));
             }
         };
     }
@@ -70,10 +70,10 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
             public GeodeticCrs.Geographic2DCrs build() {
 
                 return new GeodeticCrs.Geographic2DCrs(first(), last(), index(), token(2), token(4), token(6),
-                        firstToken(Scope.class::isInstance),
-                        tokens(Extent.class::isInstance),
-                        tokens(Identifier.class::isInstance),
-                        firstToken(Remark.class::isInstance));
+                        firstToken(Scope.class),
+                        tokens(Extent.class),
+                        tokens(Identifier.class),
+                        firstToken(Remark.class));
             }
         };
     }

@@ -42,6 +42,6 @@ public class ConcatMtBuilder extends CheckTokenBuilder<Token, ConcatMt>
 
     @Override
     public ConcatMt build() {
-        return new ConcatMt(first(), last(), index(), tokens(MathTransform.class::isInstance));
+        return new ConcatMt(first(), last(), index(), tokens(MathTransform.class));
     }
 }

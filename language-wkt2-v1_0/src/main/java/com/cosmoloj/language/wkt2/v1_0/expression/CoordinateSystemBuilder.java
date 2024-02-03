@@ -84,15 +84,15 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
     @Override
     public CoordinateSystem build() {
-        final List<Token> type = tokens(Predicates.or(CsType.values()));
-        final List<Token> dimention = tokens(UnsignedInteger.class::isInstance);
+        final List<Token> type = tokens(Predicates.in(CsType.class));
+        final List<Token> dimention = tokens(UnsignedInteger.class);
 
         return new CoordinateSystem(first(), last(), index(),
                 type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
                 dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
-                tokens(Identifier.class::isInstance),
-                tokens(Axis.class::isInstance),
-                firstToken(Unit.class::isInstance));
+                tokens(Identifier.class),
+                tokens(Axis.class),
+                firstToken(Unit.class));
     }
 
     public static class Ellipsoidal2DCoordinateSystemBuilder extends CoordinateSystemBuilder {
@@ -124,14 +124,14 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         @Override
         public CoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
             final List<Token> type = tokens(Predicates.in(CsType.class));
-            final List<Token> dimention = tokens(UnsignedInteger.class::isInstance);
+            final List<Token> dimention = tokens(UnsignedInteger.class);
 
             return new CoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
                     type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
                     dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
-                    tokens(Identifier.class::isInstance),
-                    tokens(Axis.class::isInstance),
-                    firstToken(Unit.class::isInstance));
+                    tokens(Identifier.class),
+                    tokens(Axis.class),
+                    firstToken(Unit.class));
         }
     }
 }

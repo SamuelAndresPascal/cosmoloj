@@ -44,11 +44,11 @@ public class ParamMtBuilder extends CheckTokenBuilder<Token, ParamMt>
         } else if (odd() && beyond(4)) {
             return Parameter.class::isInstance;
         }
-        return t -> true;
+        return Predicates.yes();
     }
 
     @Override
     public ParamMt build() {
-        return new ParamMt(first(), last(), index(), token(2), tokens(Parameter.class::isInstance));
+        return new ParamMt(first(), last(), index(), token(2), tokens(Parameter.class));
     }
 }

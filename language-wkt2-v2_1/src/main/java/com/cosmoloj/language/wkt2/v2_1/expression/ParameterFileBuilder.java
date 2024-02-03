@@ -33,6 +33,6 @@ public class ParameterFileBuilder extends CheckTokenBuilder<Token, ParameterFile
 
     @Override
     public ParameterFile build() {
-        return new ParameterFile(first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
+        return new ParameterFile(first(), last(), index(), token(2), token(4), tokens(Identifier.class));
     }
 }

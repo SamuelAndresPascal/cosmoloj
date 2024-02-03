@@ -41,6 +41,6 @@ public class JsonArrayBuilder extends CheckTokenBuilder<Token, JsonArray>
 
     @Override
     public JsonArray build() {
-        return new JsonArray(first(), last(), index(), tokens(JsonValue.class::isInstance));
+        return new JsonArray(first(), last(), index(), tokens(JsonValue.class));
     }
 }

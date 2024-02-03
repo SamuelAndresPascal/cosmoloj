@@ -24,9 +24,9 @@ public class BaseProjectedCrsBuilder extends CheckTokenBuilder<Token, BaseProjec
                 LeftDelimiter.class::isInstance,
                 QuotedLatinText.class::isInstance,
                 SpecialSymbol.COMMA,
-                BaseGeodeticCrs.INSTANCE_OF,
+                BaseGeodeticCrs.class::isInstance,
                 SpecialSymbol.COMMA,
-                Operation.MapProjection.INSTANCE_OF_MAP_PROJECTION,
+                Operation.MapProjection.class::isInstance,
                 RightDelimiter.class::isInstance);
     }
 

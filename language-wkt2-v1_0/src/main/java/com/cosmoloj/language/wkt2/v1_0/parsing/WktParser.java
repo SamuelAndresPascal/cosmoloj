@@ -102,7 +102,6 @@ import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.QuotedUnicodeText;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v1_0.lexeme.simple.WktKeyword;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 
@@ -1354,12 +1353,12 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     }
 
 
-    public Predicate<? super Token> baseEngineeringCrsClass(final EnumLexeme<WktKeyword> label)
+    public Class<? extends BaseCrs> baseEngineeringCrsClass(final EnumLexeme<WktKeyword> label)
             throws LanguageException {
         return switch (label.getSemantics()) {
-            case BASEPROJCRS -> BaseProjectedCrs.INSTANCE_OF;
-            case BASEGEODCRS -> BaseGeodeticCrs.INSTANCE_OF;
-            case BASEENGCRS -> BaseCrs.BaseEngineeringCrs.BASE_ENGINEERING_CRS;
+            case BASEPROJCRS -> BaseProjectedCrs.class;
+            case BASEGEODCRS -> BaseGeodeticCrs.class;
+            case BASEENGCRS -> BaseCrs.BaseEngineeringCrs.class;
             default -> throw new IllegalStateException();
         };
     }

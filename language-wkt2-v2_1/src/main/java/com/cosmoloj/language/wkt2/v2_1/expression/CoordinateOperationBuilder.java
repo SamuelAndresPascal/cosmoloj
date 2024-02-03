@@ -47,11 +47,11 @@ public class CoordinateOperationBuilder
     public Operation.CoordinateOperation build() {
 
         return new Operation.CoordinateOperation(first(), last(), index(), token(2), token(4), token(6), token(8),
-                tokens(AbstractParam.class::isInstance),
-                firstToken(OperationCrs.InterpolationCrs.class::isInstance),
-                firstToken(SimpleNumber.Accuracy.class::isInstance),
-                tokens(Usage.class::isInstance),
-                tokens(Identifier.class::isInstance),
-                firstToken(Remark.class::isInstance));
+                tokens(AbstractParam.class),
+                firstToken(OperationCrs.InterpolationCrs.class),
+                firstToken(SimpleNumber.Accuracy.class),
+                tokens(Usage.class),
+                tokens(Identifier.class),
+                firstToken(Remark.class));
     }
 }

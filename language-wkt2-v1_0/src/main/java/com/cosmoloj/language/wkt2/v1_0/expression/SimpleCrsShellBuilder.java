@@ -23,8 +23,8 @@ public abstract class SimpleCrsShellBuilder<S extends SimpleCrsShell<D>, D exten
     private final Predicate<? super Token> datumPredicate;
     private final Predicate<? super Token> labels;
 
-    protected SimpleCrsShellBuilder(final Predicate<? super Token> datumType, final WktKeyword... labels) {
-        this.datumPredicate = datumType;
+    protected SimpleCrsShellBuilder(final Class<?> datumType, final WktKeyword... labels) {
+        this.datumPredicate = datumType::isInstance;
         Predicate<? super Token> l = labels[0];
         for (int i = 1; i < labels.length; i++) {
             l = l.or(labels[i]);
@@ -48,79 +48,93 @@ public abstract class SimpleCrsShellBuilder<S extends SimpleCrsShell<D>, D exten
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.VerticalCrs, NameAndAnchorDatum.VerticalDatum> verticalCrs() {
-        return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.VerticalDatum.VERTICAL_DATUM,
+        return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.VerticalDatum.class,
                 WktKeyword.VERTCRS, WktKeyword.VERTICALCRS, WktKeyword.VERT_CS) {
 
                     @Override
                     public SimpleCrsShell.VerticalCrs build() {
-                        return new SimpleCrsShell.VerticalCrs(first(), last(), index(), token(2), token(4), token(6),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                        return new SimpleCrsShell.VerticalCrs(
+                                first(),
+                                last(),
+                                index(),
+                                token(2),
+                                token(4),
+                                token(6),
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.EngineeringCrs, NameAndAnchorDatum.EngineeringDatum>
         engineeringCrs() {
-            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.EngineeringDatum.ENGINEERING_DATUM,
+            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.EngineeringDatum.class,
                     WktKeyword.ENGCRS, WktKeyword.ENGINEERINGCRS, WktKeyword.LOCAL_CS) {
 
                         @Override
                         public SimpleCrsShell.EngineeringCrs build() {
-                            return new SimpleCrsShell.EngineeringCrs(first(), last(), index(), token(2), token(4),
+                            return new SimpleCrsShell.EngineeringCrs(first(), last(), index(),
+                                    token(2),
+                                    token(4),
                                     token(6),
-                                    firstToken(Scope.class::isInstance),
-                                    tokens(Extent.class::isInstance),
-                                    tokens(Identifier.class::isInstance),
-                                    firstToken(Remark.class::isInstance));
+                                    firstToken(Scope.class),
+                                    tokens(Extent.class),
+                                    tokens(Identifier.class),
+                                    firstToken(Remark.class));
                         }
                     };
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.ImageCrs, ImageDatum> imageCrs() {
-        return new SimpleCrsShellBuilder<>(ImageDatum.class::isInstance, WktKeyword.IMAGECRS) {
+        return new SimpleCrsShellBuilder<>(ImageDatum.class, WktKeyword.IMAGECRS) {
 
             @Override
             public SimpleCrsShell.ImageCrs build() {
-                return new SimpleCrsShell.ImageCrs(first(), last(), index(), token(2), token(4), token(6),
-                        firstToken(Scope.class::isInstance),
-                        tokens(Extent.class::isInstance),
-                        tokens(Identifier.class::isInstance),
-                        firstToken(Remark.class::isInstance));
+                return new SimpleCrsShell.ImageCrs(first(), last(), index(),
+                        token(2),
+                        token(4),
+                        token(6),
+                        firstToken(Scope.class),
+                        tokens(Extent.class),
+                        tokens(Identifier.class),
+                        firstToken(Remark.class));
             }
         };
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.ParametricCrs, NameAndAnchorDatum.ParametricDatum>
         parametricCrs() {
-            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.ParametricDatum.PARAMETRIC_DATUM,
-                    WktKeyword.PARAMETRICCRS) {
+            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.ParametricDatum.class, WktKeyword.PARAMETRICCRS) {
 
                         @Override
                         public SimpleCrsShell.ParametricCrs build() {
-                            return new SimpleCrsShell.ParametricCrs(first(), last(), index(), token(2), token(4),
+                            return new SimpleCrsShell.ParametricCrs(first(), last(), index(),
+                                    token(2),
+                                    token(4),
                                     token(6),
-                                    firstToken(Scope.class::isInstance),
-                                    tokens(Extent.class::isInstance),
-                                    tokens(Identifier.class::isInstance),
-                                    firstToken(Remark.class::isInstance));
+                                    firstToken(Scope.class),
+                                    tokens(Extent.class),
+                                    tokens(Identifier.class),
+                                    firstToken(Remark.class));
                         }
                     };
     }
 
     public static SimpleCrsShellBuilder<SimpleCrsShell.TemporalCrs, NameAndAnchorDatum.TemporalDatum> temporalCrs() {
-            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.TemporalDatum.TEMPORAL_DATUM,
-                WktKeyword.TIMECRS) {
+            return new SimpleCrsShellBuilder<>(NameAndAnchorDatum.TemporalDatum.class, WktKeyword.TIMECRS) {
 
                     @Override
                     public SimpleCrsShell.TemporalCrs build() {
-                        return new SimpleCrsShell.TemporalCrs(first(), last(), index(), token(2), token(4), token(6),
-                                firstToken(Scope.class::isInstance),
-                                tokens(Extent.class::isInstance),
-                                tokens(Identifier.class::isInstance),
-                                firstToken(Remark.class::isInstance));
+                        return new SimpleCrsShell.TemporalCrs(first(), last(), index(),
+                                token(2),
+                                token(4),
+                                token(6),
+                                firstToken(Scope.class),
+                                tokens(Extent.class),
+                                tokens(Identifier.class),
+                                firstToken(Remark.class));
                     }
                 };
     }

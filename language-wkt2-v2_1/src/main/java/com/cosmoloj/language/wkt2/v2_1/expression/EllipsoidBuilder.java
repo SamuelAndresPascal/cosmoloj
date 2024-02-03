@@ -49,8 +49,12 @@ public class EllipsoidBuilder extends CheckTokenBuilder<Token, Ellipsoid> implem
     @Override
     public Ellipsoid build() {
 
-        return new Ellipsoid(first(), last(), index(), token(0), token(2), token(4), token(6),
-                (size() >= 10 && testToken(8, Unit.Length.class::isInstance)) ? token(8) : null,
-                tokens(Identifier.class::isInstance));
+        return new Ellipsoid(first(), last(), index(),
+                token(0),
+                token(2),
+                token(4),
+                token(6),
+                (size() >= 10 && testToken(8, Unit.Length.class)) ? token(8) : null,
+                tokens(Identifier.class));
     }
 }

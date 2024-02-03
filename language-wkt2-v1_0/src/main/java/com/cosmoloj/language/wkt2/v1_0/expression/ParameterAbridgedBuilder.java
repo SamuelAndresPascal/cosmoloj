@@ -35,6 +35,6 @@ public class ParameterAbridgedBuilder extends CheckTokenBuilder<Token, Parameter
     @Override
     public ParameterAbridged build() {
         return new ParameterAbridged(
-                first(), last(), index(), token(2), token(4), tokens(Identifier.class::isInstance));
+                first(), last(), index(), token(2), token(4), tokens(Identifier.class));
     }
 }

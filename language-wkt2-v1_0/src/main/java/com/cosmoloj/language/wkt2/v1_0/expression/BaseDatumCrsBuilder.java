@@ -24,8 +24,8 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     private final Predicate<? super Token> datumPredicate;
     private final WktKeyword label;
 
-    protected BaseDatumCrsBuilder(final Predicate<? super Token> datumType, final WktKeyword label) {
-        this.datumPredicate = datumType;
+    protected BaseDatumCrsBuilder(final Class<?> datumType, final WktKeyword label) {
+        this.datumPredicate = datumType::isInstance;
         this.label = label;
     }
 
@@ -40,7 +40,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     }
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseVerticalCrs, NameAndAnchorDatum.VerticalDatum> baseVerticalCrs() {
-        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.VerticalDatum.VERTICAL_DATUM, WktKeyword.BASEVERTCRS) {
+        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.VerticalDatum.class, WktKeyword.BASEVERTCRS) {
 
             @Override
             public BaseCrs.BaseVerticalCrs build() {
@@ -51,8 +51,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseEngineeringCrs, NameAndAnchorDatum.EngineeringDatum>
         baseEngineeringCrs() {
-            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.EngineeringDatum.ENGINEERING_DATUM,
-                    WktKeyword.BASEENGCRS) {
+            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.EngineeringDatum.class, WktKeyword.BASEENGCRS) {
 
                 @Override
                 public BaseCrs.BaseEngineeringCrs build() {
@@ -63,8 +62,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseParametricCrs, NameAndAnchorDatum.ParametricDatum>
         baseParametricCrs() {
-            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.ParametricDatum.PARAMETRIC_DATUM,
-                    WktKeyword.BASEPARAMCRS) {
+            return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.ParametricDatum.class, WktKeyword.BASEPARAMCRS) {
 
                 @Override
                 public BaseCrs.BaseParametricCrs build() {
@@ -74,7 +72,7 @@ public abstract class BaseDatumCrsBuilder<BD extends BaseCrs.BaseDatumCrs<D>, D 
     }
 
     public static BaseDatumCrsBuilder<BaseCrs.BaseTemporalCrs, NameAndAnchorDatum.TemporalDatum> baseTemporalCrs() {
-        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.TemporalDatum.TEMPORAL_DATUM, WktKeyword.BASETIMECRS) {
+        return new BaseDatumCrsBuilder<>(NameAndAnchorDatum.TemporalDatum.class, WktKeyword.BASETIMECRS) {
 
             @Override
             public BaseCrs.BaseTemporalCrs build() {

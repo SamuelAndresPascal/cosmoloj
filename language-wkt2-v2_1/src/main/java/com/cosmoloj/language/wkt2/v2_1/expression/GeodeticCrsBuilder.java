@@ -39,10 +39,13 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
             @Override
             public GeodeticCrs build() {
 
-                return new GeodeticCrs(first(), last(), index(), token(2), token(4), token(6),
-                        tokens(Usage.class::isInstance),
-                        tokens(Identifier.class::isInstance),
-                        firstToken(Remark.class::isInstance));
+                return new GeodeticCrs(first(), last(), index(),
+                        token(2),
+                        token(4),
+                        token(6),
+                        tokens(Usage.class),
+                        tokens(Identifier.class),
+                        firstToken(Remark.class));
             }
         };
     }
@@ -68,10 +71,13 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
             @Override
             public GeodeticCrs.Geographic2DCrs build() {
 
-                return new GeodeticCrs.Geographic2DCrs(first(), last(), index(), token(2), token(4), token(6),
-                        tokens(Usage.class::isInstance),
-                        tokens(Identifier.class::isInstance),
-                        firstToken(Remark.class::isInstance));
+                return new GeodeticCrs.Geographic2DCrs(first(), last(), index(),
+                        token(2),
+                        token(4),
+                        token(6),
+                        tokens(Usage.class),
+                        tokens(Identifier.class),
+                        firstToken(Remark.class));
             }
         };
     }
