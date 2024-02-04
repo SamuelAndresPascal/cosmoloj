@@ -11,7 +11,6 @@ import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.CsType;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
 import com.cosmoloj.util.function.Predicates;
-import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -29,6 +28,10 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         return rightDelimiterIndex != NOT_CLOSED;
     }
 
+    protected boolean wktCts(final Object token) {
+        return !includeCs;
+    }
+
     @Override
     public Predicate<? super Token> predicate(final int currentIndex) {
 
@@ -36,47 +39,38 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
             return WktKeyword.CS.or(pb(Axis.class, Unit.class)); // WKT-CTS compatibility
         }
 
-        if (includeCs) {
-
-            return switch (currentIndex) {
-                case 1 -> LeftDelimiter.class::isInstance;
-                case 2 -> Predicates.in(CsType.class);
-                case 3 -> SpecialSymbol.COMMA;
-                case 4 -> UnsignedInteger.class::isInstance;
-                default -> {
-                    if (isOpen()) {
-                        yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
-                    } else {
-                        yield odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
-                    }
-                }
-            };
-
-        } else {
-            // WKT CTS compatibility
-            return switch (currentIndex) {
-                case 1 -> SpecialSymbol.COMMA;
-                case 2 -> pb(Axis.class, Unit.class);
-                case 3 -> SpecialSymbol.COMMA;
-                default -> {
-                    if (size() == 8) {
-                        yield Predicates.no();
-                    }
-                    yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Axis.class, Unit.class);
-                }
-            };
-        }
+        return includeCs ? wkt2Predicate(currentIndex) : wktCtsPredicate(currentIndex);
     }
 
-    private CsType.Type type() {
-        if (size() > 2) {
-            return ((EnumLexeme<CsType>) token(2)).getSemantics().getType();
-        }
-        throw new IllegalStateException();
+    protected Predicate<? super Token> wkt2Predicate(final int currentIndex) {
+
+        return switch (currentIndex) {
+            case 1 -> LeftDelimiter.class::isInstance;
+            case 2 -> Predicates.in(CsType.class);
+            case 3 -> SpecialSymbol.COMMA;
+            case 4 -> UnsignedInteger.class::isInstance;
+            default -> {
+                if (isOpen()) {
+                    yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
+                } else {
+                    yield odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
+                }
+            }
+        };
     }
 
-    protected boolean wktCts(final Object token) {
-        return !includeCs;
+    protected Predicate<? super Token> wktCtsPredicate(final int currentIndex) {
+        return switch (currentIndex) {
+            case 1 -> SpecialSymbol.COMMA;
+            case 2 -> pb(Axis.class, Unit.class);
+            case 3 -> SpecialSymbol.COMMA;
+            default -> {
+                if (size() == 8) {
+                    yield Predicates.no();
+                }
+                yield odd() ? SpecialSymbol.COMMA : pb(Axis.class, Unit.class);
+            }
+        };
     }
 
     @Override
@@ -91,12 +85,12 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
     @Override
     public CoordinateSystem build() {
-        final List<Token> type = tokens(Predicates.in(CsType.class));
-        final List<Token> dimention = tokens(UnsignedInteger.class);
+        final EnumLexeme<CsType> type = firstToken(Predicates.in(CsType.class));
+        final UnsignedInteger dimention = firstToken(UnsignedInteger.class);
 
         return new CoordinateSystem(first(), last(), index(),
-                type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
-                dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
+                type,
+                dimention,
                 tokens(Identifier.class),
                 tokens(Axis.class),
                 firstToken(Unit.class));
@@ -105,37 +99,47 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     public static class Ellipsoidal2DCoordinateSystemBuilder extends CoordinateSystemBuilder {
 
         @Override
-        public Predicate<? super Token> predicate(final int currentIndex) {
+        protected Predicate<? super Token> wkt2Predicate(final int currentIndex) {
+
             return switch (currentIndex) {
-                case 0 -> WktKeyword.CS.or(pb(Axis.class, Unit.class)); // WKT-CTS compatibility
-                case 1 -> SpecialSymbol.COMMA.and(this::wktCts).or(LeftDelimiter.class::isInstance);
-                case 2 -> CsType.ELLIPSOIDAL.or(pb(Axis.class, Unit.class).and(this::wktCts));
+                case 1 -> LeftDelimiter.class::isInstance;
+                case 2 -> CsType.ELLIPSOIDAL;
                 case 3 -> SpecialSymbol.COMMA;
                 case 4 -> pb(UnsignedInteger.class)
-                        .and(t -> ((UnsignedInteger) t).getSemantics().equals(2))
-                        .or(pb(Axis.class, Unit.class).and(this::wktCts));
+                        .and(t -> ((UnsignedInteger) t).getSemantics().equals(2));
                 default -> {
-                    if (odd() && isOpen()) {
-                        yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
-                    } else if (even() && isOpen()) {
-                        yield pb(Identifier.class).or(pb(Axis.class, Unit.class).and(this::wktCts));
-                    } else if (odd()) {
-                        yield SpecialSymbol.COMMA;
+                    if (isOpen()) {
+                        yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                     } else {
-                        yield pb(Axis.class, Unit.class);
+                        yield odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
                     }
                 }
             };
         }
 
         @Override
+        protected Predicate<? super Token> wktCtsPredicate(final int currentIndex) {
+            return switch (currentIndex) {
+                case 1 -> SpecialSymbol.COMMA;
+                case 2 -> pb(Axis.class, Unit.class);
+                case 3 -> SpecialSymbol.COMMA;
+                default -> {
+                    if (size() == 6) {
+                        yield Predicates.no();
+                    }
+                    yield odd() ? SpecialSymbol.COMMA : pb(Axis.class, Unit.class);
+                }
+            };
+        }
+
+        @Override
         public CoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
-            final List<Token> type = tokens(Predicates.in(CsType.class));
-            final List<Token> dimention = tokens(UnsignedInteger.class);
+            final EnumLexeme<CsType> type = firstToken(CsType.ELLIPSOIDAL);
+            final UnsignedInteger dimention = firstToken(UnsignedInteger.class);
 
             return new CoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
-                    type.isEmpty() ? null : (EnumLexeme<CsType>) type.get(0),
-                    dimention.isEmpty() ? null : (UnsignedInteger) dimention.get(0),
+                    type,
+                    dimention,
                     tokens(Identifier.class),
                     tokens(Axis.class),
                     firstToken(Unit.class));
