@@ -18,7 +18,7 @@ public enum CsType implements SemanticEnum<CsType> {
     PARAMETRIC("parametric", Type.SPATIAL),
     POLAR("polar", Type.SPATIAL),
     SPHERICAL("spherical", Type.SPATIAL),
-    VERTICAL("vertical", Type.TEMPORAL),
+    VERTICAL("vertical", Type.SPATIAL),
     @Deprecated TEMPORAL("temporal", Type.TEMPORAL),
     TEMPORAL_COUNT("temporalCount", Type.TEMPORAL),
     TEMPORAL_MEASURE("temporalMeasure", Type.TEMPORAL),

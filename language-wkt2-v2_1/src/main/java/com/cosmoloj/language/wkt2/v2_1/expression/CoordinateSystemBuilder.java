@@ -21,8 +21,12 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         implements PredicateIndexTokenBuilder<Token> {
 
     private static final int NOT_CLOSED = -1;
+
     private int rightDelimiterIndex = NOT_CLOSED;
     private boolean includeCs = false; // WKT-CTS compatibility
+    private int axisCount = 0;
+    private boolean unitRead = false;
+
 
     protected boolean isOpen() {
         return rightDelimiterIndex != NOT_CLOSED;
@@ -30,6 +34,10 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
 
     protected boolean wktCts(final Object token) {
         return !includeCs;
+    }
+
+    private CsType.Type csType() {
+        return ((EnumLexeme<CsType>) token(2)).getSemantics().getType();
     }
 
     @Override
@@ -53,7 +61,14 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
                 if (isOpen()) {
                     yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                 } else {
-                    yield odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
+                    if (null == csType()) {
+                        yield odd() ? pb(Axis.class) : SpecialSymbol.COMMA;
+                    } else {
+                        yield switch (csType()) {
+                            case SPATIAL -> odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
+                            case TEMPORAL, ORDINAL -> odd() ? pb(Axis.class) : SpecialSymbol.COMMA;
+                        };
+                    }
                 }
             }
         };
@@ -80,6 +95,12 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         }
         if (isOpen() && token instanceof RightDelimiter) {
             rightDelimiterIndex = size() - 1;
+        }
+        if (token instanceof Axis) {
+            axisCount++;
+        }
+        if (token instanceof Unit) {
+            unitRead = true;
         }
     }
 

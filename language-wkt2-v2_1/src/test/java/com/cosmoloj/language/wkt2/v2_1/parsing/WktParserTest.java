@@ -1808,8 +1808,7 @@ public class WktParserTest {
                 + "TIMECRS[\"GPS Time\","
                 + "TIMEDATUM[\"Time origin\",TIMEORIGIN[1980-01-01]],"
                 + "CS[temporal,1],"
-                + "AXIS[\"time (T)\",future],"
-                + "TIMEUNIT[\"day\",86400]]]";
+                + "AXIS[\"time (T)\",future,TIMEUNIT[\"day\",86400]]]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -1881,7 +1880,7 @@ public class WktParserTest {
         Assertions.assertEquals("time (T)", axisParametric.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.future, axisParametric.getDirection().getType().getSemantics());
 
-        final var parametricUnit = timeCs.getUnit();
+        final var parametricUnit = axisParametric.getUnit();
         Assertions.assertTrue(parametricUnit instanceof Unit.Time);
         Assertions.assertEquals("day", parametricUnit.getName().getSemantics());
         Assertions.assertTrue(parametricUnit.getConversionFactor().getSemantics() instanceof Integer);
@@ -2683,7 +2682,7 @@ public class WktParserTest {
 
         final var text = "TIMECRS[\"GPS Time\","
                 + "TDATUM[\"Time origin\",TIMEORIGIN[1980-01-01T00:00:00.0Z]],"
-                + "CS[temporal,1],AXIS[\"time\",future],TIMEUNIT[\"day\",86400.0]]";
+                + "CS[temporal,1],AXIS[\"time\",future,TIMEUNIT[\"day\",86400.0]]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -2710,7 +2709,7 @@ public class WktParserTest {
         Assertions.assertEquals(Direction.future, axis0.getDirection().getType().getSemantics());
         Assertions.assertNull(axis0.getOrder());
 
-        final var unit = cs.getUnit();
+        final var unit = axis0.getUnit();
         Assertions.assertTrue(unit instanceof Unit.Time);
         Assertions.assertEquals("day", unit.getName().getSemantics());
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
@@ -6639,8 +6638,7 @@ public class WktParserTest {
                 + "TIMECRS(\"GPS Time\","
                 + "TIMEDATUM(\"Time origin\",TIMEORIGIN(1980-01-01)),"
                 + "CS(temporal,1),"
-                + "AXIS(\"time (T)\",future),"
-                + "TIMEUNIT(\"day\",86400)))";
+                + "AXIS(\"time (T)\",future,TIMEUNIT(\"day\",86400))))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -6712,7 +6710,7 @@ public class WktParserTest {
         Assertions.assertEquals("time (T)", axisParametric.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.future, axisParametric.getDirection().getType().getSemantics());
 
-        final var parametricUnit = timeCs.getUnit();
+        final var parametricUnit = axisParametric.getUnit();
         Assertions.assertTrue(parametricUnit instanceof Unit.Time);
         Assertions.assertEquals("day", parametricUnit.getName().getSemantics());
         Assertions.assertTrue(parametricUnit.getConversionFactor().getSemantics() instanceof Integer);
@@ -7512,7 +7510,7 @@ public class WktParserTest {
 
         final var text = "TIMECRS(\"GPS Time\","
                 + "TDATUM(\"Time origin\",TIMEORIGIN(1980-01-01T00:00:00.0Z)),"
-                + "CS(temporal,1),AXIS(\"time\",future),TIMEUNIT(\"day\",86400.0))";
+                + "CS(temporal,1),AXIS(\"time\",future,TIMEUNIT(\"day\",86400.0)))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -7539,7 +7537,7 @@ public class WktParserTest {
         Assertions.assertEquals(Direction.future, axis0.getDirection().getType().getSemantics());
         Assertions.assertNull(axis0.getOrder());
 
-        final var unit = cs.getUnit();
+        final var unit = axis0.getUnit();
         Assertions.assertTrue(unit instanceof Unit.Time);
         Assertions.assertEquals("day", unit.getName().getSemantics());
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
