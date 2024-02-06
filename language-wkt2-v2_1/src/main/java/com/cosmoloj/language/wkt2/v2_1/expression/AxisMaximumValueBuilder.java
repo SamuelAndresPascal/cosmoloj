@@ -20,7 +20,7 @@ public class AxisMaximumValueBuilder extends CheckTokenBuilder<Lexeme, AxisMaxim
     @Override
     public List<Predicate<? super Lexeme>> predicates() {
         return List.of(
-                WktKeyword.AXISMINVALUE.or(WktKeyword.AXISMAXVALUE),
+                WktKeyword.AXISMAXVALUE,
                 LeftDelimiter.class::isInstance,
                 SignedNumericLiteral.class::isInstance,
                 RightDelimiter.class::isInstance);
