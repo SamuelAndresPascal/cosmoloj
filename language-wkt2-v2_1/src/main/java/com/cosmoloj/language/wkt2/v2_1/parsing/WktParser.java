@@ -102,6 +102,10 @@ import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
 import java.util.ArrayList;
 import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValue;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValueBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValue;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValueBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.ExtentBuilder;
@@ -1279,6 +1283,30 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 label,
                 flushAndLex(LeftDelimiter.class),
                 flushAndLex(UnsignedInteger.class),
+                flushAndLex(RightDelimiter.class)));
+    }
+
+    public AxisMinimumValue axisMinimumValue() throws LanguageException {
+        return axisMinimumValue(flushAndLexEnum(WktKeyword.class));
+    }
+
+    public AxisMinimumValue axisMinimumValue(final EnumLexeme<WktKeyword> label) throws LanguageException {
+        return build(new AxisMinimumValueBuilder().list(
+                label,
+                flushAndLex(LeftDelimiter.class),
+                numberParser.signedNumericLiteral(),
+                flushAndLex(RightDelimiter.class)));
+    }
+
+    public AxisMaximumValue axisMaximumValue() throws LanguageException {
+        return axisMaximumValue(flushAndLexEnum(WktKeyword.class));
+    }
+
+    public AxisMaximumValue axisMaximumValue(final EnumLexeme<WktKeyword> label) throws LanguageException {
+        return build(new AxisMaximumValueBuilder().list(
+                label,
+                flushAndLex(LeftDelimiter.class),
+                numberParser.signedNumericLiteral(),
                 flushAndLex(RightDelimiter.class)));
     }
 

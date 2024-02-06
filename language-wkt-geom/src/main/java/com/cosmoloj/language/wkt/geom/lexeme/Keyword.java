@@ -1,4 +1,4 @@
-package com.cosmoloj.language.wkt.geom;
+package com.cosmoloj.language.wkt.geom.lexeme;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;

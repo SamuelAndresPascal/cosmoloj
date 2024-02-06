@@ -2,6 +2,8 @@ package com.cosmoloj.language.wkt2.v2_1.parsing;
 
 import com.cosmoloj.language.api.exception.LanguageException;
 import com.cosmoloj.language.wkt2.v2_1.expression.Area;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValue;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValue;
 import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateSystem;
 import com.cosmoloj.language.wkt2.v2_1.expression.GeodeticCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.SimpleCrsShell;
@@ -48,19 +50,19 @@ public class WktParserTestM2m1 {
     @Test
     public void compound_crs_test_c_1() throws LanguageException {
 
-        final var text = "COMPOUNDCRS[\"GPS position and time\","
-                + "GEODCRS[\"WGS 84\","
-                + "DATUM[\"World Geodetic System 1984\","
-                + "ELLIPSOID[\"WGS 84\",6378137,298.257223563]],"
-                + "CS[ellipsoidal,2],"
-                + "AXIS[\"(lat)\",north,ORDER[1]],"
-                + "AXIS[\"(lon)\",east,ORDER[2]],"
-                + "ANGLEUNIT[\"degree\",0.0174532925199433]],"
-                + "TIMECRS[\"GPS Time\","
-                + "TIMEDATUM[\"Time origin\",TIMEORIGIN[1980-01-01]],"
-                + "CS[temporal,1],"
-                + "AXIS[\"time (T)\",future],"
-                + "TEMPORALQUANTITY[\"day\",86400]]]";
+        final var text = """
+                         COMPOUNDCRS["GPS position and time",
+                         GEODCRS["WGS 84",
+                         DATUM["World Geodetic System 1984",
+                         ELLIPSOID["WGS 84",6378137,298.257223563]],
+                         CS[ellipsoidal,2],
+                         AXIS["(lat)",north,ORDER[1]],
+                         AXIS["(lon)",east,ORDER[2]],
+                         ANGLEUNIT["degree",0.0174532925199433]],
+                         TIMECRS["GPS Time",
+                         TIMEDATUM["Time origin",TIMEORIGIN[1980-01-01]],
+                         CS[temporal,1],
+                         AXIS["time (T)",future,TEMPORALQUANTITY["day",86400]]]]""";
 
         final WktParser parser = WktParser.of(text);
 
@@ -132,7 +134,7 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals("time (T)", axisParametric.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.future, axisParametric.getDirection().getType().getSemantics());
 
-        final var parametricUnit = timeCs.getUnit();
+        final var parametricUnit = axisParametric.getUnit();
         Assertions.assertTrue(parametricUnit instanceof Unit.Time);
         Assertions.assertEquals("day", parametricUnit.getName().getSemantics());
         Assertions.assertTrue(parametricUnit.getConversionFactor().getSemantics() instanceof Integer);
@@ -146,7 +148,7 @@ public class WktParserTestM2m1 {
 
         final var text = "TIMECRS[\"GPS Time\","
                 + "TDATUM[\"Time origin\",TIMEORIGIN[1980-01-01T00:00:00.0Z]],"
-                + "CS[temporal,1],AXIS[\"time\",future],TEMPORALQUANTITY[\"day\",86400.0]]";
+                + "CS[temporal,1],AXIS[\"time\",future,TEMPORALQUANTITY[\"day\",86400.0]]]";
 
         final WktParser parser = WktParser.of(text);
 
@@ -173,7 +175,7 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals(Direction.future, axis0.getDirection().getType().getSemantics());
         Assertions.assertNull(axis0.getOrder());
 
-        final var unit = cs.getUnit();
+        final var unit = axis0.getUnit();
         Assertions.assertTrue(unit instanceof Unit.Time);
         Assertions.assertEquals("day", unit.getName().getSemantics());
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
@@ -263,6 +265,32 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals(2, unit.getIdentifiers().size());
     }
 
+    @Test
+    public void axisMinValue1() throws LanguageException {
+
+        final var text = """
+                         AXISMINVALUE[-2.3]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final AxisMinimumValue value = parser.axisMinimumValue();
+
+        Assertions.assertEquals(Double.valueOf(-2.3), value.getValue().getSemantics());
+    }
+
+    @Test
+    public void axisMaxValue1() throws LanguageException {
+
+        final var text = """
+                         AXISMAXVALUE[-2.3]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final AxisMaximumValue value = parser.axisMaximumValue();
+
+        Assertions.assertEquals(Double.valueOf(-2.3), value.getValue().getSemantics());
+    }
+
 
     @Test
     public void usage_area_test_2() throws LanguageException {
@@ -290,19 +318,19 @@ public class WktParserTestM2m1 {
     @Test
     public void compound_crs_test_c_2() throws LanguageException {
 
-        final var text = "COMPOUNDCRS(\"GPS position and time\","
-                + "GEODCRS(\"WGS 84\","
-                + "DATUM(\"World Geodetic System 1984\","
-                + "ELLIPSOID(\"WGS 84\",6378137,298.257223563)),"
-                + "CS(ellipsoidal,2),"
-                + "AXIS(\"(lat)\",north,ORDER(1)),"
-                + "AXIS(\"(lon)\",east,ORDER(2)),"
-                + "ANGLEUNIT(\"degree\",0.0174532925199433)),"
-                + "TIMECRS(\"GPS Time\","
-                + "TIMEDATUM(\"Time origin\",TIMEORIGIN(1980-01-01)),"
-                + "CS(temporal,1),"
-                + "AXIS(\"time (T)\",future),"
-                + "TEMPORALQUANTITY(\"day\",86400)))";
+        final var text = """
+                         COMPOUNDCRS("GPS position and time",
+                         GEODCRS("WGS 84",
+                         DATUM("World Geodetic System 1984",
+                         ELLIPSOID("WGS 84",6378137,298.257223563)),
+                         CS(ellipsoidal,2),
+                         AXIS("(lat)",north,ORDER(1)),
+                         AXIS("(lon)",east,ORDER(2)),
+                         ANGLEUNIT("degree",0.0174532925199433)),
+                         TIMECRS("GPS Time",
+                         TIMEDATUM("Time origin",TIMEORIGIN(1980-01-01)),
+                         CS(temporal,1),
+                         AXIS("time (T)",future,TEMPORALQUANTITY("day",86400))))""";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -374,7 +402,7 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals("time (T)", axisParametric.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.future, axisParametric.getDirection().getType().getSemantics());
 
-        final var parametricUnit = timeCs.getUnit();
+        final var parametricUnit = axisParametric.getUnit();
         Assertions.assertTrue(parametricUnit instanceof Unit.Time);
         Assertions.assertEquals("day", parametricUnit.getName().getSemantics());
         Assertions.assertTrue(parametricUnit.getConversionFactor().getSemantics() instanceof Integer);
@@ -388,7 +416,7 @@ public class WktParserTestM2m1 {
 
         final var text = "TIMECRS(\"GPS Time\","
                 + "TDATUM(\"Time origin\",TIMEORIGIN(1980-01-01T00:00:00.0Z)),"
-                + "CS(temporal,1),AXIS(\"time\",future),TEMPORALQUANTITY(\"day\",86400.0))";
+                + "CS(temporal,1),AXIS(\"time\",future,TEMPORALQUANTITY(\"day\",86400.0)))";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
@@ -415,7 +443,7 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals(Direction.future, axis0.getDirection().getType().getSemantics());
         Assertions.assertNull(axis0.getOrder());
 
-        final var unit = cs.getUnit();
+        final var unit = axis0.getUnit();
         Assertions.assertTrue(unit instanceof Unit.Time);
         Assertions.assertEquals("day", unit.getName().getSemantics());
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Double);
@@ -503,5 +531,31 @@ public class WktParserTestM2m1 {
         Assertions.assertEquals("calendar second", unit.getName().getSemantics());
         Assertions.assertNull(unit.getConversionFactor());
         Assertions.assertEquals(2, unit.getIdentifiers().size());
+    }
+
+    @Test
+    public void axisMinValue2() throws LanguageException {
+
+        final var text = """
+                         AXISMINVALUE(-2.3)""";
+
+        final WktParser parser = WktParser.of(text, '(', ')');
+
+        final AxisMinimumValue value = parser.axisMinimumValue();
+
+        Assertions.assertEquals(Double.valueOf(-2.3), value.getValue().getSemantics());
+    }
+
+    @Test
+    public void axisMaxValue2() throws LanguageException {
+
+        final var text = """
+                         AXISMAXVALUE(-2.3)""";
+
+        final WktParser parser = WktParser.of(text, '(', ')');
+
+        final AxisMaximumValue value = parser.axisMaximumValue();
+
+        Assertions.assertEquals(Double.valueOf(-2.3), value.getValue().getSemantics());
     }
 }
