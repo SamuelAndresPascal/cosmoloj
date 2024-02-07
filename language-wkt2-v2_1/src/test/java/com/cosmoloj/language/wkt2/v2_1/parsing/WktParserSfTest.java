@@ -2582,7 +2582,7 @@ public class WktParserSfTest {
     public void projcs_test_3a() throws LanguageException, IOException {
 
         try (var scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
-                WktParserTest.class.getResourceAsStream("example3a"))))) {
+                WktParserBracketTest.class.getResourceAsStream("example3a"))))) {
 
             final WktLexer lexer = new WktLexer(scanner, new ArrayList<>(), LD, RD);
             lexer.initialize();
@@ -2824,7 +2824,7 @@ public class WktParserSfTest {
     public void projcs_test_3b() throws LanguageException, IOException {
 
         try (var scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
-                WktParserTest.class.getResourceAsStream("example3b"))))) {
+                WktParserBracketTest.class.getResourceAsStream("example3b"))))) {
 
             final WktLexer lexer = new WktLexer(scanner, new ArrayList<>(), '(', ')');
             lexer.initialize();
@@ -3066,7 +3066,7 @@ public class WktParserSfTest {
     public void projcs_test_3c() throws LanguageException, IOException {
 
         try (var scanner = new DefaultStreamScanner(new BufferedReader(new InputStreamReader(
-                WktParserTest.class.getResourceAsStream("example3c"))))) {
+                WktParserBracketTest.class.getResourceAsStream("example3c"))))) {
 
             final WktLexer lexer = new WktLexer(scanner, new ArrayList<>(), LD, RD);
             lexer.initialize();

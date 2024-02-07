@@ -16,6 +16,7 @@ import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.Direction;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.PixelInCell;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedUnicodeText;
+import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.RangeMeaningType;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.SpecialSymbol;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
 import java.util.ArrayList;
@@ -49,19 +50,20 @@ public class WktLexer extends AbstractPredictiveMappingUnpredictiveLexer {
                         }
                     },
                 Set.of(WktKeyword.builder(),
-                CsType.builder(),
-                Direction.builder(),
-                PixelInCell.builder(),
-                QuotedLatinText.builder(),
-                QuotedUnicodeText.builder(),
-                AxisNameAbrev.builder(),
-                UnsignedInteger.builder(Character::isDigit),
-                Sign.builder(),
-                SpecialSymbol.builder(),
-                LeftDelimiter.builder(leftDelimiter),
-                RightDelimiter.builder(rightDelimiter),
-                DecimalSeparator.builder('.'),
-                ExponentSeparator.builder('E')));
+                        RangeMeaningType.builder(),
+                        CsType.builder(),
+                        Direction.builder(),
+                        PixelInCell.builder(),
+                        QuotedLatinText.builder(),
+                        QuotedUnicodeText.builder(),
+                        AxisNameAbrev.builder(),
+                        UnsignedInteger.builder(Character::isDigit),
+                        Sign.builder(),
+                        SpecialSymbol.builder(),
+                        LeftDelimiter.builder(leftDelimiter),
+                        RightDelimiter.builder(rightDelimiter),
+                        DecimalSeparator.builder('.'),
+                        ExponentSeparator.builder('E')));
     }
 
     public static WktLexer initialize(final String text, final int leftDelimiter, final int rightDelimiter) {

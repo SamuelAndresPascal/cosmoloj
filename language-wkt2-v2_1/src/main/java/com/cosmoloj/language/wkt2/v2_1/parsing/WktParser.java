@@ -106,11 +106,14 @@ import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValue;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValueBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValue;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValueBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisRangeMeaning;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisRangeMeaningBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.ExtentBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Usage;
 import com.cosmoloj.language.wkt2.v2_1.expression.UsageBuilder;
+import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.RangeMeaningType;
 
 /**
  *
@@ -1283,6 +1286,18 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 label,
                 flushAndLex(LeftDelimiter.class),
                 flushAndLex(UnsignedInteger.class),
+                flushAndLex(RightDelimiter.class)));
+    }
+
+    public AxisRangeMeaning axisRangeMeaning() throws LanguageException {
+        return axisRangeMeaning(flushAndLexEnum(WktKeyword.class));
+    }
+
+    public AxisRangeMeaning axisRangeMeaning(final EnumLexeme<WktKeyword> label) throws LanguageException {
+        return build(new AxisRangeMeaningBuilder().list(
+                label,
+                flushAndLex(LeftDelimiter.class),
+                flushAndLexEnum(RangeMeaningType.class),
                 flushAndLex(RightDelimiter.class)));
     }
 

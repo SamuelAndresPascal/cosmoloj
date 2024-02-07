@@ -6,6 +6,7 @@ import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.CsType;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.Direction;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.PixelInCell;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.QuotedLatinText;
+import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.RangeMeaningType;
 import com.cosmoloj.language.wkt2.v2_1.lexeme.simple.WktKeyword;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,25 @@ public class WktLexerTest {
     private static final int RD = ']';
 
     @Test
-    public void readPixelInCellLexeme_1() throws LanguageException {
+    public void readAxisRangeMeaning1() throws LanguageException {
+
+        final WktLexer lexer = WktLexer.initialize("wraparound", LD, RD);
+
+        lexer.lex(RangeMeaningType.class);
+        Assertions.assertEquals(RangeMeaningType.WRAPAROUND, lexer.lexeme().getSemantics());
+    }
+
+    @Test
+    public void readAxisRangeMeaning2() throws LanguageException {
+
+        final WktLexer lexer = WktLexer.initialize("exact", LD, RD);
+
+        lexer.lex(RangeMeaningType.class);
+        Assertions.assertEquals(RangeMeaningType.EXACT, lexer.lexeme().getSemantics());
+    }
+
+    @Test
+    public void readPixelInCellLexeme1() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("cellCenter", LD, RD);
 
@@ -29,7 +48,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readPixelInCellLexeme_2() throws LanguageException {
+    public void readPixelInCellLexeme2() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("cellcenter", LD, RD);
 
@@ -38,7 +57,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readDirectionLexeme_1() throws LanguageException {
+    public void readDirectionLexeme1() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("clockwise", LD, RD);
 
@@ -47,7 +66,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readCsTypeLexeme_1() throws LanguageException {
+    public void readCsTypeLexeme1() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("affine", LD, RD);
 
@@ -56,7 +75,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_1() throws LanguageException {
+    public void readWktKeywordLexeme1() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("PROJCRS", LD, RD);
 
@@ -65,7 +84,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_2() throws LanguageException {
+    public void readWktKeywordLexeme2() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("PROJCRS", LD, RD);
 
@@ -74,7 +93,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_3() throws LanguageException {
+    public void readWktKeywordLexeme3() throws LanguageException {
 
         final LanguageException ex = Assertions.assertThrows(LanguageException.class, () -> {
 
@@ -87,7 +106,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_3_2() throws LanguageException {
+    public void readWktKeywordLexeme32() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("  PROJCRS  ", LD, RD);
 
@@ -97,7 +116,7 @@ public class WktLexerTest {
         Assertions.assertEquals(WktKeyword.PROJCRS, lexer.lexeme().getSemantics());
     }
 
-    public void readWktKeywordLexeme_3_3_1() throws LanguageException {
+    public void readWktKeywordLexeme331() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("LINES2TRING", LD, RD);
 
@@ -106,7 +125,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_3_3_2() throws LanguageException {
+    public void readWktKeywordLexeme332() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize(" \"LINES2TRING\"  ", LD, RD);
 
@@ -117,7 +136,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_4() throws LanguageException {
+    public void readWktKeywordLexeme4() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("GEODCRS", LD, RD);
 
@@ -126,7 +145,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void readWktKeywordLexeme_5() throws LanguageException {
+    public void readWktKeywordLexeme5() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("USAGE", LD, RD);
 
@@ -135,7 +154,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_1() throws LanguageException {
+    public void characterStringLiteralLexeme1() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"135\"", LD, RD);
 
@@ -144,7 +163,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_2() throws LanguageException {
+    public void characterStringLiteralLexeme2() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"1''35\"", LD, RD);
 
@@ -153,7 +172,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_3() throws LanguageException {
+    public void characterStringLiteralLexeme3() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"'1'35\"", LD, RD);
 
@@ -162,7 +181,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_4() throws LanguageException {
+    public void characterStringLiteralLexeme4() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"1654\"", LD, RD);
 
@@ -172,7 +191,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_5() throws LanguageException {
+    public void characterStringLiteralLexeme5() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"1654\" \"adfum\" \"bd''f um\"", LD, RD);
 
@@ -188,7 +207,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_6() throws LanguageException {
+    public void characterStringLiteralLexeme6() throws LanguageException {
 
         final WktLexer lexer =  WktLexer.initialize("\"1''35\"", LD, RD);
 
@@ -198,7 +217,7 @@ public class WktLexerTest {
     }
 
     @Test
-    public void characterStringLiteralLexeme_8() throws LanguageException {
+    public void characterStringLiteralLexeme8() throws LanguageException {
 
         final WktLexer lexer = WktLexer.initialize("\"1'35\"", LD, RD);
 
