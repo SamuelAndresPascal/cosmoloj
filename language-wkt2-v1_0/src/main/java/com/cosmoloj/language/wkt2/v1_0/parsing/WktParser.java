@@ -1208,29 +1208,16 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         case ID, AUTHORITY -> identifier(out1);
                         default -> unit(out1);
                     });
-        } else {
-
-            if (comma()) {
-                builder.list(lexEnum(SpecialSymbol.class));
-
-                final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-                builder.list(
-                        switch (lex.getSemantics()) {
-                            case ORDER -> axisOrder(lex);
-                            case ID, AUTHORITY -> identifier(lex);
-                            default -> unit(lex);
-                        });
-            }
         }
 
-        if (comma()) {
+        while (comma()) {
             builder.list(lexEnum(SpecialSymbol.class));
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
 
             builder.list(
                     switch (lex.getSemantics()) {
+                        case ORDER -> axisOrder(lex);
                         case ID, AUTHORITY -> identifier(lex);
                         default -> unit(lex);
                     });

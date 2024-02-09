@@ -4884,7 +4884,7 @@ public class WktParserParenTest {
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final AxisRangeMeaning meaning = parser.axisRangeMeaning();
+        final AxisRangeMeaning meaning = parser.rangeMeaning();
 
         Assertions.assertEquals(RangeMeaningType.EXACT, meaning.getType().getSemantics());
     }
@@ -4897,7 +4897,7 @@ public class WktParserParenTest {
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final AxisRangeMeaning meaning = parser.axisRangeMeaning();
+        final AxisRangeMeaning meaning = parser.rangeMeaning();
 
         Assertions.assertEquals(RangeMeaningType.WRAPAROUND, meaning.getType().getSemantics());
     }

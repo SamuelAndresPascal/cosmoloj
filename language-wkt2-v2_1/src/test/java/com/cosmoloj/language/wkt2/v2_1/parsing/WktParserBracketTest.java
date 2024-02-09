@@ -4206,9 +4206,36 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void axis_test_a_1() throws LanguageException {
+    public void axis_test_a() throws LanguageException {
 
-        final var text = "AXIS[\"distance (r)\",awayFrom,ORDER[1],LENGTHUNIT[\"kilometre\",1000]]";
+        final var text = """
+                         AXIS["distance (r)",awayFrom,ORDER[1],LENGTHUNIT["kilometre",1000]]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final var axis = parser.axis();
+
+        Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
+
+        final var direction = axis.getDirection();
+
+        Assertions.assertEquals(Direction.awayFrom, direction.getType().getSemantics());
+        Assertions.assertNull(direction.getComplement());
+
+        final var order = axis.getOrder();
+        Assertions.assertEquals(1, order.getValue().getSemantics().intValue());
+
+        final var unit = axis.getUnit();
+        Assertions.assertEquals("kilometre", unit.getName().getSemantics());
+        Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Integer);
+        Assertions.assertEquals(1000, unit.getConversionFactor().getSemantics().intValue());
+    }
+
+    @Test
+    public void axis_test_a1() throws LanguageException {
+
+        final var text = """
+                         AXIS["distance (r)",awayFrom,ORDER[1],RANGEMEANING[exact],LENGTHUNIT["kilometre",1000]]""";
 
         final WktParser parser = WktParser.of(text);
 
@@ -4884,7 +4911,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final AxisRangeMeaning meaning = parser.axisRangeMeaning();
+        final AxisRangeMeaning meaning = parser.rangeMeaning();
 
         Assertions.assertEquals(RangeMeaningType.EXACT, meaning.getType().getSemantics());
     }
@@ -4897,7 +4924,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final AxisRangeMeaning meaning = parser.axisRangeMeaning();
+        final AxisRangeMeaning meaning = parser.rangeMeaning();
 
         Assertions.assertEquals(RangeMeaningType.WRAPAROUND, meaning.getType().getSemantics());
     }

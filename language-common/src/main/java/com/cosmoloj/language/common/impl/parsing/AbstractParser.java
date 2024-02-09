@@ -33,7 +33,7 @@ public abstract class AbstractParser<L extends Lexer> implements Parser<L> {
 
     private final L lexer;
 
-    public AbstractParser(final L lexer) {
+    protected AbstractParser(final L lexer) {
         this.lexer = lexer;
     }
 

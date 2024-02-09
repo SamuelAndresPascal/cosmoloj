@@ -106,6 +106,8 @@ import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValue;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValueBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValue;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValueBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisRange;
+import com.cosmoloj.language.wkt2.v2_1.expression.AxisRangeBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisRangeMeaning;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisRangeMeaningBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
@@ -1195,7 +1197,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
     public Axis axis(final EnumLexeme<WktKeyword> label) throws LanguageException {
 
-        final Lexeme[] out = new Lexeme[2];
+        Lexeme[] out = new Lexeme[2];
 
         final TokenBuilder<Token, Axis> builder = new AxisBuilder().list(label,
                 flushAndLex(LeftDelimiter.class),
@@ -1203,43 +1205,65 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 flushAndLexEnum(SpecialSymbol.class),
                 axisDirection(out));
 
-        if (out[0] != null && out[1] != null) {
-            builder.list(out[0]);
+        while (out[0] != null && out[1] != null) {
+            builder.list(out[0]); // comma
 
             final EnumLexeme<WktKeyword> out1 = (EnumLexeme<WktKeyword>) out[1];
+            out[0] = null;
+            out[1] = null;
 
-            builder.list(
-                    switch (out1.getSemantics()) {
-                        case ORDER -> axisOrder(out1);
-                        case ID, AUTHORITY -> identifier(out1);
-                        default -> unit(out1);
-                    });
-        } else {
 
-            if (comma()) {
-                builder.list(lexEnum(SpecialSymbol.class));
-
-                final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-
-                builder.list(
-                        switch (lex.getSemantics()) {
-                            case ORDER -> axisOrder(lex);
-                            case ID, AUTHORITY -> identifier(lex);
-                            default -> unit(lex);
-                        });
+            switch (out1.getSemantics()) {
+                case ORDER -> {
+                    builder.list(axisOrder(out1));
+                    out[0] = out[1] = null;
+                }
+                case AXISMINVALUE, AXISMAXVALUE, RANGEMEANING -> {
+                    final Lexeme[] outOfRange = new Lexeme[2];
+                    builder.list(axisRange(out1, outOfRange));
+                    out = outOfRange;
+                }
+                case ID, AUTHORITY -> {
+                    builder.list(identifier(out1));
+                    out[0] = out[1] = null;
+                }
+                default -> {
+                    builder.list(unit(out1));
+                    out[0] = out[1] = null;
+                }
             }
         }
 
-        if (comma()) {
-            builder.list(lexEnum(SpecialSymbol.class));
+        while (comma() || (out[0] != null && out[1] != null)) {
 
-            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
+            final EnumLexeme<WktKeyword> lex;
+            if (out[0] != null && out[1] != null) {
+                builder.list(out[0]); // comma
+                lex = (EnumLexeme<WktKeyword>) out[1];
+            } else {
+                builder.list(lexEnum(SpecialSymbol.class));
+                lex = flushAndLexEnum(WktKeyword.class);
+            }
 
-            builder.list(
-                    switch (lex.getSemantics()) {
-                        case ID, AUTHORITY -> identifier(lex);
-                        default -> unit(lex);
-                    });
+            switch (lex.getSemantics()) {
+                case ORDER -> {
+                    builder.list(axisOrder(lex));
+                    out[0] = out[1] = null;
+                }
+                case AXISMINVALUE, AXISMAXVALUE, RANGEMEANING -> {
+                    final Lexeme[] outOfRange = new Lexeme[2];
+                    builder.list(axisRange(lex, outOfRange));
+                    out = outOfRange;
+                }
+                case ID, AUTHORITY -> {
+                    builder.list(identifier(lex));
+                    out[0] = out[1] = null;
+                }
+                default -> {
+                    builder.list(unit(lex));
+                    out[0] = out[1] = null;
+                }
+            }
         }
 
         return build(patternIndentifiers(builder)
@@ -1255,6 +1279,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         final TokenBuilder<Token, AxisDirection> builder = new AxisDirectionBuilder().list(
                 flushAndLexEnum(Direction.class));
 
+        // la direction peut éventuellement comporter un composant MERIDIAN ou BEARING
         if (comma()) {
             out[0] = lexEnum(SpecialSymbol.class);
             builder.list(out[0]);
@@ -1270,7 +1295,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                     builder.list(bearing(lex));
                     out[0] = out[1] = null;
                 }
-                default -> out[1] = lex;
+                default -> out[1] = lex; // si on a lu autre chose, alors c'est qu'on a dépassé la porté de la direction
             }
         }
 
@@ -1289,11 +1314,48 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                 flushAndLex(RightDelimiter.class)));
     }
 
-    public AxisRangeMeaning axisRangeMeaning() throws LanguageException {
-        return axisRangeMeaning(flushAndLexEnum(WktKeyword.class));
+    public AxisRange axisRange(final EnumLexeme<WktKeyword> label, final Lexeme[] out) throws LanguageException {
+
+        final var builder = new AxisRangeBuilder();
+
+        switch (label.getSemantics()) {
+            case AXISMINVALUE -> builder.list(axisMinimumValue(label));
+            case AXISMAXVALUE -> builder.list(axisMaximumValue(label));
+            case RANGEMEANING -> builder.list(rangeMeaning(label));
+            default -> {
+            }
+        }
+
+        while (comma()) {
+            out[0] = lexEnum(SpecialSymbol.class);
+            builder.list(out[0]);
+
+            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
+            out[1] = lex;
+
+            switch (lex.getSemantics()) {
+                case AXISMAXVALUE -> {
+                    builder.list(axisMaximumValue(lex));
+                    out[0] = out[1] = null;
+                }
+                case RANGEMEANING -> {
+                    builder.list(rangeMeaning(lex));
+                    out[0] = out[1] = null;
+                }
+                default -> {
+                    out[1] = lex;
+                }
+            }
+        }
+
+        return build(builder);
     }
 
-    public AxisRangeMeaning axisRangeMeaning(final EnumLexeme<WktKeyword> label) throws LanguageException {
+    public AxisRangeMeaning rangeMeaning() throws LanguageException {
+        return rangeMeaning(flushAndLexEnum(WktKeyword.class));
+    }
+
+    public AxisRangeMeaning rangeMeaning(final EnumLexeme<WktKeyword> label) throws LanguageException {
         return build(new AxisRangeMeaningBuilder().list(
                 label,
                 flushAndLex(LeftDelimiter.class),
