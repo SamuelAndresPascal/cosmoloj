@@ -27,12 +27,13 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
             case 2 -> AxisNameAbrev.class::isInstance;
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> AxisDirection.class::isInstance;
-            case 6 -> pb(AxisOrder.class, Unit.class, Identifier.class);
-            case 8 -> pb(Identifier.class, Unit.class);
+            case 6 -> pb(AxisOrder.class, AxisRange.class, Unit.class, Identifier.class);
+            case 8 -> pb(AxisRange.class, Unit.class, Identifier.class);
+            case 10 -> pb(Identifier.class, Unit.class);
             default -> {
                 if (odd() && beyond(4)) {
                     yield pb(RightDelimiter.class).or(SpecialSymbol.COMMA);
-                } else if (even() && beyond(8)) {
+                } else if (even() && beyond(10)) {
                     yield pb(Identifier.class);
                 }
                 yield Predicates.no();
@@ -47,19 +48,12 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
 
     @Override
     public Axis build() {
-
-        final AxisOrder order = (size() >= 8 && testToken(6, AxisOrder.class)) ?  token(6) : null;
-
-        final Unit unit;
-        if (size() >= 8 && testToken(6, Unit.class)) {
-            unit = token(6);
-        } else if (size() >= 10 && testToken(8, Unit.class)) {
-            unit = token(8);
-        } else {
-            unit = null;
-        }
-
         return new Axis(first(), last(), index(),
-                token(2), token(4), order, unit, tokens(Identifier.class));
+                token(2),
+                token(4),
+                firstToken(AxisOrder.class),
+                firstToken(AxisRange.class),
+                firstToken(Unit.class),
+                tokens(Identifier.class));
     }
 }

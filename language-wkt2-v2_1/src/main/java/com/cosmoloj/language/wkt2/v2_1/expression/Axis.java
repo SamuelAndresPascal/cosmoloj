@@ -13,16 +13,18 @@ public class Axis extends AbstractExpression {
     private final AxisNameAbrev nameAbrev;
     private final AxisDirection direction;
     private final AxisOrder order;
+    private final AxisRange range;
     private final Unit unit;
     private final List<Identifier> identifiers;
 
     public Axis(final int start, final int end, final int index, final AxisNameAbrev nameAbrev,
-            final AxisDirection direction, final AxisOrder order, final Unit unit,
+            final AxisDirection direction, final AxisOrder order, final AxisRange range, final Unit unit,
             final List<Identifier> identifiers) {
         super(start, end, index);
         this.nameAbrev = nameAbrev;
         this.direction = direction;
         this.order = order;
+        this.range = range;
         this.unit = unit;
         this.identifiers = identifiers;
     }
@@ -37,6 +39,10 @@ public class Axis extends AbstractExpression {
 
     public AxisOrder getOrder() {
         return this.order;
+    }
+
+    public AxisRange getRange() {
+        return this.range;
     }
 
     public Unit getUnit() {

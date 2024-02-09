@@ -1328,18 +1328,16 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
 
         while (comma()) {
             out[0] = lexEnum(SpecialSymbol.class);
-            builder.list(out[0]);
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
-            out[1] = lex;
 
             switch (lex.getSemantics()) {
                 case AXISMAXVALUE -> {
-                    builder.list(axisMaximumValue(lex));
+                    builder.list(out[0], axisMaximumValue(lex));
                     out[0] = out[1] = null;
                 }
                 case RANGEMEANING -> {
-                    builder.list(rangeMeaning(lex));
+                    builder.list(out[0], rangeMeaning(lex));
                     out[0] = out[1] = null;
                 }
                 default -> {

@@ -4206,7 +4206,7 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void axis_test_a() throws LanguageException {
+    public void axis1() throws LanguageException {
 
         final var text = """
                          AXIS["distance (r)",awayFrom,ORDER[1],LENGTHUNIT["kilometre",1000]]""";
@@ -4232,7 +4232,7 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void axis_test_a1() throws LanguageException {
+    public void axis2() throws LanguageException {
 
         final var text = """
                          AXIS["distance (r)",awayFrom,ORDER[1],RANGEMEANING[exact],LENGTHUNIT["kilometre",1000]]""";
@@ -4251,6 +4251,11 @@ public class WktParserBracketTest {
         final var order = axis.getOrder();
         Assertions.assertEquals(1, order.getValue().getSemantics().intValue());
 
+        final var range = axis.getRange();
+        Assertions.assertNull(range.getMin());
+        Assertions.assertNull(range.getMax());
+        Assertions.assertEquals(RangeMeaningType.EXACT, range.getMeaning().getType().getSemantics());
+
         final var unit = axis.getUnit();
         Assertions.assertEquals("kilometre", unit.getName().getSemantics());
         Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Integer);
@@ -4258,10 +4263,84 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void axis_test_b_1() throws LanguageException {
+    public void axis3() throws LanguageException {
 
-        final var text = "AXIS[\"longitude (U)\",counterClockwise,BEARING[0],ORDER[2],"
-                + "ANGLEUNIT[\"degree\",0.0174532925199433]]";
+        final var text = """
+                         AXIS["distance (r)",awayFrom,
+                         ORDER[1],
+                         AXISMINVALUE[-2],
+                         AXISMAXVALUE[85],
+                         RANGEMEANING[exact],
+                         LENGTHUNIT["kilometre",1000]]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final var axis = parser.axis();
+
+        Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
+
+        final var direction = axis.getDirection();
+
+        Assertions.assertEquals(Direction.awayFrom, direction.getType().getSemantics());
+        Assertions.assertNull(direction.getComplement());
+
+        final var order = axis.getOrder();
+        Assertions.assertEquals(1, order.getValue().getSemantics().intValue());
+
+        final var range = axis.getRange();
+        Assertions.assertEquals(-2, range.getMin().getValue().getSemantics());
+        Assertions.assertEquals(85, range.getMax().getValue().getSemantics());
+        Assertions.assertEquals(RangeMeaningType.EXACT, range.getMeaning().getType().getSemantics());
+
+        final var unit = axis.getUnit();
+        Assertions.assertEquals("kilometre", unit.getName().getSemantics());
+        Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Integer);
+        Assertions.assertEquals(1000, unit.getConversionFactor().getSemantics().intValue());
+    }
+
+    @Test
+    public void axis4() throws LanguageException {
+
+        final var text = """
+                         AXIS["distance (r)",awayFrom,
+                         ORDER[1],
+                         AXISMINVALUE[-2],
+                         AXISMAXVALUE[85],
+                         LENGTHUNIT["kilometre",1000]]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final var axis = parser.axis();
+
+        Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
+
+        final var direction = axis.getDirection();
+
+        Assertions.assertEquals(Direction.awayFrom, direction.getType().getSemantics());
+        Assertions.assertNull(direction.getComplement());
+
+        final var order = axis.getOrder();
+        Assertions.assertEquals(1, order.getValue().getSemantics().intValue());
+
+        final var range = axis.getRange();
+        Assertions.assertEquals(-2, range.getMin().getValue().getSemantics());
+        Assertions.assertEquals(85, range.getMax().getValue().getSemantics());
+        Assertions.assertNull(range.getMeaning());
+
+        final var unit = axis.getUnit();
+        Assertions.assertEquals("kilometre", unit.getName().getSemantics());
+        Assertions.assertTrue(unit.getConversionFactor().getSemantics() instanceof Integer);
+        Assertions.assertEquals(1000, unit.getConversionFactor().getSemantics().intValue());
+    }
+
+    @Test
+    public void axis5() throws LanguageException {
+
+        final var text = """
+                         AXIS["longitude (U)",counterClockwise,
+                         BEARING[0],
+                         ORDER[2],
+                         ANGLEUNIT["degree",0.0174532925199433]]""";
 
         final WktParser parser = WktParser.of(text);
 
