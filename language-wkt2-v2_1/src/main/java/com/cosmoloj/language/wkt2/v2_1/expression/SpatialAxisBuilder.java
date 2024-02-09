@@ -16,8 +16,8 @@ import java.util.function.Predicate;
  *
  * @author Samuel Andrés
  */
-public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements PredicateIndexTokenBuilder<Token>,
-        ConstraintLastPredicateTokenBuilder<Token> {
+public class SpatialAxisBuilder extends CheckTokenBuilder<Token, SpatialAxis>
+        implements PredicateIndexTokenBuilder<Token>, ConstraintLastPredicateTokenBuilder<Token> {
 
     @Override
     public Predicate<? super Token> predicate(final int currentIndex) {
@@ -47,8 +47,8 @@ public class AxisBuilder extends CheckTokenBuilder<Token, Axis> implements Predi
     }
 
     @Override
-    public Axis build() {
-        return new Axis(first(), last(), index(),
+    public SpatialAxis build() {
+        return new SpatialAxis(first(), last(), index(),
                 token(2),
                 token(4),
                 firstToken(AxisOrder.class),

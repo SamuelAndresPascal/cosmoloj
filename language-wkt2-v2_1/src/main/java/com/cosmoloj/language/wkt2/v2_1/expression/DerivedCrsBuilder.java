@@ -51,7 +51,7 @@ public abstract class DerivedCrsBuilder<CRS extends DerivedCrs<B, O, M, P>,
             case 5 -> SpecialSymbol.COMMA;
             case 6 -> operationPredicate;
             case 7 -> SpecialSymbol.COMMA;
-            case 8 -> CoordinateSystem.class::isInstance;
+            case 8 -> SpatialCoordinateSystem.class::isInstance;
             default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
                 : pb(Usage.class, Identifier.class, Remark.class);
         };

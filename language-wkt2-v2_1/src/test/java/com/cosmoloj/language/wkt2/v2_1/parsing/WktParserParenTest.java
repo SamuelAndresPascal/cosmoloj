@@ -11,7 +11,7 @@ import com.cosmoloj.language.wkt2.v2_1.expression.BBox;
 import com.cosmoloj.language.wkt2.v2_1.expression.BaseGeodeticCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BaseProjectedCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.Citation;
-import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateSystem;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialCoordinateSystem;
 import com.cosmoloj.language.wkt2.v2_1.expression.DerivedCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.Extent;
 import com.cosmoloj.language.wkt2.v2_1.expression.GeodeticCrs;
@@ -1638,7 +1638,7 @@ public class WktParserParenTest {
         Assertions.assertEquals(0, pm.getIrmLongitude().getSemantics().intValue());
 
         final var cs = geodetic.getCoordinateSystem();
-        Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
+        Assertions.assertTrue(cs instanceof SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem);
         Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
@@ -1736,7 +1736,7 @@ public class WktParserParenTest {
         Assertions.assertNull(datum.getPrimeMeridian());
 
         final var cs = geodetic.getCoordinateSystem();
-        Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
+        Assertions.assertTrue(cs instanceof SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem);
         Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
@@ -1830,7 +1830,7 @@ public class WktParserParenTest {
         Assertions.assertNull(datum.getPrimeMeridian());
 
         final var cs = geodetic.getCoordinateSystem();
-        Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
+        Assertions.assertTrue(cs instanceof SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem);
         Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
@@ -4041,7 +4041,7 @@ public class WktParserParenTest {
         final WktParser parser = WktParser.of(text, '(', ')');
 
         final Token[] out = new Token[2];
-        final var cs = parser.coordinateSystem(out);
+        final var cs = parser.spatialCoordinateSystem(out);
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
@@ -4096,7 +4096,7 @@ public class WktParserParenTest {
         final WktParser parser = WktParser.of(text, '(', ')');
 
         final Token[] out = new Token[2];
-        final var cs = parser.coordinateSystem(out);
+        final var cs = parser.spatialCoordinateSystem(out);
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
@@ -4150,7 +4150,7 @@ public class WktParserParenTest {
         final WktParser parser = WktParser.of(text, '(', ')');
 
         final Token[] out = new Token[2];
-        final var cs = parser.coordinateSystem(out);
+        final var cs = parser.spatialCoordinateSystem(out);
         Assertions.assertNull(out[0]);
         Assertions.assertNull(out[1]);
 
@@ -4206,14 +4206,14 @@ public class WktParserParenTest {
     }
 
     @Test
-    public void axis1() throws LanguageException {
+    public void spatialAxis1() throws LanguageException {
 
         final var text = """
                          AXIS("distance (r)",awayFrom,ORDER(1),LENGTHUNIT("kilometre",1000))""";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final var axis = parser.axis();
+        final var axis = parser.spatialAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4232,14 +4232,14 @@ public class WktParserParenTest {
     }
 
     @Test
-    public void axis2() throws LanguageException {
+    public void spatialAxis2() throws LanguageException {
 
         final var text = """
                          AXIS("distance (r)",awayFrom,ORDER(1),RANGEMEANING(exact),LENGTHUNIT("kilometre",1000))""";
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final var axis = parser.axis();
+        final var axis = parser.spatialAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4263,7 +4263,7 @@ public class WktParserParenTest {
     }
 
     @Test
-    public void axis3() throws LanguageException {
+    public void spatialAxis3() throws LanguageException {
 
         final var text = """
                          AXIS("distance (r)",awayFrom,
@@ -4275,7 +4275,7 @@ public class WktParserParenTest {
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final var axis = parser.axis();
+        final var axis = parser.spatialAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4299,7 +4299,7 @@ public class WktParserParenTest {
     }
 
     @Test
-    public void axis4() throws LanguageException {
+    public void spatialAxis4() throws LanguageException {
 
         final var text = """
                          AXIS("distance (r)",awayFrom,
@@ -4310,7 +4310,7 @@ public class WktParserParenTest {
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final var axis = parser.axis();
+        final var axis = parser.spatialAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4334,7 +4334,7 @@ public class WktParserParenTest {
     }
 
     @Test
-    public void axis5() throws LanguageException {
+    public void spatialAxis5() throws LanguageException {
 
         final var text = """
                          AXIS("longitude (U)",counterClockwise,
@@ -4344,7 +4344,7 @@ public class WktParserParenTest {
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final var axis = parser.axis();
+        final var axis = parser.spatialAxis();
 
         Assertions.assertEquals("longitude (U)", axis.getNameAbrev().getSemantics());
 
@@ -4367,14 +4367,15 @@ public class WktParserParenTest {
     }
 
     @Test
-    public void axis_test_c_2() throws LanguageException {
+    public void spatialAxis6() throws LanguageException {
 
-        final var text = "AXIS(\"longitude (U)\",counterClockwise,BEARING(0),ORDER(2),"
-                + "UNIT(\"degree\",0.0174532925199433))";
+        final var text = """
+                         AXIS("longitude (U)",counterClockwise,BEARING(0),ORDER(2),UNIT("degree",0.0174532925199433))
+                         """;
 
         final WktParser parser = WktParser.of(text, '(', ')');
 
-        final var axis = parser.axis();
+        final var axis = parser.spatialAxis();
 
         Assertions.assertEquals("longitude (U)", axis.getNameAbrev().getSemantics());
 

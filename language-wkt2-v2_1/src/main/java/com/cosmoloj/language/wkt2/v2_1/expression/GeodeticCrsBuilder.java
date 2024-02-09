@@ -30,7 +30,7 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.class::isInstance;
                     case 5 -> SpecialSymbol.COMMA;
-                    case 6 -> CoordinateSystem.class::isInstance;
+                    case 6 -> SpatialCoordinateSystem.class::isInstance;
                     default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
                         : pb(Usage.class, Identifier.class, Remark.class);
                 };
@@ -62,7 +62,7 @@ public abstract class GeodeticCrsBuilder<S extends ScopeExtentIdentifierRemark>
                     case 3 -> SpecialSymbol.COMMA;
                     case 4 -> GeodeticDatum.class::isInstance;
                     case 5 -> SpecialSymbol.COMMA;
-                    case 6 -> CoordinateSystem.Ellipsoidal2DCoordinateSystem.class::isInstance;
+                    case 6 -> SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem.class::isInstance;
                     default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
                         : pb(Usage.class, Identifier.class, Remark.class);
                 };

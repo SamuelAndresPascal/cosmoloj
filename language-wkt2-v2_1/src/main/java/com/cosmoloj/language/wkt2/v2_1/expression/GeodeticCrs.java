@@ -10,10 +10,10 @@ import java.util.List;
 public class GeodeticCrs extends Crs {
 
     private final GeodeticDatum datum;
-    private final CoordinateSystem coordinateSystem;
+    private final SpatialCoordinateSystem coordinateSystem;
 
     public GeodeticCrs(final int start, final int end, final int index, final QuotedLatinText name,
-            final GeodeticDatum datum, final CoordinateSystem coordinateSystem,
+            final GeodeticDatum datum, final SpatialCoordinateSystem coordinateSystem,
             final List<Usage> extents, final List<Identifier> identifiers, final Remark remark) {
         super(start, end, index, name, extents, identifiers, remark);
         this.datum = datum;
@@ -24,14 +24,14 @@ public class GeodeticCrs extends Crs {
         return this.datum;
     }
 
-    public CoordinateSystem getCoordinateSystem() {
+    public SpatialCoordinateSystem getCoordinateSystem() {
         return this.coordinateSystem;
     }
 
     public static class Geographic2DCrs extends GeodeticCrs implements HorizontalCrs {
 
         public Geographic2DCrs(final int start, final int end, final int index, final QuotedLatinText name,
-                final GeodeticDatum datum, final CoordinateSystem.Ellipsoidal2DCoordinateSystem coordinateSystem,
+                final GeodeticDatum datum, final SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem coordinateSystem,
                 final List<Usage> extents, final List<Identifier> identifiers,
                 final Remark remark) {
             super(start, end, index, name, datum, coordinateSystem, extents, identifiers, remark);

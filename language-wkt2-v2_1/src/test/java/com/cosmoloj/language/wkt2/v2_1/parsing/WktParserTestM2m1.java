@@ -4,7 +4,7 @@ import com.cosmoloj.language.api.exception.LanguageException;
 import com.cosmoloj.language.wkt2.v2_1.expression.Area;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMaximumValue;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisMinimumValue;
-import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateSystem;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialCoordinateSystem;
 import com.cosmoloj.language.wkt2.v2_1.expression.GeodeticCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.SimpleCrsShell;
 import com.cosmoloj.language.wkt2.v2_1.expression.Unit;
@@ -92,7 +92,7 @@ public class WktParserTestM2m1 {
         Assertions.assertNull(datum.getPrimeMeridian());
 
         final var cs = geodetic.getCoordinateSystem();
-        Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
+        Assertions.assertTrue(cs instanceof SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem);
         Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 
@@ -360,7 +360,7 @@ public class WktParserTestM2m1 {
         Assertions.assertNull(datum.getPrimeMeridian());
 
         final var cs = geodetic.getCoordinateSystem();
-        Assertions.assertTrue(cs instanceof CoordinateSystem.Ellipsoidal2DCoordinateSystem);
+        Assertions.assertTrue(cs instanceof SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem);
         Assertions.assertEquals(CsType.ELLIPSOIDAL, cs.getType().getSemantics());
         Assertions.assertEquals(2, cs.getDimension().getSemantics().intValue());
 

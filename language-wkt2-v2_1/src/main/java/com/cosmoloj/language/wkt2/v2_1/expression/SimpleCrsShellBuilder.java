@@ -41,7 +41,7 @@ public abstract class SimpleCrsShellBuilder<S extends SimpleCrsShell<D>, D exten
             case 3 -> SpecialSymbol.COMMA;
             case 4 -> datumPredicate;
             case 5 -> SpecialSymbol.COMMA;
-            case 6 -> CoordinateSystem.class::isInstance;
+            case 6 -> SpatialCoordinateSystem.class::isInstance;
             default -> odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA)
                 : pb(Usage.class, Identifier.class, Remark.class);
         };

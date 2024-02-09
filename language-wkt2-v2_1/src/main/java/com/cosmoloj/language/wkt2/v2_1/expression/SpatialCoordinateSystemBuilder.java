@@ -17,7 +17,7 @@ import java.util.function.Predicate;
  *
  * @author Samuel Andrés
  */
-public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, CoordinateSystem>
+public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, SpatialCoordinateSystem>
         implements PredicateIndexTokenBuilder<Token> {
 
     private static final int NOT_CLOSED = -1;
@@ -44,7 +44,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     public Predicate<? super Token> predicate(final int currentIndex) {
 
         if (currentIndex == 0) {
-            return WktKeyword.CS.or(pb(Axis.class, Unit.class)); // WKT-CTS compatibility
+            return WktKeyword.CS.or(pb(SpatialAxis.class, Unit.class)); // WKT-CTS compatibility
         }
 
         return includeCs ? wkt2Predicate(currentIndex) : wktCtsPredicate(currentIndex);
@@ -62,11 +62,11 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
                     yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                 } else {
                     if (null == csType()) {
-                        yield odd() ? pb(Axis.class) : SpecialSymbol.COMMA;
+                        yield odd() ? pb(SpatialAxis.class) : SpecialSymbol.COMMA;
                     } else {
                         yield switch (csType()) {
-                            case SPATIAL -> odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
-                            case TEMPORAL, ORDINAL -> odd() ? pb(Axis.class) : SpecialSymbol.COMMA;
+                            case SPATIAL -> odd() ? pb(SpatialAxis.class, Unit.class) : SpecialSymbol.COMMA;
+                            case TEMPORAL, ORDINAL -> odd() ? pb(SpatialAxis.class) : SpecialSymbol.COMMA;
                         };
                     }
                 }
@@ -77,13 +77,13 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     protected Predicate<? super Token> wktCtsPredicate(final int currentIndex) {
         return switch (currentIndex) {
             case 1 -> SpecialSymbol.COMMA;
-            case 2 -> pb(Axis.class, Unit.class);
+            case 2 -> pb(SpatialAxis.class, Unit.class);
             case 3 -> SpecialSymbol.COMMA;
             default -> {
                 if (size() == 8) {
                     yield Predicates.no();
                 }
-                yield odd() ? SpecialSymbol.COMMA : pb(Axis.class, Unit.class);
+                yield odd() ? SpecialSymbol.COMMA : pb(SpatialAxis.class, Unit.class);
             }
         };
     }
@@ -96,7 +96,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         if (isOpen() && token instanceof RightDelimiter) {
             rightDelimiterIndex = size() - 1;
         }
-        if (token instanceof Axis) {
+        if (token instanceof SpatialAxis) {
             axisCount++;
         }
         if (token instanceof Unit) {
@@ -105,19 +105,19 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
     }
 
     @Override
-    public CoordinateSystem build() {
+    public SpatialCoordinateSystem build() {
         final EnumLexeme<CsType> type = firstToken(Predicates.in(CsType.class));
         final UnsignedInteger dimention = firstToken(UnsignedInteger.class);
 
-        return new CoordinateSystem(first(), last(), index(),
+        return new SpatialCoordinateSystem(first(), last(), index(),
                 type,
                 dimention,
                 tokens(Identifier.class),
-                tokens(Axis.class),
+                tokens(SpatialAxis.class),
                 firstToken(Unit.class));
     }
 
-    public static class Ellipsoidal2DCoordinateSystemBuilder extends CoordinateSystemBuilder {
+    public static class Ellipsoidal2DCoordinateSystemBuilder extends SpatialCoordinateSystemBuilder {
 
         @Override
         protected Predicate<? super Token> wkt2Predicate(final int currentIndex) {
@@ -132,7 +132,7 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
                     if (isOpen()) {
                         yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                     } else {
-                        yield odd() ? pb(Axis.class, Unit.class) : SpecialSymbol.COMMA;
+                        yield odd() ? pb(SpatialAxis.class, Unit.class) : SpecialSymbol.COMMA;
                     }
                 }
             };
@@ -142,27 +142,27 @@ public class CoordinateSystemBuilder extends CheckTokenBuilder<Token, Coordinate
         protected Predicate<? super Token> wktCtsPredicate(final int currentIndex) {
             return switch (currentIndex) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> pb(Axis.class, Unit.class);
+                case 2 -> pb(SpatialAxis.class, Unit.class);
                 case 3 -> SpecialSymbol.COMMA;
                 default -> {
                     if (size() == 6) {
                         yield Predicates.no();
                     }
-                    yield odd() ? SpecialSymbol.COMMA : pb(Axis.class, Unit.class);
+                    yield odd() ? SpecialSymbol.COMMA : pb(SpatialAxis.class, Unit.class);
                 }
             };
         }
 
         @Override
-        public CoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
+        public SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem build() {
             final EnumLexeme<CsType> type = firstToken(CsType.ELLIPSOIDAL);
             final UnsignedInteger dimention = firstToken(UnsignedInteger.class);
 
-            return new CoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
+            return new SpatialCoordinateSystem.Ellipsoidal2DCoordinateSystem(first(), last(), index(),
                     type,
                     dimention,
                     tokens(Identifier.class),
-                    tokens(Axis.class),
+                    tokens(SpatialAxis.class),
                     firstToken(Unit.class));
         }
     }

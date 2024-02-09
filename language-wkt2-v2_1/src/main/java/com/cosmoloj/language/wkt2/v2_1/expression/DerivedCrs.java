@@ -16,10 +16,10 @@ public abstract class DerivedCrs
 
     private final B baseCrs;
     private final O operation;
-    private final CoordinateSystem coordinateSystem;
+    private final SpatialCoordinateSystem coordinateSystem;
 
     protected DerivedCrs(final int start, final int end, final int index, final QuotedLatinText name,
-            final B baseCrs, final O operation, final CoordinateSystem coordinateSystem,
+            final B baseCrs, final O operation, final SpatialCoordinateSystem coordinateSystem,
             final List<Usage> usages, final List<Identifier> identifiers, final Remark remark) {
         super(start, end, index, name, usages, identifiers, remark);
         this.baseCrs = baseCrs;
@@ -35,7 +35,7 @@ public abstract class DerivedCrs
         return this.operation;
     }
 
-    public CoordinateSystem getCoordinateSystem() {
+    public SpatialCoordinateSystem getCoordinateSystem() {
         return this.coordinateSystem;
     }
 
@@ -45,7 +45,7 @@ public abstract class DerivedCrs
 
         public ProjectedCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final BaseGeodeticCrs baseCrs, final Operation.MapProjection projection,
-                final CoordinateSystem coordinateSystem, final List<Usage> extents,
+                final SpatialCoordinateSystem coordinateSystem, final List<Usage> extents,
                 final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, baseCrs, projection, coordinateSystem, extents, identifiers, remark);
         }
@@ -56,7 +56,7 @@ public abstract class DerivedCrs
 
         public DerivedGeodeticCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final BaseGeodeticCrs baseCrs, final Operation.DerivingConversion conversion,
-                final CoordinateSystem coordinateSystem, final List<Usage> extents,
+                final SpatialCoordinateSystem coordinateSystem, final List<Usage> extents,
                 final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, baseCrs, conversion, coordinateSystem, extents, identifiers, remark);
         }
@@ -67,7 +67,7 @@ public abstract class DerivedCrs
 
         public DerivedVerticalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final BaseCrs.BaseVerticalCrs baseCrs, final Operation.DerivingConversion conversion,
-                final CoordinateSystem coordinateSystem, final List<Usage> extents,
+                final SpatialCoordinateSystem coordinateSystem, final List<Usage> extents,
                 final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, baseCrs, conversion, coordinateSystem, extents, identifiers, remark);
         }
@@ -76,8 +76,11 @@ public abstract class DerivedCrs
     public static class DerivedEngineeringCrs<B extends BaseCrs> extends DerivedCrs<B, Operation.DerivingConversion,
             Method.OperationMethod, AbstractParam> {
 
-        public DerivedEngineeringCrs(final int start, final int end, final int index, final QuotedLatinText name,
-                final B baseCrs, final Operation.DerivingConversion conversion, final CoordinateSystem coordinateSystem,
+        public DerivedEngineeringCrs(final int start, final int end, final int index,
+                final QuotedLatinText name,
+                final B baseCrs,
+                final Operation.DerivingConversion conversion,
+                final SpatialCoordinateSystem coordinateSystem,
                 final List<Usage> extents, final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, baseCrs, conversion, coordinateSystem, extents, identifiers, remark);
         }
@@ -89,7 +92,7 @@ public abstract class DerivedCrs
 
         public DerivedParametricCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final BaseCrs.BaseParametricCrs baseCrs, final Operation.DerivingConversion conversion,
-                final CoordinateSystem coordinateSystem, final List<Usage> extents,
+                final SpatialCoordinateSystem coordinateSystem, final List<Usage> extents,
                 final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, baseCrs, conversion, coordinateSystem, extents, identifiers, remark);
         }
@@ -100,7 +103,7 @@ public abstract class DerivedCrs
 
         public DerivedTemporalCrs(final int start, final int end, final int index, final QuotedLatinText name,
                 final BaseCrs.BaseTemporalCrs baseCrs, final Operation.DerivingConversion conversion,
-                final CoordinateSystem coordinateSystem, final List<Usage> extents,
+                final SpatialCoordinateSystem coordinateSystem, final List<Usage> extents,
                 final List<Identifier> identifiers, final Remark remark) {
             super(start, end, index, name, baseCrs, conversion, coordinateSystem, extents, identifiers, remark);
         }

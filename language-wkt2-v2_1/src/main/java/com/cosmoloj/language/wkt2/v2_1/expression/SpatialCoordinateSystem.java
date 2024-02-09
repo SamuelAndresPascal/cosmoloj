@@ -10,16 +10,16 @@ import java.util.List;
  *
  * @author Samuel Andrés
  */
-public class CoordinateSystem extends AbstractExpression {
+public class SpatialCoordinateSystem extends AbstractExpression {
 
     private final EnumLexeme<CsType> type;
     private final UnsignedInteger dimension;
     private final List<Identifier> identifiers;
-    private final List<Axis> axis;
+    private final List<SpatialAxis> axis;
     private final Unit unit;
 
-    public CoordinateSystem(final int start, final int end, final int index, final EnumLexeme<CsType> type,
-            final UnsignedInteger dimension, final List<Identifier> identifiers, final List<Axis> axis,
+    public SpatialCoordinateSystem(final int start, final int end, final int index, final EnumLexeme<CsType> type,
+            final UnsignedInteger dimension, final List<Identifier> identifiers, final List<SpatialAxis> axis,
             final Unit unit) {
         super(start, end, index);
         this.type = type;
@@ -41,7 +41,7 @@ public class CoordinateSystem extends AbstractExpression {
         return this.identifiers;
     }
 
-    public List<Axis> getAxis() {
+    public List<SpatialAxis> getAxis() {
         return this.axis;
     }
 
@@ -49,11 +49,11 @@ public class CoordinateSystem extends AbstractExpression {
         return this.unit;
     }
 
-    public static class Ellipsoidal2DCoordinateSystem extends CoordinateSystem {
+    public static class Ellipsoidal2DCoordinateSystem extends SpatialCoordinateSystem {
 
         public Ellipsoidal2DCoordinateSystem(final int start, final int end, final int index,
                 final EnumLexeme<CsType> type, final UnsignedInteger dimension, final List<Identifier> identifiers,
-                final List<Axis> axis, final Unit unit) {
+                final List<SpatialAxis> axis, final Unit unit) {
             super(start, end, index, type, dimension, identifiers, axis, unit);
         }
     }

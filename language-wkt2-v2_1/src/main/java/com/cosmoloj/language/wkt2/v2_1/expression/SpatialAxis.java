@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Samuel Andrés
  */
-public class Axis extends AbstractExpression {
+public class SpatialAxis extends AbstractExpression {
 
     private final AxisNameAbrev nameAbrev;
     private final AxisDirection direction;
@@ -17,7 +17,7 @@ public class Axis extends AbstractExpression {
     private final Unit unit;
     private final List<Identifier> identifiers;
 
-    public Axis(final int start, final int end, final int index, final AxisNameAbrev nameAbrev,
+    public SpatialAxis(final int start, final int end, final int index, final AxisNameAbrev nameAbrev,
             final AxisDirection direction, final AxisOrder order, final AxisRange range, final Unit unit,
             final List<Identifier> identifiers) {
         super(start, end, index);

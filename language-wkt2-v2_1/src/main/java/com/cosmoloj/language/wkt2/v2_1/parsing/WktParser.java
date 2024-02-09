@@ -13,8 +13,8 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.expression.AbridgedTransformationBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Anchor;
 import com.cosmoloj.language.wkt2.v2_1.expression.Area;
-import com.cosmoloj.language.wkt2.v2_1.expression.Axis;
-import com.cosmoloj.language.wkt2.v2_1.expression.AxisBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialAxis;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialAxisBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisDirection;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisDirectionBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisOrder;
@@ -31,8 +31,8 @@ import com.cosmoloj.language.wkt2.v2_1.expression.Citation;
 import com.cosmoloj.language.wkt2.v2_1.expression.CompoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.CompoundCrsBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateOperationBuilder;
-import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateSystem;
-import com.cosmoloj.language.wkt2.v2_1.expression.CoordinateSystemBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialCoordinateSystem;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialCoordinateSystemBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Crs;
 import com.cosmoloj.language.wkt2.v2_1.expression.DerivedCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.DerivedCrsBuilder;
@@ -283,7 +283,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         flushAndLexEnum(SpecialSymbol.class),
                         imageDatum(),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -341,7 +341,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                             comma,
                             verticalDatum(datumLabel),
                             flushAndLexEnum(SpecialSymbol.class),
-                            coordinateSystem(outCs)),
+                            WktParser.this.spatialCoordinateSystem(outCs)),
                     outCs)
                     .list(lex(RightDelimiter.class)));
     }
@@ -374,7 +374,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         comma,
                         engineeringDatum(datumLabel),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -407,7 +407,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         comma,
                         parametricDatum(datumLabel),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -440,7 +440,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         comma,
                         temporalDatum(datumLabel),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -533,11 +533,11 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         if (outProj[0] == null && outProj[1] == null) {
             builder.list(
                     flushAndLex(SpecialSymbol.COMMA),
-                    coordinateSystem(outCs));
+                    WktParser.this.spatialCoordinateSystem(outCs));
         } else {
             builder.list(
                     outProj[0],
-                    coordinateSystem((EnumLexeme<WktKeyword>) outProj[1], outCs));
+                    spatialCoordinateSystem((EnumLexeme<WktKeyword>) outProj[1], outCs));
         }
         return build(patternScopeExtentIdentifierRemark(
                 builder,
@@ -618,11 +618,11 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         if (outDatum[0] == null && outDatum[1] == null) {
             builder.list(
                 flushAndLexEnum(SpecialSymbol.class),
-                coordinateSystem(outCs));
+                WktParser.this.spatialCoordinateSystem(outCs));
         } else {
             builder.list(
                 outDatum[0],
-                coordinateSystem((EnumLexeme<WktKeyword>) outDatum[1], outCs));
+                spatialCoordinateSystem((EnumLexeme<WktKeyword>) outDatum[1], outCs));
         }
 
         return build(patternScopeExtentIdentifierRemark(builder, outCs)
@@ -739,7 +739,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         flushAndLexEnum(SpecialSymbol.class),
                         derivingConversion(),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -770,7 +770,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         flushAndLexEnum(SpecialSymbol.class),
                         derivingConversion(),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -801,7 +801,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                         flushAndLexEnum(SpecialSymbol.class),
                         derivingConversion(),
                         flushAndLexEnum(SpecialSymbol.class),
-                        coordinateSystem(outCs)),
+                        WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -832,7 +832,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                     flushAndLexEnum(SpecialSymbol.class),
                     derivingConversion(),
                     flushAndLexEnum(SpecialSymbol.class),
-                    coordinateSystem(outCs)),
+                    WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -863,7 +863,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                     flushAndLexEnum(SpecialSymbol.class),
                     derivingConversion(),
                     flushAndLexEnum(SpecialSymbol.class),
-                    coordinateSystem(outCs)),
+                    WktParser.this.spatialCoordinateSystem(outCs)),
                 outCs)
                 .list(lex(RightDelimiter.class)));
     }
@@ -1173,33 +1173,35 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return build(builder.list(flushAndLex(RightDelimiter.class)));
     }
 
-    public CoordinateSystem ellipsoidal2dCoordinateSystem(final Token[] out) throws LanguageException {
+    public SpatialCoordinateSystem ellipsoidal2dCoordinateSystem(final Token[] out) throws LanguageException {
         return ellipsoidal2dCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public CoordinateSystem ellipsoidal2dCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    public SpatialCoordinateSystem ellipsoidal2dCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
-        return patternCoordinateSystem(label, out, new CoordinateSystemBuilder.Ellipsoidal2DCoordinateSystemBuilder());
+        return patternSpatialCoordinateSystem(label,
+                out,
+                new SpatialCoordinateSystemBuilder.Ellipsoidal2DCoordinateSystemBuilder());
     }
 
-    public CoordinateSystem coordinateSystem(final Token[] out) throws LanguageException {
-        return coordinateSystem(flushAndLexEnum(WktKeyword.class), out);
+    public SpatialCoordinateSystem spatialCoordinateSystem(final Token[] out) throws LanguageException {
+        return spatialCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public CoordinateSystem coordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    public SpatialCoordinateSystem spatialCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
-        return patternCoordinateSystem(label, out, new CoordinateSystemBuilder());
+        return patternSpatialCoordinateSystem(label, out, new SpatialCoordinateSystemBuilder());
     }
 
-    public Axis axis() throws LanguageException {
-        return axis(flushAndLexEnum(WktKeyword.class));
+    public SpatialAxis spatialAxis() throws LanguageException {
+        return WktParser.this.spatialAxis(flushAndLexEnum(WktKeyword.class));
     }
 
-    public Axis axis(final EnumLexeme<WktKeyword> label) throws LanguageException {
+    public SpatialAxis spatialAxis(final EnumLexeme<WktKeyword> label) throws LanguageException {
 
         Lexeme[] out = new Lexeme[2];
 
-        final TokenBuilder<Token, Axis> builder = new AxisBuilder().list(label,
+        final TokenBuilder<Token, SpatialAxis> builder = new SpatialAxisBuilder().list(label,
                 flushAndLex(LeftDelimiter.class),
                 flushAndLex(AxisNameAbrev.class),
                 flushAndLexEnum(SpecialSymbol.class),
@@ -2041,8 +2043,10 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
     private static final int ACCEPT_ID_REMARK = 2;
     private static final int ACCEPT_REMARK = 1;
 
-    private CoordinateSystem patternCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out,
-            final CoordinateSystemBuilder builder) throws LanguageException {
+    private SpatialCoordinateSystem patternSpatialCoordinateSystem(
+            final EnumLexeme<WktKeyword> label,
+            final Token[] out,
+            final SpatialCoordinateSystemBuilder builder) throws LanguageException {
 
         if (WktKeyword.CS.test(label)) {
             builder.list(
@@ -2057,7 +2061,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         } else {
 
             if (WktKeyword.AXIS.test(label)) {
-                builder.list(axis(label));
+                builder.list(WktParser.this.spatialAxis(label));
             } else if (WktKeyword.isUnit(label)) {
                 builder.list(unit(label));
             } else {
@@ -2073,7 +2077,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
 
             if (WktKeyword.AXIS.test(lex)) {
-                builder.list(axis(lex));
+                builder.list(WktParser.this.spatialAxis(lex));
             } else if (WktKeyword.isUnit(lex)) {
                 builder.list(unit(lex));
                 break;
