@@ -4224,9 +4224,7 @@ public class WktParserParenTest {
 
         Assertions.assertTrue(cs.getIdentifiers().isEmpty());
 
-        Assertions.assertEquals(1, cs.getAxis().size());
-
-        final var x = cs.getAxis().get(0);
+        final var x = cs.getAxis();
         Assertions.assertEquals("Time", x.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.future, x.getDirection().getType().getSemantics());
         Assertions.assertNull(x.getDirection().getComplement());
@@ -4239,6 +4237,34 @@ public class WktParserParenTest {
         Assertions.assertEquals(0.001,
         ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
         Assertions.assertTrue(xUnit.getIdentifiers().isEmpty());
+    }
+
+    @Test
+    public void cs5() throws LanguageException {
+
+        final var text = """
+                         CS(TemporalDateTime,1),AXIS("Time (T)",future)""";
+
+        final WktParser parser = WktParser.of(text, '(', ')');
+
+        final Token[] out = new Token[2];
+        final var cs = parser.ordinalDateTimeCoordinateSystem(out);
+        Assertions.assertNull(out[0]);
+        Assertions.assertNull(out[1]);
+
+        Assertions.assertEquals(CsType.TEMPORAL_DATE_TIME, cs.getType().getSemantics());
+        Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
+
+        Assertions.assertTrue(cs.getIdentifiers().isEmpty());
+
+        Assertions.assertEquals(1, cs.getAxis().size());
+
+        final var x = cs.getAxis().get(0);
+        Assertions.assertEquals("Time (T)", x.getNameAbrev().getSemantics());
+        Assertions.assertEquals(Direction.future, x.getDirection().getType().getSemantics());
+        Assertions.assertNull(x.getDirection().getComplement());
+        Assertions.assertTrue(x.getIdentifiers().isEmpty());
+        Assertions.assertNull(x.getOrder());
     }
 
     @Test

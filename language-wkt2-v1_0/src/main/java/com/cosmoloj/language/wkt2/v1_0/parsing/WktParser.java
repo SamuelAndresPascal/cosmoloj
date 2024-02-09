@@ -1169,7 +1169,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return ellipsoidal2dCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public CoordinateSystem ellipsoidal2dCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    private CoordinateSystem ellipsoidal2dCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
         return patternCoordinateSystem(label, out, new CoordinateSystemBuilder.Ellipsoidal2DCoordinateSystemBuilder());
     }
@@ -1178,7 +1178,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return coordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public CoordinateSystem coordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    private CoordinateSystem coordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
         return patternCoordinateSystem(label, out, new CoordinateSystemBuilder());
     }

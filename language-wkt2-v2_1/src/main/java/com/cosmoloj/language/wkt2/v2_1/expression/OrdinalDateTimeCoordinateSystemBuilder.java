@@ -17,7 +17,7 @@ import java.util.function.Predicate;
  *
  * @author Samuel Andrés
  */
-public class TemporalCoordinateSystemBuilder extends CheckTokenBuilder<Token, TemporalCoordinateSystem>
+public class OrdinalDateTimeCoordinateSystemBuilder extends CheckTokenBuilder<Token, OrdinalDateTimeCoordinateSystem>
         implements PredicateIndexTokenBuilder<Token> {
 
     private static final int NOT_CLOSED = -1;
@@ -43,7 +43,7 @@ public class TemporalCoordinateSystemBuilder extends CheckTokenBuilder<Token, Te
                 if (isOpen()) {
                     yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                 } else {
-                    yield odd() ? pb(SpatialTemporalAxis.class) : SpecialSymbol.COMMA;
+                    yield odd() ? pb(OrdinalDateTimeAxis.class) : SpecialSymbol.COMMA;
                 }
             }
         };
@@ -54,20 +54,20 @@ public class TemporalCoordinateSystemBuilder extends CheckTokenBuilder<Token, Te
         if (isOpen() && token instanceof RightDelimiter) {
             rightDelimiterIndex = size() - 1;
         }
-        if (token instanceof SpatialTemporalAxis) {
+        if (token instanceof OrdinalDateTimeAxis) {
             axisCount++;
         }
     }
 
     @Override
-    public TemporalCoordinateSystem build() {
+    public OrdinalDateTimeCoordinateSystem build() {
         final EnumLexeme<CsType> type = firstToken(Predicates.in(CsType.class));
         final UnsignedInteger dimention = firstToken(UnsignedInteger.class);
 
-        return new TemporalCoordinateSystem(first(), last(), index(),
+        return new OrdinalDateTimeCoordinateSystem(first(), last(), index(),
                 type,
                 dimention,
                 tokens(Identifier.class),
-                firstToken(SpatialTemporalAxis.class));
+                tokens(OrdinalDateTimeAxis.class));
     }
 }

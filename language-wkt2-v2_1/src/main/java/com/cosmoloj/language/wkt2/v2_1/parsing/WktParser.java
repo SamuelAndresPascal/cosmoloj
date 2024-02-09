@@ -113,6 +113,10 @@ import com.cosmoloj.language.wkt2.v2_1.expression.AxisRangeMeaningBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.BoundCrsBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.ExtentBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.OrdinalDateTimeAxis;
+import com.cosmoloj.language.wkt2.v2_1.expression.OrdinalDateTimeAxisBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.OrdinalDateTimeCoordinateSystem;
+import com.cosmoloj.language.wkt2.v2_1.expression.OrdinalDateTimeCoordinateSystemBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.TemporalCoordinateSystem;
 import com.cosmoloj.language.wkt2.v2_1.expression.TemporalCoordinateSystemBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Usage;
@@ -1179,7 +1183,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return ellipsoidal2dCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public SpatialCoordinateSystem ellipsoidal2dCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    private SpatialCoordinateSystem ellipsoidal2dCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
         return patternSpatialCoordinateSystem(label,
                 out,
@@ -1190,7 +1194,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return spatialCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public SpatialCoordinateSystem spatialCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    private SpatialCoordinateSystem spatialCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
         return patternSpatialCoordinateSystem(label, out, new SpatialCoordinateSystemBuilder());
     }
@@ -1199,7 +1203,7 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return temporalCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
     }
 
-    public TemporalCoordinateSystem temporalCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
+    private TemporalCoordinateSystem temporalCoordinateSystem(final EnumLexeme<WktKeyword> label, final Token[] out)
             throws LanguageException {
 
         final var builder = new TemporalCoordinateSystemBuilder();
@@ -1224,6 +1228,44 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
             // dans ce cas, on a dépassé la fin du CS, il faut récupérer les lexèmes lus en trop et sortir
             out[0] = key;
             out[1] = lex;
+        }
+
+        return build(builder);
+    }
+
+    public OrdinalDateTimeCoordinateSystem ordinalDateTimeCoordinateSystem(final Token[] out) throws LanguageException {
+        return ordinalDateTimeCoordinateSystem(flushAndLexEnum(WktKeyword.class), out);
+    }
+
+    private OrdinalDateTimeCoordinateSystem ordinalDateTimeCoordinateSystem(final EnumLexeme<WktKeyword> label,
+            final Token[] out) throws LanguageException {
+
+        final var builder = new OrdinalDateTimeCoordinateSystemBuilder();
+
+        builder.list(
+                label,
+                flushAndLex(LeftDelimiter.class),
+                flushAndLexEnum(CsType.class),
+                flushAndLexEnum(SpecialSymbol.class),
+                flushAndLex(UnsignedInteger.class));
+
+        patternIndentifiers(builder)
+                .list(flushAndLex(RightDelimiter.class));
+
+        while (comma()) {
+
+            final EnumLexeme<SpecialSymbol> key = flushAndLexEnum(SpecialSymbol.class);
+
+            final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
+
+            if (WktKeyword.AXIS.test(lex)) {
+                builder.list(key, ordinalDateTimeAxis(lex));
+            } else {
+                // dans ce cas, on a dépassé la fin du CS, il faut récupérer les lexèmes lus en trop et sortir
+                out[0] = key;
+                out[1] = lex;
+                break;
+            }
         }
 
         return build(builder);
@@ -1301,6 +1343,79 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
                     builder.list(unit(lex));
                     out[0] = out[1] = null;
                 }
+            }
+        }
+
+        return build(patternIndentifiers(builder)
+                .list(flushAndLex(RightDelimiter.class)));
+    }
+
+    public OrdinalDateTimeAxis ordinalDateTimeAxis() throws LanguageException {
+        return ordinalDateTimeAxis(flushAndLexEnum(WktKeyword.class));
+    }
+
+    public OrdinalDateTimeAxis ordinalDateTimeAxis(final EnumLexeme<WktKeyword> label) throws LanguageException {
+
+        Lexeme[] out = new Lexeme[2];
+
+        final TokenBuilder<Token, OrdinalDateTimeAxis> builder = new OrdinalDateTimeAxisBuilder().list(label,
+                flushAndLex(LeftDelimiter.class),
+                flushAndLex(AxisNameAbrev.class),
+                flushAndLexEnum(SpecialSymbol.class),
+                axisDirection(out));
+
+        while (out[0] != null && out[1] != null) {
+            builder.list(out[0]); // comma
+
+            final EnumLexeme<WktKeyword> out1 = (EnumLexeme<WktKeyword>) out[1];
+            out[0] = null;
+            out[1] = null;
+
+
+            switch (out1.getSemantics()) {
+                case ORDER -> {
+                    builder.list(axisOrder(out1));
+                    out[0] = out[1] = null;
+                }
+                case AXISMINVALUE, AXISMAXVALUE, RANGEMEANING -> {
+                    final Lexeme[] outOfRange = new Lexeme[2];
+                    builder.list(axisRange(out1, outOfRange));
+                    out = outOfRange;
+                }
+                case ID, AUTHORITY -> {
+                    builder.list(identifier(out1));
+                    out[0] = out[1] = null;
+                }
+                default -> throw new IllegalStateException();
+            }
+        }
+
+        while (comma() || (out[0] != null && out[1] != null)) {
+
+            final EnumLexeme<WktKeyword> lex;
+            if (out[0] != null && out[1] != null) {
+                builder.list(out[0]); // comma
+                lex = (EnumLexeme<WktKeyword>) out[1];
+            } else {
+                builder.list(lexEnum(SpecialSymbol.class));
+                lex = flushAndLexEnum(WktKeyword.class);
+            }
+
+            switch (lex.getSemantics()) {
+                case ORDER -> {
+                    builder.list(axisOrder(lex));
+                    out[0] = out[1] = null;
+                }
+                case AXISMINVALUE, AXISMAXVALUE, RANGEMEANING -> {
+                    final Lexeme[] outOfRange = new Lexeme[2];
+                    builder.list(axisRange(lex, outOfRange));
+                    out = outOfRange;
+                }
+                case ID, AUTHORITY -> {
+                    builder.list(identifier(lex));
+                    out[0] = out[1] = null;
+                }
+                default -> throw new IllegalStateException();
             }
         }
 
