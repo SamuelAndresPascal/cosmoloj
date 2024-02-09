@@ -61,14 +61,7 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
                 if (isOpen()) {
                     yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                 } else {
-                    if (null == csType()) {
-                        yield odd() ? pb(SpatialTemporalAxis.class) : SpecialSymbol.COMMA;
-                    } else {
-                        yield switch (csType()) {
-                            case SPATIAL -> odd() ? pb(SpatialTemporalAxis.class, Unit.class) : SpecialSymbol.COMMA;
-                            case TEMPORAL, ORDINAL -> odd() ? pb(SpatialTemporalAxis.class) : SpecialSymbol.COMMA;
-                        };
-                    }
+                    yield odd() ? pb(SpatialTemporalAxis.class, Unit.class) : SpecialSymbol.COMMA;
                 }
             }
         };

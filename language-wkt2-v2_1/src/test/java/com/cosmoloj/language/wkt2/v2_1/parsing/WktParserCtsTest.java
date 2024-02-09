@@ -371,7 +371,7 @@ public class WktParserCtsTest {
         final WktParser parser = WktParser.of("""
                                               AXIS["Lat",NORTH]""");
 
-        final SpatialTemporalAxis axis = parser.spatialAxis();
+        final SpatialTemporalAxis axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("Lat", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis.getDirection().getType().getSemantics());
@@ -1363,10 +1363,10 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals("9001", vertCsUnitAuthority.getCode().getSemantics());
 
-        final SpatialTemporalAxis spatialAxis = vertCs.getAxis();
+        final SpatialTemporalAxis spatialTemporalAxis = vertCs.getAxis();
 
-        Assertions.assertEquals("Up", spatialAxis.getName().getSemantics());
-        Assertions.assertEquals(Direction.UP, spatialAxis.getDirection().getSemantics());
+        Assertions.assertEquals("Up", spatialTemporalAxis.getName().getSemantics());
+        Assertions.assertEquals(Direction.UP, spatialTemporalAxis.getDirection().getSemantics());
 
         final Authority vertCsAuthority = vertCs.getAuthority();
 
@@ -3695,7 +3695,7 @@ public class WktParserCtsTest {
         final WktParser parser = WktParser.of("""
                                               AXIS("Lat",NORTH)""", '(', ')');
 
-        final SpatialTemporalAxis axis = parser.spatialAxis();
+        final SpatialTemporalAxis axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("Lat", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis.getDirection().getType().getSemantics());
@@ -4668,10 +4668,10 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals("9001", vertCsUnitAuthority.getCode().getSemantics());
 
-        final SpatialTemporalAxis spatialAxis = vertCs.getAxis();
+        final SpatialTemporalAxis spatialTemporalAxis = vertCs.getAxis();
 
-        Assertions.assertEquals("Up", spatialAxis.getName().getSemantics());
-        Assertions.assertEquals(Direction.UP, spatialAxis.getDirection().getSemantics());
+        Assertions.assertEquals("Up", spatialTemporalAxis.getName().getSemantics());
+        Assertions.assertEquals(Direction.UP, spatialTemporalAxis.getDirection().getSemantics());
 
         final Authority vertCsAuthority = vertCs.getAuthority();
 

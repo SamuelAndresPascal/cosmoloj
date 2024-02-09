@@ -4030,7 +4030,7 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void coordinate_system_test_a_1() throws LanguageException {
+    public void cs1() throws LanguageException {
 
         final var text = "CS[Cartesian,3],"
                 + "AXIS[\"(X)\",geocentricX],"
@@ -4085,7 +4085,7 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void coordinate_system_test_b_1() throws LanguageException {
+    public void cs2() throws LanguageException {
 
         final var text = "CS[cartesian,3],"
                 + "AXIS[\"(X)\",east],"
@@ -4140,7 +4140,7 @@ public class WktParserBracketTest {
     }
 
     @Test
-    public void coordinate_system_test_c_1() throws LanguageException {
+    public void cs3() throws LanguageException {
 
         final var text = "CS[ellipsoidal,3],"
                 + "AXIS[\"latitude\",north,ORDER[1],ANGLEUNIT[\"degree\",0.0174532925199433]],"
@@ -4206,6 +4206,42 @@ public class WktParserBracketTest {
     }
 
     @Test
+    public void cs4() throws LanguageException {
+
+        final var text = """
+                         CS[temporalCount,1],
+                         AXIS["Time",future,TIMEUNIT["millisecond (ms)",0.001]]""";
+
+        final WktParser parser = WktParser.of(text);
+
+        final Token[] out = new Token[2];
+        final var cs = parser.temporalCoordinateSystem(out);
+        Assertions.assertNull(out[0]);
+        Assertions.assertNull(out[1]);
+
+        Assertions.assertEquals(CsType.TEMPORAL_COUNT, cs.getType().getSemantics());
+        Assertions.assertEquals(1, cs.getDimension().getSemantics().intValue());
+
+        Assertions.assertTrue(cs.getIdentifiers().isEmpty());
+
+        Assertions.assertEquals(1, cs.getAxis().size());
+
+        final var x = cs.getAxis().get(0);
+        Assertions.assertEquals("Time", x.getNameAbrev().getSemantics());
+        Assertions.assertEquals(Direction.future, x.getDirection().getType().getSemantics());
+        Assertions.assertNull(x.getDirection().getComplement());
+        Assertions.assertTrue(x.getIdentifiers().isEmpty());
+        Assertions.assertNull(x.getOrder());
+        final var xUnit = x.getUnit();
+        Assertions.assertTrue(xUnit instanceof Unit.Time);
+        Assertions.assertEquals("millisecond (ms)", xUnit.getName().getSemantics());
+        Assertions.assertTrue(xUnit.getConversionFactor().getSemantics() instanceof Double);
+        Assertions.assertEquals(0.001,
+        ((Double) xUnit.getConversionFactor().getSemantics()).doubleValue());
+        Assertions.assertTrue(xUnit.getIdentifiers().isEmpty());
+    }
+
+    @Test
     public void spatialAxis1() throws LanguageException {
 
         final var text = """
@@ -4213,7 +4249,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final var axis = parser.spatialAxis();
+        final var axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4239,7 +4275,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final var axis = parser.spatialAxis();
+        final var axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4275,7 +4311,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final var axis = parser.spatialAxis();
+        final var axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4310,7 +4346,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final var axis = parser.spatialAxis();
+        final var axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("distance (r)", axis.getNameAbrev().getSemantics());
 
@@ -4344,7 +4380,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final var axis = parser.spatialAxis();
+        final var axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("longitude (U)", axis.getNameAbrev().getSemantics());
 
@@ -4375,7 +4411,7 @@ public class WktParserBracketTest {
 
         final WktParser parser = WktParser.of(text);
 
-        final var axis = parser.spatialAxis();
+        final var axis = parser.spatialTemporalAxis();
 
         Assertions.assertEquals("longitude (U)", axis.getNameAbrev().getSemantics());
 

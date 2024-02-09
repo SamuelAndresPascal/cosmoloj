@@ -1898,14 +1898,13 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         while (comma()) {
 
             final EnumLexeme<SpecialSymbol> key = flushAndLexEnum(SpecialSymbol.class);
-            builder.list(key);
 
             final EnumLexeme<WktKeyword> lex = flushAndLexEnum(WktKeyword.class);
 
             if (WktKeyword.AXIS.test(lex)) {
-                builder.list(axis(lex));
+                builder.list(key, axis(lex));
             } else if (WktKeyword.isUnit(lex)) {
-                builder.list(unit(lex));
+                builder.list(key, unit(lex));
                 break;
             } else {
                 // dans ce cas, on a dépassé la fin du CS, il faut récupérer les lexèmes lus en trop et sortir
