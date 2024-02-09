@@ -15,11 +15,11 @@ public class SpatialCoordinateSystem extends AbstractExpression {
     private final EnumLexeme<CsType> type;
     private final UnsignedInteger dimension;
     private final List<Identifier> identifiers;
-    private final List<SpatialAxis> axis;
+    private final List<SpatialTemporalAxis> axis;
     private final Unit unit;
 
     public SpatialCoordinateSystem(final int start, final int end, final int index, final EnumLexeme<CsType> type,
-            final UnsignedInteger dimension, final List<Identifier> identifiers, final List<SpatialAxis> axis,
+            final UnsignedInteger dimension, final List<Identifier> identifiers, final List<SpatialTemporalAxis> axis,
             final Unit unit) {
         super(start, end, index);
         this.type = type;
@@ -41,7 +41,7 @@ public class SpatialCoordinateSystem extends AbstractExpression {
         return this.identifiers;
     }
 
-    public List<SpatialAxis> getAxis() {
+    public List<SpatialTemporalAxis> getAxis() {
         return this.axis;
     }
 
@@ -53,7 +53,7 @@ public class SpatialCoordinateSystem extends AbstractExpression {
 
         public Ellipsoidal2DCoordinateSystem(final int start, final int end, final int index,
                 final EnumLexeme<CsType> type, final UnsignedInteger dimension, final List<Identifier> identifiers,
-                final List<SpatialAxis> axis, final Unit unit) {
+                final List<SpatialTemporalAxis> axis, final Unit unit) {
             super(start, end, index, type, dimension, identifiers, axis, unit);
         }
     }

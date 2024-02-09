@@ -44,7 +44,7 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
     public Predicate<? super Token> predicate(final int currentIndex) {
 
         if (currentIndex == 0) {
-            return WktKeyword.CS.or(pb(SpatialAxis.class, Unit.class)); // WKT-CTS compatibility
+            return WktKeyword.CS.or(pb(SpatialTemporalAxis.class, Unit.class)); // WKT-CTS compatibility
         }
 
         return includeCs ? wkt2Predicate(currentIndex) : wktCtsPredicate(currentIndex);
@@ -62,11 +62,11 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
                     yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                 } else {
                     if (null == csType()) {
-                        yield odd() ? pb(SpatialAxis.class) : SpecialSymbol.COMMA;
+                        yield odd() ? pb(SpatialTemporalAxis.class) : SpecialSymbol.COMMA;
                     } else {
                         yield switch (csType()) {
-                            case SPATIAL -> odd() ? pb(SpatialAxis.class, Unit.class) : SpecialSymbol.COMMA;
-                            case TEMPORAL, ORDINAL -> odd() ? pb(SpatialAxis.class) : SpecialSymbol.COMMA;
+                            case SPATIAL -> odd() ? pb(SpatialTemporalAxis.class, Unit.class) : SpecialSymbol.COMMA;
+                            case TEMPORAL, ORDINAL -> odd() ? pb(SpatialTemporalAxis.class) : SpecialSymbol.COMMA;
                         };
                     }
                 }
@@ -77,13 +77,13 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
     protected Predicate<? super Token> wktCtsPredicate(final int currentIndex) {
         return switch (currentIndex) {
             case 1 -> SpecialSymbol.COMMA;
-            case 2 -> pb(SpatialAxis.class, Unit.class);
+            case 2 -> pb(SpatialTemporalAxis.class, Unit.class);
             case 3 -> SpecialSymbol.COMMA;
             default -> {
                 if (size() == 8) {
                     yield Predicates.no();
                 }
-                yield odd() ? SpecialSymbol.COMMA : pb(SpatialAxis.class, Unit.class);
+                yield odd() ? SpecialSymbol.COMMA : pb(SpatialTemporalAxis.class, Unit.class);
             }
         };
     }
@@ -96,7 +96,7 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
         if (isOpen() && token instanceof RightDelimiter) {
             rightDelimiterIndex = size() - 1;
         }
-        if (token instanceof SpatialAxis) {
+        if (token instanceof SpatialTemporalAxis) {
             axisCount++;
         }
         if (token instanceof Unit) {
@@ -113,7 +113,7 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
                 type,
                 dimention,
                 tokens(Identifier.class),
-                tokens(SpatialAxis.class),
+                tokens(SpatialTemporalAxis.class),
                 firstToken(Unit.class));
     }
 
@@ -132,7 +132,7 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
                     if (isOpen()) {
                         yield odd() ? pb(RightDelimiter.class).or(SpecialSymbol.COMMA) : pb(Identifier.class);
                     } else {
-                        yield odd() ? pb(SpatialAxis.class, Unit.class) : SpecialSymbol.COMMA;
+                        yield odd() ? pb(SpatialTemporalAxis.class, Unit.class) : SpecialSymbol.COMMA;
                     }
                 }
             };
@@ -142,13 +142,13 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
         protected Predicate<? super Token> wktCtsPredicate(final int currentIndex) {
             return switch (currentIndex) {
                 case 1 -> SpecialSymbol.COMMA;
-                case 2 -> pb(SpatialAxis.class, Unit.class);
+                case 2 -> pb(SpatialTemporalAxis.class, Unit.class);
                 case 3 -> SpecialSymbol.COMMA;
                 default -> {
                     if (size() == 6) {
                         yield Predicates.no();
                     }
-                    yield odd() ? SpecialSymbol.COMMA : pb(SpatialAxis.class, Unit.class);
+                    yield odd() ? SpecialSymbol.COMMA : pb(SpatialTemporalAxis.class, Unit.class);
                 }
             };
         }
@@ -162,7 +162,7 @@ public class SpatialCoordinateSystemBuilder extends CheckTokenBuilder<Token, Spa
                     type,
                     dimention,
                     tokens(Identifier.class),
-                    tokens(SpatialAxis.class),
+                    tokens(SpatialTemporalAxis.class),
                     firstToken(Unit.class));
         }
     }

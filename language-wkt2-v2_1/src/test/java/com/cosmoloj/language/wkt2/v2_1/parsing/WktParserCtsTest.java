@@ -3,7 +3,7 @@ package com.cosmoloj.language.wkt2.v2_1.parsing;
 import com.cosmoloj.language.api.exception.LanguageException;
 import com.cosmoloj.language.api.semantic.Token;
 import com.cosmoloj.language.common.impl.parsing.DefaultStreamScanner;
-import com.cosmoloj.language.wkt2.v2_1.expression.SpatialAxis;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialTemporalAxis;
 import com.cosmoloj.language.wkt2.v2_1.expression.BaseGeodeticCrs;
 import com.cosmoloj.language.wkt2.v2_1.expression.SpatialCoordinateSystem;
 import com.cosmoloj.language.wkt2.v2_1.expression.DerivedCrs;
@@ -371,7 +371,7 @@ public class WktParserCtsTest {
         final WktParser parser = WktParser.of("""
                                               AXIS["Lat",NORTH]""");
 
-        final SpatialAxis axis = parser.spatialAxis();
+        final SpatialTemporalAxis axis = parser.spatialAxis();
 
         Assertions.assertEquals("Lat", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis.getDirection().getType().getSemantics());
@@ -847,7 +847,7 @@ public class WktParserCtsTest {
         Assertions.assertEquals(117, unit.last());
         Assertions.assertEquals(33, unit.order());
 
-        final SpatialAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Up", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis.getDirection().getType().getSemantics());
@@ -1056,7 +1056,7 @@ public class WktParserCtsTest {
         Assertions.assertEquals(117, unit.last());
         Assertions.assertEquals(33, unit.order());
 
-        final SpatialAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Up", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis.getDirection().getType().getSemantics());
@@ -1125,11 +1125,11 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals(2, cs.getAxis().size());
 
-        final SpatialAxis axis0 = cs.getAxis().get(0);
+        final SpatialTemporalAxis axis0 = cs.getAxis().get(0);
         Assertions.assertEquals("Up", axis0.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis0.getDirection().getType().getSemantics());
 
-        final SpatialAxis axis1 = cs.getAxis().get(1);
+        final SpatialTemporalAxis axis1 = cs.getAxis().get(1);
         Assertions.assertEquals("East", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
 
@@ -1219,11 +1219,11 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals(2, localCs.getAxis().size());
 
-        final SpatialAxis axis0 = localCs.getAxis().get(0);
+        final SpatialTemporalAxis axis0 = localCs.getAxis().get(0);
         Assertions.assertEquals("Up", axis0.getName().getSemantics());
         Assertions.assertEquals(Direction.UP, axis0.getDirection().getSemantics());
 
-        final SpatialAxis axis1 = localCs.getAxis().get(1);
+        final SpatialTemporalAxis axis1 = localCs.getAxis().get(1);
         Assertions.assertEquals("East", axis1.getName().getSemantics());
         Assertions.assertEquals(Direction.EAST, axis1.getDirection().getSemantics());
 
@@ -1324,11 +1324,11 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals(2, localCs.getAxis().size());
 
-        final SpatialAxis axis0 = localCs.getAxis().get(0);
+        final SpatialTemporalAxis axis0 = localCs.getAxis().get(0);
         Assertions.assertEquals("Up", axis0.getName().getSemantics());
         Assertions.assertEquals(Direction.UP, axis0.getDirection().getSemantics());
 
-        final SpatialAxis axis1 = localCs.getAxis().get(1);
+        final SpatialTemporalAxis axis1 = localCs.getAxis().get(1);
         Assertions.assertEquals("East", axis1.getName().getSemantics());
         Assertions.assertEquals(Direction.EAST, axis1.getDirection().getSemantics());
 
@@ -1363,7 +1363,7 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals("9001", vertCsUnitAuthority.getCode().getSemantics());
 
-        final SpatialAxis spatialAxis = vertCs.getAxis();
+        final SpatialTemporalAxis spatialAxis = vertCs.getAxis();
 
         Assertions.assertEquals("Up", spatialAxis.getName().getSemantics());
         Assertions.assertEquals(Direction.UP, spatialAxis.getDirection().getSemantics());
@@ -1505,13 +1505,13 @@ public class WktParserCtsTest {
         Assertions.assertEquals("Degree", unit.getName().getSemantics());
         Assertions.assertEquals(0.0174532925199433, unit.getConversionFactor().getSemantics().doubleValue());
 
-        final SpatialAxis axis1 = geoccs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = geoccs.getCoordinateSystem().getAxis().get(0);
         Assertions.assertEquals("E", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
-        final SpatialAxis axis2 = geoccs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = geoccs.getCoordinateSystem().getAxis().get(1);
         Assertions.assertEquals("N", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
-        final SpatialAxis axis3 = geoccs.getCoordinateSystem().getAxis().get(2);
+        final SpatialTemporalAxis axis3 = geoccs.getCoordinateSystem().getAxis().get(2);
         Assertions.assertEquals("U", axis3.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis3.getDirection().getType().getSemantics());
         final Identifier authority = geoccs.getIdentifiers().get(0);
@@ -1755,10 +1755,10 @@ public class WktParserCtsTest {
         Assertions.assertEquals("Degree", angular.getName().getSemantics());
         Assertions.assertEquals(0.0174532925199433, angular.getConversionFactor().getSemantics().doubleValue());
 
-        final SpatialAxis axis1 = geogcs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = geogcs.getCoordinateSystem().getAxis().get(0);
         Assertions.assertEquals("E", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
-        final SpatialAxis axis2 = geogcs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = geogcs.getCoordinateSystem().getAxis().get(1);
         Assertions.assertEquals("N", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
 
@@ -2273,12 +2273,12 @@ public class WktParserCtsTest {
         Assertions.assertEquals(421, unit.last());
         Assertions.assertEquals(130, unit.order());
 
-        final SpatialAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Easting", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
 
-        final SpatialAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
 
         Assertions.assertEquals("Northing", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
@@ -2538,12 +2538,12 @@ public class WktParserCtsTest {
         Assertions.assertEquals(421, unit.last());
         Assertions.assertEquals(130, unit.order());
 
-        final SpatialAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Easting", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
 
-        final SpatialAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
 
         Assertions.assertEquals("Northing", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
@@ -3695,7 +3695,7 @@ public class WktParserCtsTest {
         final WktParser parser = WktParser.of("""
                                               AXIS("Lat",NORTH)""", '(', ')');
 
-        final SpatialAxis axis = parser.spatialAxis();
+        final SpatialTemporalAxis axis = parser.spatialAxis();
 
         Assertions.assertEquals("Lat", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis.getDirection().getType().getSemantics());
@@ -4152,7 +4152,7 @@ public class WktParserCtsTest {
         Assertions.assertEquals(117, unit.last());
         Assertions.assertEquals(33, unit.order());
 
-        final SpatialAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Up", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis.getDirection().getType().getSemantics());
@@ -4361,7 +4361,7 @@ public class WktParserCtsTest {
         Assertions.assertEquals(117, unit.last());
         Assertions.assertEquals(33, unit.order());
 
-        final SpatialAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis = vertCs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Up", axis.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis.getDirection().getType().getSemantics());
@@ -4430,11 +4430,11 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals(2, cs.getAxis().size());
 
-        final SpatialAxis axis0 = cs.getAxis().get(0);
+        final SpatialTemporalAxis axis0 = cs.getAxis().get(0);
         Assertions.assertEquals("Up", axis0.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis0.getDirection().getType().getSemantics());
 
-        final SpatialAxis axis1 = cs.getAxis().get(1);
+        final SpatialTemporalAxis axis1 = cs.getAxis().get(1);
         Assertions.assertEquals("East", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
 
@@ -4524,11 +4524,11 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals(2, localCs.getAxis().size());
 
-        final SpatialAxis axis0 = localCs.getAxis().get(0);
+        final SpatialTemporalAxis axis0 = localCs.getAxis().get(0);
         Assertions.assertEquals("Up", axis0.getName().getSemantics());
         Assertions.assertEquals(Direction.UP, axis0.getDirection().getSemantics());
 
-        final SpatialAxis axis1 = localCs.getAxis().get(1);
+        final SpatialTemporalAxis axis1 = localCs.getAxis().get(1);
         Assertions.assertEquals("East", axis1.getName().getSemantics());
         Assertions.assertEquals(Direction.EAST, axis1.getDirection().getSemantics());
 
@@ -4629,11 +4629,11 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals(2, localCs.getAxis().size());
 
-        final SpatialAxis axis0 = localCs.getAxis().get(0);
+        final SpatialTemporalAxis axis0 = localCs.getAxis().get(0);
         Assertions.assertEquals("Up", axis0.getName().getSemantics());
         Assertions.assertEquals(Direction.UP, axis0.getDirection().getSemantics());
 
-        final SpatialAxis axis1 = localCs.getAxis().get(1);
+        final SpatialTemporalAxis axis1 = localCs.getAxis().get(1);
         Assertions.assertEquals("East", axis1.getName().getSemantics());
         Assertions.assertEquals(Direction.EAST, axis1.getDirection().getSemantics());
 
@@ -4668,7 +4668,7 @@ public class WktParserCtsTest {
 
         Assertions.assertEquals("9001", vertCsUnitAuthority.getCode().getSemantics());
 
-        final SpatialAxis spatialAxis = vertCs.getAxis();
+        final SpatialTemporalAxis spatialAxis = vertCs.getAxis();
 
         Assertions.assertEquals("Up", spatialAxis.getName().getSemantics());
         Assertions.assertEquals(Direction.UP, spatialAxis.getDirection().getSemantics());
@@ -4811,13 +4811,13 @@ public class WktParserCtsTest {
         Assertions.assertEquals("Degree", unit.getName().getSemantics());
         Assertions.assertEquals(0.0174532925199433, unit.getConversionFactor().getSemantics().doubleValue());
 
-        final SpatialAxis axis1 = geoccs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = geoccs.getCoordinateSystem().getAxis().get(0);
         Assertions.assertEquals("E", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
-        final SpatialAxis axis2 = geoccs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = geoccs.getCoordinateSystem().getAxis().get(1);
         Assertions.assertEquals("N", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
-        final SpatialAxis axis3 = geoccs.getCoordinateSystem().getAxis().get(2);
+        final SpatialTemporalAxis axis3 = geoccs.getCoordinateSystem().getAxis().get(2);
         Assertions.assertEquals("U", axis3.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.up, axis3.getDirection().getType().getSemantics());
         final Identifier authority = geoccs.getIdentifiers().get(0);
@@ -5061,10 +5061,10 @@ public class WktParserCtsTest {
         Assertions.assertEquals("Degree", angular.getName().getSemantics());
         Assertions.assertEquals(0.0174532925199433, angular.getConversionFactor().getSemantics().doubleValue());
 
-        final SpatialAxis axis1 = geogcs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = geogcs.getCoordinateSystem().getAxis().get(0);
         Assertions.assertEquals("E", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
-        final SpatialAxis axis2 = geogcs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = geogcs.getCoordinateSystem().getAxis().get(1);
         Assertions.assertEquals("N", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
 
@@ -5579,12 +5579,12 @@ public class WktParserCtsTest {
         Assertions.assertEquals(421, unit.last());
         Assertions.assertEquals(130, unit.order());
 
-        final SpatialAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Easting", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
 
-        final SpatialAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
 
         Assertions.assertEquals("Northing", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());
@@ -5844,12 +5844,12 @@ public class WktParserCtsTest {
         Assertions.assertEquals(421, unit.last());
         Assertions.assertEquals(130, unit.order());
 
-        final SpatialAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
+        final SpatialTemporalAxis axis1 = projcs.getCoordinateSystem().getAxis().get(0);
 
         Assertions.assertEquals("Easting", axis1.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.east, axis1.getDirection().getType().getSemantics());
 
-        final SpatialAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
+        final SpatialTemporalAxis axis2 = projcs.getCoordinateSystem().getAxis().get(1);
 
         Assertions.assertEquals("Northing", axis2.getNameAbrev().getSemantics());
         Assertions.assertEquals(Direction.north, axis2.getDirection().getType().getSemantics());

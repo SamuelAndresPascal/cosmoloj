@@ -13,8 +13,8 @@ import com.cosmoloj.language.wkt.sf.lexeme.RightDelimiter;
 import com.cosmoloj.language.wkt2.v2_1.expression.AbridgedTransformationBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.Anchor;
 import com.cosmoloj.language.wkt2.v2_1.expression.Area;
-import com.cosmoloj.language.wkt2.v2_1.expression.SpatialAxis;
-import com.cosmoloj.language.wkt2.v2_1.expression.SpatialAxisBuilder;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialTemporalAxis;
+import com.cosmoloj.language.wkt2.v2_1.expression.SpatialTemporalAxisBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisDirection;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisDirectionBuilder;
 import com.cosmoloj.language.wkt2.v2_1.expression.AxisOrder;
@@ -1193,15 +1193,15 @@ public class WktParser extends AbstractPredictiveMappingUnpredictiveParser<WktLe
         return patternSpatialCoordinateSystem(label, out, new SpatialCoordinateSystemBuilder());
     }
 
-    public SpatialAxis spatialAxis() throws LanguageException {
+    public SpatialTemporalAxis spatialAxis() throws LanguageException {
         return WktParser.this.spatialAxis(flushAndLexEnum(WktKeyword.class));
     }
 
-    public SpatialAxis spatialAxis(final EnumLexeme<WktKeyword> label) throws LanguageException {
+    public SpatialTemporalAxis spatialAxis(final EnumLexeme<WktKeyword> label) throws LanguageException {
 
         Lexeme[] out = new Lexeme[2];
 
-        final TokenBuilder<Token, SpatialAxis> builder = new SpatialAxisBuilder().list(label,
+        final TokenBuilder<Token, SpatialTemporalAxis> builder = new SpatialTemporalAxisBuilder().list(label,
                 flushAndLex(LeftDelimiter.class),
                 flushAndLex(AxisNameAbrev.class),
                 flushAndLexEnum(SpecialSymbol.class),
