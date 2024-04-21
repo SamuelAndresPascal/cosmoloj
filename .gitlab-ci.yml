@@ -63,6 +63,7 @@ site:
   script:
     - mvn $MAVEN_CLI_OPTS clean install
     - mvn $MAVEN_CLI_OPTS site-deploy
+    - curl --silent http://cosmoloj.com/cosmoloj/ | grep publishDate
   artifacts:
     expire_in: 2 days
   environment:
