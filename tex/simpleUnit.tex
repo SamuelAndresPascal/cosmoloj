@@ -1,4 +1,4 @@
-\documentclass[a4paper,draft,twoside,10pt]{article}
+\documentclass[a4paper,twoside,10pt]{article}
 
 \usepackage[francais]{babel}
 \usepackage{fontspec}
@@ -6,13 +6,14 @@
 \usepackage{tikz-uml}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{hyperref}
 
 %\usepackage{amsmath}
 
 % Compiler avec:
 % xelatex simpleUnit
 
-\title{Simple Unit\\0.1-r0 (en cours de rédaction)}
+\title{Simple Unit\\1.0-r0}
 \author{Samuel \textsc{Andrés}}
 
 \begin{document}
@@ -58,20 +59,21 @@ la spécification.
 
 \subsection{Périmètre}
 
-La présente spécification abstraite s'inspire de la JSR 363 de la communauté Java mais en restreint le périmètre.
+La présente spécification abstraite s'inspire de la \href{https://jcp.org/en/jsr/detail?id=363}{JSR 363} de la
+communauté Java mais en restreint le périmètre.
 
-Elle est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et non pas à 
-fournir des collections d'unités courantes déjà construites. Il ne s'agit pas non plus d'une bibliothèque 
+Elle est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et non pas à
+fournir des collections d'unités courantes déjà construites. Il ne s'agit pas non plus d'une bibliothèque
 d'interprétation de chaines de caractères comme unités ni d'écriture d'unités sous forme de chaînes de caractères.
 
 En définissant les unes par rapport aux autres les unités qui lui sont nécessaires, la présente spécification vise à
 permettre à l'utilisateur d'une implémentation de s'affranchir de la question rébarbative de l'implémentation des
 convertisseurs d'unité à unité.
 
-En adoptant un périmètre limité, la présente spécification a également pour objectif de s'abstraire des spécificités des
-langages de programmation de manière à ce que la représentation conceptuelle qu'elle propose puisse être aisément
-implémentée en plusieurs d'entre eux en y consacrant un minimum d'effort. Toutefois, la spécification est explicitement
-orientée objet.
+En adoptant un périmètre limité, la présente spécification s'assigne également l'objectif de s'abstraire des
+spécificités des langages de programmation de manière à ce que la représentation conceptuelle qu'elle propose puisse
+être aisément implémentée en plusieurs d'entre eux en y consacrant un minimum d'effort. Toutefois, la spécification est
+explicitement orientée objet.
 
 La présente spécification n'inclut pas les contrôles d'homogénéité de conversion d'unités ni de cohérence des dimension
 ni des grandeurs. La cohérence des conversions est laissée à l'utilisateur.
@@ -91,13 +93,15 @@ Dans les diagrammes de cette section, les méthodes en italique sont optionnelle
 \subsection{Convertisseurs}
 
 Un convertisseur représente une conversion affine ou linéaire d'une unité à une autre. La méthode \emph{convert()} prend
-en paramètre une valeur exprimée dans l'unité de départ et retourne son expression dans l'unité cible.
+en paramètre une valeur exprimée dans l'unité source et retourne son expression dans l'unité cible. L'unité source est
+celle à partir de laquelle s'effectue l'appel de la méthode de création de convertisseur, l'unité cible étant passée en
+paramètre à cette méthode.
 
 Les méthodes \emph{scale()} et \emph{offset()} retournent respectivement la pente et l'ordonnée à l'origine de la
-formule de conversion linéaire ou affine et la méthode \emph{inverse()} retourne le convertisseur inverse de l'unité 
-cible vers l'unité de départ du convertisseur d'appel de la méthode.
+formule de conversion affine et la méthode \emph{inverse()} retourne le convertisseur inverse de l'unité
+cible vers l'unité source du convertisseur.
 
-On \emph{recommande} qu'un convertisseur soit identique au sens de l'instance au convertisseur inverse de son 
+On \emph{recommande} qu'un convertisseur soit identique, au sens de l'instance, au convertisseur inverse de son
 convertisseur inverse.
 
 La méthode \emph{linear()} est optionnelle. Elle construit un convertisseur qui ne garde que la partie linéaire du
@@ -139,9 +143,10 @@ caractéristique de manière explicite.
 Le type abstrait \emph{Unit} représente une unité de manière générale. Les unités concrètes sont de trois types: les
 unités fondamentales (\emph{FundamentalUnit}) ne sont définies à partir d'aucune autre unité. Les unités transformées
 (\emph{TransformedUnit}) sont définies par une unité de référence et un convertisseur qui représente la formule linéaire
-ou affine qui permet de passer de l'une à l'autre. Les unités dérivées (\emph{DerivedUnit}) sont définies par une
-collection d'unités chacune élevée à une puissance rationnelle, l'association d'une unité et d'une puissance rationnelle
-constitutant un facteur (\emph{Factor}) de l'unité dérivée.
+ou affine qui permet de passer de l'unité transformée à son unité de référence. Les unités dérivées (\emph{DerivedUnit})
+sont définies par une collection d'unités chacune élevée à une puissance rationnelle, l'association d'une unité et d'une
+puissance rationnelle constitutant un facteur (\emph{Factor}) de l'unité dérivée. Il n'est pas requis que les facteurs
+soient eux-mêmes des unités.
 
 Les unités transformées et dérivées sont ainsi définies à partir d'autres unités et donc, directement ou indirectement,
 de manière ultime à partir d'un jeu d'unités qui sont toutes fondamentales.
@@ -155,20 +160,20 @@ un convertisseur vers le jeu d'unités fondamentales qui la composent.
 \begin{tikzpicture}
 \umlclass[type=abstract, y=3]{Unit}{
   }{
-  + getConverterTo(unit: Unit): UnitConverter\\
-  + toBase(): UnitConverter
+  + getConverterTo(unit : Unit) : UnitConverter\\
+  + toBase() : UnitConverter
 }
 \umlclass[x=-3.5]{TransformedUnit}{
   }{
-\umlvirt{+ reference(): Unit}\\
-\umlvirt{+ toReference(): UnitConverter}
+\umlvirt{+ reference() : Unit}\\
+\umlvirt{+ toReference() : UnitConverter}
 }
 \umlclass[y=-3]{FundamentalUnit}{
   }{
 }
 \umlclass[x=3.5]{DerivedUnit}{
   }{
-  \umlvirt{+ definition(): Factor[]}
+  \umlvirt{+ definition() : Factor[]}
 }
 \umlinherit{FundamentalUnit}{Unit}
 \umlinherit{TransformedUnit}{Unit}
@@ -181,7 +186,7 @@ Les unités sont des instances immuables (impératif).
 
 \subsection{Facteurs}
 
-Un facteur représente l'association d'une unité à une exposant rationnel. La combinaison des facteurs permet de
+Un facteur représente l'association d'une unité à un exposant rationnel. La combinaison des facteurs permet de
 construire les unités dérivées.
 
 On \emph{suggère} que le concept d'unité spécialise celui de facteur de manière à considérer par polymorphisme qu'une
@@ -193,19 +198,19 @@ facteurs d'unités à la puissance 1 dans la définition de nombreuses unités d
 \begin{tikzpicture}
 \umlclass[y=4]{Factor}{
   }{
-    + dim(): Unit\\
-    + numerator(): integer\\
-    + denominator(): integer\\
-    + power(): decimal
+    + dim() : Unit\\
+    + numerator() : integer\\
+    + denominator() integer\\
+    + power() : decimal
 }
 \umlclass{Unit}{
   }{
-  + getConverterTo(): UnitConverter\\
-  + toBase(): UnitConverter\\
-  + dim(): Unit \{ return this \}\\
-  + numerator(): integer \{ return 1 \}\\
-  + denominator(): integer \{ return 1 \}\\
-  + power(): decimal \{ return 1. \}
+  + getConverterTo() : UnitConverter\\
+  + toBase() : UnitConverter\\
+  + dim() : Unit \{ return this \}\\
+  + numerator() : integer \{ return 1 \}\\
+  + denominator() : integer \{ return 1 \}\\
+  + power() : decimal \{ return 1. \}
 }
 \umlinherit{Unit}{Factor}
 \end{tikzpicture}
@@ -215,9 +220,7 @@ facteurs d'unités à la puissance 1 dans la définition de nombreuses unités d
 \subsection{Méthodes de construction}
 
 On \emph{suggère} l'implémentation de méthodes de construction d'unités filles à partir d'une unité parente à la manière
-des méthodes spécifiées par la JSR 363.
-
-On suggère l'implémentation de méthodes utilitaires, parmi lesquelles les méthodes suivantes:
+des méthodes spécifiées par la JSR 363, parmi lesquelles les méthodes utilitaires suivantes:
 
 \begin{itemize}
 \item La méthode \emph{shift()} construit une unité transformée dont l'unité de référence est l'unité d'appel de la
@@ -227,7 +230,7 @@ la méthode et le convertisseur à l'unité de référence est un agrandissement
 \item La méthode \emph{scaleDivide()} construit une unité transformée correspondant à un appel à \emph{scaleMultiply()}
 avec un argument donc la valeur est inversée.
 \item La méthode \emph{factor()} construit un facteur dont l'unité est l'unité d'appel et la puissance est un rationnel
-construit par le rapport du premier et du second paramètres.
+tel que le numérateur corresponde au premier paramètre de la méthode et le dénominateur au second.
 \end{itemize}
 
 
@@ -235,12 +238,12 @@ construit par le rapport du premier et du second paramètres.
 \begin{tikzpicture}
 \umlclass{Unit}{
   }{
-  + getConverterTo(): UnitConverter\\
-  + toBase(): UnitConverter\\
-  + shift(value: decimal): TransformedUnit\\
-  + scaleMultiply(value: number): TransformedUnit\\
-  + scaleDivide(value: number): TransformedUnit\\
-  + factor(numerator: integer, denominator: integer) : Factor
+  + getConverterTo() : UnitConverter\\
+  + toBase() : UnitConverter\\
+  + shift(value : decimal) : TransformedUnit\\
+  + scaleMultiply(value : number) : TransformedUnit\\
+  + scaleDivide(value : number) : TransformedUnit\\
+  + factor(numerator : integer, denominator : integer) : Factor
 }
 \end{tikzpicture}
 \caption{Quelques méthodes de construction suggérées pour l'unité.}
@@ -301,7 +304,7 @@ convertisseur vers son jeu d'unités fondamentales, tous sont concaténés de ma
 
 L'algorithme ne garde que la partie linéaire des convertisseurs résultants des unités référencées par chaque facteur car
 on considère que les translations doivent disparaître ainsi qu'on s'y attend, par exemple en convertissant des degrés
-Celcius par mètre en degrés Kelvin par mètre.
+Celcius par mètre en Kelvin par mètre.
 
 \begin{algorithm}[!h]
 \caption{Implémentation de DerivedUnit.toBase()}\label{derivedToBase}
@@ -323,5 +326,93 @@ Celcius par mètre en degrés Kelvin par mètre.
 
 La conformité aux critères de validation est impérative au respect de la spécification. On ne donne cependant pas de
 critère relatif à la précision des conversions au-delà des valeurs indiquées.
+
+
+\begin{algorithm}[!h]
+\caption{Test d'unités transformées}\label{transformedTest}
+\begin{algorithmic}
+\Procedure{TransformedTest}{}
+
+\State m : Unit $\gets$ FundamentalUnit()
+\State km : Unit $\gets$ m.scaleMultiply(1000)
+\State cm : Unit $\gets$ m.scaleDivide(100)
+\State cmToKm : UnitConverter $\gets$ cm.getConverterTo(km)
+
+\Require cmToKm.convert(3) = 0.00003
+\Require cmToKm.inverse().convert(0.00003) = 3
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[!h]
+\caption{Test d'unités dérivées}\label{derivedTest}
+\begin{algorithmic}
+\Procedure{TransformedTest}{}
+
+\State m : Unit $\gets$ FundamentalUnit()
+\State km : Unit $\gets$ m.scaleMultiply(1000)
+\State km2 : Unit $\gets$ DerivedUnit(km.factor(2))
+\State cm : Unit $\gets$ m.scaleDivide(100)
+\State cm : Unit $\gets$ DerivedUnit(cm.factor(2))
+\State km2ToCm2 : UnitConverter $\gets$ km2.getConverterTo(cm2)
+
+\Require km2ToCm2.convert(3.) = 30000000000
+\Require km2ToCm2.inverse().convert(30000000000.) = 3
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[!h]
+\caption{Test d'unités dérivées (dimensions combinées)}\label{combinedDerivedTest}
+\begin{algorithmic}
+\Procedure{TransformedTest}{}
+
+\State m : Unit $\gets$ FundamentalUnit()
+\State kg : Unit $\gets$ FundamentalUnit()
+\State g : Unit $\gets$ kg.scaleDivide(1000)
+\State ton : Unit $\gets$ kg.scaleMultiply(1000)
+\State gPerM2 : Unit $\gets$ DerivedUnit(g, m.factor(-2))
+\State km : Unit $\gets$ m.scaleMultiply(1000)
+\State tonPerKm2 : Unit $\gets$ DerivedUnit(ton, km.factor(-2))
+\State cm : Unit $\gets$ m.scaleDivide(100)
+\State tonPerCm2 : Unit $\gets$ DerivedUnit(ton, cm.factor(-2))
+\State toTonPerKm2 : UnitConverter $\gets$ gPerM2.getConverterTo(tonPerKm2)
+\State toTonPerCm2 : UnitConverter $\gets$ gPerM2.getConverterTo(tonPerCm2)
+
+\Require toTonPerKm2.convert(1) = 1
+\Require toTonPerKm2.inverse().convert(3) = 3
+
+\Require toTonPerCm2.convert(1) = 1E-10
+\Require toTonPerCm2.convert(3) = 3E-10
+\Require toTonPerCm2.offset() = 0
+\Require toTonPerCm2.scale() = 1E-10
+\Require toTonPerCm2.inverse().offset() = 0
+\Require toTonPerCm2.inverse().convert(3E-10) = 3
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[!h]
+\caption{Test d'unités dérivées (transformations affines)}\label{affineDerivedTest}
+\begin{algorithmic}
+\Procedure{TransformedTest}{}
+
+\State k : Unit $\gets$ FundamentalUnit()
+\State c : Unit $\gets$ k.shift(273.15)
+\State m : Unit $\gets$ FundamentalUnit()
+\State cPerM : Unit $\gets$ DerivedUnit(c, m.factor(-1))
+\State kPerM : Unit $\gets$ DerivedUnit(k, m.factor(-1))
+
+\State kToC : UnitConverter $\gets$ k.getConverterTo(c)
+\State kPerMToCPerM : UnitConverter $\gets$ kPerM.getConverterTo(cPerM)
+
+\Require gPerM2ToTonPerKm2.convert(1) = 1
+\Require gPerM2ToTonPerKm2.inverse().convert(3) = 3
+
+\Require kPerMToCPerM.convert(3) = 3
+\Require kPerMToCPerM.inverse().convert(3) = 3
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \end{document}
