@@ -347,7 +347,7 @@ critère relatif à la précision des conversions au-delà des valeurs indiquée
 \begin{algorithm}[!h]
 \caption{Test d'unités dérivées}\label{derivedTest}
 \begin{algorithmic}
-\Procedure{TransformedTest}{}
+\Procedure{DerivedTest}{}
 
 \State m : Unit $\gets$ FundamentalUnit()
 \State km : Unit $\gets$ m.scaleMultiply(1000)
@@ -365,7 +365,7 @@ critère relatif à la précision des conversions au-delà des valeurs indiquée
 \begin{algorithm}[!h]
 \caption{Test d'unités dérivées (dimensions combinées)}\label{combinedDerivedTest}
 \begin{algorithmic}
-\Procedure{TransformedTest}{}
+\Procedure{CombinedDerivedTest}{}
 
 \State m : Unit $\gets$ FundamentalUnit()
 \State kg : Unit $\gets$ FundamentalUnit()
@@ -395,7 +395,7 @@ critère relatif à la précision des conversions au-delà des valeurs indiquée
 \begin{algorithm}[!h]
 \caption{Test d'unités dérivées (transformations affines)}\label{affineDerivedTest}
 \begin{algorithmic}
-\Procedure{TransformedTest}{}
+\Procedure{AffineDerivedTest}{}
 
 \State k : Unit $\gets$ FundamentalUnit()
 \State c : Unit $\gets$ k.shift(273.15)
