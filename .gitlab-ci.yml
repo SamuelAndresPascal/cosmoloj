@@ -32,7 +32,7 @@ form:
     - htxelatex simpleUnit.tex "xhtml"
     - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
     - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$PUBLIC_SITE_SERVER_PATH/su
-    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $PUBLIC_SITE_SERVER_PATH/su ; unzip simpleUnit.zip ; rm simpleUnit.zip"
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $PUBLIC_SITE_SERVER_PATH/su ; unzip simpleUnit.zip ; mv simpleUnit.html index.html ; rm simpleUnit.zip"
   artifacts:
     paths:
       - tex/simpleUnit.pdf
