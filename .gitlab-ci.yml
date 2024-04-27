@@ -29,6 +29,8 @@ form:
   script:
     - cd tex/
     - xelatex -halt-on-error simpleUnit.tex
+    - htxelatex simpleUnit.tex "xhtml"
+    - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
   artifacts:
     paths:
       - tex/simpleUnit.pdf
@@ -64,6 +66,7 @@ site:
     - mvn $MAVEN_CLI_OPTS clean install
     - mvn $MAVEN_CLI_OPTS site-deploy
     - curl --silent http://cosmoloj.com/cosmoloj/ | grep publishDate
+    - curl --silent http://cosmoloj.com/cosmoloj/apidocs/index.html | grep Generated
   artifacts:
     expire_in: 2 days
   environment:

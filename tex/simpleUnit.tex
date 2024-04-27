@@ -155,8 +155,8 @@ un convertisseur vers le jeu d'unités fondamentales qui la composent.
 \begin{tikzpicture}
 \umlclass[type=abstract, y=3]{Unit}{
   }{
-  + getConverterTo​(unit: Unit) : UnitConverter\\
-  + toBase() : UnitConverter
+  + getConverterTo(unit: Unit): UnitConverter\\
+  + toBase(): UnitConverter
 }
 \umlclass[x=-3.5]{TransformedUnit}{
   }{
@@ -193,19 +193,19 @@ facteurs d'unités à la puissance 1 dans la définition de nombreuses unités d
 \begin{tikzpicture}
 \umlclass[y=4]{Factor}{
   }{
-    + dim() : Unit\\
-    + numerator() : integer\\
-    + denominator() : integer\\
-    + power() : decimal
+    + dim(): Unit\\
+    + numerator(): integer\\
+    + denominator(): integer\\
+    + power(): decimal
 }
 \umlclass{Unit}{
   }{
-  + getConverterTo​() : UnitConverter\\
-  + toBase() : UnitConverter\\
-  + dim() : Unit \{ return this \}\\
-  + numerator() : integer \{ return 1 \}\\
-  + denominator() : integer \{ return 1 \}\\
-  + power() : decimal \{ return 1. \}
+  + getConverterTo(): UnitConverter\\
+  + toBase(): UnitConverter\\
+  + dim(): Unit \{ return this \}\\
+  + numerator(): integer \{ return 1 \}\\
+  + denominator(): integer \{ return 1 \}\\
+  + power(): decimal \{ return 1. \}
 }
 \umlinherit{Unit}{Factor}
 \end{tikzpicture}
@@ -235,12 +235,12 @@ construit par le rapport du premier et du second paramètres.
 \begin{tikzpicture}
 \umlclass{Unit}{
   }{
-  + getConverterTo​() : UnitConverter\\
-  + toBase() : UnitConverter\\
-  + shift(value : decimal) : TransformedUnit\\
-  + scaleMultiply(value : number) : TransformedUnit\\
-  + scaleDivide(value : number) : TransformedUnit\\
-  + factor(numerator : integer, denominator : integer) : Factor
+  + getConverterTo(): UnitConverter\\
+  + toBase(): UnitConverter\\
+  + shift(value: decimal): TransformedUnit\\
+  + scaleMultiply(value: number): TransformedUnit\\
+  + scaleDivide(value: number): TransformedUnit\\
+  + factor(numerator: integer, denominator: integer) : Factor
 }
 \end{tikzpicture}
 \caption{Quelques méthodes de construction suggérées pour l'unité.}
@@ -255,12 +255,12 @@ implémentation sans qu'elle s'aligne pour autant sur les choix d'implémentatio
 
 Les convertisseurs sont construits par concaténation de la conversion de l'unité de départ vers les unités fondamentales
 qui la composent et de la conversion inverse de l'unité cible vers ces mêmes unités fondamentales
-(Algorithme~\ref{alg:getConverterTo​}).
+(Algorithme~\ref{getConverterTo}).
 
 \begin{algorithm}[!h]
-\caption{Implémentation de Unit.getConverterTo​()}\label{alg:getConverterTo​}
+\caption{Implémentation de Unit.getConverterTo()}\label{getConverterTo}
 \begin{algorithmic}
-\Procedure{Unit.getConverterTo​}{target}\Comment{convertisseur de $this$ à $target$}
+\Procedure{Unit.getConverterTo}{target}\Comment{convertisseur de $this$ à $target$}
 \State \textbf{return} target.toBase().inverse().concatenate(this.toBase())
 \EndProcedure
 \end{algorithmic}
@@ -274,7 +274,7 @@ La conversion d'une unité fondamentale vers le jeu d'unités fondamentales qui 
 \emph{recommande} d'implémenter cette identité comme un convertisseur singleton.
 
 \begin{algorithm}[!h]
-\caption{Implémentation de FundamentalUnit.toBase()}\label{alg:fundamentalUnit:toBase}
+\caption{Implémentation de FundamentalUnit.toBase()}\label{fundamentalToBase}
 \begin{algorithmic}
 \Procedure{FundamentalUnit.toBase}{}
 \State \textbf{return} identity()\Comment{un UnitConverter correspondant à l'identité.}
@@ -286,7 +286,7 @@ La conversion d'une unité transformée vers le jeu d'unités fondamentales qui 
 conversion vers son unité de référence à la conversion vers le jeu d'unités fondamentales qui composent cette dernière.
 
 \begin{algorithm}[!h]
-\caption{Implémentation de TransformedUnit.toBase()}\label{alg:transformedUnit:toBase}
+\caption{Implémentation de TransformedUnit.toBase()}\label{transformedToBase}
 \begin{algorithmic}
 \Procedure{TransformedUnit.toBase}{}
 \State \textbf{return} this.reference().toBase().concatenate(this.toReference())
@@ -304,7 +304,7 @@ on considère que les translations doivent disparaître ainsi qu'on s'y attend, 
 Celcius par mètre en degrés Kelvin par mètre.
 
 \begin{algorithm}[!h]
-\caption{Implémentation de DerivedUnit.toBase()}\label{alg:derivedUnit:toBase}
+\caption{Implémentation de DerivedUnit.toBase()}\label{derivedToBase}
 \begin{algorithmic}
 \Procedure{DerivedUnit.toBase}{}
 
