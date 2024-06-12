@@ -12,11 +12,11 @@
 
     <checkstyle.plugin.version>3.3.1</checkstyle.plugin.version>
     <checkstyle.location>checkstyle.xml</checkstyle.location>
-    <checkstyle.version>10.15.0</checkstyle.version>
+    <checkstyle.version>10.17.0</checkstyle.version>
     <compiler.plugin.version>3.13.0</compiler.plugin.version>
-    <compiler.plugin.release>21</compiler.plugin.release>
+    <compiler.plugin.release>22</compiler.plugin.release>
     <processor.plugin.version>5.1</processor.plugin.version>
-    <dependency.plugin.version>3.6.1</dependency.plugin.version>
+    <dependency.plugin.version>3.7.0</dependency.plugin.version>
     <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
     <deploy.plugin.version>3.1.1</deploy.plugin.version>
     <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
