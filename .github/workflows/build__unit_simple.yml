@@ -18,3 +18,4 @@ jobs:
           java-version: '22'
       - run: java -version
       - run: mvn -v
+      - run: mvn clean install -DskipTests
