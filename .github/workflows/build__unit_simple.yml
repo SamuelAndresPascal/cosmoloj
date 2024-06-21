@@ -12,3 +12,5 @@ jobs:
     steps:
       - run: java -version
       - run: mvn -v
+      - run: curl -O https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_linux-x64_bin.tar.gz
+      - run: curl -O https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz
