@@ -4,7 +4,7 @@ run-name: ${{ github.actor }}
 on:
   push:
     branches:
-      - master
+      - actions_try
 
 jobs:
   build__unit_simple:
