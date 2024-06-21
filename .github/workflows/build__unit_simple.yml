@@ -1,0 +1,21 @@
+name: unit_simple
+run-name: ${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build__unit_simple:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: s4u/setup-maven-action@v1.13.0
+        with:
+          distribution: 'oracle' # See 'Supported distributions' for available options
+          java-version: '22'
+          maven-version: '3.9.7'
+      - run: java -version
+      - run: mvn -v
+      - run: mvn clean install -DskipTests
