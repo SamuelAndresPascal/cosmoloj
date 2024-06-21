@@ -11,14 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: mvn -v
-      - run: curl -O https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz
-      - uses: actions/setup-java@v4
+#      - run: curl -O https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz
+#      - uses: actions/setup-java@v4
+      - uses: s4u/setup-maven-action@1.13.0
         with:
           distribution: 'oracle' # See 'Supported distributions' for available options
           java-version: '22'
+          maven-version: '3.9.7'
       - run: java -version
       - run: mvn -v
-      - run: pwd
-      - run: ls -lR
-      - run: mvn clean install -DskipTests
+#      - run: mvn clean install -DskipTests
