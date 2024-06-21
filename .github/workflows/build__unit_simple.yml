@@ -1,0 +1,14 @@
+name: unit_simple
+run-name: ${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build__unit_simple:
+    runs-on: ubuntu-latest
+    steps:
+      - run: java -version
+      - run: mvn -v
