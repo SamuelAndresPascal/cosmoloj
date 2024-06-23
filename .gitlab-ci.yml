@@ -55,6 +55,14 @@ deploy:
   artifacts:
     expire_in: 2 days
 
+github:
+  stage: deploy
+  allow_failure: true
+  script:
+    - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy -Pgithub
+  artifacts:
+    expire_in: 2 days
+
 javadoc:
   stage: doc
   script:
