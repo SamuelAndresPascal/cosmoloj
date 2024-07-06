@@ -111,8 +111,9 @@
     <module>format-shp</module>
     <module>format-shx</module>
     <module>format-dbf-v3</module>
-    <module>util-java2d</module>
+    <module>format-gr3df97a</module>
     <module>format-tga</module>
+    <module>util-java2d</module>
     <module>time</module>
     <module>unit-simple-api</module>
     <module>unit-simple-impl</module>
@@ -260,12 +261,17 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>util-java2d</artifactId>
+        <artifactId>format-gr3df97a</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>format-tga</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>util-java2d</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -537,7 +543,7 @@
         <module>format-tga-test</module>
       </modules>
     </profile>
-    
+
     <profile>
       <id>github</id>
       <distributionManagement>

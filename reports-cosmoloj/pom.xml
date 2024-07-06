@@ -90,6 +90,10 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>format-gr3df97a</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>format-tga</artifactId>
     </dependency>
     <dependency>
@@ -245,6 +249,11 @@
                 <artifactItem>
                   <groupId>${project.groupId}</groupId>
                   <artifactId>format-tga</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>format-gr3df97a</artifactId>
                   <version>${project.version}</version>
                 </artifactItem>
                 <artifactItem>
