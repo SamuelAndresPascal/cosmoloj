@@ -28,19 +28,19 @@ public class Epsg9811 implements InversibleProjection {
     private final double fe;
     private final double fn;
 
-    private final Complex z0 = Complex.of(6023150., 2510000.);
-    private final Complex coefB1 = Complex.real(0.7557853228);
-    private final Complex coefB2 = Complex.of(0.249204646, 0.003371507);
-    private final Complex coefB3 = Complex.of(-0.001541739, 0.041058560);
-    private final Complex coefB4 = Complex.of(-0.10162907, 0.01727609);
-    private final Complex coefB5 = Complex.of(-0.26623489, -0.36249218);
-    private final Complex coefB6 = Complex.of(-0.6870983, -1.1651967);
-    private final Complex b1 = Complex.real(1.3231270439);
-    private final Complex b2 = Complex.of(-0.577245789, -0.007809598);
-    private final Complex b3 = Complex.of(0.508307513, -0.112208952);
-    private final Complex b4 = Complex.of(-0.15094762, 0.18200602);
-    private final Complex b5 = Complex.of(1.01418179, 1.64497696);
-    private final Complex b6 = Complex.of(1.9660549, 2.5127645);
+    private static final Complex Z0 = Complex.of(6023150., 2510000.);
+    private static final Complex COEF_B1 = Complex.real(0.7557853228);
+    private static final Complex COEF_B2 = Complex.of(0.249204646, 0.003371507);
+    private static final Complex COEF_B3 = Complex.of(-0.001541739, 0.041058560);
+    private static final Complex COEF_B4 = Complex.of(-0.10162907, 0.01727609);
+    private static final Complex COEF_B5 = Complex.of(-0.26623489, -0.36249218);
+    private static final Complex COEF_B6 = Complex.of(-0.6870983, -1.1651967);
+    private static final Complex B1 = Complex.real(1.3231270439);
+    private static final Complex B2 = Complex.of(-0.577245789, -0.007809598);
+    private static final Complex B3 = Complex.of(0.508307513, -0.112208952);
+    private static final Complex B4 = Complex.of(-0.15094762, 0.18200602);
+    private static final Complex B5 = Complex.of(1.01418179, 1.64497696);
+    private static final Complex B6 = Complex.of(1.9660549, 2.5127645);
 
     public Epsg9811(final Ellipsoid ellipsoid, final double phi0, final double lambda0, final double fe,
             final double fn) {
@@ -95,19 +95,19 @@ public class Epsg9811 implements InversibleProjection {
         final Complex dzeta = Complex.of(dpsi, dlambda);
 
         final Complex z = dzeta.mult(ellipsoid.a())
-                .mult(coefB1.add(dzeta
-                        .mult(coefB2.add(dzeta
-                                .mult(coefB3.add(dzeta
-                                        .mult(coefB4.add(dzeta
-                                                .mult(coefB5.add(dzeta
-                                                        .mult(coefB6)
+                .mult(COEF_B1.add(dzeta
+                        .mult(COEF_B2.add(dzeta
+                                .mult(COEF_B3.add(dzeta
+                                        .mult(COEF_B4.add(dzeta
+                                                .mult(COEF_B5.add(dzeta
+                                                        .mult(COEF_B6)
                                                 ))
                                         ))
                                 ))
                         ))
                 ));
 
-        final Complex p = z.add(z0.opposite());
+        final Complex p = z.add(Z0.opposite());
         return new double[]{p.getImaginary(), p.getReal()};
     }
 
@@ -116,7 +116,7 @@ public class Epsg9811 implements InversibleProjection {
         final double northing = input[NORTHING];
         final double easting = input[EASTING];
 
-        final Complex z = Complex.of(northing, easting).add(z0.opposite()).div(ellipsoid.a());
+        final Complex z = Complex.of(northing, easting).add(Z0.opposite()).div(ellipsoid.a());
 
         final Complex dzeta = dzeta(z);
 
@@ -128,8 +128,8 @@ public class Epsg9811 implements InversibleProjection {
     }
 
     Complex dzeta(final Complex z) {
-        final Complex dzeta0 = z.mult(b1.add(z.mult(b2.add(
-                z.mult(b3.add(z.mult(b4.add(z.mult(b5.add(z.mult(b6)))))))))));
+        final Complex dzeta0 = z.mult(B1.add(z.mult(B2.add(
+                z.mult(B3.add(z.mult(B4.add(z.mult(B5.add(z.mult(B6)))))))))));
 
         Complex dzeta = dzeta(z, dzeta0);
 
@@ -145,21 +145,21 @@ public class Epsg9811 implements InversibleProjection {
 
     Complex dzeta(final Complex z, final Complex dzeta) {
         final Complex numerator = z.add(dzeta.mult(dzeta)
-                .mult(coefB2.add(dzeta
-                        .mult(coefB3.mult(2.).add(dzeta
-                                .mult(coefB4.mult(3.).add(dzeta
-                                        .mult(coefB5.mult(4.).add(dzeta
-                                                .mult(coefB6.mult(5.))
+                .mult(COEF_B2.add(dzeta
+                        .mult(COEF_B3.mult(2.).add(dzeta
+                                .mult(COEF_B4.mult(3.).add(dzeta
+                                        .mult(COEF_B5.mult(4.).add(dzeta
+                                                .mult(COEF_B6.mult(5.))
                                         ))
                                 ))
                         ))
                 )));
-        final Complex denominator = coefB1.add(dzeta
-                        .mult(coefB2.mult(2.).add(dzeta
-                                .mult(coefB3.mult(3.).add(dzeta
-                                        .mult(coefB4.mult(4.).add(dzeta
-                                                .mult(coefB5.mult(5.).add(dzeta
-                                                        .mult(coefB6.mult(6.))
+        final Complex denominator = COEF_B1.add(dzeta
+                        .mult(COEF_B2.mult(2.).add(dzeta
+                                .mult(COEF_B3.mult(3.).add(dzeta
+                                        .mult(COEF_B4.mult(4.).add(dzeta
+                                                .mult(COEF_B5.mult(5.).add(dzeta
+                                                        .mult(COEF_B6.mult(6.))
                                                 ))
                                         ))
                                 ))
