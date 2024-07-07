@@ -112,6 +112,7 @@
     <module>format-shx</module>
     <module>format-dbf-v3</module>
     <module>format-gr3df97a</module>
+    <module>math-operation</module>
     <module>format-tga</module>
     <module>util-java2d</module>
     <module>time</module>
@@ -262,6 +263,11 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>format-gr3df97a</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>math-operation</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

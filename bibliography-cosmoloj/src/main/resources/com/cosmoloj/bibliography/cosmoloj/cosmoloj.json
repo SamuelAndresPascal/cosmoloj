@@ -6,6 +6,17 @@
 
     },
     {
+        "type": "institution",
+        "key": "iogp",
+        "title": "International Association of Oil & Gas Producers"
+    },
+    {
+        "type": "journal",
+        "key": "zeitschrift_fur_vermessungswesen",
+        "title": "Zeitschrift für Vermessungswesen",
+        "issn": "0044-3689"
+    },
+    {
         "type": "techreport",
         "key": "tga",
         "kind": "document",
@@ -21,6 +32,15 @@
         "year": 2004
     },
     {
+        "type": "book",
+        "format": "bibtex",
+        "key": "map_projections",
+        "title": "Map Projections - A Working Manual",
+        "editor": "UNITED STATES GOVERNMENT PRINTING OFFICE, WASHINGTON",
+        "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
+        "year": 1987
+    },
+    {
         "type": "techreport",
         "key": "sf_access_part_1_v1_2_1",
         "kind": "standard",
@@ -33,6 +53,19 @@
             "key": "ogc"
         },
         "url": "http://portal.opengeospatial.org/files/?artifact_id=25355"
+    },
+    {
+        "type": "techreport",
+        "key": "iogp_guidance_note_7_2_2019",
+        "kind": "document",
+        "title": "Geomatics Guidance Note 7, part 2 Coordinate Conversions & Transformations including Formulas",
+        "institution": {
+            "type": "reference",
+            "key": "iogp"
+        },
+        "year": 2019,
+        "url": "https://www.iogp.org/wp-content/uploads/2019/09/373-07-02.pdf",
+        "number": "373-7-2"
     },
     {
         "type": "techreport",
@@ -81,5 +114,33 @@
             "key": "ogc"
         },
         "url": "https://docs.ogc.org/is/18-010r11/18-010r11.pdf"
+    },
+    {
+        "type": "article",
+        "format": "bibtex",
+        "key": "joachim_boljen_2003",
+        "title": "Bezugssystemumstellung DHDN90 ETRS89 in Schleswig-Holstein",
+        "journal": {
+            "type": "reference",
+            "key" : "zeitschrift_fur_vermessungswesen"
+        },
+        "year": 2003,
+        "volume": "128",
+        "pages": "244-250",
+        "url": "https://geodaesie.info/system/files/privat/zfv_2003_4_Boljen.pdf"
+    },
+    {
+        "type": "article",
+        "format": "bibtex",
+        "key": "joachim_boljen_2004",
+        "title": "Zur geometrischen Interpretation und direkten Bestimmung von Formfunktionen",
+        "journal": {
+            "type": "reference",
+            "key" : "zeitschrift_fur_vermessungswesen"
+        },
+        "year": 2004,
+        "volume": "129",
+        "pages": "258-260",
+        "url": "https://geodaesie.info/system/files/privat/zfv_2004_4_Boljen.pdf"
     }
 ]
