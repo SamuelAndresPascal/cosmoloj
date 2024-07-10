@@ -6,5 +6,5 @@ import com.cosmoloj.math.operation.AutoInverse;
  *
  * @author Samuel Andrés
  */
-public interface InversibleProjection extends Projection, AutoInverse<double[]> {
+public interface InvertibleProjection extends Projection, AutoInverse<double[]> {
 }

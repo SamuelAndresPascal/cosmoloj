@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author Samuel Andrés
  */
-public class Epsg9819a implements InversibleProjection {
+public class Epsg9819a implements InvertibleProjection {
 
     private static final int PHI = 0;
     private static final int LAMBDA = 1;

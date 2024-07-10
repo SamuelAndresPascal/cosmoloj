@@ -184,7 +184,7 @@ public class OrthographicSphericalTest {
     @Test
     public void inverse() {
 
-        final InversibleProjection projection = new OrthographicSpherical(Spheroid.ofRadius(1.), Math.PI / 2., 0.);
+        final InvertibleProjection projection = new OrthographicSpherical(Spheroid.ofRadius(1.), Math.PI / 2., 0.);
         for (final double[][] line : INVERSE) {
             Assertions.assertArrayEquals(line[0], projection.inverse(line[1]), 1e-10);
         }

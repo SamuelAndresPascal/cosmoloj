@@ -6,7 +6,7 @@ package com.cosmoloj.math.operation;
  * @param <I>
  * @param <O>
  */
-public interface InversibleOperation<I, O> extends Operation<I, O> {
+public interface InvertibleOperation<I, O> extends Operation<I, O> {
 
     O inverse(I input);
 

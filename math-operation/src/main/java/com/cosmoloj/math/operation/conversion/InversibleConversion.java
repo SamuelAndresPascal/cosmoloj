@@ -1,6 +1,6 @@
 package com.cosmoloj.math.operation.conversion;
 
-import com.cosmoloj.math.operation.InversibleOperation;
+import com.cosmoloj.math.operation.InvertibleOperation;
 
 /**
  *
@@ -8,5 +8,5 @@ import com.cosmoloj.math.operation.InversibleOperation;
  * @param <I>
  * @param <O>
  */
-public interface InversibleConversion<I, O> extends Conversion<I, O>, InversibleOperation<I, O> {
+public interface InversibleConversion<I, O> extends Conversion<I, O>, InvertibleOperation<I, O> {
 }

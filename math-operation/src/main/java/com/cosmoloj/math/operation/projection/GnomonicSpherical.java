@@ -17,7 +17,7 @@ import java.util.Map;
 @Reference(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.SECTION, number = 22)
 @Page(164)
-public class GnomonicSpherical implements InversibleProjection {
+public class GnomonicSpherical implements InvertibleProjection {
 
     private final Spheroid spheroid;
     private final double r;

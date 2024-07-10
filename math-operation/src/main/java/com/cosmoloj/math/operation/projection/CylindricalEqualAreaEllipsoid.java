@@ -21,7 +21,7 @@ import com.cosmoloj.math.operation.trials.AbsoluteDifferenceDoubleTrials;
 @Reference(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.SECTION, number = 10)
 @Page(81)
-public abstract class CylindricalEqualAreaEllipsoid implements InversibleProjection {
+public abstract class CylindricalEqualAreaEllipsoid implements InvertibleProjection {
 
     private static final int PHI = 0;
     private static final int LAMBDA = 1;

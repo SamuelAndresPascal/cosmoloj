@@ -3,6 +3,8 @@ package com.cosmoloj.math.operation.projection;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.operation.surface.Ellipsoid;
+import com.cosmoloj.math.operation.surface.Spheroid;
+import com.cosmoloj.math.operation.surface.Surface;
 import com.cosmoloj.util.bib.Reference;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +16,14 @@ import java.util.Map;
  * @author Samuel Andrés
  */
 @Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
-public class Epsg1024 implements InversibleProjection {
+public class Epsg1024 implements InvertibleProjection {
 
     private static final int PHI = 0;
     private static final int LAMBDA = 1;
     private static final int EASTING = 0;
     private static final int NORTHING = 1;
 
-    private final Ellipsoid ellipsoid;
+    private final Surface ellipsoid;
     private final double a;
     private final double lambda0;
     private final double fe;
@@ -35,6 +37,14 @@ public class Epsg1024 implements InversibleProjection {
         this.fn = fn;
     }
 
+    public Epsg1024(final Spheroid ellipsoid, final double lambda0, final double fe, final double fn) {
+        this.ellipsoid = ellipsoid;
+        this.a = ellipsoid.r();
+        this.lambda0 = lambda0;
+        this.fe = fe;
+        this.fn = fn;
+    }
+
     public static Epsg1024 ofParams(final Ellipsoid ellipsoid, final Map<MethodParameter, ?> params) {
         return new Epsg1024(ellipsoid,
                 (double) params.get(MethodParameter.LONGITUDE_OF_NATURAL_ORIGIN),
@@ -42,8 +52,15 @@ public class Epsg1024 implements InversibleProjection {
                 (double) params.get(MethodParameter.FALSE_NORTHING));
     }
 
+    public static Epsg1024 ofParams(final Spheroid ellipsoid, final Map<MethodParameter, ?> params) {
+        return new Epsg1024(ellipsoid,
+                (double) params.get(MethodParameter.LONGITUDE_OF_NATURAL_ORIGIN),
+                (double) params.get(MethodParameter.FALSE_EASTING),
+                (double) params.get(MethodParameter.FALSE_NORTHING));
+    }
+
     @Override
-    public Ellipsoid getSurface() {
+    public Surface getSurface() {
         return ellipsoid;
     }
 

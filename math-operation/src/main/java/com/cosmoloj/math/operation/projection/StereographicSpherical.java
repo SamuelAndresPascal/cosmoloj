@@ -17,7 +17,7 @@ import java.util.Map;
 @Reference(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.SECTION, number = 21)
 @Page(154)
-public class StereographicSpherical implements InversibleProjection {
+public class StereographicSpherical implements InvertibleProjection {
 
     private final Spheroid spheroid;
     private final double r; // R

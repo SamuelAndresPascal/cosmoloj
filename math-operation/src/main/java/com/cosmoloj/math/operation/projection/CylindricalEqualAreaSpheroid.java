@@ -17,7 +17,7 @@ import java.util.Map;
 @Reference(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.SECTION, number = 10)
 @Page(77)
-public abstract class CylindricalEqualAreaSpheroid implements InversibleProjection {
+public abstract class CylindricalEqualAreaSpheroid implements InvertibleProjection {
 
     private static final int PHI = 0;
     private static final int LAMBDA = 1;

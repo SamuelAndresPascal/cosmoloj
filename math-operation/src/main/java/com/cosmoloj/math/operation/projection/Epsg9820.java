@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Samuel Andrés
  */
 @Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
-public class Epsg9820 implements InversibleProjection {
+public class Epsg9820 implements InvertibleProjection {
 
     private enum Aspect {
         OBLIQUE, NORTH_POLE, SOUTH_POLE;

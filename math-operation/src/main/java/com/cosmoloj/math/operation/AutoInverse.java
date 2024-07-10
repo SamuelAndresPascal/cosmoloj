@@ -7,7 +7,7 @@ import java.util.List;
  * @author Samuel Andrés
  * @param <I>
  */
-public interface AutoInverse<I> extends InversibleOperation<I, I> {
+public interface AutoInverse<I> extends InvertibleOperation<I, I> {
 
     @Override
     default AutoInverse<I> inverse() {

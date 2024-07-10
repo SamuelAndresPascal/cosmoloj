@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Samuel Andrés
  */
 @Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
-public class Epsg9817a implements InversibleProjection {
+public class Epsg9817a implements InvertibleProjection {
 
     private static final int PHI = 0;
     private static final int LAMBDA = 1;

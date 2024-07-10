@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Samuel Andrés
  */
 @Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
-public class Epsg9817b extends Epsg9817a implements InversibleProjection {
+public class Epsg9817b extends Epsg9817a implements InvertibleProjection {
 
     public Epsg9817b(final Ellipsoid ellipsoid, final double phi0, final double lambda0, final double k0,
             final double fe, final double fn) {

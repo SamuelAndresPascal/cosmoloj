@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Samuel Andrés
  */
 @Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
-public class Epsg1026 extends MercatorSpherical implements InversibleProjection {
+public class Epsg1026 extends MercatorSpherical implements InvertibleProjection {
 
     private static final int EASTING = 0;
     private static final int NORTHING = 1;

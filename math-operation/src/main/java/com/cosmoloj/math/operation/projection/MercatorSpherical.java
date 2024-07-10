@@ -16,7 +16,7 @@ import java.util.List;
 @Reference(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.SECTION, number = 7)
 @Page(38)
-public class MercatorSpherical implements InversibleProjection {
+public class MercatorSpherical implements InvertibleProjection {
 
     private final Spheroid spheroid;
     private final double r; // R
