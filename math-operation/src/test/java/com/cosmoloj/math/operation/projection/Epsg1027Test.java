@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 @Reference(Cosmoloj.MAP_PROJECTIONS)
 public class Epsg1027Test {
 
-    private final Epsg1027 transform = new Epsg1027(Spheroid.ofRadius(1.), 0., 0., 0., 0.);
+    private final Epsg1027 transform = new Epsg1027(Spheroid.unit(), 0., 0., 0., 0.);
 
     @Test
     public void forward() {

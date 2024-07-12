@@ -111,8 +111,8 @@ public class Epsg1027 implements InvertibleProjection {
         final double easting = input[EASTING];
         final double northing = input[NORTHING];
 
-        final double east = (easting - fe);
-        final double north = (northing - fn);
+        final double east = easting - fe;
+        final double north = northing - fn;
         final double rho = Math.sqrt(east * east + north * north);
 
         if (rho < 1e-9) {
@@ -124,25 +124,15 @@ public class Epsg1027 implements InvertibleProjection {
         final double cosc = Math.cos(c);
         final double phi = Math.asin(cosc * Math.sin(phi0) + north * sinc * Math.cos(phi0) / rho);
 
-        if (aspect.equals(Aspect.OBLIQUE)) {
 
-            return new double[]{
-                phi,
-                lambda0 + Math.atan2(east * sinc, rho * Math.cos(phi0) * cosc - north * Math.sin(phi0) * sinc)
-            };
-        } else {
-            if (aspect.equals(Aspect.NORTH_POLE)) {
-                return new double[] {
-                    phi,
-                    lambda0 + Math.atan2(easting - fe, fn - northing)
-                };
-            } else  {
-                return new double[] {
-                    phi,
-                    lambda0 + Math.atan2(easting - fe, northing - fn)
-                };
+        return new double[]{
+            phi,
+            lambda0 + switch (aspect) {
+                case OBLIQUE -> Math.atan2(east * sinc, rho * Math.cos(phi0) * cosc - north * Math.sin(phi0) * sinc);
+                case NORTH_POLE -> Math.atan2(easting - fe, fn - northing);
+                default -> Math.atan2(easting - fe, northing - fn);
             }
-        }
+        };
     }
 
     @Override

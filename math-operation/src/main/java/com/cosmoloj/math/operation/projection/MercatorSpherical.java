@@ -18,15 +18,17 @@ import java.util.List;
 @Page(38)
 public class MercatorSpherical implements InvertibleProjection {
 
+    private static final int LATITUDE = 0;
+    private static final int LONGITUDE = 1;
+    private static final int X = 0;
+    private static final int Y = 1;
+
     private final Spheroid spheroid;
     private final double r; // R
     private final double phi0;
     private final double lambda0; // Lambda 0
 
     private final double cosPhi1;
-
-    private final double[] project = new double[2];
-    private final double[] unproject = new double[2];
 
     public MercatorSpherical(final Spheroid spheroid, final double phi0, final double lambda0) {
         this.spheroid = spheroid;
@@ -56,20 +58,16 @@ public class MercatorSpherical implements InvertibleProjection {
 
     @Override
     public double[] compute(final double[] input) {
-        final double lat = input[0];
-        final double lon = input[1];
-        project[0] = MapProjections.x_7_1(r, cosPhi1, lambda0, lon);
-        project[1] = MapProjections.y_7_2(r, cosPhi1, lat);
-        return project;
+        return new double[]{
+            MapProjections.x_7_1(r, cosPhi1, lambda0, input[LONGITUDE]),
+            MapProjections.y_7_2(r, cosPhi1, input[LATITUDE])};
     }
 
     @Override
     public double[] inverse(final double[] input) {
-        final double x = input[0];
-        final double y = input[1];
-        unproject[0] = MapProjections.phi_7_4(r, cosPhi1, y);
-        unproject[1] = MapProjections.lambda_7_5(r, cosPhi1, lambda0, x);
-        return unproject;
+        return new double[]{
+            MapProjections.phi_7_4(r, cosPhi1, input[Y]),
+            MapProjections.lambda_7_5(r, cosPhi1, lambda0, input[X])};
     }
 
     @Override
@@ -83,6 +81,7 @@ public class MercatorSpherical implements InvertibleProjection {
 
     @Override
     public List<MethodParameter> getParameters() {
-        return List.of(MethodParameter.LONGITUDE_OF_NATURAL_ORIGIN, MethodParameter.LATITUDE_OF_NATURAL_ORIGIN);
+        return List.of(MethodParameter.LONGITUDE_OF_NATURAL_ORIGIN,
+                MethodParameter.LATITUDE_OF_NATURAL_ORIGIN);
     }
 }
