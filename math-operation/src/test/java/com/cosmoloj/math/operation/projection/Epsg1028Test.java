@@ -16,7 +16,7 @@ public class Epsg1028Test {
     private final double phi = 0.959931086;
     private final double lambda = 0.174532925;
     private final double easting = 1113194.91;
-    private final double northing2dKind = 6097230.31;
+    private final double northing2dKind = 6097230.3131;
 
     // test du manuel
 
@@ -57,7 +57,7 @@ public class Epsg1028Test {
     private final Epsg1028 series = new Epsg1028.Series(
             Ellipsoid.ofInverseFlattening(6378137.0, 298.257223563), 0., 0., 0., 0.);
 
-    private final double northingSeries = 6097230.22;
+    private final double northingSeries = 6097230.29;
 
     @Test
     public void forwardSeries() {

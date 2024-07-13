@@ -232,7 +232,7 @@ public final class Ellipsoid implements Surface {
      */
     @Reference(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-21")
-    public double mp() {
+    private double mp() {
         return mp;
     }
 
