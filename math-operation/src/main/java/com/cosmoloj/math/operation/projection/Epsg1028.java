@@ -164,7 +164,7 @@ public abstract class Epsg1028 implements InvertibleProjection {
                     * Integral.sum(phi -> Math.pow(1. - e2() * Math.sin(phi) * Math.sin(phi), -3. / 2.),
                             0.,
                             f,
-                            (int) (50. * Math.toDegrees(f)) + 1);
+                            (int) (50. * Math.toDegrees(f)) + 1); // 50 parts par degré pour intégration
         }
     }
 
@@ -185,8 +185,11 @@ public abstract class Epsg1028 implements InvertibleProjection {
 
         @Override
         double m(final double f) {
-            return a() * (Integral.sum(phi -> Math.sqrt(1. - e2() * Math.sin(phi) * Math.sin(phi)), 0., f,
-                    (int) (4. * Math.toDegrees(f)) + 1) - e2() * Math.sin(f) * Math.cos(f) / getSurface().eSinSqrt(f));
+            return a() * (Integral.sum(phi -> Math.sqrt(1. - e2() * Math.sin(phi) * Math.sin(phi)),
+                            0.,
+                            f,
+                            (int) (4. * Math.toDegrees(f)) + 1) // 4 parts par degré pour intégration
+                    - e2() * Math.sin(f) * Math.cos(f) / getSurface().eSinSqrt(f));
         }
     }
 

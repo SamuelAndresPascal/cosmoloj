@@ -32,7 +32,7 @@ public class Epsg1028Test {
                         integration2dKind.inverse(new double[]{easting, northing2dKind}), 1e-8);
     }
 
-    // test avec l'intégrale du troisième type (on ne trouve pas exactement la même valeur pour northing
+    // test avec l'intégrale du troisième type (on ne trouve pas exactement la même valeur pour northing)
 
     private final Epsg1028 integration3rdKind = new Epsg1028.Integration3rdKind(
             Ellipsoid.ofInverseFlattening(6378137.0, 298.257223563), 0., 0., 0., 0.);
