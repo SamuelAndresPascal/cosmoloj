@@ -29,6 +29,7 @@ form:
   script:
     - cd tex/
     - xelatex -halt-on-error simpleUnit.tex
+    - xelatex -halt-on-error simpleUnit.tex
     - htxelatex simpleUnit.tex "xhtml"
     - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
     - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$PUBLIC_SITE_SERVER_PATH/su
