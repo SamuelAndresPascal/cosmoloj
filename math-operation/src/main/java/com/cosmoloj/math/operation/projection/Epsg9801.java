@@ -34,7 +34,7 @@ public class Epsg9801 implements InvertibleProjection {
     private final double n;
     private final double r0;
 
-    private final double precision = 1e-12;
+    private static final double PRECISION = 1e-12;
 
     public Epsg9801(final Ellipsoid ellipsoid, final double phi0, final double lambda0, final double k0,
             final double fe, final double fn) {
@@ -144,7 +144,7 @@ public class Epsg9801 implements InvertibleProjection {
 
         while (true) {
             double tmp = phi(easting, northing, phi);
-            if (Math.abs(tmp - phi) > this.precision) {
+            if (Math.abs(tmp - phi) > this.PRECISION) {
                 phi = tmp;
             } else {
                 return tmp;
