@@ -13,7 +13,7 @@
 % Compiler avec:
 % xelatex simpleUnit
 
-\title{Simple Unit\\1.0-r0}
+\title{Simple Unit\\1.0-r1}
 \author{Samuel \textsc{Andrés}}
 
 \begin{document}
@@ -273,6 +273,11 @@ Pour cela, chaque type d'unité doit être capable de définir la conversion par
 unités fondamentales qui la composent en implémentant la méthode \emph{toBase()} de manière spécifique chacune à sa
 nature.
 
+\subsection{Convertisseurs vers les unités fondamentales}
+
+
+\subsubsection{Depuis une unité fondamentale}
+
 La conversion d'une unité fondamentale vers le jeu d'unités fondamentales qui la constitue est l'identité. On
 \emph{recommande} d'implémenter cette identité comme un convertisseur singleton.
 
@@ -285,6 +290,9 @@ La conversion d'une unité fondamentale vers le jeu d'unités fondamentales qui 
 \end{algorithmic}
 \end{algorithm}
 
+
+\subsubsection{Depuis une unité transformée}
+
 La conversion d'une unité transformée vers le jeu d'unités fondamentales qui la composent consite à concaténer la
 conversion vers son unité de référence à la conversion vers le jeu d'unités fondamentales qui composent cette dernière.
 
@@ -296,6 +304,9 @@ conversion vers son unité de référence à la conversion vers le jeu d'unités
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
+
+\subsubsection{Depuis une unité dérivée}
 
 Enfin, la conversion d'une unité dérivée vers le jeu d'unités fondamentales qui la composent consiste à parcourir les
 facteurs de définition de l'unité, d'en extraire la conversion vers le jeu d'unités fondamentales de l'unité du facteur,
@@ -325,7 +336,7 @@ Celcius par mètre en Kelvin par mètre.
 \section{Validation}
 
 La conformité aux critères de validation est impérative au respect de la spécification. On ne donne cependant pas de
-critère relatif à la précision des conversions au-delà des valeurs indiquées.
+critère relatif à la précision des conversions laissée à une appréciation raisonnable.
 
 
 \begin{algorithm}[!h]
