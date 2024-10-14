@@ -24,6 +24,9 @@ import org.slf4j.LoggerFactory;
  */
 public class BibliographyWriter extends TypeElementWriter {
 
+    private static final String ENTRY_TYPE_FIELD = "entry_type";
+    private static final String CITE_KEY_FIELD = "cite_key";
+
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final List<String> IMPORTS = List.of("com.cosmoloj.util.bib.Reference",
@@ -80,15 +83,16 @@ public class BibliographyWriter extends TypeElementWriter {
                     .map(Map.Entry::getValue)
                     .filter(JsonObject.class::isInstance)
                     .map(JsonObject.class::cast)
-                    .filter(o -> "reference".equals(((QuotedString) o.firstOrNull("type")).getSemantics()))
+                    .filter(o -> "reference".equals(((QuotedString) o.firstOrNull(ENTRY_TYPE_FIELD)).getSemantics()))
                     .findFirst();
 
             if (ref.isPresent()) {
                 indentln("@Reference(value = {"
-                        + ((QuotedString) ref.get().firstOrNull("key")).getSemantics().toUpperCase(Locale.ROOT) + "})");
+                        + ((QuotedString) ref.get().firstOrNull(CITE_KEY_FIELD))
+                                .getSemantics().toUpperCase(Locale.ROOT) + "})");
             }
 
-            switch (((QuotedString) map.get("type")).getSemantics()) {
+            switch (((QuotedString) map.get(ENTRY_TYPE_FIELD)).getSemantics()) {
                 case "article" -> {
                     indent("@Article(");
                     writeKeys(map, "title", "subtitle", "pages", "issue", "volume", "month", "year", "url");
@@ -126,7 +130,7 @@ public class BibliographyWriter extends TypeElementWriter {
                 }
             }
 
-            final String key = ((QuotedString) map.get("key")).getSemantics();
+            final String key = ((QuotedString) map.get(CITE_KEY_FIELD)).getSemantics();
             indentln("public static final String " + key.toUpperCase(Locale.ROOT) + " = \"" + key + "\";");
             ln();
         }
