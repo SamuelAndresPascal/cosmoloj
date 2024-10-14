@@ -144,7 +144,7 @@ public class Epsg9801 implements InvertibleProjection {
 
         while (true) {
             double tmp = phi(easting, northing, phi);
-            if (Math.abs(tmp - phi) > this.PRECISION) {
+            if (Math.abs(tmp - phi) > Epsg9801.PRECISION) {
                 phi = tmp;
             } else {
                 return tmp;
