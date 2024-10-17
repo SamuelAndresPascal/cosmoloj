@@ -34,8 +34,7 @@ public class BibliographyWriter extends TypeElementWriter {
         "com.cosmoloj.util.bib.Book",
         "com.cosmoloj.util.bib.Article",
         "com.cosmoloj.util.bib.Web",
-        "com.cosmoloj.util.bib.Series",
-        "com.cosmoloj.util.bib.SeriesType",
+        "com.cosmoloj.util.bib.Misc",
         "com.cosmoloj.util.bib.TechReport",
         "com.cosmoloj.util.bib.TechReportKind",
         "com.cosmoloj.util.bib.PhdThesis");
@@ -118,13 +117,9 @@ public class BibliographyWriter extends TypeElementWriter {
                             + ((QuotedString) map.get("kind")).getSemantics().toUpperCase(Locale.ROOT));
                     writeKeys(map, false, "title", "number", "version", "year", "url");
                 }
-                case "journal" -> {
-                    indent("@Series(type = SeriesType.JOURNAL");
-                    writeKeys(map, false, "title", "issn", "eIssn", "url");
-                }
-                case "collection" -> {
-                    indent("@Series(type = SeriesType.COLLECTION");
-                    writeKeys(map, false, "title", "issn", "eIssn", "url");
+                case "misc" -> {
+                    indent("@Misc(");
+                    writeKeys(map, true, "title", "issn", "eIssn", "url");
                 }
                 default -> {
                 }

@@ -10,8 +10,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface Series {
-    SeriesType type();
+public @interface Misc {
     String title() default "";
     String issn() default "";
     String eIssn() default "";
