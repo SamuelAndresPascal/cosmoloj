@@ -30,10 +30,8 @@ public class BibliographyWriter extends TypeElementWriter {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final List<String> IMPORTS = List.of("com.cosmoloj.util.bib.Reference",
-        "com.cosmoloj.util.bib.Institution",
         "com.cosmoloj.util.bib.Book",
         "com.cosmoloj.util.bib.Article",
-        "com.cosmoloj.util.bib.Web",
         "com.cosmoloj.util.bib.Misc",
         "com.cosmoloj.util.bib.TechReport",
         "com.cosmoloj.util.bib.TechReportKind",
@@ -103,10 +101,6 @@ public class BibliographyWriter extends TypeElementWriter {
                 case "phdthesis" -> {
                     indent("@PhdThesis(");
                     writeKeys(map, "title", "year", "url");
-                }
-                case "institution" -> {
-                    indent("@Institution(");
-                    writeKeys(map, "title", "url");
                 }
                 case "book" -> {
                     indent("@Book(");
