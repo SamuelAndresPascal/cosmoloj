@@ -36,7 +36,6 @@ public class BibliographyWriter extends TypeElementWriter {
         "com.cosmoloj.util.bib.Article",
         "com.cosmoloj.util.bib.Misc",
         "com.cosmoloj.util.bib.TechReport",
-        "com.cosmoloj.util.bib.TechReportKind",
         "com.cosmoloj.util.bib.PhdThesis");
 
     private final JsonArray<JsonValue> json;
@@ -102,17 +101,16 @@ public class BibliographyWriter extends TypeElementWriter {
                     writeKeys(map, "title", "editor", "year", "url");
                 }
                 case "techreport" -> {
-                    indent("@TechReport(kind = TechReportKind."
-                            + ((QuotedString) map.get("kind")).getSemantics().toUpperCase(Locale.ROOT));
-                    writeKeys(map, false, "title", "number", "version", "year", "url");
+                    indent("@TechReport(");
+                    writeKeys(map, "type", "title", "author", "institution", "number", "version", "year", "url");
                 }
                 case "proceedings" -> {
                     indent("@Proceedings(");
-                    writeKeys(map, true, "title", "issn", "eIssn", "url");
+                    writeKeys(map, "title", "issn", "eIssn", "url");
                 }
                 case "misc" -> {
                     indent("@Misc(");
-                    writeKeys(map, true, "title", "issn", "eIssn", "url");
+                    writeKeys(map, "title", "issn", "eIssn", "url");
                 }
                 default -> {
                 }
@@ -129,13 +127,9 @@ public class BibliographyWriter extends TypeElementWriter {
     }
 
     private void writeKeys(final Map<String, JsonValue> map, final String... keys) {
-        writeKeys(map, true, keys);
-    }
-
-    private void writeKeys(final Map<String, JsonValue> map, final boolean asFirst, final String... keys) {
         incrIndent();
 
-        boolean first = asFirst;
+        boolean first = true;
         for (final String key : keys) {
             final JsonValue value = map.get(key);
             // only not null and skip "reference" type Json objects

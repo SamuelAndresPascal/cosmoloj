@@ -11,11 +11,12 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 public @interface TechReport {
-    TechReportKind kind();
-    String title() default "";
+    String author() default "";
+    String title();
     String institution() default "";
+    int year();
+    String type() default "";
     String number() default "";
     String version() default "";
-    int year() default -1;
     String url() default "";
 }
