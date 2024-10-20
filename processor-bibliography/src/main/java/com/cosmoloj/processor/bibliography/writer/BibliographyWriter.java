@@ -10,7 +10,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.TypeElement;
@@ -26,11 +25,14 @@ public class BibliographyWriter extends TypeElementWriter {
 
     private static final String ENTRY_TYPE_FIELD = "entry_type";
     private static final String CITE_KEY_FIELD = "cite_key";
+    private static final String CROSS_REF_KEY = "crossref";
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final List<String> IMPORTS = List.of("com.cosmoloj.util.bib.Reference",
         "com.cosmoloj.util.bib.Book",
+        "com.cosmoloj.util.bib.Proceedings",
+        "com.cosmoloj.util.bib.InProceedings",
         "com.cosmoloj.util.bib.Article",
         "com.cosmoloj.util.bib.Misc",
         "com.cosmoloj.util.bib.TechReport",
@@ -75,18 +77,11 @@ public class BibliographyWriter extends TypeElementWriter {
             final Map<String, JsonValue> map = entries.stream()
                     .collect(Collectors.toMap(e -> e.getKey().getSemantics(), Map.Entry::getValue));
 
-            // search reference
-            final Optional<JsonObject> ref = map.entrySet().stream()
-                    .map(Map.Entry::getValue)
-                    .filter(JsonObject.class::isInstance)
-                    .map(JsonObject.class::cast)
-                    .filter(o -> "reference".equals(((QuotedString) o.firstOrNull(ENTRY_TYPE_FIELD)).getSemantics()))
-                    .findFirst();
+            final JsonValue crossref = map.get(CROSS_REF_KEY);
 
-            if (ref.isPresent()) {
+            if (crossref != null) {
                 indentln("@Reference(value = {"
-                        + ((QuotedString) ref.get().firstOrNull(CITE_KEY_FIELD))
-                                .getSemantics().toUpperCase(Locale.ROOT) + "})");
+                        + ((QuotedString) crossref).getSemantics().toUpperCase(Locale.ROOT) + "})");
             }
 
             switch (((QuotedString) map.get(ENTRY_TYPE_FIELD)).getSemantics()) {
@@ -94,9 +89,9 @@ public class BibliographyWriter extends TypeElementWriter {
                     indent("@Article(");
                     writeKeys(map, "title", "subtitle", "pages", "issue", "volume", "month", "year", "url");
                 }
-                case "web" -> {
-                    indent("@Web(");
-                    writeKeys(map, "title", "institution", "url");
+                case "inproceedings" -> {
+                    indent("@InProceedings(");
+                    writeKeys(map, "title", "subtitle", "pages", "issue", "volume", "month", "year", "url");
                 }
                 case "phdthesis" -> {
                     indent("@PhdThesis(");
@@ -110,6 +105,10 @@ public class BibliographyWriter extends TypeElementWriter {
                     indent("@TechReport(kind = TechReportKind."
                             + ((QuotedString) map.get("kind")).getSemantics().toUpperCase(Locale.ROOT));
                     writeKeys(map, false, "title", "number", "version", "year", "url");
+                }
+                case "proceedings" -> {
+                    indent("@Proceedings(");
+                    writeKeys(map, true, "title", "issn", "eIssn", "url");
                 }
                 case "misc" -> {
                     indent("@Misc(");

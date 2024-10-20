@@ -10,10 +10,13 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface Web {
-    String[] value() default "";
+public @interface InProceedings {
     String title() default "";
-    String[] url() default "";
-    String institution() default "";
+    String subtitle() default "";
+    String pages() default "";
+    String url() default "";
+    String issue() default "";
+    String volume() default "";
+    String month() default "";
     int year() default 0;
 }
