@@ -3,7 +3,7 @@ package com.cosmoloj.math.operation.projection;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.operation.surface.Ellipsoid;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.Map;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg9817b extends Epsg9817a implements InvertibleProjection {
 
     public Epsg9817b(final Ellipsoid ellipsoid, final double phi0, final double lambda0, final double k0,

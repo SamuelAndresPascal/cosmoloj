@@ -5,7 +5,7 @@ import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.operation.surface.Ellipsoid;
 import com.cosmoloj.math.operation.surface.Spheroid;
 import com.cosmoloj.math.operation.surface.Surface;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg1024 implements InvertibleProjection {
 
     private static final int PHI = 0;

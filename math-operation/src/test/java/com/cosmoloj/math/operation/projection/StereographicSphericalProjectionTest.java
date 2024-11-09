@@ -3,7 +3,7 @@ package com.cosmoloj.math.operation.projection;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.surface.Spheroid;
 import com.cosmoloj.util.bib.Page;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.MAP_PROJECTIONS)
+@Cite(Cosmoloj.MAP_PROJECTIONS)
 public class StereographicSphericalProjectionTest {
 
     private static final double RADIUS = 1.;

@@ -5,7 +5,7 @@ import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.util.bib.Page;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
 
@@ -13,7 +13,7 @@ import com.cosmoloj.util.bib.SectionReferenceType;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.SF_ACCESS_PART_1_V1_2_1)
+@Cite(Cosmoloj.SF_ACCESS_PART_1_V1_2_1)
 @SectionReference(type = SectionReferenceType.SECTION, id = "9.1")
 public enum WktName implements SemanticEnum<WktName> {
 

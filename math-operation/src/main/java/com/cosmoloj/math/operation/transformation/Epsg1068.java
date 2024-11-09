@@ -3,7 +3,7 @@ package com.cosmoloj.math.operation.transformation;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.AutoInverse;
 import com.cosmoloj.math.operation.MethodParameter;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.List;
 
 /**
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg1068 implements OffsetTransformation<Double>, AutoInverse<Double> {
 
     private static final Epsg1068 INSTANCE = new Epsg1068();

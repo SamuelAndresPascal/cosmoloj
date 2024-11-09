@@ -3,7 +3,7 @@ package com.cosmoloj.math.operation.projection;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.surface.Ellipsoid;
 import com.cosmoloj.util.bib.Page;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.MAP_PROJECTIONS)
+@Cite(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.APPENDIX, id = "A")
 @Page(281)
 public class CylindricalEqualAreaEllipsoidTest {
@@ -115,7 +115,7 @@ public class CylindricalEqualAreaEllipsoidTest {
                 obliqueEllipsoidal.inverse(new double[]{eastingOblique, northingOblique}), 1e-8);
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 13)
     @Page(83)
     private static final double[][] POLE_CLARKE_1866 = new double[][]{
@@ -128,7 +128,7 @@ public class CylindricalEqualAreaEllipsoidTest {
         {1.0, 0.0, 0.0} // 90
     };
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 13)
     @Page(83)
     private static final double[][] POLE_INTERNATIONAL = new double[][]{

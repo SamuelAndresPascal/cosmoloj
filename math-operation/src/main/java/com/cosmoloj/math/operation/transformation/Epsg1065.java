@@ -2,7 +2,7 @@ package com.cosmoloj.math.operation.transformation;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.MethodParameter;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.Map;
 
 /**
@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg1065 extends AbstractTimeSpecificHelmert {
 
     public Epsg1065(final double tx, final double ty, final double tz,

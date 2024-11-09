@@ -10,7 +10,7 @@ import com.cosmoloj.math.operation.surface.Ellipsoid;
 import com.cosmoloj.math.operation.transformation.Epsg1031;
 import com.cosmoloj.math.operation.transformation.InversibleTransformation;
 import com.cosmoloj.math.tabular.core.DoubleTabulars;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
@@ -28,7 +28,7 @@ import java.util.Map;
  * @see Epsg1031
  * @see GridGr3df97a
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg9655 implements InversibleTransformation<double[], double[]>, AutoInverse<double[]> {
 
     private final Epsg9659 ntf3d2d; // 3d => 2d

@@ -4,7 +4,7 @@ import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.AutoInverse;
 import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.tabular.core.DoubleTabulars;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 abstract class AbstractTimeDependentHelmert
         implements InversibleCoordinateTransformation, AutoInverse<double[]> {
 

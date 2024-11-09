@@ -3,7 +3,7 @@ package com.cosmoloj.math.operation.surface;
 import com.cosmoloj.math.operation.trials.AbstractInitTrials;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.util.bib.Page;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
 import com.cosmoloj.math.operation.trials.AbsoluteDifferenceDoubleTrials;
@@ -173,19 +173,19 @@ public final class Ellipsoid implements Surface {
         return rq;
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-11")
     public double betaPhi(final double phi) {
         return betaQ(q(phi));
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-11")
     public double betaQ(final double q) {
         return Math.asin(q / qp);
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-12")
     public double q(final double phi) {
         final double sinphi = Math.sin(phi);
@@ -200,7 +200,7 @@ public final class Ellipsoid implements Surface {
      * @param betap <span class="en">authalic latitude</span>
      * @return <span class="en">latitude</span>
      */
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-18")
     public double phi(final double betap) {
         return betap + e2 * ((1. / 3. + e2 * (31. / 180. + e2 * 517. / 5040.)) * Math.sin(2. * betap)
@@ -220,7 +220,7 @@ public final class Ellipsoid implements Surface {
      * @param m
      * @return <span class="en">rectifying latitude</span>
      */
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-20")
     public double rectifyingLatitude(final double m) {
         return m / mp() * (Math.PI / 2.);
@@ -230,19 +230,19 @@ public final class Ellipsoid implements Surface {
      * <div class="en">Value of m(phi) / phi when phi = PI/2.</div>
      * @return
      */
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-21")
     private double mp() {
         return mp;
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-24")
     public double e1() {
         return e1;
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-26")
     public double phi1(final double mu) {
         return mu + e1 * ((3. / 2. - e12 * 27. / 32.) * Math.sin(2. * mu)
@@ -257,7 +257,7 @@ public final class Ellipsoid implements Surface {
      * @param phi
      * @return
      */
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-21")
     public double m(final double phi) {
         return a * ((1. - e2 * (1. / 4. + e2 * (3. / 64. + e2 * 5. / 256.))) * phi
@@ -266,13 +266,13 @@ public final class Ellipsoid implements Surface {
                 + e2 * -35. / 3072. * Math.sin(6. * phi))));
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "7-19")
     public double mu(final double m) {
         return m / (a * (1. - e2 * (1. / 4. + e2 * (3. / 64. + e2 * (5. / 256.)))));
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "18-17")
     public double mp(final double phi) {
         return (1. - e2 * (1. / 4. + e2 * (3. / 64. + e2 * 5. / 256.)))
@@ -301,7 +301,7 @@ public final class Ellipsoid implements Surface {
         return new Ellipsoid(a, Math.sqrt(e2), Parameter.ECCENTRICITY);
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.FORMULA, id = "3-16")
     public final class PhiIterator extends AbstractInitTrials implements AbsoluteDifferenceDoubleTrials {
 
@@ -331,57 +331,57 @@ public final class Ellipsoid implements Surface {
         }
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid GRS_80 = ofInverseFlattening(6_378_137., 298.257);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid WGS_72 = ofInverseFlattening(6_378_135., 298.26);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid AUSTRALIAN = ofInverseFlattening(6_378_160., 298.25);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid KRASOVSKY = ofInverseFlattening(6_378_245., 298.3);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid INTERNATIONAL = ofInverseFlattening(6_378_388., 297.);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid HAYFORD = ofInverseFlattening(6_378_388., 297.);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid CLARKE_1880 = ofInverseFlattening(6_378_249.1, 293.46);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid CLARKE_1866 = ofSemiMinorAxis(6_378_206.4, 6_356_583.8);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid AIRY = ofSemiMinorAxis(6_377_563.4, 6_356_256.9);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid BESSEL = ofSemiMinorAxis(6_377_397.2, 6_356_079.0);
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 1)
     @Page(12)
     public static final Ellipsoid EVEREST = ofSemiMinorAxis(6_377_276.3, 6_356_075.4);

@@ -4,7 +4,7 @@ import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.tabular.core.DoubleTabulars;
 import com.cosmoloj.math.util.set.polynomial.PolynomialUtil;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 abstract class AbstractPolynomialTransformation implements CoordinateTransformation {
 
     private final double xs;

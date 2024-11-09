@@ -5,7 +5,7 @@ import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.operation.conversion.Epsg9837;
 import com.cosmoloj.math.operation.surface.Ellipsoid;
 import com.cosmoloj.math.operation.trials.AbsoluteDifferenceDoubleVectorTrials;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @see Epsg9837
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg9840 implements InvertibleProjection {
 
     private static final int PHI = 0;

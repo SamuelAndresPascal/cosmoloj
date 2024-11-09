@@ -6,7 +6,7 @@ import com.cosmoloj.math.operation.trials.AbstractInitTrials;
 import com.cosmoloj.math.util.integral.Integral;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.util.bib.Page;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.cosmoloj.math.operation.trials.AbsoluteDifferenceDoubleTrials;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.MAP_PROJECTIONS)
+@Cite(Cosmoloj.MAP_PROJECTIONS)
 @SectionReference(type = SectionReferenceType.SECTION, number = 10)
 @Page(81)
 public abstract class CylindricalEqualAreaEllipsoid implements InvertibleProjection {
@@ -365,7 +365,7 @@ public abstract class CylindricalEqualAreaEllipsoid implements InvertibleProject
         return ellipsoid;
     }
 
-    @Reference(Cosmoloj.MAP_PROJECTIONS)
+    @Cite(Cosmoloj.MAP_PROJECTIONS)
     @SectionReference(type = SectionReferenceType.TABLE, number = 13)
     @Page(83)
     static final double[][] GENERAL = new double[][]{

@@ -5,7 +5,7 @@ import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
 import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.EnumLexeme;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
 import com.cosmoloj.util.function.Predicates;
@@ -14,7 +14,7 @@ import com.cosmoloj.util.function.Predicates;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.WKT_CRS_V1_0)
+@Cite(Cosmoloj.WKT_CRS_V1_0)
 public enum WktKeyword implements SemanticEnum<WktKeyword> {
 
     ABRIDGEDTRANSFORMATION,

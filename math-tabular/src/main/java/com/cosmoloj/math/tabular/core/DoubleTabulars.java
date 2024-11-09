@@ -7,7 +7,7 @@ import com.cosmoloj.math.tabular.matrix.Matrix.Dimension;
 import com.cosmoloj.math.tabular.line.FloatVector;
 import com.cosmoloj.math.tabular.matrix.FloatMatrix;
 import com.cosmoloj.util.bib.Page;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.Arrays;
 import java.util.function.IntToDoubleFunction;
 
@@ -778,7 +778,7 @@ public final class DoubleTabulars {
      * @param m <span class="en">2x2 matrix</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(27)
     public static double determinant11(final double[][] m) {
         if (m.length != 1 && m[0].length != 1) {
@@ -792,7 +792,7 @@ public final class DoubleTabulars {
      * @param m <span class="en">2x2 matrix</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(27)
     public static double determinant11(final DoubleMatrix m) {
         return determinant11(m.getMatrix());
@@ -803,7 +803,7 @@ public final class DoubleTabulars {
      * @param m <span class="en">2x2 matrix</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(27)
     public static double determinant22(final double[][] m) {
         if (m.length != 2 && m[0].length != 2) {
@@ -817,7 +817,7 @@ public final class DoubleTabulars {
      * @param m <span class="en">2x2 matrix</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(27)
     public static double determinant22(final DoubleMatrix m) {
         return determinant22(m.getMatrix());
@@ -832,7 +832,7 @@ public final class DoubleTabulars {
      * @return <span class="fr">la sous-matrice associée au cofacteur indiqué par ses index de ligne et de colonne
      * </span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(29)
     public static double[][] subMatrix(final double[][]m, final int i, final int j) {
         if (m == null || m.length != m[0].length) {
@@ -863,7 +863,7 @@ public final class DoubleTabulars {
      * @return <span class="fr">la sous-matrice associée au cofacteur indiqué par ses index de ligne et de colonne
      * </span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(29)
     public static double[][] subMatrix(final DoubleMatrix m, final int i, final int j) {
         return subMatrix(m.getMatrix(), i, j);
@@ -883,7 +883,7 @@ public final class DoubleTabulars {
      * @param d <span class="en">the dimension used to compute determinant</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(29)
     public static double cofactor(final double[][]m, final int i, final int j, final Dimension d) {
         return (((i + j) % 2 == 0) ? 1 : -1) * determinantNN(subMatrix(m, i, j), d);
@@ -897,7 +897,7 @@ public final class DoubleTabulars {
      * @param j <span class="en">the column index</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(29)
     public static double cofactor(final double[][]m, final int i, final int j) {
         return cofactor(m, i, j, DEFAULT_DETERMINANT_DIMENSION);
@@ -909,7 +909,7 @@ public final class DoubleTabulars {
      * @param d <span class="en">the dimension used to compute the determinant</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(29)
     public static double determinantNN(final double[][] m, final Dimension d) {
         if (m == null || m.length != m[0].length) {
@@ -948,7 +948,7 @@ public final class DoubleTabulars {
      * @param m <span class="en">NxN matrix</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(29)
     public static double determinantNN(final double[][] m) {
         return determinantNN(m, DEFAULT_DETERMINANT_DIMENSION);
@@ -960,7 +960,7 @@ public final class DoubleTabulars {
      * @param d <span class="en">the dimension used to compute the determinant</span>
      * @return <span class="en">the matrix determinant</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     public static double determinantNN(final DoubleMatrix m, final Dimension d) {
         return determinantNN(m.getMatrix(), d);
     }
@@ -1064,7 +1064,7 @@ public final class DoubleTabulars {
      * @param v <span class="fr">second vecteur</span>
      * @return <span class="fr">vecteur résultant du produit vectoriel</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(41)
     public static double[] crossProduct(final double[] u, final double[] v) {
         return new double[]{u[1] * v[2] - u[2] * v[1],
@@ -1079,7 +1079,7 @@ public final class DoubleTabulars {
      * @param w <span class="fr">troisième vecteur</span>
      * @return <span class="fr">scalaire résultant du produit triple</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(44)
     public static double scalarTripleProduct(final double[] u, final double[] v, final double[] w) {
         return mult1nn1(crossProduct(u, v), w);
@@ -1090,7 +1090,7 @@ public final class DoubleTabulars {
      * @param set <span class="fr">ensemble de valeurs</span>
      * @return <span class="fr">moyenne des valeurs</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(92)
     public static double mean1D(final double[] set) {
         double u = 0.;
@@ -1106,7 +1106,7 @@ public final class DoubleTabulars {
      * @param set <span class="fr">ensemble de points de dimension 1</span>
      * @return <span class="fr">moyenne des valeurs</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(92)
     public static double mean1D(final double[][] set) {
         double u = 0.;
@@ -1121,7 +1121,7 @@ public final class DoubleTabulars {
      * @param set <span class="fr">ensemble de valeurs</span>
      * @return <span class="fr">variance des valeurs</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(92)
     public static double variance1D(final double[] set) {
         final double u = mean1D(set);
@@ -1139,7 +1139,7 @@ public final class DoubleTabulars {
      * @param set <span class="fr">ensemble de points de dimension 1</span>
      * @return <span class="fr">variance des valeurs</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(92)
     public static double variance1D(final double[][] set) {
         final double u = mean1D(set);
@@ -1156,7 +1156,7 @@ public final class DoubleTabulars {
      * @param set <span class="fr">ensemble de points</span>
      * @return <span class="fr">matrice de covariance des points</span>
      */
-    @Reference(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
+    @Cite(Cosmoloj.REAL_TIME_COLLISION_DETECTION)
     @Page(93)
     public static double[][] covarianceMatrix(final double[][] set) {
         final double oon = 1. / set.length;

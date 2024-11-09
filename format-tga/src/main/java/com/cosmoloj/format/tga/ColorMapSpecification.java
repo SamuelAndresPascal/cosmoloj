@@ -1,7 +1,7 @@
 package com.cosmoloj.format.tga;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 
 /**
  * <div class="en">This field and its sub-fields describe the color map (if any) used for the image.  If the Color Map
@@ -10,7 +10,7 @@ import com.cosmoloj.util.bib.Reference;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.TGA)
+@Cite(Cosmoloj.TGA)
 public record ColorMapSpecification(
 
     /**
@@ -56,6 +56,6 @@ public record ColorMapSpecification(
      *
      * @return
      */
-    @Reference(Cosmoloj.TGA)
+    @Cite(Cosmoloj.TGA)
     byte colorMapEntrySize) {
 }

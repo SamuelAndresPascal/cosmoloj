@@ -2,7 +2,7 @@ package com.cosmoloj.math.operation.transformation;
 
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.MethodParameter;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg9622 extends Epsg9623 {
 
     public Epsg9622(final double xt0, final double yt0, final double mx, final double my, final double k,

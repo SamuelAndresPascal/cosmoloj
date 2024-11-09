@@ -7,7 +7,7 @@ import com.cosmoloj.math.operation.trials.AbstractInitTrials;
 import java.util.List;
 import java.util.Map;
 import com.cosmoloj.math.operation.trials.AbsoluteDifferenceDoubleTrials;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 
 /**
  * <div>EPSG::9831</div>
@@ -16,7 +16,7 @@ import com.cosmoloj.util.bib.Reference;
  * @author Samuel Andrés
  *
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg9831 implements InvertibleProjection {
 
     private static final int PHI = 0;

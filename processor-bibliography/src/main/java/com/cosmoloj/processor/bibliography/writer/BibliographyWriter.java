@@ -1,16 +1,19 @@
 package com.cosmoloj.processor.bibliography.writer;
 
+import com.cosmoloj.language.api.semantic.Lexeme;
 import com.cosmoloj.language.json.expression.JsonArray;
 import com.cosmoloj.language.json.expression.JsonObject;
 import com.cosmoloj.language.json.expression.JsonValue;
-import com.cosmoloj.language.json.lexeme.compound.JsonSignedNumericLiteral;
 import com.cosmoloj.language.json.lexeme.simple.QuotedString;
+import com.cosmoloj.processor.bibliography.annotation.Entry;
 import com.cosmoloj.processor.common.writer.TypeElementWriter;
 import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.TypeElement;
 import org.slf4j.Logger;
@@ -29,14 +32,9 @@ public class BibliographyWriter extends TypeElementWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private static final List<String> IMPORTS = List.of("com.cosmoloj.util.bib.Reference",
-        "com.cosmoloj.util.bib.Book",
-        "com.cosmoloj.util.bib.Proceedings",
-        "com.cosmoloj.util.bib.InProceedings",
-        "com.cosmoloj.util.bib.Article",
-        "com.cosmoloj.util.bib.Misc",
-        "com.cosmoloj.util.bib.TechReport",
-        "com.cosmoloj.util.bib.PhdThesis");
+    private static final List<String> IMPORTS = List.of("com.cosmoloj.util.bib.Cite",
+        "com.cosmoloj.processor.bibliography.annotation.Entry",
+        "com.cosmoloj.processor.bibliography.annotation.EntryType");
 
     private final JsonArray<JsonValue> json;
 
@@ -79,42 +77,32 @@ public class BibliographyWriter extends TypeElementWriter {
             final JsonValue crossref = map.get(CROSS_REF_KEY);
 
             if (crossref != null) {
-                indentln("@Reference(value = {"
+                indentln("@Cite(value = {"
                         + ((QuotedString) crossref).getSemantics().toUpperCase(Locale.ROOT) + "})");
             }
 
-            switch (((QuotedString) map.get(ENTRY_TYPE_FIELD)).getSemantics()) {
-                case "article" -> {
-                    indent("@Article(");
-                    writeKeys(map, "title", "subtitle", "pages", "issue", "volume", "month", "year", "url");
+            indent("@Entry(entryType = EntryType."
+                            + ((QuotedString) map.get(ENTRY_TYPE_FIELD)).getSemantics().toUpperCase(Locale.ROOT));
+            incrIndent();
+
+            final String[] toDisplay = Stream.of(Entry.class.getMethods()).map(Method::getName).toArray(String[]::new);
+
+            for (final String key : toDisplay) {
+
+                if ("entryType".equals(key)) {
+                    continue;
                 }
-                case "inproceedings" -> {
-                    indent("@InProceedings(");
-                    writeKeys(map, "title", "subtitle", "pages", "issue", "volume", "month", "year", "url");
-                }
-                case "phdthesis" -> {
-                    indent("@PhdThesis(");
-                    writeKeys(map, "title", "year", "url");
-                }
-                case "book" -> {
-                    indent("@Book(");
-                    writeKeys(map, "title", "editor", "year", "url");
-                }
-                case "techreport" -> {
-                    indent("@TechReport(");
-                    writeKeys(map, "type", "title", "author", "institution", "number", "version", "year", "url");
-                }
-                case "proceedings" -> {
-                    indent("@Proceedings(");
-                    writeKeys(map, "title", "issn", "eIssn", "url");
-                }
-                case "misc" -> {
-                    indent("@Misc(");
-                    writeKeys(map, "title", "issn", "eIssn", "url");
-                }
-                default -> {
+
+                final JsonValue value = map.get(key);
+                // only not null and skip "reference" type Json objects
+                if (value != null && !(value instanceof JsonObject)) {
+                    println(",");
+                    indent();
+                    print(key + " = \"" + ((Lexeme) value).getSemantics() + "\"");
                 }
             }
+            println(")");
+            decrIndent();
 
             final String key = ((QuotedString) map.get(CITE_KEY_FIELD)).getSemantics();
             indentln("public static final String " + key.toUpperCase(Locale.ROOT) + " = \"" + key + "\";");
@@ -123,32 +111,5 @@ public class BibliographyWriter extends TypeElementWriter {
 
         decrIndent();
         indentln("}");
-
-    }
-
-    private void writeKeys(final Map<String, JsonValue> map, final String... keys) {
-        incrIndent();
-
-        boolean first = true;
-        for (final String key : keys) {
-            final JsonValue value = map.get(key);
-            // only not null and skip "reference" type Json objects
-            if (value != null && !(value instanceof JsonObject)) {
-                if (first) {
-                    first = false;
-                } else {
-                    println(",");
-                    indent();
-                }
-
-                if (value instanceof QuotedString string) {
-                    print(key + " = \"" + string.getSemantics() + "\"");
-                } else if (value instanceof JsonSignedNumericLiteral literal) {
-                    print(key + " = " + literal.getSemantics());
-                }
-            }
-        }
-        println(")");
-        decrIndent();
     }
 }

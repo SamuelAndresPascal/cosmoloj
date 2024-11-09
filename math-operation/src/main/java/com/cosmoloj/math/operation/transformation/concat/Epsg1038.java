@@ -4,7 +4,7 @@ import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.math.operation.surface.Ellipsoid;
 import com.cosmoloj.math.operation.transformation.Epsg1032;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.Map;
 
 /**
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @see Epsg1032
  */
-@Reference(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
+@Cite(Cosmoloj.IOGP_GUIDANCE_NOTE_7_2_2019)
 public class Epsg1038 extends Abstract3DTo3D {
 
     public Epsg1038(final Ellipsoid source, final Ellipsoid target,

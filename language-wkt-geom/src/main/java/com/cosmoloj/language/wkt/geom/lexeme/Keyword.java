@@ -4,13 +4,13 @@ import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.language.common.impl.builder.EnumLexemeBuilder;
 import com.cosmoloj.language.common.impl.semantic.EnumCase;
 import com.cosmoloj.language.common.impl.semantic.SemanticEnum;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 
 /**
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.SF_ACCESS_PART_1_V1_2_1)
+@Cite(Cosmoloj.SF_ACCESS_PART_1_V1_2_1)
 public enum Keyword implements SemanticEnum<Keyword> {
     POINT,
     LINESTRING,

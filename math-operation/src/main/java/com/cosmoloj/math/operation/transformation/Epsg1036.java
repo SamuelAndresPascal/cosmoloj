@@ -2,14 +2,14 @@ package com.cosmoloj.math.operation.transformation;
 
 import com.cosmoloj.math.operation.MethodParameter;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import java.util.List;
 
 /**
  *
  * @author Samuel Andrés
  */
-@Reference(value = {Cosmoloj.JOACHIM_BOLJEN_2003, Cosmoloj.JOACHIM_BOLJEN_2004})
+@Cite(value = {Cosmoloj.JOACHIM_BOLJEN_2003, Cosmoloj.JOACHIM_BOLJEN_2004})
 public class Epsg1036 implements CoordinateTransformation {
 
     @Override

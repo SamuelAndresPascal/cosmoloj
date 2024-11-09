@@ -10,7 +10,6 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface PhdThesis {
-    String title();
-    int year();
+public @interface Cite {
+    String[] value();
 }

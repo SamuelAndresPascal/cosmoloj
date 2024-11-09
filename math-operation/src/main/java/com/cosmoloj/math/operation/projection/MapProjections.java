@@ -1,6 +1,6 @@
 package com.cosmoloj.math.operation.projection;
 
-import com.cosmoloj.util.bib.Reference;
+import com.cosmoloj.util.bib.Cite;
 import com.cosmoloj.bibliography.cosmoloj.Cosmoloj;
 import com.cosmoloj.util.bib.SectionReference;
 import com.cosmoloj.util.bib.SectionReferenceType;
@@ -9,7 +9,7 @@ import com.cosmoloj.util.bib.SectionReferenceType;
  *
  * @author Samuel Andrés
  */
-@Reference(Cosmoloj.MAP_PROJECTIONS)
+@Cite(Cosmoloj.MAP_PROJECTIONS)
 public final class MapProjections {
 
     private MapProjections() {
