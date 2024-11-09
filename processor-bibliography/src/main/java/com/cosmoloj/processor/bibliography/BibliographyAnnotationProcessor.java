@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Samuel Andrés
  */
 @SupportedAnnotationTypes("com.cosmoloj.processor.bibliography.annotation.Bibliography")
-@SupportedSourceVersion(SourceVersion.RELEASE_22)
+@SupportedSourceVersion(SourceVersion.RELEASE_23)
 public class BibliographyAnnotationProcessor extends AbstractProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

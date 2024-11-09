@@ -25,7 +25,7 @@
     <project.info.reports.plugin.version>3.5.0</project.info.reports.plugin.version>
     <site.plugin.version>4.0.0-M13</site.plugin.version>
     <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
-    <surefire.plugin.version>3.2.5</surefire.plugin.version>
+    <surefire.plugin.version>3.5.2</surefire.plugin.version>
     <spotbugs.plugin.version>4.8.4.0</spotbugs.plugin.version>
     <wagon.ssh.version>3.5.3</wagon.ssh.version>
 
