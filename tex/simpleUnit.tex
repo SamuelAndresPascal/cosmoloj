@@ -7,14 +7,16 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{hyperref}
+\usepackage{multirow}
 
 %\usepackage{amsmath}
 
 % Compiler avec:
 % xelatex simpleUnit
 
-\title{Simple Unit\\1.0-r1}
+\title{Simple Unit\\1.0-r2}
 \author{Samuel \textsc{Andrés}}
+\date{15 novembre 2024}
 
 \begin{document}
 
@@ -425,5 +427,21 @@ critère relatif à la précision des conversions laissée à une appréciation 
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
+
+\section{Versionnement}
+
+\begin{tabular}{ | l || l | l |  }
+ \hline
+ \multicolumn{3}{ |c| }{Versionnement} \\
+ \hline
+ Version & Date & modification\\
+ \hline
+ 1.0-r2 & 15 novembre 2024 & correctif: fixation de la date et ajout du tableau de versionnement \\
+ 1.0-r1 & 20 juillet 2024 & correctif: structuration de la section sur les convertisseurs \\
+ 1.0-r0 & 28 avril 2024 & version initiale \\
+ 0.1-r0 & 18 novembre 2022 & version de travail \\
+ \hline
+\end{tabular}
 
 \end{document}
