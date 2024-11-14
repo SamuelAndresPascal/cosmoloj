@@ -24,19 +24,34 @@ build:
       - ./*/target/*
     expire_in: 2 days
 
-form:
+form-simpleunit:
   stage: build
   script:
     - cd tex/
     - xelatex -halt-on-error simpleUnit.tex
     - xelatex -halt-on-error simpleUnit.tex
-    - htxelatex simpleUnit.tex "xhtml"
+    - htxelatex simpleUnit.tex xhtml
     - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
     - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$PUBLIC_SITE_SERVER_PATH/su
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $PUBLIC_SITE_SERVER_PATH/su ; unzip -o simpleUnit.zip ; mv simpleUnit.html index.html ; rm simpleUnit.zip"
   artifacts:
     paths:
       - tex/simpleUnit.pdf
+    expire_in: 2 days
+
+form-bibliograpi:
+  stage: build
+  script:
+    - cd tex/
+    - xelatex -halt-on-error bibliograpi.tex
+    - xelatex -halt-on-error bibliograpi.tex
+    - htxelatex bibliograpi.tex xhtml
+    - zip bibliograpi.zip bibliograpi.pdf bibliograpi.html bibliograpi.css bibliograpi*x.svg
+    - scp bibliograpi.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$PUBLIC_SITE_SERVER_PATH/bibapi
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $PUBLIC_SITE_SERVER_PATH/bibapi ; unzip -o bibliograpi.zip ; mv bibliograpi.html index.html ; rm bibliograpi.zip"
+  artifacts:
+    paths:
+      - tex/bibliograpi.pdf
     expire_in: 2 days
 
 test:
