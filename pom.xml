@@ -10,9 +10,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <checkstyle.plugin.version>3.3.1</checkstyle.plugin.version>
+    <checkstyle.plugin.version>3.6.0</checkstyle.plugin.version>
     <checkstyle.location>checkstyle.xml</checkstyle.location>
-    <checkstyle.version>10.17.0</checkstyle.version>
+    <checkstyle.version>10.25.0</checkstyle.version>
     <compiler.plugin.version>3.13.0</compiler.plugin.version>
     <compiler.plugin.release>23</compiler.plugin.release>
     <processor.plugin.version>5.1</processor.plugin.version>
