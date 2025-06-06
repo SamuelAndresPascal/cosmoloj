@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -34,10 +36,20 @@ public final class NetUtil {
                 .encodeToString(String.format("%s:%s", username, password).getBytes(StandardCharsets.UTF_8));
     }
 
+    @Deprecated
     public static URL buildUrl(final String base, final Set<Map.Entry<String, String>> params)
             throws MalformedURLException, UnsupportedEncodingException {
 
         return new URL(base + '?' + params.stream()
+                .map(e -> URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8)
+                        + '=' + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
+                .reduce("", (a, b) -> a + '&' + b));
+    }
+
+    public static URI buildUri(final String base, final Set<Map.Entry<String, String>> params)
+            throws URISyntaxException {
+
+        return new URI(base + '?' + params.stream()
                 .map(e -> URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8)
                         + '=' + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
                 .reduce("", (a, b) -> a + '&' + b));
