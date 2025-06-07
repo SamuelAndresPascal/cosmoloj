@@ -18,7 +18,7 @@
     <processor.plugin.version>5.1</processor.plugin.version>
     <dependency.plugin.version>3.8.1</dependency.plugin.version>
     <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
-    <deploy.plugin.version>3.1.3</deploy.plugin.version>
+    <deploy.plugin.version>3.1.2</deploy.plugin.version>
     <jacoco.plugin.version>0.8.13</jacoco.plugin.version>
     <javadoc.plugin.version>3.11.2</javadoc.plugin.version>
     <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
