@@ -558,6 +558,11 @@
           <name>GitHub Apache Maven Packages</name>
           <url>https://maven.pkg.github.com/${github.username}/${env.CI_PROJECT_NAME}</url>
         </repository>
+        <snapshotRepository>
+          <id>github</id>
+          <name>GitHub Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/${github.username}/${env.CI_PROJECT_NAME}</url>
+        </snapshotRepository>
       </distributionManagement>
     </profile>
   </profiles>
