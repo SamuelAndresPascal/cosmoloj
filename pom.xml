@@ -18,7 +18,7 @@
     <processor.plugin.version>5.1</processor.plugin.version>
     <dependency.plugin.version>3.8.1</dependency.plugin.version>
     <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
-    <deploy.plugin.version>3.1.2</deploy.plugin.version>
+    <deploy.plugin.version>3.1.4</deploy.plugin.version>
     <jacoco.plugin.version>0.8.13</jacoco.plugin.version>
     <javadoc.plugin.version>3.11.2</javadoc.plugin.version>
     <javadoc.plugin.failOnError>false</javadoc.plugin.failOnError>
@@ -28,7 +28,6 @@
     <surefire.plugin.version>3.5.3</surefire.plugin.version>
     <spotbugs.plugin.version>4.9.3.0</spotbugs.plugin.version>
     <wagon.ssh.version>3.5.3</wagon.ssh.version>
-    <wagon.http.version>3.5.3</wagon.http.version>
 
     <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
     <site.server.ip>${env.PUBLIC_SITE_SERVER}</site.server.ip>
@@ -363,11 +362,6 @@
             <artifactId>wagon-ssh</artifactId>
             <version>${wagon.ssh.version}</version>
           </dependency>
-          <dependency>
-            <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-http</artifactId>
-            <version>${wagon.http.version}</version>
-          </dependency>
         </dependencies>
       </plugin>
 
@@ -559,11 +553,11 @@
     <profile>
       <id>github</id>
       <distributionManagement>
-        <snapshotRepository>
-          <id>github-snapshot</id>
+        <repository>
+          <id>github</id>
           <name>GitHub Apache Maven Packages</name>
           <url>https://maven.pkg.github.com/${github.username}/${env.CI_PROJECT_NAME}</url>
-        </snapshotRepository>
+        </repository>
       </distributionManagement>
     </profile>
   </profiles>

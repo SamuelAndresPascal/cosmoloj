@@ -74,7 +74,7 @@ deploy:
 github:
   stage: deploy
   script:
-    - mvn $MAVEN_CLI_OPTS -Dmaven.resolver.transport=wagon jar:jar deploy:deploy -Pgithub
+    - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy -Pgithub
   artifacts:
     expire_in: 2 days
 
