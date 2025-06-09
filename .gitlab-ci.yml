@@ -64,7 +64,7 @@ test:
 deploy:
   stage: deploy
   script:
-    - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy
+    - mvn $MAVEN_CLI_OPTS deploy
   environment:
     name: maven
     url: http://cosmoloj.com/maven/com/cosmoloj/cosmoloj/maven-metadata.xml
@@ -74,7 +74,7 @@ deploy:
 github:
   stage: deploy
   script:
-    - mvn $MAVEN_CLI_OPTS jar:jar deploy:deploy -Pgithub
+    - mvn $MAVEN_CLI_OPTS deploy -Pgithub
   artifacts:
     expire_in: 2 days
 
