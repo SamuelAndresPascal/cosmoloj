@@ -2,10 +2,12 @@ package com.cosmoloj.util.net;
 
 import com.cosmoloj.util.security.SecurityUtil;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -13,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Iterator;
@@ -41,24 +44,73 @@ public final class NetUtil {
             throws MalformedURLException, UnsupportedEncodingException {
 
         return new URL(base + '?' + params.stream()
-                .map(e -> URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8)
-                        + '=' + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
-                .reduce("", (a, b) -> a + '&' + b));
+                .map(e -> parameterEntryEncoderMapper(e, StandardCharsets.UTF_8))
+                .reduce("", NetUtil::parameterListReducer));
     }
 
-    public static URI buildUri(final String base, final Set<Map.Entry<String, String>> params)
+    public static String parameterEntryEncoderMapper(final String key, final String value, final Charset charset) {
+        return URLEncoder.encode(key, charset) + '=' + URLEncoder.encode(value, charset);
+    }
+
+    public static String parameterEntryEncoderMapper(final Map.Entry<String, String> entry, final Charset charset) {
+        return parameterEntryEncoderMapper(entry.getKey(), entry.getValue(), charset);
+    }
+
+    public static String parameterListReducer(final String p1, final String p2) {
+        return p1 + '&' + p2;
+    }
+
+    public static URI buildUri(final String base, final Set<Map.Entry<String, String>> params, final Charset charset)
             throws URISyntaxException {
 
         return new URI(base + '?' + params.stream()
-                .map(e -> URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8)
-                        + '=' + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
-                .reduce("", (a, b) -> a + '&' + b));
+                .map(e -> parameterEntryEncoderMapper(e, charset))
+                .reduce("", NetUtil::parameterListReducer));
     }
 
     public static void submit(final URL url, final String method, final Map<String, String> requestProperties,
             final Consumer<String> certificateInfo, final Consumer<String> responseHeader,
             final Consumer<String> responseBody) throws IOException {
-        submit(url, method, requestProperties, null, certificateInfo, responseHeader, responseBody);
+        submit(url,
+                method,
+                requestProperties,
+                (Consumer<OutputStream>) null,
+                certificateInfo,
+                responseHeader,
+                responseBody);
+    }
+
+    public static void submit(final URL url, final String method, final Map<String, String> requestProperties,
+            final Map<String, String> requestBody,
+            final Charset bodyEncoding,
+            final Consumer<String> certificateInfo,
+            final Consumer<String> responseHeaderConsumer,
+            final Consumer<String> responseBodyConsumer) throws IOException {
+        submit(url, method, requestProperties,
+                requestBody.entrySet().stream()
+                .map(e -> parameterEntryEncoderMapper(e, bodyEncoding))
+                .reduce("", NetUtil::parameterListReducer),
+                bodyEncoding,
+                certificateInfo,
+                responseHeaderConsumer,
+                responseBodyConsumer);
+    }
+
+    public static void submit(final URL url, final String method, final Map<String, String> requestProperties,
+            final String requestBody,
+            final Charset bodyEncoding,
+            final Consumer<String> certificateInfo,
+            final Consumer<String> responseHeaderConsumer,
+            final Consumer<String> responseBodyConsumer) throws IOException {
+        submit(url, method, requestProperties,
+            o -> {
+                try (DataOutputStream wr = new DataOutputStream(o)) {
+                    wr.write(requestBody.getBytes(bodyEncoding));
+                } catch (final IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            },
+        certificateInfo, responseHeaderConsumer, responseBodyConsumer);
     }
 
     public static void submit(final URL url, final String method, final Map<String, String> requestProperties,
