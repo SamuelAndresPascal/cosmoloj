@@ -12,11 +12,12 @@
 
     <checkstyle.plugin.version>3.6.0</checkstyle.plugin.version>
     <checkstyle.location>checkstyle.xml</checkstyle.location>
-    <checkstyle.version>10.25.0</checkstyle.version>
+    <checkstyle.version>11.0.0</checkstyle.version>
     <compiler.plugin.version>3.14.0</compiler.plugin.version>
-    <compiler.plugin.release>23</compiler.plugin.release>
+    <compiler.plugin.release>24</compiler.plugin.release>
     <processor.plugin.version>5.1</processor.plugin.version>
     <dependency.plugin.version>3.8.1</dependency.plugin.version>
+    <dependency.plugin.org.ow2.asm.version>9.8</dependency.plugin.org.ow2.asm.version>
     <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
     <deploy.plugin.version>3.1.4</deploy.plugin.version>
     <jacoco.plugin.version>0.8.13</jacoco.plugin.version>
@@ -433,6 +434,14 @@
             </configuration>
           </execution>
         </executions>
+
+        <dependencies>
+          <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>${dependency.plugin.org.ow2.asm.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
 
       <!-- pour les rapports de couverture de tests -->
