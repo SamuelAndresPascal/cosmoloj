@@ -16,7 +16,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.13.0
         with:
           distribution: 'oracle'
-          java-version: '23'
+          java-version: '24'
           maven-version: '3.9.9'
       - run: java -version
       - run: mvn -v
