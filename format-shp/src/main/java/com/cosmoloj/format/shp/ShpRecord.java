@@ -90,7 +90,7 @@ public interface ShpRecord<G> {
      * @param other
      * @return
      */
-    default boolean equalData(ShpRecord<?> other) {
+    default boolean equalData(final ShpRecord<?> other) {
         if (this == other) {
             return true;
         }
@@ -125,9 +125,6 @@ public interface ShpRecord<G> {
         if (!Arrays.equals(this.getZValues(), other.getZValues())) {
             return false;
         }
-        if (!Arrays.equals(this.getPartTypes(), other.getPartTypes())) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(this.getPartTypes(), other.getPartTypes());
     }
 }
