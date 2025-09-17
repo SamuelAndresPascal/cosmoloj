@@ -7,6 +7,9 @@ before_script:
   - echo $MAVEN_CLI_OPTS
   - echo $ORG_SLF4J_SIMPLELOGGER_DEFAULTLOGLEVEL
 
+after_script:
+  - cat *.log
+
 stages:
   - build
   - test
