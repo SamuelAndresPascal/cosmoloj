@@ -17,7 +17,7 @@
     <compiler.plugin.release>25</compiler.plugin.release>
     <processor.plugin.version>5.1</processor.plugin.version>
     <dependency.plugin.version>3.8.1</dependency.plugin.version>
-    <dependency.plugin.org.ow2.asm.version>9.8</dependency.plugin.org.ow2.asm.version>
+    <dependency.plugin.org.ow2.asm.version>9.9</dependency.plugin.org.ow2.asm.version>
     <dependency.plugin.output.cosmoloj.modules>${project.build.directory}/cosmoloj-modules</dependency.plugin.output.cosmoloj.modules>
     <deploy.plugin.version>3.1.4</deploy.plugin.version>
     <jacoco.plugin.version>0.8.13</jacoco.plugin.version>
