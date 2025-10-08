@@ -350,11 +350,6 @@
             <artifactId>wagon-ssh</artifactId>
             <version>${wagon.ssh.version}</version>
           </dependency>
-          <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>${dependency.plugin.org.ow2.asm.version}</version>
-          </dependency>
         </dependencies>
       </plugin>
 
@@ -439,6 +434,20 @@
             </configuration>
           </execution>
         </executions>
+
+        <dependencies>
+          <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>${dependency.plugin.org.ow2.asm.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>${project.info.reports.plugin.version}</version>
 
         <dependencies>
           <dependency>
