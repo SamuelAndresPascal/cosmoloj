@@ -14,7 +14,7 @@
 % Compiler avec:
 % xelatex simpleUnit
 
-\title{Simple Unit\\1.0-r2}
+\title{Simple Unit\\2.0-r0}
 \author{Samuel \textsc{Andrés}}
 \date{15 novembre 2024}
 
@@ -22,12 +22,26 @@
 
 \maketitle
 
+\tableofcontents
+
 \section{Versionnement et recommandations}
 
 Le numéro de version de ce document est composé d'un numéro de version majeure, d'un numéro de version mineure et d'un
-numéro de révision:
+numéro de révision. Ces numéros sont agencés comme suit, concernant les versions stables:
 
 <version majeure>.<version mineure>-r<révision>
+
+Et de la manière suivante pour les versions en cours de préparation:
+
+<version majeure>.<version mineure>-a<révision>
+
+Les versions en cours de préparation sont publiées à titre indicatif et ne doivent pas être considérées comme
+\emph{a priori} représentatives de la version définitive. Les numéros de version majeure et mineure qui les composent
+sont considérés comme n'étant pas encore atteints dans leur version définitive. Ils ne peuvent donc servir de
+référence à des implémentations qui reprendraient leur numérotation. Enfin, il n'est pas garanti qu'une version stable
+utilisera les mêmes numéros de version majeure et mineure qu'une version en cours de préparation.
+
+Une sémantique particulière est attachée aux composantes d'un numéro de version stable.
 
 Un changement de numéro de version majeure intervient lors d'une modification du contrat cassant la rétrocompatibilité
 avec les versions précédentes.
@@ -62,10 +76,29 @@ la spécification.
 \subsection{Périmètre}
 
 La présente spécification abstraite s'inspire de la \href{https://jcp.org/en/jsr/detail?id=363}{JSR 363} de la
-communauté Java mais en restreint le périmètre.
+communauté Java. Elle en restreint pour une part le périmètre aux conversions affines entre unités et adopte une
+représentation conceptuelle un peu différente, quoique reposant sur le même principe de représentation des unités en un
+graphe d'objets permettant de calculer dynamiquement la formule d'un convertisseur d'une unité à l'autre.
 
-Elle est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et non pas à
-fournir des collections d'unités courantes déjà construites. Il ne s'agit pas non plus d'une bibliothèque
+D'autre part, cette spécification ajoute aux concepts inspirés de la JSR la notion de \emph{transformation}
+et la distingue des opérations de \emph{conversion} entre unités.
+
+Une opération de \emph{conversion} est un calcul purement \emph{mathématique} entre deux unités de même dimension
+physique.
+
+Une opération de \emph{transformation} représente une formule physique. Les unités impliquées en entrée et en
+sortie peuvent être identiques, par exemple, pour transformer une pression d'un constituant donné à une température de
+référence en une pression du même constituan à une température donnée). Les unités impliquées en entrée et en sortie
+peuvent aussi être différentes et de dimensions différentes (transformer une tension en courant à résistance donnée).
+
+Ces opérations de \emph{transformation} se donnent pour premier objectif d'attirer l'attention des utilisateurs sur
+le fait que des opérations parfois traitées comme des conversions d'unités relèvent en fait d'une nature différente, non
+pas purement mathématique, mais physique. Le traitement des formules physiques comme de simples conversions
+mathématiques d'une unité à l'autre provoque des erreurs de conception, de manipulation et de compréhension des unités
+de mesure, masquant en particulier des changements de dimension.
+
+Cette spécification est destinée à guider l'implémentation de bibliothèques de construction et de conversion d'unités et
+non pas àfournir des collections d'unités courantes déjà construites. Il ne s'agit pas non plus d'une bibliothèque
 d'interprétation de chaines de caractères comme unités ni d'écriture d'unités sous forme de chaînes de caractères.
 
 En définissant les unes par rapport aux autres les unités qui lui sont nécessaires, la présente spécification vise à
@@ -251,6 +284,44 @@ tel que le numérateur corresponde au premier paramètre de la méthode et le d�
 \caption{Quelques méthodes de construction suggérées pour l'unité.}
 \end{figure}
 
+
+\subsection{Transformeurs}
+
+Un transformeur (\emph{UnitTransformer}) représente l'expression d'une valeur dans une unité cible à partir d'une valeur
+exprimée dans une unité source dans un contexte physique déterminé. Cette situation physique est caractérisée par une
+formule (\emph{UnitTransformFormula}).
+
+La formule elle-même implémente le contrat d'un transformeur, se retournant lui-même comme formule. Elle définit en
+plus, les méthodes \emph{source()} et \emph{target()} qui exposent respectivement les unités source et cible dans
+lesquelles les valeurs d'entrée et de sortie de la formule doivent étre interprétées pour garantir un résultat correct.
+
+Enfin, une formule dispose d'une méthode \emph{transformer()} permettant de construire un transformeur d'unités dérivé
+de la formule à partir d'une unité source différente et vers une unité source différente.
+
+\begin{figure}[!h]
+\begin{tikzpicture}
+\umlclass[type=abstract, y=4]{UnitTransformer}{
+  }{
+  \umlvirt{+ formula() : UnitTransformFormula}\\
+  \umlvirt{+ transform(value : decimal) : decimal}
+}
+
+\umlclass{UnitTransformFormula}{
+  }{
+  + source() : Unit\\
+  + target() : Unit\\
+  + formula() : UnitTransformFormula \{ return this \}\\
+  + transform(value : decimal) : decimal\\
+  + transformer(source: Unit, target: Unit) : UnitTransformer
+}
+
+
+\umlinherit{UnitTransformFormula}{UnitTransformer}
+\end{tikzpicture}
+\caption{Contrat du transformeur d'unités et de sa formule de référence.}
+\end{figure}
+
+
 \section{Spécification d'implémentation}
 
 La spécification d'implémentation est indicative. La spécification dans son ensemble peut être respectée par une
@@ -428,6 +499,29 @@ critère relatif à la précision des conversions laissée à une appréciation 
 \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}[!h]
+\caption{Test des transformations d'unités}\label{unitTransformerTest}
+\begin{algorithmic}
+\Procedure{UnitTransformerTest}{}
+
+\State copper : UnitTransformFormula $\gets$ UnitTransformFormula(source=Volume.CM3, target=Mass.G, kernel=x : x * 8.94)
+
+\Require copper.transform(1) = 8.94
+
+\State copperM3ToG : UnitTransformer = copper.transformer(source=Volume.M3, target=Mass.G)
+
+\Require copperM3ToG.transform(1) = 8.94e6
+
+\State copperCm3ToKg = copper.transformer(source=Volume.CM3, target=Mass.KG)
+
+\Require copperCm3ToKg.transform(1) = 8.94e-3
+
+\State copperM3ToKg = copper.transformer(source=Volume.M3, target=Mass.KG)
+
+\Require copperM3ToKg.transform(1) = 8.94e3
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \section{Versionnement}
 
@@ -437,6 +531,7 @@ critère relatif à la précision des conversions laissée à une appréciation 
  \hline
  Version & Date & modification\\
  \hline
+ 2.0-s0 & 9 octobre 2025 & fonctionnalité d'API: transformeurs d'unités \\
  1.0-r2 & 15 novembre 2024 & correctif: fixation de la date et ajout du tableau de versionnement \\
  1.0-r1 & 20 juillet 2024 & correctif: structuration de la section sur les convertisseurs \\
  1.0-r0 & 28 avril 2024 & version initiale \\
