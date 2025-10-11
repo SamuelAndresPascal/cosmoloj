@@ -150,9 +150,9 @@ méthode est implémentée, on \emph{recommande} que si le convertisseur sur leq
 \emph{et} que la puissance indiquée en paramètre est égale à 1, alors la méthode renvoie ce convertisseur lui-même au
 sens de l'instance.
 
-La méthode \emph{concatenate()} produit un convertisseur dont la méthode \emph{convert()} est équivalente à l'évaluation
-en premier lieu de la méthode \emph{convert()} du convertisseur indiqué en paramètre et en second lieu de la méthode
-\emph{convert()} du convertisseur d'appel sur la valeur qui en résulte.
+La méthode \emph{concatenateTo()} produit un convertisseur dont la méthode \emph{convert()} est équivalente à
+l'évaluation en premier lieu de la méthode \emph{convert()} du convertisseur indiqué en paramètre et en second lieu de
+la méthode \emph{convert()} du convertisseur d'appel sur la valeur qui en résulte.
 
 \begin{figure}[!h]
 \begin{tikzpicture}
@@ -164,7 +164,7 @@ en premier lieu de la méthode \emph{convert()} du convertisseur indiqué en par
   \umlvirt{+ linear() : UnitConverter}\\
   \umlvirt{+ linearPow(pow : decimal) : UnitConverter}\\
   + convert(value : decimal) : decimal\\
-  + concatenate(converter : UnitConverter) : UnitConverter
+  + concatenateTo(converter : UnitConverter) : UnitConverter
 }
 \end{tikzpicture}
 \caption{Contrat du convertisseur d'unités.}
@@ -312,7 +312,8 @@ de la formule à partir d'une unité source différente et vers une unité sourc
   + target() : Unit\\
   + formula() : UnitTransformFormula \{ return this \}\\
   + transform(value : decimal) : decimal\\
-  + transformer(source: Unit, target: Unit) : UnitTransformer
+  + transformer(source: Unit, target: Unit) : UnitTransformer\\
+  + concatenateTo(other: UnitTransformationFormula): UnitTransformationFormula
 }
 
 
@@ -337,7 +338,7 @@ qui la composent et de la conversion inverse de l'unité cible vers ces mêmes u
 \caption{Implémentation de Unit.getConverterTo()}\label{getConverterTo}
 \begin{algorithmic}
 \Procedure{Unit.getConverterTo}{target}\Comment{convertisseur de $this$ à $target$}
-\State \textbf{return} target.toBase().inverse().concatenate(this.toBase())
+\State \textbf{return} target.toBase().inverse().concatenateTo(this.toBase())
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -373,7 +374,7 @@ conversion vers son unité de référence à la conversion vers le jeu d'unités
 \caption{Implémentation de TransformedUnit.toBase()}\label{transformedToBase}
 \begin{algorithmic}
 \Procedure{TransformedUnit.toBase}{}
-\State \textbf{return} this.reference().toBase().concatenate(this.toReference())
+\State \textbf{return} this.reference().toBase().concatenateTo(this.toReference())
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -398,7 +399,7 @@ Celcius par mètre en Kelvin par mètre.
 \State result : UnitConverter $\gets$ identity()
 \For{factor $\in$ this.definition()}
 \State toFactorBase $\gets$ factor.dim().toBase().linearPow(factor.power())
-\State result $\gets$ toFactorBase.concatenate(result)
+\State result $\gets$ toFactorBase.concatenateTo(result)
 \EndFor
 
 \State \textbf{return} result
@@ -525,13 +526,14 @@ critère relatif à la précision des conversions laissée à une appréciation 
 
 \section{Versionnement}
 
-\begin{tabular}{ | l || l | l |  }
+\begin{tabular}{ | l || l | p{6cm} |  }
  \hline
  \multicolumn{3}{ |c| }{Versionnement} \\
  \hline
  Version & Date & modification\\
  \hline
- 2.0-s0 & 9 octobre 2025 & fonctionnalité d'API: transformeurs d'unités \\
+ 2.0-a0 & 11 octobre 2025 & fonctionnalité d'API: transformeurs d'unités, modifications du versionnement,
+                            modification du nom de la concaténation des convertisseurs \\
  1.0-r2 & 15 novembre 2024 & correctif: fixation de la date et ajout du tableau de versionnement \\
  1.0-r1 & 20 juillet 2024 & correctif: structuration de la section sur les convertisseurs \\
  1.0-r0 & 28 avril 2024 & version initiale \\
