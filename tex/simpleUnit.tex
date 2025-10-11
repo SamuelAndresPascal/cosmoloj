@@ -295,8 +295,15 @@ La formule elle-même implémente le contrat d'un transformeur, se retournant lu
 plus, les méthodes \emph{source()} et \emph{target()} qui exposent respectivement les unités source et cible dans
 lesquelles les valeurs d'entrée et de sortie de la formule doivent étre interprétées pour garantir un résultat correct.
 
-Enfin, une formule dispose d'une méthode \emph{transformer()} permettant de construire un transformeur d'unités dérivé
-de la formule à partir d'une unité source différente et vers une unité source différente.
+Une formule dispose également d'une méthode \emph{transformer()} permettant de construire un transformeur d'unités
+dérivé de la formule à partir d'une unité source différente et vers une unité cible différente.
+
+Enfin, il est possible de concaténer les formules au moyen de la méthode \emph{concatenateTo()}, laquelle produit une
+formule appliquant en premier lieu les opérations correspondant à la formule passée en paramètre, suivies des opérations
+correspondant à la formule d'appel. L'unité source de la formule en résultant est l'unité source de la formule passée
+en paramètre et son unité cible est l'unité cible de la formule d'appel. Il importe que veiller à l'homogénéïté de
+l'unité cible de la formule passée en paramètre avec l'unité source de la formule d'appel afin que la concaténation
+puisse le cas échéant gérer les opérations de conversions en interne de l'une à l'autre.
 
 \begin{figure}[!h]
 \begin{tikzpicture}
@@ -313,7 +320,7 @@ de la formule à partir d'une unité source différente et vers une unité sourc
   + formula() : UnitTransformFormula \{ return this \}\\
   + transform(value : decimal) : decimal\\
   + transformer(source: Unit, target: Unit) : UnitTransformer\\
-  + concatenateTo(other: UnitTransformationFormula): UnitTransformationFormula
+  + concatenateTo(formula: UnitTransformationFormula): UnitTransformationFormula
 }
 
 
