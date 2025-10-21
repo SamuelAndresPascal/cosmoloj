@@ -1,0 +1,83 @@
+
+
+form-simpleunit-snapshot:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+  variables:
+    TARGET_PATH: $PUBLIC_SITE_SERVER_PATH/su/SNAPSHOT
+  script:
+    - cd tex/su
+    - xelatex -halt-on-error simpleUnit.tex
+    - xelatex -halt-on-error simpleUnit.tex
+    - htxelatex simpleUnit.tex xhtml
+    - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
+    - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o simpleUnit.zip ; mv simpleUnit.html index.html ; rm simpleUnit.zip"
+  artifacts:
+    paths:
+      - tex/su/simpleUnit.pdf
+    expire_in: 2 days
+
+form-simpleunit-tag:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^simple-unit-/
+    - when: never
+  variables:
+    TARGET_PATH: $PUBLIC_SITE_SERVER_PATH/su/$CI_COMMIT_TAG
+  script:
+    - cd tex/su
+    - xelatex -halt-on-error simpleUnit.tex
+    - xelatex -halt-on-error simpleUnit.tex
+    - htxelatex simpleUnit.tex xhtml
+    - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "mkdir $TARGET_PATH"
+    - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o simpleUnit.zip ; mv simpleUnit.html index.html ; rm simpleUnit.zip"
+  artifacts:
+    paths:
+      - tex/su/simpleUnit.pdf
+    expire_in: 2 days
+
+form-bibliograpi-snapshot:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+  variables:
+    TARGET_PATH: $PUBLIC_SITE_SERVER_PATH/bibapi/SNAPSHOT
+  script:
+    - cd tex/bibapi
+    - xelatex -halt-on-error bibliograpi.tex
+    - xelatex -halt-on-error bibliograpi.tex
+    - htxelatex bibliograpi.tex xhtml
+    - zip bibliograpi.zip bibliograpi.pdf bibliograpi.html bibliograpi.css bibliograpi*x.svg
+    - scp bibliograpi.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o bibliograpi.zip ; mv bibliograpi.html index.html ; rm bibliograpi.zip"
+  artifacts:
+    paths:
+      - tex/bibapi/bibliograpi.pdf
+    expire_in: 2 days
+
+form-bibliograpi-tag:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_TAG
+    - when: never
+  variables:
+    TARGET_PATH: $PUBLIC_SITE_SERVER_PATH/bibapi/$CI_COMMIT_TAG
+  script:
+    - cd tex/bibapi
+    - xelatex -halt-on-error bibliograpi.tex
+    - xelatex -halt-on-error bibliograpi.tex
+    - htxelatex bibliograpi.tex xhtml
+    - zip bibliograpi.zip bibliograpi.pdf bibliograpi.html bibliograpi.css bibliograpi*x.svg
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH "mkdir $TARGET_PATH"
+    - scp bibliograpi.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
+    - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o bibliograpi.zip ; mv bibliograpi.html index.html ; rm bibliograpi.zip"
+  artifacts:
+    paths:
+      - tex/bibapi/bibliograpi.pdf
+    expire_in: 2 days
