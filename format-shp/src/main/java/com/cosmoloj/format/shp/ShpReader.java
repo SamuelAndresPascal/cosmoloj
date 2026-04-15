@@ -442,10 +442,10 @@ public class ShpReader<R extends ShpRecord<?>> implements EntryStreamReader<R> {
      * <div class="fr">Lecture des coordonnées d'une série de points.</div>
      *
      * @param channel
-     * @param nbPoints <span class="fr">nombre de points à lire</div>
-     * @param dim <span class="fr">dimension des points</div>
+     * @param nbPoints <span class="fr">nombre de points à lire</span>
+     * @param dim <span class="fr">dimension des points</span>
      * @return <span class="fr">coordonnées d'une série de point dans un tableau à deux indices dont le premier
-     * est le nombre de points de la série et le second la dimension des points</div>
+     * est le nombre de points de la série et le second la dimension des points</span>
      * @throws IOException
      */
     private static double[][] readPoints(final ReadableByteChannel channel, final int nbPoints) throws IOException {

@@ -61,7 +61,7 @@ public enum NumberPriority {
         }
     }
 
-    public static Number asOrSame(final Number candidate, final Class<? extends Number> c) {
+    private static Number asOrSame(final Number candidate, final Class<? extends Number> c) {
 
         if (getPriority(c) > getPriority(candidate.getClass())) {
             return as(candidate, c);
@@ -69,12 +69,12 @@ public enum NumberPriority {
         return candidate;
     }
 
-    public static <T extends Number> T as(final Number candidate, final Class<T> c) {
+    private static Number as(final Number candidate, final Class<? extends Number> c) {
 
         final Class<? extends Number> candidateClass = candidate.getClass();
 
         if (c.isAssignableFrom(candidateClass)) {
-            return (T) candidate;
+            return candidate;
         }
 
         if (getPriority(c) < getPriority(candidateClass)) {
@@ -86,17 +86,17 @@ public enum NumberPriority {
             throw new UnsupportedOperationException();
         } else if (Number.class.isAssignableFrom(candidateClass)) {
             if (Byte.class.equals(c)) {
-                return (T) (Byte) candidate.byteValue();
+                return candidate.byteValue();
             } else if (Short.class.equals(c)) {
-                return (T) (Short) candidate.shortValue();
+                return candidate.shortValue();
             } else if (Integer.class.equals(c)) {
-                return (T) (Integer) candidate.intValue();
+                return candidate.intValue();
             } else if (Long.class.equals(c)) {
-                return (T) (Long) candidate.longValue();
+                return candidate.longValue();
             } else if (Float.class.equals(c)) {
-                return (T) (Float) candidate.floatValue();
+                return candidate.floatValue();
             } else if (Double.class.equals(c)) {
-                return (T) (Double) candidate.doubleValue();
+                return candidate.doubleValue();
             } else {
                 throw new UnsupportedOperationException();
             }

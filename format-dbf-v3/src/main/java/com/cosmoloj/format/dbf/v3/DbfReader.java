@@ -165,7 +165,7 @@ public class DbfReader implements EntryStreamReader<DbfRecord> {
      * <tr><td>23  </td><td>1 byte  </td><td>SET FIELDS flag.</td></tr>
      * <tr><td>24-31  </td><td>1 byte  </td><td>Reserved bytes.</td></tr>
      * </tbody>
-     * </pre>
+     * </table>
      *
      * @param trimHeaders
      * @param trimValues

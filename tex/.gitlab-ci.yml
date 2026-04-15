@@ -1,5 +1,3 @@
-
-
 form-simpleunit-snapshot:
   stage: build
   rules:
@@ -16,6 +14,8 @@ form-simpleunit-snapshot:
     - zip simpleUnit.zip simpleUnit.pdf simpleUnit.html simpleUnit.css simpleUnit*x.svg
     - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o simpleUnit.zip ; mv simpleUnit.html index.html ; rm simpleUnit.zip"
+  after_script:
+    - ls -l tex/su
   artifacts:
     paths:
       - tex/su/simpleUnit.pdf
@@ -37,6 +37,8 @@ form-simpleunit-tag:
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "mkdir $TARGET_PATH"
     - scp simpleUnit.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o simpleUnit.zip ; mv simpleUnit.html index.html ; rm simpleUnit.zip"
+  after_script:
+    - ls -l tex/su
   artifacts:
     paths:
       - tex/su/simpleUnit.pdf
@@ -58,6 +60,8 @@ form-bibliograpi-snapshot:
     - zip bibliograpi.zip bibliograpi.pdf bibliograpi.html bibliograpi.css bibliograpi*x.svg
     - scp bibliograpi.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o bibliograpi.zip ; mv bibliograpi.html index.html ; rm bibliograpi.zip"
+  after_script:
+    - ls -l tex/bibapi
   artifacts:
     paths:
       - tex/bibapi/bibliograpi.pdf
@@ -79,6 +83,8 @@ form-bibliograpi-tag:
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH "mkdir $TARGET_PATH"
     - scp bibliograpi.zip $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER:$TARGET_PATH
     - ssh $PUBLIC_SITE_USER@$PUBLIC_SITE_SERVER "cd $TARGET_PATH ; unzip -o bibliograpi.zip ; mv bibliograpi.html index.html ; rm bibliograpi.zip"
+  after_script:
+    - ls -l tex/bibapi
   artifacts:
     paths:
       - tex/bibapi/bibliograpi.pdf
