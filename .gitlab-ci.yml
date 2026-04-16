@@ -43,7 +43,7 @@ deploy:
     - mvn $MAVEN_CLI_OPTS deploy
   environment:
     name: maven
-    url: http://cosmoloj.com/maven/com/cosmoloj/cosmoloj/maven-metadata.xml
+    url: http://cosmoloj.com/maven-deploy/com/cosmoloj/cosmoloj/maven-metadata.xml
   artifacts:
     expire_in: 2 days
 
@@ -66,13 +66,13 @@ site:
   script:
     - mvn $MAVEN_CLI_OPTS clean install
     - mvn $MAVEN_CLI_OPTS site-deploy
-    - curl --silent http://cosmoloj.com/cosmoloj/ | grep publishDate
-    - curl --silent http://cosmoloj.com/cosmoloj/apidocs/index.html | grep Generated
+    - curl --silent http://cosmoloj.com/maven-site/cosmoloj/ | grep publishDate
+    - curl --silent http://cosmoloj.com/maven-site/cosmoloj/apidocs/index.html | grep Generated
   artifacts:
     expire_in: 2 days
   environment:
     name: site
-    url: http://cosmoloj.com/cosmoloj/
+    url: http://cosmoloj.com/maven-site/cosmoloj/
 
 sonar:
   stage: site

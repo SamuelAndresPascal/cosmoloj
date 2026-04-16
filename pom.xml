@@ -52,7 +52,7 @@
     </repository>
     <site>
       <id>site-public</id>
-      <url>scp://${site.server.ip}${site.server.path}</url>
+      <url>scp://${site.server.ip}${site.server.path}/maven-site</url>
     </site>
   </distributionManagement>
 
