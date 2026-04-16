@@ -33,7 +33,7 @@
     <deploy.server.ip>${env.PUBLIC_DEPLOY_SERVER}</deploy.server.ip>
     <site.server.ip>${env.PUBLIC_SITE_SERVER}</site.server.ip>
     <deploy.server.path>${env.PUBLIC_DEPLOY_SERVER_PATH}</deploy.server.path>
-    <site.server.path>${env.PUBLIC_SITE_SERVER_PATH}/${project.artifactId}</site.server.path>
+    <site.server.path>${env.PUBLIC_SITE_SERVER_PATH}/maven-site/${project.artifactId}</site.server.path>
     <github.username>${env.GITHUB_USERNAME}</github.username>
 
     <slf4j.version>2.0.7</slf4j.version>
@@ -52,7 +52,7 @@
     </repository>
     <site>
       <id>site-public</id>
-      <url>scp://${site.server.ip}${site.server.path}/maven-site</url>
+      <url>scp://${site.server.ip}${site.server.path}</url>
     </site>
   </distributionManagement>
 
