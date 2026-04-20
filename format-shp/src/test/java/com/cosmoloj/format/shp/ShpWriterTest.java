@@ -29,7 +29,7 @@ public class ShpWriterTest {
         final List<ShpRecord<?>> records1 = new ArrayList<>();
 
         try (FileChannel rChannel = new FileInputStream(file1).getChannel()) {
-            final ShpReader reader = new ShpReader(rChannel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> reader = new ShpReader<>(rChannel, DefaultRecordFactory.INSTANCE);
             while (reader.hasNext()) {
                 records1.add(reader.readEntry());
             }
@@ -68,9 +68,9 @@ public class ShpWriterTest {
         // lecture du fichier
         final List<ShpRecord<?>> records1 = new ArrayList<>();
 
-        records1.add(new DefaultShpRecord(1, 88 / 2, ShapeType.MULTI_POINT, ShpTestGeometries.MULTIPOINTS_BBOXES[0],
+        records1.add(new DefaultShpRecord<>(1, 88 / 2, ShapeType.MULTI_POINT, ShpTestGeometries.MULTIPOINTS_BBOXES[0],
                 ShpTestGeometries.MULTIPOINTS[0], null, null, null, null, null));
-        records1.add(new DefaultShpRecord(2, 88 / 2, ShapeType.MULTI_POINT, ShpTestGeometries.MULTIPOINTS_BBOXES[1],
+        records1.add(new DefaultShpRecord<>(2, 88 / 2, ShapeType.MULTI_POINT, ShpTestGeometries.MULTIPOINTS_BBOXES[1],
                 ShpTestGeometries.MULTIPOINTS[1], null, null, null, null, null));
 
 
@@ -111,7 +111,7 @@ public class ShpWriterTest {
         final List<ShpRecord<?>> records1 = new ArrayList<>();
 
         try (FileChannel rChannel = new FileInputStream(file1).getChannel()) {
-            final ShpReader reader = new ShpReader(rChannel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> reader = new ShpReader<>(rChannel, DefaultRecordFactory.INSTANCE);
             while (reader.hasNext()) {
                 records1.add(reader.readEntry());
             }
@@ -153,7 +153,7 @@ public class ShpWriterTest {
         final List<ShpRecord<?>> records1 = new ArrayList<>();
 
         try (FileChannel rChannel1 = new FileInputStream(file1).getChannel()) {
-            final ShpReader reader = new ShpReader(rChannel1, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> reader = new ShpReader<>(rChannel1, DefaultRecordFactory.INSTANCE);
             while (reader.hasNext()) {
                 records1.add(reader.readEntry());
             }
@@ -194,7 +194,7 @@ public class ShpWriterTest {
         final List<ShpRecord<?>> records1 = new ArrayList<>();
 
         try (FileChannel rChannel1 = new FileInputStream(file1).getChannel()) {
-            final ShpReader reader1 = new ShpReader(rChannel1, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> reader1 = new ShpReader<>(rChannel1, DefaultRecordFactory.INSTANCE);
             while (reader1.hasNext()) {
                 records1.add(reader1.readEntry());
             }

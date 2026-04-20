@@ -1,6 +1,7 @@
 package com.cosmoloj.format.shp;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * <div class="fr">Implémentation par défaut de la représentation d'un enregistrement, incluant en-tête, type de forme
@@ -9,83 +10,17 @@ import java.util.Arrays;
  * @author Samuel Andrés
  * @param <G> <span class="fr">type de données géométriques dans la représentation lue dans le fichier</span>
  */
-public class DefaultShpRecord<G> implements ShpRecord<G> {
-
-    private final int recordNumber;
-    private final int recordLength;
-    private final int shapeType;
-    private final double[] bbox;
-    private final G geometry;
-    private final double[] measureRange;
-    private final double[] measureValues;
-    private final double[] zRange;
-    private final double[] zValues;
-    private final int[] partTypes;
-
-    public DefaultShpRecord(final int recordNumber, final int recordLength, final int shapeType, final double[] bbox,
-            final G geometry, final double[] measureRange, final double[] measureValues, final double[] zRange,
-            final double[] zValues, final int[] partTypes) {
-        this.recordNumber = recordNumber;
-        this.recordLength = recordLength;
-        this.shapeType = shapeType;
-        this.bbox = bbox;
-        this.geometry = geometry;
-        this.measureRange = measureRange;
-        this.measureValues = measureValues;
-        this.zRange = zRange;
-        this.zValues = zValues;
-        this.partTypes = partTypes;
-    }
-
-    @Override
-    public int getRecordNumber() {
-        return recordNumber;
-    }
-
-    @Override
-    public int getRecordLength() {
-        return recordLength;
-    }
-
-    @Override
-    public int getShapeType() {
-        return shapeType;
-    }
-
-    @Override
-    public G getGeometry() {
-        return geometry;
-    }
-
-    @Override
-    public double[] getBbox() {
-        return bbox;
-    }
-
-    @Override
-    public double[] getMeasureRange() {
-        return measureRange;
-    }
-
-    @Override
-    public double[] getMeasureValues() {
-        return measureValues;
-    }
-
-    @Override
-    public double[] getZRange() {
-        return zRange;
-    }
-
-    @Override
-    public double[] getZValues() {
-        return zValues;
-    }
-
-    @Override
-    public int[] getPartTypes() {
-        return partTypes;
-    }
+public record DefaultShpRecord<G>(
+    int recordNumber,
+    int recordLength,
+    int shapeType,
+    double[] bbox,
+    G geometry,
+    double[] measureRange,
+    double[] measureValues,
+    double[] zRange,
+    double[] zValues,
+    int[] partTypes) implements ShpRecord<G> {
 
     @Override
     public String toString() {
@@ -95,5 +30,63 @@ public class DefaultShpRecord<G> implements ShpRecord<G> {
                 + ", measureValues=" + Arrays.toString(measureValues)
                 + ", zRange=" + Arrays.toString(zRange) + ", zValues=" + Arrays.toString(zValues)
                 + ", partTypes=" + Arrays.toString(partTypes) + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + this.recordNumber;
+        hash = 17 * hash + this.recordLength;
+        hash = 17 * hash + this.shapeType;
+        hash = 17 * hash + Arrays.hashCode(this.bbox);
+        hash = 17 * hash + Objects.hashCode(this.geometry);
+        hash = 17 * hash + Arrays.hashCode(this.measureRange);
+        hash = 17 * hash + Arrays.hashCode(this.measureValues);
+        hash = 17 * hash + Arrays.hashCode(this.zRange);
+        hash = 17 * hash + Arrays.hashCode(this.zValues);
+        hash = 17 * hash + Arrays.hashCode(this.partTypes);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DefaultShpRecord<?> other = (DefaultShpRecord<?>) obj;
+        if (this.recordNumber != other.recordNumber) {
+            return false;
+        }
+        if (this.recordLength != other.recordLength) {
+            return false;
+        }
+        if (this.shapeType != other.shapeType) {
+            return false;
+        }
+        if (!Arrays.equals(this.bbox, other.bbox)) {
+            return false;
+        }
+        if (!Objects.equals(this.geometry, other.geometry)) {
+            return false;
+        }
+        if (!Arrays.equals(this.measureRange, other.measureRange)) {
+            return false;
+        }
+        if (!Arrays.equals(this.measureValues, other.measureValues)) {
+            return false;
+        }
+        if (!Arrays.equals(this.zRange, other.zRange)) {
+            return false;
+        }
+        if (!Arrays.equals(this.zValues, other.zValues)) {
+            return false;
+        }
+        return Arrays.equals(this.partTypes, other.partTypes);
     }
 }

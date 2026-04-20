@@ -57,10 +57,10 @@ public class ShpWriter implements EntryStreamWriter<ShpRecord<?>> {
 
     @Override
     public void writeEntry(final ShpRecord<?> rec) throws IOException {
-        writeRecordHeaderField(channel, rec.getRecordNumber());
+        writeRecordHeaderField(channel, rec.recordNumber());
 
-        final int recordLength = rec.getRecordLength();
-        writeRecordHeaderField(channel, rec.getRecordLength());
+        final int recordLength = rec.recordLength();
+        writeRecordHeaderField(channel, rec.recordLength());
 
         /*
         on met à jour la position du prochain enregistrement avec la taille de l'en-tête de l'enregistrement
@@ -69,9 +69,9 @@ public class ShpWriter implements EntryStreamWriter<ShpRecord<?>> {
         */
         position += Integer.BYTES * 2 + recordLength * 2;
 
-        writeRecordData(channel, rec.getShapeType(), rec.getGeometry(), rec.getBbox(),
-                rec.getZRange(), rec.getZValues(), rec.getMeasureRange(), rec.getMeasureValues(),
-                rec.getPartTypes());
+        writeRecordData(channel, rec.shapeType(), rec.geometry(), rec.bbox(),
+                rec.zRange(), rec.zValues(), rec.measureRange(), rec.measureValues(),
+                rec.partTypes());
     }
 
     //==================================================================================================================
@@ -155,21 +155,25 @@ public class ShpWriter implements EntryStreamWriter<ShpRecord<?>> {
     private static void writeGeometry(final WritableByteChannel channel, final int shapeType, final Object data,
             final int[] partTypes) throws IOException {
         switch (shapeType) {
-            case ShapeType.NULL_SHAPE: return;
-            case ShapeType.POINT:
-            case ShapeType.POINT_M:
-            case ShapeType.POINT_Z: writePoint(channel, (double[]) data); return;
-            case ShapeType.POLY_LINE:
-            case ShapeType.POLY_LINE_M:
-            case ShapeType.POLY_LINE_Z: writePolyLine(channel, (double[][][]) data); return;
-            case ShapeType.POLYGON:
-            case ShapeType.POLYGON_M:
-            case ShapeType.POLYGON_Z: writePolygon(channel, (double[][][]) data); return;
-            case ShapeType.MULTI_POINT:
-            case ShapeType.MULTI_POINT_M:
-            case ShapeType.MULTI_POINT_Z: writeMultiPoint(channel, (double[][]) data); return;
-            case ShapeType.MULTI_PATCH: writeMultiPatch(channel, (double[][][]) data, partTypes); return;
-            default: throw new IllegalArgumentException(String.format("unknown shape type %s", shapeType));
+            case ShapeType.NULL_SHAPE -> {
+                // nothing to do
+            }
+            case ShapeType.POINT, ShapeType.POINT_M, ShapeType.POINT_Z -> {
+                writePoint(channel, (double[]) data);
+            }
+            case ShapeType.POLY_LINE, ShapeType.POLY_LINE_M, ShapeType.POLY_LINE_Z -> {
+                writePolyLine(channel, (double[][][]) data);
+            }
+            case ShapeType.POLYGON, ShapeType.POLYGON_M, ShapeType.POLYGON_Z -> {
+                writePolygon(channel, (double[][][]) data);
+            }
+            case ShapeType.MULTI_POINT, ShapeType.MULTI_POINT_M, ShapeType.MULTI_POINT_Z -> {
+                writeMultiPoint(channel, (double[][]) data);
+            }
+            case ShapeType.MULTI_PATCH -> {
+                writeMultiPatch(channel, (double[][][]) data, partTypes);
+            }
+            default -> throw new IllegalArgumentException("unknown shape type " + shapeType);
         }
     }
 

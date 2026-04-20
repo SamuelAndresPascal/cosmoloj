@@ -58,25 +58,6 @@ public class ShpReader<R extends ShpRecord<?>> implements EntryStreamReader<R> {
         */
         position += (Integer.BYTES + recordLength) * 2;
 
-        return readRecordData(channel, recordNumber, recordLength, recordFactory);
-    }
-
-    //==================================================================================================================
-    // En-tête d'enregistrement
-    //==================================================================================================================
-
-    private static int readRecordHeaderField(final ReadableByteChannel channel) throws IOException {
-
-        return BinaryUtil.read(channel, Integer.BYTES, ByteOrder.BIG_ENDIAN).getInt();
-    }
-
-    //==================================================================================================================
-    // Enregistrement
-    //==================================================================================================================
-
-    private static <SR extends ShpRecord<?>> SR readRecordData(final ReadableByteChannel channel,
-            final int recordNumber, final int recordLength, final RecordFactory<SR> factory) throws IOException {
-
         // lecture du type de forme
         final int shapeType = BinaryUtil.read(channel, Integer.BYTES, ByteOrder.LITTLE_ENDIAN).getInt();
 
@@ -85,7 +66,16 @@ public class ShpReader<R extends ShpRecord<?>> implements EntryStreamReader<R> {
 
         final int[] parameters = recomputeNbPoints(channel, shapeType);
 
-        final Object geometry = readGeometry(channel, shapeType, parameters);
+        final Object geometry = switch (shapeType) {
+            case ShapeType.NULL_SHAPE -> null;
+            case ShapeType.POINT, ShapeType.POINT_M, ShapeType.POINT_Z -> readPoint(channel);
+            case ShapeType.POLY_LINE, ShapeType.POLY_LINE_M, ShapeType.POLY_LINE_Z -> readPolyLine(channel, parameters);
+            case ShapeType.POLYGON, ShapeType.POLYGON_M, ShapeType.POLYGON_Z -> readPolygon(channel, parameters);
+            case ShapeType.MULTI_POINT, ShapeType.MULTI_POINT_M, ShapeType.MULTI_POINT_Z ->
+                readMultiPoint(channel, parameters[0]);
+            case ShapeType.MULTI_PATCH -> readMultiPatch(channel, parameters);
+            default -> throw new IllegalArgumentException("unknown shape type");
+        };
 
         final double[] zRange = shapeType >= ShapeType.POINT_Z ? readZRange(channel, shapeType) : new double[0];
         final double[] z = shapeType >= ShapeType.POINT_Z ? readZ(channel, shapeType, parameters[1]) : new double[0];
@@ -99,8 +89,17 @@ public class ShpReader<R extends ShpRecord<?>> implements EntryStreamReader<R> {
                 ? Arrays.copyOfRange(parameters, ((parameters.length - 2) / 2) + 2, parameters.length) : new int[0];
 
         // lecture de la géométrie et création de l'enregistrement
-        return factory.get(recordNumber, recordLength, shapeType, bbox, geometry, measureRange, measure, zRange, z,
-                partTypes);
+        return this.recordFactory.get(recordNumber, recordLength, shapeType, bbox, geometry, measureRange, measure,
+                zRange, z, partTypes);
+    }
+
+    //==================================================================================================================
+    // En-tête d'enregistrement
+    //==================================================================================================================
+
+    private static int readRecordHeaderField(final ReadableByteChannel channel) throws IOException {
+
+        return BinaryUtil.read(channel, Integer.BYTES, ByteOrder.BIG_ENDIAN).getInt();
     }
 
     //==================================================================================================================
@@ -252,20 +251,6 @@ public class ShpReader<R extends ShpRecord<?>> implements EntryStreamReader<R> {
     //==================================================================================================================
     // Géométrie d'enregistrement
     //==================================================================================================================
-
-    private static Object readGeometry(final ReadableByteChannel channel, final int shapeType, final int[] parameters)
-            throws IOException {
-        return switch (shapeType) {
-            case ShapeType.NULL_SHAPE -> null;
-            case ShapeType.POINT, ShapeType.POINT_M, ShapeType.POINT_Z -> readPoint(channel);
-            case ShapeType.POLY_LINE, ShapeType.POLY_LINE_M, ShapeType.POLY_LINE_Z -> readPolyLine(channel, parameters);
-            case ShapeType.POLYGON, ShapeType.POLYGON_M, ShapeType.POLYGON_Z -> readPolygon(channel, parameters);
-            case ShapeType.MULTI_POINT, ShapeType.MULTI_POINT_M, ShapeType.MULTI_POINT_Z ->
-                readMultiPoint(channel, parameters[0]);
-            case ShapeType.MULTI_PATCH -> readMultiPatch(channel, parameters);
-            default -> throw new IllegalArgumentException("unknown shape type");
-        };
-    }
 
     /**
      * <div class="fr">Lecture d'un polygone 2D. La structure des enregistrements est identique à celle des polylignes.

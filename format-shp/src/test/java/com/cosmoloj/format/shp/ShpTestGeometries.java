@@ -39,7 +39,7 @@ public final class ShpTestGeometries {
         try (FileChannel channel = new FileInputStream(file).getChannel()) {
 
             // par iterateur
-            final ShpReader it = new ShpReader(channel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> it = new ShpReader<>(channel, DefaultRecordFactory.INSTANCE);
 
             int i = 0;
             while (it.hasNext()) {
@@ -52,15 +52,15 @@ public final class ShpTestGeometries {
     }
 
     private static void pointDataTest_0(final ShpRecord record, final int i) {
-        Assertions.assertEquals(i + 1, record.getRecordNumber());
-        Assertions.assertEquals(20 / 2, record.getRecordLength());
-        Assertions.assertEquals(ShapeType.POINT, record.getShapeType());
+        Assertions.assertEquals(i + 1, record.recordNumber());
+        Assertions.assertEquals(20 / 2, record.recordLength());
+        Assertions.assertEquals(ShapeType.POINT, record.shapeType());
 
         // comparaison des bbox
-        Assertions.assertArrayEquals(new double[0], record.getBbox());
+        Assertions.assertArrayEquals(new double[0], record.bbox());
 
         // Les données sont des points qui sont des ensembles de coordonnées
-        Assertions.assertArrayEquals(POINTS[i], (double[]) record.getGeometry());
+        Assertions.assertArrayEquals(POINTS[i], (double[]) record.geometry());
     }
 
     // multipoints attendus
@@ -101,7 +101,7 @@ public final class ShpTestGeometries {
         try (FileChannel channel = new FileInputStream(file).getChannel()) {
 
             // par iterateur
-            final ShpReader it = new ShpReader(channel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> it = new ShpReader<>(channel, DefaultRecordFactory.INSTANCE);
 
             int i = 0;
             while (it.hasNext()) {
@@ -115,14 +115,14 @@ public final class ShpTestGeometries {
 
     private static void multiPointDataTest_0(final ShpRecord<?> record, final int i) {
 
-        Assertions.assertEquals(i + 1, record.getRecordNumber());
-        Assertions.assertEquals(88 / 2, record.getRecordLength());
-        Assertions.assertEquals(ShapeType.MULTI_POINT, record.getShapeType());
+        Assertions.assertEquals(i + 1, record.recordNumber());
+        Assertions.assertEquals(88 / 2, record.recordLength());
+        Assertions.assertEquals(ShapeType.MULTI_POINT, record.shapeType());
 
         // comparaison des bbox
-        Assertions.assertArrayEquals(MULTIPOINTS_BBOXES[i], record.getBbox());
+        Assertions.assertArrayEquals(MULTIPOINTS_BBOXES[i], record.bbox());
 
-        final double[][] data = (double[][]) record.getGeometry();
+        final double[][] data = (double[][]) record.geometry();
         Assertions.assertEquals(MULTIPOINTS[i].length, data.length);
 
         for (int j = 0; j < MULTIPOINTS[i].length; j++) {
@@ -211,7 +211,7 @@ public final class ShpTestGeometries {
         try (FileChannel channel = new FileInputStream(file).getChannel()) {
 
             // par iterateur
-            final ShpReader it = new ShpReader(channel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> it = new ShpReader<>(channel, DefaultRecordFactory.INSTANCE);
 
             int i = 0;
             while (it.hasNext()) {
@@ -224,17 +224,17 @@ public final class ShpTestGeometries {
     }
 
     private static void polyLineDataTest_0(final ShpRecord record, final int i) {
-        Assertions.assertEquals(i + 1, record.getRecordNumber());
-        Assertions.assertEquals(POLYLINES_LENGTHS[i], record.getRecordLength());
-        Assertions.assertEquals(ShapeType.POLY_LINE, record.getShapeType());
+        Assertions.assertEquals(i + 1, record.recordNumber());
+        Assertions.assertEquals(POLYLINES_LENGTHS[i], record.recordLength());
+        Assertions.assertEquals(ShapeType.POLY_LINE, record.shapeType());
 
         // comparaison des bbox
-        Assertions.assertArrayEquals(POLYLINES_BBOXES[i], record.getBbox());
+        Assertions.assertArrayEquals(POLYLINES_BBOXES[i], record.bbox());
 
         // Les données sont des ensembles de lignes
         // les lignes sont des ensembles de points
         // les points sont des ensembles de coordonnées
-        final double[][][] data =  (double[][][]) record.getGeometry();
+        final double[][][] data =  (double[][][]) record.geometry();
 
         // toutes les polylignes du fichiers ont composées d'une unique ligne
         Assertions.assertEquals(1, data.length);
@@ -330,7 +330,7 @@ public final class ShpTestGeometries {
         try (FileChannel channel = new FileInputStream(file).getChannel()) {
 
             // par iterateur
-            final ShpReader it = new ShpReader(channel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> it = new ShpReader<>(channel, DefaultRecordFactory.INSTANCE);
 
             int i = 0;
             while (it.hasNext()) {
@@ -343,17 +343,17 @@ public final class ShpTestGeometries {
     }
 
     private static void polygonDataTest_0(final ShpRecord record, final int i) {
-        Assertions.assertEquals(i + 1, record.getRecordNumber());
-        Assertions.assertEquals(POLYGONS_LENGTHS[i], record.getRecordLength());
-        Assertions.assertEquals(ShapeType.POLYGON, record.getShapeType());
+        Assertions.assertEquals(i + 1, record.recordNumber());
+        Assertions.assertEquals(POLYGONS_LENGTHS[i], record.recordLength());
+        Assertions.assertEquals(ShapeType.POLYGON, record.shapeType());
 
         // comparaison des bbox
-        Assertions.assertArrayEquals(POLYGONS_BBOXES[i], record.getBbox());
+        Assertions.assertArrayEquals(POLYGONS_BBOXES[i], record.bbox());
 
         // Les données sont des ensembles d'anneaux
         // les anneaux sont des ensembles de points
         // les points sont des ensembles de coordonnées
-        final double[][][] data =  (double[][][]) record.getGeometry();
+        final double[][][] data =  (double[][][]) record.geometry();
 
         // toutes les polylignes du fichiers ont composées d'une unique ligne
         Assertions.assertEquals(1, data.length);
@@ -453,7 +453,7 @@ public final class ShpTestGeometries {
         try (FileChannel channel = new FileInputStream(file).getChannel()) {
 
             // par iterateur
-            final ShpReader it = new ShpReader(channel, DefaultRecordFactory.INSTANCE);
+            final ShpReader<ShpRecord<?>> it = new ShpReader<>(channel, DefaultRecordFactory.INSTANCE);
 
             int i = 0;
             while (it.hasNext()) {
@@ -467,17 +467,17 @@ public final class ShpTestGeometries {
 
     private static void polygon2DataTest_0(final ShpRecord record, final int i) {
 
-        Assertions.assertEquals(i + 1, record.getRecordNumber());
-        Assertions.assertEquals(POLYGONS2_LENGTHS[i], record.getRecordLength());
-        Assertions.assertEquals(ShapeType.POLYGON, record.getShapeType());
+        Assertions.assertEquals(i + 1, record.recordNumber());
+        Assertions.assertEquals(POLYGONS2_LENGTHS[i], record.recordLength());
+        Assertions.assertEquals(ShapeType.POLYGON, record.shapeType());
 
         // comparaison des bbox
-        Assertions.assertArrayEquals(POLYGONS_BBOXES[i], record.getBbox());
+        Assertions.assertArrayEquals(POLYGONS_BBOXES[i], record.bbox());
 
         // Les données sont des ensembles d'anneaux
         // les anneaux sont des ensembles de points
         // les points sont des ensembles de coordonnées
-        final double[][][] data =  (double[][][]) record.getGeometry();
+        final double[][][] data =  (double[][][]) record.geometry();
 
         // nombre d'anneaux des polygones
         Assertions.assertEquals(POLYGONS2_NB_RINGS[i], data.length);
